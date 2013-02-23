@@ -27,11 +27,11 @@
 		<maven.test.skip>false</maven.test.skip>
 	</properties>
 
-	<!--scm>
+	<scm>
 		<url>${project.url}</url>
 		<connection>scm:git:git://github.com/tfreese/jripper.git</connection>
 		<developerConnection>scm:git:https://github.com/tfreese/jripper.git</developerConnection>
-	</scm-->
+	</scm>
 
 	<dependencies>
 	</dependencies>

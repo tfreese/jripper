@@ -1,5 +1,8 @@
-/target
 *.class
+*.wav
+*.flag
+*.mp3
+*.log
 
 # Package Files #
 *.jar

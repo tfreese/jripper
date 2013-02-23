@@ -5,8 +5,8 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-	<groupId>de.freese.jripper</groupId>
-	<artifactId>jripper-parent</artifactId>
+		<groupId>de.freese.jripper</groupId>
+		<artifactId>jripper-parent</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 
@@ -14,16 +14,35 @@
 	<packaging>jar</packaging>
 
 	<name>${project.artifactId}</name>
-	<description>Java Ripper Core Module.</description>
-
+	<description>Java Ripper Core Modul.</description>
 
 	<dependencies>	
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.janino</groupId>
+			<artifactId>janino</artifactId>
+			<scope>runtime</scope>
+		</dependency>		
+					
 		<!-- Test -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<scope>test</scope>
-		</dependency>	
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-nop</artifactId>
+			<scope>test</scope>
+		</dependency>			
 	</dependencies>
 
 </project>
