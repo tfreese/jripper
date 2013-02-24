@@ -11,7 +11,7 @@ import java.io.InputStreamReader;
 /**
  * @author Thomas Freese
  */
-public class CDParanoia
+public class DiskID
 {
 	/**
 	 * @param args String[]
@@ -19,30 +19,13 @@ public class CDParanoia
 	 */
 	public static void main(final String[] args) throws Exception
 	{
-		new Thread(new KeyListenerErsatz()).start();
-
 		ProcessBuilder processBuilder = new ProcessBuilder();
 		processBuilder.directory(new File("."));
-		processBuilder.command("cdparanoia", "-w", "-B");// -v, -Q
+		processBuilder.command("cd-discid", "/dev/dvd");
 		processBuilder.redirectErrorStream(true);
 		// Map<String, String> env = processBuilder.environment();
 		// env.put("ipps", "true");
-		final Process process = processBuilder.start();
-
-		Runtime.getRuntime().addShutdownHook(new Thread()
-		{
-			/**
-			 * @see java.lang.Thread#run()
-			 */
-			@Override
-			public void run()
-			{
-				if (process != null)
-				{
-					process.destroy();
-				}
-			}
-		});
+		Process process = processBuilder.start();
 
 		BufferedReader inputReader =
 				new BufferedReader(new InputStreamReader(process.getInputStream()));
@@ -59,9 +42,9 @@ public class CDParanoia
 	}
 
 	/**
-	 * Erstellt ein neues {@link CDParanoia} Object.
+	 * Erstellt ein neues {@link DiskID} Object.
 	 */
-	private CDParanoia()
+	private DiskID()
 	{
 		super();
 	}
