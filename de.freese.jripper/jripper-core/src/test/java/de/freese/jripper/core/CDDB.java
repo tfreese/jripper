@@ -1,5 +1,7 @@
 package de.freese.jripper.core;
 
+import java.util.Arrays;
+
 /*************************************************************************
  * Note: Pearl Jam's album Vs. has N = 12 tracks.<br>
  * The first track starts at frames[0] = 150, the second at frames[1] = 14672, the twelfth at
@@ -23,25 +25,50 @@ public class CDDB
 	public static void main(final String[] args)
 	{
 		int FRAMES_PER_SECOND = 75;
+		// int[] frames =
+		// {
+		// 150,
+		// 14672,
+		// 27367,
+		// 45030,
+		// 60545,
+		// 76707,
+		// 103645,
+		// 116430,
+		// 137730,
+		// 156887,
+		// 171577,
+		// 185792,
+		// 208500
+		// };
+		//
+		// cddb-tool query http://freedb.freedb.org/~cddb/cddb.cgi 5 anonymous private c80ff00d 14 0
+		// 24395 41647 60672 80002 116852 142400 169605 191907 211210 239147 256175 278925 306070
+		// 4372
+		// cddb-tool read http://freedb.freedb.org/~cddb/cddb.cgi 5 anonymous private rock c6112e0e
+
+		int offset = 0;
 		int[] frames =
 				{
-						150,
-						14672,
-						27367,
-						45030,
-						60545,
-						76707,
-						103645,
-						116430,
-						137730,
-						156887,
-						171577,
-						185792,
-						208500
+						offset,
+						24395 + offset,
+						41647 + offset,
+						60672 + offset,
+						80002 + offset,
+						116852 + offset,
+						142400 + offset,
+						169605 + offset,
+						191907 + offset,
+						211210 + offset,
+						239147 + offset,
+						256175 + offset,
+						278925 + offset,
+						306070 + offset
 				};
 
-		int N = frames.length - 1;   // 12
+		int N = frames.length - 1;
 		int totalLength = (frames[N] - frames[0]) / FRAMES_PER_SECOND;
+		totalLength = (327900 - frames[0]) / FRAMES_PER_SECOND;
 		int checkSum = 0;
 		// int s = 2;
 
@@ -56,7 +83,8 @@ public class CDDB
 
 		// XXYYYYZZ
 		int discID = ((XX << 24) | (YYYY << 8) | ZZ);
-		System.out.println(Integer.toHexString(discID));
+		System.out.print(Integer.toHexString(discID));
+		System.out.println(Arrays.toString(frames));
 	}
 
 	/**

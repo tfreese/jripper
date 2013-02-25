@@ -10,32 +10,19 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>jripper-core</artifactId>
+	<artifactId>jripper-console</artifactId>
 	<packaging>jar</packaging>
 
 	<name>${project.artifactId}</name>
-	<description>Java Ripper Core Modul.</description>
+	<description>Java Ripper Console Modul.</description>
 
 	<dependencies>	
 		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-lang3</artifactId>
-		</dependency>	
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>jripper-core</artifactId>
+			<version>${project.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>ch.qos.logback</groupId>
-			<artifactId>logback-classic</artifactId>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.codehaus.janino</groupId>
-			<artifactId>janino</artifactId>
-			<scope>runtime</scope>
-		</dependency>		
-					
+						
 		<!-- Test -->
 		<dependency>
 			<groupId>junit</groupId>
