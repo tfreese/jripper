@@ -42,7 +42,7 @@ public final class DiskID
 
 		if (diskIDService == null)
 		{
-			throw new NullPointerException("no service found for" + SystemUtils.OS_NAME);
+			throw new NullPointerException("no diskID service found for" + SystemUtils.OS_NAME);
 		}
 
 		return diskIDService;

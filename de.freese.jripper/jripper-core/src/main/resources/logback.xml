@@ -6,7 +6,7 @@
 	<property name="pattern"
 		value="%date{yyyy-MM-dd HH:mm:ss.SSS} - %-5level[%thread] - %logger{0}[%method] - %message%n" />
 
-	<!-- Fuer Bedingungen wird Dependency org.codehaus.janino:janino:[2.6.1,) benoetigt.
+	<!-- Fuer Bedingungen wird Dependency org.codehaus.janino:janino:[2.6.1,) benoetigt.-->
 	<!--if condition='isNull("log.pattern")'>
 		<then>
 			<property name="log.pattern"
