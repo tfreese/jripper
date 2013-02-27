@@ -17,6 +17,11 @@ public class Album
 	private String diskID = null;
 
 	/**
+	 * 
+	 */
+	private String genre = null;
+
+	/**
 	 * Erstellt ein neues {@link Album} Object.
 	 */
 	public Album()
@@ -33,10 +38,26 @@ public class Album
 	}
 
 	/**
+	 * @return String
+	 */
+	public String getGenre()
+	{
+		return this.genre;
+	}
+
+	/**
 	 * @param diskID String
 	 */
 	public void setDiskID(final String diskID)
 	{
 		this.diskID = diskID;
+	}
+
+	/**
+	 * @param genre String
+	 */
+	public void setGenre(final String genre)
+	{
+		this.genre = genre;
 	}
 }
