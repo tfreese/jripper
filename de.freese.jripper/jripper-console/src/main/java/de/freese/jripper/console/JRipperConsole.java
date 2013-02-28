@@ -12,6 +12,9 @@ import java.io.Reader;
 import java.net.URL;
 import java.net.URLConnection;
 
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.text.WordUtils;
+
 import de.freese.jripper.core.diskid.DiskID;
 import de.freese.jripper.core.model.Album;
 import de.freese.jripper.core.util.CDDetector;
@@ -23,6 +26,31 @@ import de.freese.jripper.core.util.CDDetector;
  */
 public class JRipperConsole implements IAnsiCodes
 {
+	// /**
+	// *
+	// */
+	// private static final Pattern RECORD_DGENRE = Pattern.compile("DGENRE=(.*)");
+	//
+	// /**
+	// *
+	// */
+	// private static final Pattern RECORD_DTITLE = Pattern.compile("DTITLE=(.*)");
+	//
+	// /**
+	// *
+	// */
+	// private static final Pattern RECORD_DYEAR = Pattern.compile("DYEAR=(.*)");
+	//
+	// /**
+	// *
+	// */
+	// private static final Pattern RECORD_EXTD = Pattern.compile("EXTD=(.*)");
+	//
+	// /**
+	// *
+	// */
+	// private static final Pattern RECORD_TTITLE = Pattern.compile("TTITLE(\\d+)=(.*)");
+
 	/**
 	 * 
 	 */
@@ -125,9 +153,10 @@ public class JRipperConsole implements IAnsiCodes
 	 * 42165+60015+79512+101560+118757+136605+159492+176067+198875+2957&hello=user+
 	 * hostname+program+version&proto=3(6)
 	 * 
+	 * @return String
 	 * @throws Exception Falls was schief geht.
 	 */
-	private void queryFreeDB() throws Exception
+	private String queryFreeDB() throws Exception
 	{
 		String device = CDDetector.detectCDDVD();
 		String diskID = DiskID.getService().getDiskID(device);
@@ -149,6 +178,7 @@ public class JRipperConsole implements IAnsiCodes
 
 		URL url = new URL("http", "freedb.freedb.org", 80, sb.toString());
 		URLConnection connection = url.openConnection();
+		String genre = null;
 
 		try (BufferedReader reader =
 				new BufferedReader(new InputStreamReader(connection.getInputStream(), "UTF-8")))
@@ -158,28 +188,32 @@ public class JRipperConsole implements IAnsiCodes
 
 			while ((line = reader.readLine()) != null)
 			{
+				System.out.println(line);
+
 				if (i == 1)
 				{
 					splits = line.split("[ ]");
-					this.album.setGenre(splits[0]);
+					genre = StringUtils.trim(splits[0]);
 				}
 
-				System.out.println(line);
 				i++;
 			}
 
-			print("%s: %s\n", "Genre", this.album.getGenre());
+			print("%s: %s\n", "Genre", genre);
 		}
+
+		return genre;
 	}
 
 	/**
+	 * @param genre String
 	 * @throws Exception Falls was schief geht.
 	 */
-	private void readFreeDB() throws Exception
+	private void readFreeDB(final String genre) throws Exception
 	{
 		StringBuilder sb = new StringBuilder();
 		sb.append("/~cddb/cddb.cgi?cmd=cddb+read");
-		sb.append("+").append(this.album.getGenre());
+		sb.append("+").append(genre);
 
 		String[] splits = this.album.getDiskID().split("[ ]");
 		sb.append("+").append(splits[0]);
@@ -197,6 +231,62 @@ public class JRipperConsole implements IAnsiCodes
 			while ((line = reader.readLine()) != null)
 			{
 				System.out.println(line);
+
+				if (line.startsWith("DTITLE"))
+				{
+					splits = line.split("[=]");
+					splits = splits[1].split("[/]");
+					this.album.setArtist(WordUtils.capitalize(StringUtils.trim(splits[0])));
+					this.album.setTitle(WordUtils.capitalize(StringUtils.trim(splits[1])));
+				}
+				else if (line.startsWith("DYEAR"))
+				{
+					splits = line.split("[=]");
+					this.album.setYear(Integer.parseInt(StringUtils.trim(splits[1])));
+				}
+				else if (line.startsWith("DGENRE"))
+				{
+					// "Richtiges" Genre auslesen.
+					splits = line.split("[=]");
+					this.album.setGenre(WordUtils.capitalize(StringUtils.trim(splits[1])));
+				}
+				else if (line.startsWith("TTITLE"))
+				{
+					splits = line.split("[=]");
+
+					String trackArtist = null;
+					String trackTitle = null;
+
+					if (splits[1].contains("/"))
+					{
+						// Annahme Compilation.
+						splits = splits[1].split("[/]");
+						trackArtist = WordUtils.capitalize(StringUtils.trim(splits[0]));
+						trackTitle = WordUtils.capitalize(StringUtils.trim(splits[1]));
+					}
+					else
+					{
+						// Annahme Album.
+						splits = splits[1].split("[ ]");
+
+						if (StringUtils.isNumeric(splits[0]))
+						{
+							splits[0] = "";
+						}
+
+						// splits[1].replaceAll("[\\d+]", "");
+						trackTitle =
+								WordUtils
+										.capitalize(StringUtils.trim(StringUtils.join(splits, " ")));
+					}
+
+					// TODO Add Track
+				}
+				else if (line.startsWith("EXTD"))
+				{
+					splits = line.split("[=]");
+					this.album.setComment(WordUtils.capitalize(StringUtils.trim(splits[1])));
+				}
 			}
 		}
 	}
@@ -220,8 +310,8 @@ public class JRipperConsole implements IAnsiCodes
 			switch (input)
 			{
 				case "1":
-					queryFreeDB();
-					readFreeDB();
+					String genre = queryFreeDB();
+					readFreeDB(genre);
 					break;
 
 				case "q":
