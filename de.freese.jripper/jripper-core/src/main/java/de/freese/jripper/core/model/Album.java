@@ -35,12 +35,22 @@ public class Album implements Iterable<Track>
 	/**
 	 * 
 	 */
+	private int diskNumber = 1;
+
+	/**
+	 * 
+	 */
 	private String genre = null;
 
 	/**
 	 * 
 	 */
 	private String title = null;
+
+	/**
+	 * 
+	 */
+	private int totalDisks = 1;
 
 	/**
 	 * 
@@ -101,6 +111,14 @@ public class Album implements Iterable<Track>
 	}
 
 	/**
+	 * @return int
+	 */
+	public int getDiskNumber()
+	{
+		return this.diskNumber;
+	}
+
+	/**
 	 * @return String
 	 */
 	public String getGenre()
@@ -114,6 +132,24 @@ public class Album implements Iterable<Track>
 	public String getTitle()
 	{
 		return this.title;
+	}
+
+	/**
+	 * @return int
+	 */
+	public int getTotalDisks()
+	{
+		return this.totalDisks;
+	}
+
+	/**
+	 * Liefert die Anzahl der Tracks.
+	 * 
+	 * @return int
+	 */
+	public int getTrackCount()
+	{
+		return this.tracks.size();
 	}
 
 	/**
@@ -160,6 +196,14 @@ public class Album implements Iterable<Track>
 	}
 
 	/**
+	 * @param diskNumber int
+	 */
+	public void setDiskNumber(final int diskNumber)
+	{
+		this.diskNumber = diskNumber;
+	}
+
+	/**
 	 * @param genre String
 	 */
 	public void setGenre(final String genre)
@@ -173,6 +217,34 @@ public class Album implements Iterable<Track>
 	public void setTitle(final String title)
 	{
 		this.title = title;
+	}
+
+	/**
+	 * @param totalDisks int
+	 */
+	public void setTotalDisks(final int totalDisks)
+	{
+		this.totalDisks = totalDisks;
+	}
+
+	/**
+	 * @param index int, beginnend mit 0
+	 * @param artist String
+	 */
+	public void setTrackArtist(final int index, final String artist)
+	{
+		Track track = this.tracks.get(index);
+		track.setArtist(artist);
+	}
+
+	/**
+	 * @param index int, beginnend mit 0
+	 * @param title String
+	 */
+	public void setTrackTitle(final int index, final String title)
+	{
+		Track track = this.tracks.get(index);
+		track.setTitle(title);
 	}
 
 	/**

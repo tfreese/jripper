@@ -19,33 +19,32 @@ public final class DiskID
 	/**
 	 * 
 	 */
-	private static final ServiceLoader<IDiskIDService> serviceLoader = ServiceLoader
-			.load(IDiskIDService.class);
+	private static final ServiceLoader<IDiskID> SERVICE_LOADER = ServiceLoader.load(IDiskID.class);
 
 	/**
 	 * Je nach Betriebssystem wird die entsprechende Implementierung geliefert.
 	 * 
-	 * @return {@link IDiskIDService}
+	 * @return {@link IDiskID}
 	 */
-	public static IDiskIDService getService()
+	public static IDiskID getInstance()
 	{
-		IDiskIDService diskIDService = null;
+		IDiskID impl = null;
 
-		for (IDiskIDService service : DiskID.serviceLoader)
+		for (IDiskID diskID : SERVICE_LOADER)
 		{
-			if (service.isSupportedOS(SystemUtils.OS_NAME))
+			if (diskID.isSupportedOS(SystemUtils.OS_NAME))
 			{
-				diskIDService = service;
+				impl = diskID;
 				break;
 			}
 		}
 
-		if (diskIDService == null)
+		if (impl == null)
 		{
-			throw new NullPointerException("no diskID service found for" + SystemUtils.OS_NAME);
+			throw new NullPointerException("no diskID found for" + SystemUtils.OS_NAME);
 		}
 
-		return diskIDService;
+		return impl;
 	}
 
 	/**

@@ -9,8 +9,6 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
-import de.freese.jripper.core.util.CDDetector;
-
 /**
  * Testklasse für die Utilities.
  * 
@@ -33,6 +31,6 @@ public class TestUtils
 	@Test
 	public void testDetectCDDVD()
 	{
-		Assert.assertNotNull(CDDetector.detectCDDVD());
+		Assert.assertNotNull(JRipperUtils.detectCDDVD());
 	}
 }

@@ -11,7 +11,7 @@ import de.freese.jripper.core.IOSProvider;
  * 
  * @author Thomas Freese
  */
-public interface IDiskIDService extends IOSProvider
+public interface IDiskID extends IOSProvider
 {
 	/**
 	 * Liefert die DiskID der CD.

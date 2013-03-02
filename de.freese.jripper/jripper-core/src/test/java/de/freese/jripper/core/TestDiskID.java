@@ -2,7 +2,7 @@
  * Created: 25.02.2013
  */
 
-package de.freese.jripper.core.diskid;
+package de.freese.jripper.core;
 
 import org.apache.commons.lang3.SystemUtils;
 import org.junit.Assert;
@@ -10,10 +10,12 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
-import de.freese.jripper.core.util.CDDetector;
+import de.freese.jripper.core.diskid.DiskID;
+import de.freese.jripper.core.diskid.IDiskID;
+import de.freese.jripper.core.diskid.LinuxDiskID;
 
 /**
- * Testklasse für die {@link IDiskIDService}.
+ * Testklasse für die {@link IDiskID}.
  * 
  * @author Thomas Freese
  */
@@ -36,8 +38,8 @@ public class TestDiskID
 	{
 		try
 		{
-			IDiskIDService service = DiskID.getService();
-			Assert.assertNotNull(service);
+			IDiskID diskID = DiskID.getInstance();
+			Assert.assertNotNull(diskID);
 		}
 		catch (Exception ex)
 		{
@@ -49,18 +51,18 @@ public class TestDiskID
 	 * Linux.
 	 */
 	@Test
-	public void testOSServiceLinux()
+	public void testLinux()
 	{
 		if (!SystemUtils.IS_OS_LINUX)
 		{
 			return;
 		}
 
-		IDiskIDService service = new LinuxDiskIDService();
+		IDiskID diskID = new LinuxDiskID();
 
 		try
 		{
-			String id = service.getDiskID(CDDetector.detectCDDVD());
+			String id = diskID.getDiskID(JRipperUtils.detectCDDVD());
 			Assert.assertNotNull(id);
 		}
 		catch (IllegalStateException ex)

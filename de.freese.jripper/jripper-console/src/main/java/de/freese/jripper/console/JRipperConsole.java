@@ -8,20 +8,22 @@ import java.io.BufferedReader;
 import java.io.Console;
 import java.io.File;
 import java.io.InputStreamReader;
-import java.io.PrintStream;
-import java.io.Reader;
-import java.net.URL;
-import java.net.URLConnection;
+import java.io.PrintWriter;
+import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.text.WordUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
+import de.freese.jripper.core.JRipperUtils;
+import de.freese.jripper.core.cddb.FreeDB;
+import de.freese.jripper.core.cddb.ICDDBProvider;
 import de.freese.jripper.core.diskid.DiskID;
+import de.freese.jripper.core.encoder.Encoder;
+import de.freese.jripper.core.encoder.EncoderFormat;
+import de.freese.jripper.core.encoder.IEncoder;
 import de.freese.jripper.core.model.Album;
 import de.freese.jripper.core.model.Track;
-import de.freese.jripper.core.util.CDDetector;
+import de.freese.jripper.core.ripper.IRipper;
+import de.freese.jripper.core.ripper.Ripper;
 
 /**
  * Console-View für den JRipper.
@@ -33,47 +35,17 @@ public class JRipperConsole implements IAnsiCodes
 	/**
 	 * 
 	 */
-	private static final Logger LOGGER = LoggerFactory.getLogger(JRipperConsole.class);
-
-	// /**
-	// *
-	// */
-	// private static final Pattern RECORD_DGENRE = Pattern.compile("DGENRE=(.*)");
-	//
-	// /**
-	// *
-	// */
-	// private static final Pattern RECORD_DTITLE = Pattern.compile("DTITLE=(.*)");
-	//
-	// /**
-	// *
-	// */
-	// private static final Pattern RECORD_DYEAR = Pattern.compile("DYEAR=(.*)");
-	//
-	// /**
-	// *
-	// */
-	// private static final Pattern RECORD_EXTD = Pattern.compile("EXTD=(.*)");
-	//
-	// /**
-	// *
-	// */
-	// private static final Pattern RECORD_TTITLE = Pattern.compile("TTITLE(\\d+)=(.*)");
-
-	/**
-	 * 
-	 */
 	private Album album = null;
 
 	/**
 	 * 
 	 */
-	private final boolean isDevelopment;
+	private final ICDDBProvider cddbService;
 
 	/**
 	 * 
 	 */
-	private final PrintStream printStream;
+	private final PrintWriter printWriter;
 
 	/**
 	 * 
@@ -87,29 +59,57 @@ public class JRipperConsole implements IAnsiCodes
 	{
 		super();
 
-		this.printStream = System.out;
-
 		Console console = System.console();
-		Reader reader = null;
 
 		if (console != null)
 		{
-			reader = console.reader();
+			if (!(console.reader() instanceof BufferedReader))
+			{
+				this.reader = new BufferedReader(console.reader());
+			}
+			else
+			{
+				this.reader = (BufferedReader) console.reader();
+			}
+
+			this.printWriter = console.writer();
 		}
 		else
 		{
 			// In Eclipse kann Console null sein.
-			reader = new InputStreamReader(System.in);
+			this.reader = new BufferedReader(new InputStreamReader(System.in));
+			this.printWriter = new PrintWriter(System.out);
 		}
 
-		if (!(reader instanceof BufferedReader))
-		{
-			reader = new BufferedReader(reader);
-		}
+		this.cddbService = new FreeDB();
+	}
 
-		this.reader = (BufferedReader) reader;
+	/**
+	 * @param album {@link Album}
+	 * @param printWriter {@link PrintWriter}
+	 * @param format {@link EncoderFormat}
+	 * @param directory {@link File}
+	 * @throws Exception Falls was schief geht.
+	 */
+	private void encode(final Album album, final PrintWriter printWriter,
+						final EncoderFormat format, final File directory) throws Exception
+	{
+		IEncoder encoder = Encoder.getInstance(format);
+		encoder.encode(album, directory, printWriter);
+	}
 
-		this.isDevelopment = System.getProperty("dev.env") == null ? false : true;
+	/**
+	 * Auslesen der Disc-ID.<br>
+	 * 
+	 * @return String
+	 * @throws Exception Falls was schief geht.
+	 */
+	private String getDiskID() throws Exception
+	{
+		String device = JRipperUtils.detectCDDVD();
+		String diskID = DiskID.getInstance().getDiskID(device);
+
+		return diskID;
 	}
 
 	/**
@@ -134,7 +134,7 @@ public class JRipperConsole implements IAnsiCodes
 	 */
 	private void print(final String format, final Object...params)
 	{
-		if (this.isDevelopment)
+		if (JRipperUtils.isDevelopment())
 		{
 			// In der Entwicklungsumgebung die ANSI-Codes entfernen.
 			for (int i = 0; i < params.length; i++)
@@ -154,224 +154,199 @@ public class JRipperConsole implements IAnsiCodes
 			}
 		}
 
-		this.printStream.format(format, params);
+		this.printWriter.printf(format, params);
+		this.printWriter.flush();
 	}
 
 	/**
-	 * http://freedb.freedb.org/~cddb/cddb.cgi?cmd=cddb+query+7c0b8b0b+11+150+23115+
-	 * 42165+60015+79512+101560+118757+136605+159492+176067+198875+2957&hello=user+
-	 * hostname+program+version&proto=3(6)
+	 * Abfragen der CDDB nach den Genres.<br>
 	 * 
+	 * @param diskID String
 	 * @return String
 	 * @throws Exception Falls was schief geht.
 	 */
-	private String queryFreeDB() throws Exception
+	private String queryCDDB(final String diskID) throws Exception
 	{
-		String device = CDDetector.detectCDDVD();
-		String diskID = DiskID.getService().getDiskID(device);
+		List<String> genres = this.cddbService.query(diskID);
 
-		this.album = new Album();
-		this.album.setDiskID(diskID);
-
-		StringBuilder sb = new StringBuilder();
-		sb.append("/~cddb/cddb.cgi?cmd=cddb+query");
-
-		String[] splits = this.album.getDiskID().split("[ ]");
-
-		for (String split : splits)
-		{
-			sb.append("+").append(split);
-		}
-
-		sb.append("&hello=anonymous+localhost+jRipper+0.0.1-SNAPSHOP&proto=6");
-
-		URL url = new URL("http", "freedb.freedb.org", 80, sb.toString());
-		URLConnection connection = url.openConnection();
-		String genre = null;
-
-		try (BufferedReader reader =
-				new BufferedReader(new InputStreamReader(connection.getInputStream(), "UTF-8")))
-		{
-			String line = null;
-			int i = 0;
-
-			while ((line = reader.readLine()) != null)
-			{
-				LOGGER.debug(line);
-
-				if (i == 1)
-				{
-					splits = line.split("[ ]");
-					genre = StringUtils.trim(splits[0]);
-				}
-
-				i++;
-			}
-
-			// print("%s: %s\n", "Genre", genre);
-		}
-
-		return genre;
+		return genres.get(0);
 	}
 
 	/**
+	 * Abfragen der CDDB nach dem Album.<br>
+	 * 
+	 * @param diskID String
 	 * @param genre String
+	 * @return {@link Album}
 	 * @throws Exception Falls was schief geht.
 	 */
-	private void readFreeDB(final String genre) throws Exception
+	private Album readCDDB(final String diskID, final String genre) throws Exception
 	{
-		StringBuilder sb = new StringBuilder();
-		sb.append("/~cddb/cddb.cgi?cmd=cddb+read");
-		sb.append("+").append(genre);
+		Album album = this.cddbService.read(diskID, genre);
 
-		String[] splits = this.album.getDiskID().split("[ ]");
-		sb.append("+").append(splits[0]);
-
-		sb.append("&hello=anonymous+localhost+jRipper+0.0.1-SNAPSHOP&proto=6");
-
-		URL url = new URL("http", "freedb.freedb.org", 80, sb.toString());
-		URLConnection connection = url.openConnection();
-
-		try (BufferedReader reader =
-				new BufferedReader(new InputStreamReader(connection.getInputStream(), "UTF-8")))
-		{
-			String line = null;
-
-			while ((line = reader.readLine()) != null)
-			{
-				LOGGER.debug(line);
-
-				if (line.startsWith("DTITLE"))
-				{
-					splits = line.split("[=]");
-					splits = splits[1].split("[/]");
-					this.album.setArtist(WordUtils.capitalize(StringUtils.trim(splits[0])));
-					this.album.setTitle(WordUtils.capitalize(StringUtils.trim(splits[1])));
-				}
-				else if (line.startsWith("DYEAR"))
-				{
-					splits = line.split("[=]");
-					this.album.setYear(Integer.parseInt(StringUtils.trim(splits[1])));
-				}
-				else if (line.startsWith("DGENRE"))
-				{
-					// "Richtiges" Genre auslesen.
-					splits = line.split("[=]");
-					this.album.setGenre(WordUtils.capitalize(StringUtils.trim(splits[1])));
-				}
-				else if (line.startsWith("TTITLE"))
-				{
-					splits = line.split("[=]");
-
-					String trackArtist = null;
-					String trackTitle = null;
-
-					if (splits[1].contains("/"))
-					{
-						// Annahme Compilation.
-						splits = splits[1].split("[/]");
-						trackArtist = WordUtils.capitalize(StringUtils.trim(splits[0]));
-						trackTitle = WordUtils.capitalize(StringUtils.trim(splits[1]));
-					}
-					else
-					{
-						// Annahme Album.
-						splits = splits[1].split("[ ]");
-
-						if (StringUtils.isNumeric(splits[0]))
-						{
-							splits[0] = "";
-						}
-
-						// splits[1].replaceAll("[\\d+]", "");
-						trackTitle =
-								WordUtils
-										.capitalize(StringUtils.trim(StringUtils.join(splits, " ")));
-					}
-
-					this.album.addTrack(trackArtist, trackTitle);
-				}
-				else if (line.startsWith("EXTD"))
-				{
-					splits = line.split("[=]");
-
-					if (splits.length == 1)
-					{
-						// Kein Kommentar.
-						continue;
-					}
-
-					this.album.setComment(WordUtils.capitalize(StringUtils.trim(splits[1])));
-				}
-			}
-		}
+		return album;
 	}
 
 	/**
+	 * @param album {@link Album}
+	 * @param printWriter {@link PrintWriter}
 	 * @throws Exception Falls was schief geht.
 	 */
-	private void rip() throws Exception
+	private void rip(final Album album, final PrintWriter printWriter) throws Exception
 	{
-		ProcessBuilder processBuilder = new ProcessBuilder();
-		processBuilder.directory(new File("."));
-		processBuilder.command("cdparanoia", "-w", "-B");// -v, -Q
-		processBuilder.redirectErrorStream(true);
-		// Map<String, String> env = processBuilder.environment();
-		// env.put("ipps", "true");
-		final Process process = processBuilder.start();
+		IRipper ripper = Ripper.getInstance();
+		File directory = JRipperUtils.getWavDir(album, true);
 
-		Runtime.getRuntime().addShutdownHook(new Thread()
-		{
-			/**
-			 * @see java.lang.Thread#run()
-			 */
-			@Override
-			public void run()
-			{
-				if (process != null)
-				{
-					process.destroy();
-				}
-			}
-		});
-
-		try (BufferedReader inputReader =
-				new BufferedReader(new InputStreamReader(process.getInputStream())))
-		{
-			String line = null;
-
-			while ((line = inputReader.readLine()) != null)
-			{
-				if (StringUtils.isBlank(line))
-				{
-					continue;
-				}
-
-				print("%s\n", line);
-			}
-		}
-
-		process.destroy();
+		ripper.rip(null, album, directory, printWriter);
 	}
 
 	/**
 	 * Zeigt den Inhalt des Albums.
+	 * 
+	 * @param album {@link Album}
 	 */
-	private void showAlbum()
+	private void showAlbum(final Album album)
 	{
 		print("%s\n", "*****************");
 		print("%s\n", "Album Inhalt");
 		print("%s\n", "*****************");
 
-		// print("%s\t\t%s\n", "Artist", this.album.getArtist());
-		print("%s\t\t%s\n", "Album", this.album.getTitle());
-		print("%s\t\t%s\n", "Genre", this.album.getGenre());
-		print("%s\t\t%s\n", "Comment", this.album.getComment());
+		print("%-15s%s\n", "Artist", this.album.getArtist());
+		print("%-15s%s\n", "Title", album.getTitle());
+		print("%-15s%s\n", "Genre", album.getGenre());
+		print("%-15s%d\n", "Year", album.getYear());
+		print("%-15s%d\n", "Disknumber", album.getDiskNumber());
+		print("%-15s%d\n", "Total Disks", album.getTotalDisks());
+		print("%-15s%s\n", "Comment", album.getComment());
 		print("\n");
 
-		for (Track track : this.album)
+		for (Track track : album)
 		{
 			print("%2d. %-20s%s\n", track.getNumber(), track.getArtist(), track.getTitle());
+		}
+	}
+
+	/**
+	 * 
+	 */
+	private void showEditMenu()
+	{
+		showAlbum(this.album);
+
+		print("%s\n", "*****************");
+		print("%s\n", "Album Editmenü");
+		print("%s\n", "*****************");
+
+		print("%s%s%s \t%s\n", ANSI_CYAN, "aa", ANSI_RESET, "Album Artist");
+		print("%s%s%s \t%s\n", ANSI_CYAN, "at", ANSI_RESET, "Album Titel");
+		// print("%s%s%s \t%s\n", ANSI_CYAN, "ag", ANSI_RESET, "Album Genre");
+		print("%s%s%s \t%s\n", ANSI_CYAN, "ay", ANSI_RESET, "Album Year");
+		print("%s%s%s \t%s\n", ANSI_CYAN, "ac", ANSI_RESET, "Album Comment");
+		print("%s%s%s \t%s\n", ANSI_CYAN, "adn", ANSI_RESET, "Album Disknumber");
+		print("%s%s%s \t%s\n", ANSI_CYAN, "atd", ANSI_RESET, "Album Total Disks");
+		print("%s%s%s \t%s\n", ANSI_CYAN, "ta(number)", ANSI_RESET, "Track Artist");
+		print("%s%s%s \t%s\n", ANSI_CYAN, "tt(number)", ANSI_RESET, "Track Title");
+
+		print("\n");
+		print("%s%s%s \t%s\n", ANSI_CYAN, "h", ANSI_RESET, "Hauptmenü");
+
+		String input = null;
+
+		try
+		{
+			input = getInput();
+
+			switch (input)
+			{
+				case "aa":
+					print("%s - ", "Neuer Wert");
+					input = getInput();
+					this.album.setArtist(input);
+					break;
+
+				case "at":
+					print("%s - ", "Neuer Wert");
+					input = getInput();
+					this.album.setTitle(input);
+					break;
+
+				case "ag":
+					print("%s - ", "Neuer Wert");
+					input = getInput();
+					this.album.setGenre(input);
+					break;
+
+				case "ay":
+					print("%s - ", "Neuer Wert");
+					input = getInput();
+					this.album.setYear(Integer.parseInt(input));
+					break;
+
+				case "ac":
+					print("%s - ", "Neuer Wert");
+					input = getInput();
+					this.album.setComment(input);
+					break;
+
+				case "adn":
+					print("%s - ", "Neuer Wert");
+					input = getInput();
+					this.album.setDiskNumber(Integer.parseInt(input));
+					break;
+
+				case "atd":
+					print("%s - ", "Neuer Wert");
+					input = getInput();
+					this.album.setTotalDisks(Integer.parseInt(input));
+					break;
+
+				case "h":
+					break;
+
+				default:
+					if (input.startsWith("ta"))
+					{
+						input = input.replace("ta", "").replace(".", "");
+						input = StringUtils.trim(input);
+						int index = Integer.parseInt(input) - 1;
+
+						print("%s - ", "Neuer Wert");
+						input = getInput();
+						this.album.setTrackArtist(index, input);
+					}
+					else if (input.startsWith("tt"))
+					{
+						input = input.replace("tt", "").replace(".", "");
+						input = StringUtils.trim(input);
+						int index = Integer.parseInt(input) - 1;
+
+						print("%s - ", "Neuer Wert");
+						input = getInput();
+						this.album.setTrackTitle(index, input);
+					}
+					else
+					{
+						print("%s%s \t%s%s\n", ANSI_RED, input, "Unbekannte Eingabe", ANSI_RESET);
+					}
+					break;
+			}
+		}
+		catch (Exception ex)
+		{
+			// String message = ex.getMessage();
+			// message = ex.toString();
+			// message = StringUtils.isNotBlank(message) ? message : ex.toString();
+			print("%s%s%s", ANSI_RED, ex.toString(), ANSI_RESET);
+		}
+
+		if ("h".equals(input))
+		{
+			// Notwendig um aus den switch-case rauszukommen.
+			showMainMenu();
+		}
+		else
+		{
+			showEditMenu();
 		}
 	}
 
@@ -384,24 +359,66 @@ public class JRipperConsole implements IAnsiCodes
 		print("%s\n", "JRipper Hauptmenü");
 		print("%s\n", "*****************");
 
-		print("%s%s%s \t%s\n", ANSI_CYAN, "1", ANSI_RESET, "FreeDB auslesen");
-		print("%s%s%s \t%s\n", ANSI_CYAN, "2", ANSI_RESET, "CD auslesen");
-		print("%s%s%s \t%s\n", ANSI_CYAN, "q", ANSI_RESET, "Beenden");
+		print("%s%s%s \t%s\n", ANSI_CYAN, "1", ANSI_RESET, "FreeDB abfragen");
+
+		if (this.album != null)
+		{
+			print("%s%s%s \t%s\n", ANSI_CYAN, "2", ANSI_RESET, "Album bearbeiten");
+			print("%s%s%s \t%s\n", ANSI_CYAN, "3", ANSI_RESET, "CD auslesen -> ./ALBUM/wav");
+
+		}
+
+		File directory = null;
 
 		try
 		{
-			String input = getInput();
+			directory = JRipperUtils.getWavDir(this.album, false);
+		}
+		catch (Exception ex)
+		{
+			// Ignore
+		}
+
+		if ((directory != null) && directory.exists())
+		{
+			print("%s%s%s \t%s\n", ANSI_CYAN, "4", ANSI_RESET, "flac erzeugen -> ./ALBUM/flac");
+			print("%s%s%s \t%s\n", ANSI_CYAN, "5", ANSI_RESET, "mp3 erzeugen -> ./ALBUM/mp3");
+		}
+
+		print("\n");
+		print("%s%s%s \t%s\n", ANSI_CYAN, "q", ANSI_RESET, "Beenden");
+
+		String input = null;
+
+		try
+		{
+			input = getInput();
 
 			switch (input)
 			{
 				case "1":
-					String genre = queryFreeDB();
-					readFreeDB(genre);
-					showAlbum();
+					this.album = null;
+					String diskID = getDiskID();
+					String genre = queryCDDB(diskID);
+					this.album = readCDDB(diskID, genre);
+					showAlbum(this.album);
 					break;
 
 				case "2":
-					rip();
+					break;
+
+				case "3":
+					rip(this.album, this.printWriter);
+					break;
+
+				case "4":
+					directory = JRipperUtils.getFlacDir(this.album, true);
+					encode(this.album, this.printWriter, EncoderFormat.flac, directory);
+					break;
+
+				case "5":
+					directory = JRipperUtils.getMP3Dir(this.album, true);
+					encode(this.album, this.printWriter, EncoderFormat.mp3, directory);
 					break;
 
 				case "q":
@@ -420,6 +437,14 @@ public class JRipperConsole implements IAnsiCodes
 			print("%s%s%s", ANSI_RED, ex.toString(), ANSI_RESET);
 		}
 
-		showMainMenu();
+		if ("2".equals(input))
+		{
+			// Notwendig um aus den switch-case rauszukommen.
+			showEditMenu();
+		}
+		else
+		{
+			showMainMenu();
+		}
 	}
 }

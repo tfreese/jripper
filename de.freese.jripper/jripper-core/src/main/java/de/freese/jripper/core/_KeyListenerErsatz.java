@@ -14,12 +14,12 @@ import java.io.Reader;
  * 
  * @author Thomas Freese
  */
-public class KeyListenerErsatz implements Runnable
+public class _KeyListenerErsatz implements Runnable
 {
 	/**
-	 * Erstellt ein neues {@link KeyListenerErsatz} Object.
+	 * Erstellt ein neues {@link _KeyListenerErsatz} Object.
 	 */
-	public KeyListenerErsatz()
+	public _KeyListenerErsatz()
 	{
 		super();
 	}

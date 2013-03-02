@@ -17,7 +17,7 @@ import java.util.Arrays;
  * - ZZ is the number of tracks N expressed in hex.
  *************************************************************************/
 
-public class DiskIDAlgorythm
+public class _DiskIDAlgorythm
 {
 	/**
 	 * @param args String[]
@@ -74,7 +74,7 @@ public class DiskIDAlgorythm
 
 		for (int i = 0; i < N; i++)
 		{
-			checkSum += DiskIDAlgorythm.sumOfDigits(frames[i] / FRAMES_PER_SECOND);
+			checkSum += _DiskIDAlgorythm.sumOfDigits(frames[i] / FRAMES_PER_SECOND);
 		}
 
 		int XX = checkSum % 255;

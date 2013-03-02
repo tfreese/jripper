@@ -8,8 +8,6 @@ import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import de.freese.jripper.core.diskid.TestDiskID;
-
 /**
  * @author Thomas Freese
  */
@@ -23,6 +21,7 @@ public class JRipperCoreTestSuite
 		TestSuite suite = new TestSuite("de.freese.jripper.core");
 		suite.addTest(new JUnit4TestAdapter(TestUtils.class));
 		suite.addTest(new JUnit4TestAdapter(TestDiskID.class));
+		suite.addTest(new JUnit4TestAdapter(TestRipper.class));
 
 		return suite;
 	}
