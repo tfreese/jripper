@@ -4,12 +4,18 @@
 
 package de.freese.jripper.core.model;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * Zusammenfassendes Objekt für eine CD.
  * 
  * @author Thomas Freese
  */
-public class Album
+public class Album implements Iterable<Track>
 {
 	/**
 	 * Bei Compilations null.
@@ -39,6 +45,11 @@ public class Album
 	/**
 	 * 
 	 */
+	private List<Track> tracks = new ArrayList<>();
+
+	/**
+	 * 
+	 */
 	private int year = 0;
 
 	/**
@@ -47,6 +58,20 @@ public class Album
 	public Album()
 	{
 		super();
+	}
+
+	/**
+	 * @param artist String; Nur bei Compilations != null.
+	 * @param title String
+	 */
+	public void addTrack(final String artist, final String title)
+	{
+		Track track = new Track();
+		track.setAlbum(this);
+		track.setArtist(artist);
+		track.setTitle(title);
+		track.setNumber(this.tracks.size() + 1);
+		this.tracks.add(track);
 	}
 
 	/**
@@ -64,7 +89,7 @@ public class Album
 	 */
 	public String getComment()
 	{
-		return this.comment;
+		return StringUtils.defaultIfBlank(this.comment, "");
 	}
 
 	/**
@@ -97,6 +122,15 @@ public class Album
 	public int getYear()
 	{
 		return this.year;
+	}
+
+	/**
+	 * @see java.lang.Iterable#iterator()
+	 */
+	@Override
+	public Iterator<Track> iterator()
+	{
+		return this.tracks.iterator();
 	}
 
 	/**

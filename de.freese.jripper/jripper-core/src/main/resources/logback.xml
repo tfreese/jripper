@@ -73,6 +73,8 @@
 	<logger name="cloudsession.CloudSessionCache" level="DEBUG">
 		<appender-ref ref="FILE" />
 	</logger-->
+	
+	<logger name="de.freese.jripper.console.JRipperConsole" level="INFO" />
 
 	<root level="INFO">
 		<appender-ref ref="STDOUT" />

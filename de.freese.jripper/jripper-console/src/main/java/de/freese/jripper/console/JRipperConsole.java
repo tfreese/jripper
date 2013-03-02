@@ -6,6 +6,7 @@ package de.freese.jripper.console;
 
 import java.io.BufferedReader;
 import java.io.Console;
+import java.io.File;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.io.Reader;
@@ -14,9 +15,12 @@ import java.net.URLConnection;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.text.WordUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import de.freese.jripper.core.diskid.DiskID;
 import de.freese.jripper.core.model.Album;
+import de.freese.jripper.core.model.Track;
 import de.freese.jripper.core.util.CDDetector;
 
 /**
@@ -26,6 +30,11 @@ import de.freese.jripper.core.util.CDDetector;
  */
 public class JRipperConsole implements IAnsiCodes
 {
+	/**
+	 * 
+	 */
+	private static final Logger LOGGER = LoggerFactory.getLogger(JRipperConsole.class);
+
 	// /**
 	// *
 	// */
@@ -188,7 +197,7 @@ public class JRipperConsole implements IAnsiCodes
 
 			while ((line = reader.readLine()) != null)
 			{
-				System.out.println(line);
+				LOGGER.debug(line);
 
 				if (i == 1)
 				{
@@ -199,7 +208,7 @@ public class JRipperConsole implements IAnsiCodes
 				i++;
 			}
 
-			print("%s: %s\n", "Genre", genre);
+			// print("%s: %s\n", "Genre", genre);
 		}
 
 		return genre;
@@ -230,7 +239,7 @@ public class JRipperConsole implements IAnsiCodes
 
 			while ((line = reader.readLine()) != null)
 			{
-				System.out.println(line);
+				LOGGER.debug(line);
 
 				if (line.startsWith("DTITLE"))
 				{
@@ -280,14 +289,89 @@ public class JRipperConsole implements IAnsiCodes
 										.capitalize(StringUtils.trim(StringUtils.join(splits, " ")));
 					}
 
-					// TODO Add Track
+					this.album.addTrack(trackArtist, trackTitle);
 				}
 				else if (line.startsWith("EXTD"))
 				{
 					splits = line.split("[=]");
+
+					if (splits.length == 1)
+					{
+						// Kein Kommentar.
+						continue;
+					}
+
 					this.album.setComment(WordUtils.capitalize(StringUtils.trim(splits[1])));
 				}
 			}
+		}
+	}
+
+	/**
+	 * @throws Exception Falls was schief geht.
+	 */
+	private void rip() throws Exception
+	{
+		ProcessBuilder processBuilder = new ProcessBuilder();
+		processBuilder.directory(new File("."));
+		processBuilder.command("cdparanoia", "-w", "-B");// -v, -Q
+		processBuilder.redirectErrorStream(true);
+		// Map<String, String> env = processBuilder.environment();
+		// env.put("ipps", "true");
+		final Process process = processBuilder.start();
+
+		Runtime.getRuntime().addShutdownHook(new Thread()
+		{
+			/**
+			 * @see java.lang.Thread#run()
+			 */
+			@Override
+			public void run()
+			{
+				if (process != null)
+				{
+					process.destroy();
+				}
+			}
+		});
+
+		try (BufferedReader inputReader =
+				new BufferedReader(new InputStreamReader(process.getInputStream())))
+		{
+			String line = null;
+
+			while ((line = inputReader.readLine()) != null)
+			{
+				if (StringUtils.isBlank(line))
+				{
+					continue;
+				}
+
+				print("%s\n", line);
+			}
+		}
+
+		process.destroy();
+	}
+
+	/**
+	 * Zeigt den Inhalt des Albums.
+	 */
+	private void showAlbum()
+	{
+		print("%s\n", "*****************");
+		print("%s\n", "Album Inhalt");
+		print("%s\n", "*****************");
+
+		// print("%s\t\t%s\n", "Artist", this.album.getArtist());
+		print("%s\t\t%s\n", "Album", this.album.getTitle());
+		print("%s\t\t%s\n", "Genre", this.album.getGenre());
+		print("%s\t\t%s\n", "Comment", this.album.getComment());
+		print("\n");
+
+		for (Track track : this.album)
+		{
+			print("%2d. %-20s%s\n", track.getNumber(), track.getArtist(), track.getTitle());
 		}
 	}
 
@@ -301,6 +385,7 @@ public class JRipperConsole implements IAnsiCodes
 		print("%s\n", "*****************");
 
 		print("%s%s%s \t%s\n", ANSI_CYAN, "1", ANSI_RESET, "FreeDB auslesen");
+		print("%s%s%s \t%s\n", ANSI_CYAN, "2", ANSI_RESET, "CD auslesen");
 		print("%s%s%s \t%s\n", ANSI_CYAN, "q", ANSI_RESET, "Beenden");
 
 		try
@@ -312,6 +397,11 @@ public class JRipperConsole implements IAnsiCodes
 				case "1":
 					String genre = queryFreeDB();
 					readFreeDB(genre);
+					showAlbum();
+					break;
+
+				case "2":
+					rip();
 					break;
 
 				case "q":
@@ -324,7 +414,10 @@ public class JRipperConsole implements IAnsiCodes
 		}
 		catch (Exception ex)
 		{
-			print("%s%s%s", ANSI_RED, ex.getMessage(), ANSI_RESET);
+			// String message = ex.getMessage();
+			// message = ex.toString();
+			// message = StringUtils.isNotBlank(message) ? message : ex.toString();
+			print("%s%s%s", ANSI_RED, ex.toString(), ANSI_RESET);
 		}
 
 		showMainMenu();
