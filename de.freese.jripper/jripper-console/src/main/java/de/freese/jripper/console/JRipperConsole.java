@@ -91,8 +91,7 @@ public class JRipperConsole implements IAnsiCodes
 	 * @param directory {@link File}
 	 * @throws Exception Falls was schief geht.
 	 */
-	private void encode(final Album album, final PrintWriter printWriter,
-						final EncoderFormat format, final File directory) throws Exception
+	private void encode(final Album album, final PrintWriter printWriter, final EncoderFormat format, final File directory) throws Exception
 	{
 		IEncoder encoder = Encoder.getInstance(format);
 		encoder.encode(album, directory, printWriter);
@@ -365,21 +364,20 @@ public class JRipperConsole implements IAnsiCodes
 		{
 			print("%s%s%s \t%s\n", ANSI_CYAN, "2", ANSI_RESET, "Album bearbeiten");
 			print("%s%s%s \t%s\n", ANSI_CYAN, "3", ANSI_RESET, "CD auslesen -> ./ALBUM/wav");
-
 		}
 
-		File directory = null;
+		File wavDir = null;
 
 		try
 		{
-			directory = JRipperUtils.getWavDir(this.album, false);
+			wavDir = JRipperUtils.getWavDir(this.album, false);
 		}
 		catch (Exception ex)
 		{
 			// Ignore
 		}
 
-		if ((directory != null) && directory.exists())
+		if ((wavDir != null) && wavDir.exists() && (this.album != null) && (this.album.getTrackCount() > 0))
 		{
 			print("%s%s%s \t%s\n", ANSI_CYAN, "4", ANSI_RESET, "flac erzeugen -> ./ALBUM/flac");
 			print("%s%s%s \t%s\n", ANSI_CYAN, "5", ANSI_RESET, "mp3 erzeugen -> ./ALBUM/mp3");
@@ -412,13 +410,13 @@ public class JRipperConsole implements IAnsiCodes
 					break;
 
 				case "4":
-					directory = JRipperUtils.getFlacDir(this.album, true);
-					encode(this.album, this.printWriter, EncoderFormat.flac, directory);
+					File flacDir = JRipperUtils.getFlacDir(this.album, true);
+					encode(this.album, this.printWriter, EncoderFormat.flac, flacDir);
 					break;
 
 				case "5":
-					directory = JRipperUtils.getMP3Dir(this.album, true);
-					encode(this.album, this.printWriter, EncoderFormat.mp3, directory);
+					File mp3Dir = JRipperUtils.getMP3Dir(this.album, true);
+					encode(this.album, this.printWriter, EncoderFormat.mp3, mp3Dir);
 					break;
 
 				case "q":

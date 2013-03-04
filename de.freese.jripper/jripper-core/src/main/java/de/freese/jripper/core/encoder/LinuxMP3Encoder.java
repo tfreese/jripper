@@ -6,17 +6,21 @@ package de.freese.jripper.core.encoder;
 
 import java.io.File;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.commons.lang3.SystemUtils;
 
 import de.freese.jripper.core.model.Album;
+import de.freese.jripper.core.model.Track;
+import de.freese.jripper.core.process.AbstractProcess;
 
 /**
  * Linux Implementierung mit dem Programm "lame".
  * 
  * @author Thomas Freese
  */
-public class LinuxMP3Encoder implements IEncoder
+public class LinuxMP3Encoder extends AbstractProcess implements IEncoder
 {
 	/**
 	 * Erstellt ein neues {@link LinuxMP3Encoder} Object.
@@ -27,14 +31,80 @@ public class LinuxMP3Encoder implements IEncoder
 	}
 
 	/**
-	 * @see de.freese.jripper.core.encoder.IEncoder#encode(de.freese.jripper.core.model.Album,
-	 *      java.io.File, java.io.PrintWriter)
+	 * @see de.freese.jripper.core.encoder.IEncoder#encode(de.freese.jripper.core.model.Album, java.io.File, java.io.PrintWriter)
 	 */
 	@Override
-	public void encode(final Album album, final File directory, final PrintWriter printWriter)
-		throws Exception
+	public void encode(final Album album, final File directory, final PrintWriter printWriter) throws Exception
 	{
-		throw new UnsupportedOperationException("must implement");
+		String diskID = album.getDiskID().split(" ")[0];
+		List<String> mp3Files = new ArrayList<>();
+		List<String> command = new ArrayList<>();
+
+		for (Track track : album)
+		{
+			command.clear();
+			command.add("lame");
+			command.add("-m");
+			command.add("j");
+			command.add("-q");
+			command.add("0");
+			// command.add("-s");
+			// command.add("44.1");
+			command.add("-b");
+			command.add("320");
+			command.add("--replaygain-accurate");
+			command.add("--add-id3v2");
+			command.add("--pad-id3v2");
+			command.add("--ignore-tag-errors");
+			command.add("--ta");
+			command.add(track.getArtist());
+			command.add("--tl");
+			command.add(album.getTitle());
+			command.add("--tt");
+			command.add(track.getTitle());
+			command.add("--tg");
+			command.add(album.getGenre());
+			command.add("--ty");
+			command.add(Integer.toString(album.getYear()));
+			command.add("--tn");
+			command.add(String.format("%d/%d", track.getNumber(), album.getTrackCount()));
+			command.add("--tc");
+			command.add(album.getComment());
+			command.add("--tv");
+			command.add(String.format("DISCID=%s", diskID));
+			command.add("--tv");
+			command.add(String.format("DISCNUMBER=%s", album.getDiskNumber()));
+			command.add("--tv");
+			command.add(String.format("TOTALDISCS=%s", album.getTotalDisks()));
+			command.add("--tv");
+			command.add(String.format("DISCTOTAL=%s", album.getTotalDisks()));  // Für Player-Kompatibilität.
+			command.add(String.format("../wav/track%02d.cdda.wav", track.getNumber()));
+
+			String mp3File = String.format("%s (%s) - %02d - %s.mp3", track.getArtist(), album.getTitle(), track.getNumber(), track.getTitle());
+			mp3Files.add(mp3File);
+
+			command.add(mp3File);
+
+			execute(command, directory, printWriter, null);
+
+			// Überprüfung -> gibs anscheinend nicht für mp3.
+			// command.clear();
+			// command.add("flac");
+			// command.add("-t");
+			// command.add(flacFile);
+			// execute(command, directory, printWriter, null);
+
+			// mp3info "$OUTPUT"
+		}
+
+		// Replay-Gain.
+		printWriter.printf("\n%s\n", "Generiere Replay-Gain...");
+		printWriter.flush();
+		command.clear();
+		command.add("mp3gain");
+		command.addAll(mp3Files);
+		// command.add("*.mp3");
+		execute(command, directory, printWriter, null);
 	}
 
 	/**

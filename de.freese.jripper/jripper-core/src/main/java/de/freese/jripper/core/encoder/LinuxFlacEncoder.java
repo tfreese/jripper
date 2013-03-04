@@ -35,9 +35,10 @@ public class LinuxFlacEncoder extends AbstractProcess implements IEncoder
 	 *      java.io.File, java.io.PrintWriter)
 	 */
 	@Override
-	public void encode(final Album album, final File directory, final PrintWriter printWriter)
-		throws Exception
+	public void encode(final Album album, final File directory, final PrintWriter printWriter) throws Exception
 	{
+		String diskID = album.getDiskID().split(" ")[0];
+		List<String> flacFiles = new ArrayList<>();
 		List<String> command = new ArrayList<>();
 
 		for (Track track : album)
@@ -57,12 +58,14 @@ public class LinuxFlacEncoder extends AbstractProcess implements IEncoder
 			command.add("--tag=DATE=" + album.getYear());
 			command.add("--tag=COMMENT=" + album.getComment());
 			command.add("--tag=TOTALTRACKS=" + album.getTrackCount());
+			command.add("--tag=TRACKTOTAL=" + album.getTrackCount()); // Für Player-Kompatibilität
 			command.add("--tag=DISCNUMBER=" + album.getDiskNumber());
 			command.add("--tag=TOTALDISCS=" + album.getTotalDisks());
+			command.add("--tag=DISCTOTAL=" + album.getTotalDisks()); // Für Player-Kompatibilität
+			command.add("--tag=DISKID=" + diskID);
 
-			String flacFile =
-					String.format("%s (%s) - %02d - %s.flac", track.getArtist(), album.getTitle(),
-							track.getNumber(), track.getTitle());
+			String flacFile = String.format("%s (%s) - %02d - %s.flac", track.getArtist(), album.getTitle(), track.getNumber(), track.getTitle());
+			flacFiles.add(flacFile);
 
 			command.add("-o");
 			command.add(flacFile);
@@ -85,7 +88,9 @@ public class LinuxFlacEncoder extends AbstractProcess implements IEncoder
 		command.clear();
 		command.add("metaflac");
 		command.add("--add-replay-gain");
-		command.add("*.flac");
+		// command.add("--with-filename");
+		command.addAll(flacFiles);
+		// command.add("*.flac");
 		execute(command, directory, printWriter, null);
 	}
 
