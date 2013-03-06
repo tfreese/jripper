@@ -35,7 +35,7 @@ public final class JRipperUtils
 	 * @param directory {@link File}
 	 * @throws IOException Falls was schief geht.
 	 */
-	private static void createDir(final Album album, final File directory) throws IOException
+	private static void createOrDeleteDir(final Album album, final File directory) throws IOException
 	{
 		if (directory.exists())
 		{
@@ -48,8 +48,7 @@ public final class JRipperUtils
 	}
 
 	/**
-	 * Versucht in Abhängigkeit des Betriebssystems das CD/DVD Laufwerk zu finden und liefert das
-	 * erste CD/DVD-Laufwerk.
+	 * Versucht in Abhängigkeit des Betriebssystems das CD/DVD Laufwerk zu finden und liefert das erste CD/DVD-Laufwerk.
 	 * 
 	 * @return String
 	 */
@@ -152,17 +151,17 @@ public final class JRipperUtils
 	 * Format: ${user.dir}/ALBUMTITEL/flac
 	 * 
 	 * @param album {@link Album}
-	 * @param create boolean; Erzeugt das Verzeichnis oder löscht vorhandene Dateien.
+	 * @param createOrDelete boolean; Erzeugt das Verzeichnis oder löscht vorhandene Dateien.
 	 * @return {@link File}
 	 * @throws IOException Falls was schief geht.
 	 */
-	public static File getFlacDir(final Album album, final boolean create) throws IOException
+	public static File getFlacDir(final Album album, final boolean createOrDelete) throws IOException
 	{
 		File dir = getDir(album, "flac");
 
-		if (create)
+		if (createOrDelete)
 		{
-			createDir(album, dir);
+			createOrDeleteDir(album, dir);
 		}
 
 		return dir;
@@ -173,17 +172,17 @@ public final class JRipperUtils
 	 * Format: ${user.dir}/ALBUMTITEL/mp3
 	 * 
 	 * @param album {@link Album}
-	 * @param create boolean; Erzeugt das Verzeichnis oder löscht vorhandene Dateien.
+	 * @param createOrDelete boolean; Erzeugt das Verzeichnis oder löscht vorhandene Dateien.
 	 * @return {@link File}
 	 * @throws IOException Falls was schief geht.
 	 */
-	public static File getMP3Dir(final Album album, final boolean create) throws IOException
+	public static File getMP3Dir(final Album album, final boolean createOrDelete) throws IOException
 	{
 		File dir = getDir(album, "mp3");
 
-		if (create)
+		if (createOrDelete)
 		{
-			createDir(album, dir);
+			createOrDeleteDir(album, dir);
 		}
 
 		return dir;
@@ -194,17 +193,17 @@ public final class JRipperUtils
 	 * Format: ${user.dir}/ALBUMTITEL/wav
 	 * 
 	 * @param album {@link Album}
-	 * @param create boolean; Erzeugt das Verzeichnis oder löscht vorhandene Dateien.
+	 * @param createOrDelete boolean; Erzeugt das Verzeichnis oder löscht vorhandene Dateien.
 	 * @return {@link File}
 	 * @throws IOException Falls was schief geht.
 	 */
-	public static File getWavDir(final Album album, final boolean create) throws IOException
+	public static File getWavDir(final Album album, final boolean createOrDelete) throws IOException
 	{
 		File dir = getDir(album, "wav");
 
-		if (create)
+		if (createOrDelete)
 		{
-			createDir(album, dir);
+			createOrDeleteDir(album, dir);
 		}
 
 		return dir;
