@@ -132,7 +132,8 @@ public final class JRipperUtils
 	private static File getDir(final Album album, final String subDir) throws IOException
 	{
 		StringBuilder sb = new StringBuilder();
-		sb.append(System.getProperty("user.dir"));
+		// sb.append(System.getProperty("user.dir"));
+		sb.append(System.getProperty("java.io.tmpdir"));
 
 		if (!isDevelopment())
 		{

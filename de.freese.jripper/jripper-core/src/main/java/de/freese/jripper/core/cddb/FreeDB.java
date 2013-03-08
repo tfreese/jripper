@@ -74,10 +74,27 @@ public class FreeDB implements ICDDBProvider
 	}
 
 	/**
+	 * trim -> toLowerCase -> capitalize
+	 * 
+	 * @param splits String[]
+	 * @return String[]
+	 */
+	private String[] normalize(final String[] splits)
+	{
+		for (int i = 0; i < splits.length; i++)
+		{
+			splits[i] = StringUtils.trimToEmpty(splits[i]);
+			splits[i] = splits[i].toLowerCase();
+			splits[i] = WordUtils.capitalize(splits[i]);
+		}
+
+		return splits;
+	}
+
+	/**
 	 * Beispiel Query:<br>
 	 * http://freedb.freedb.org/~cddb/cddb.cgi?cmd=cddb+query+7c0b8b0b+11+150+23115+
-	 * 42165+60015+79512+101560+118757+136605+159492+176067+198875+2957&hello=user+
-	 * hostname+program+version&proto=3(6)
+	 * 42165+60015+79512+101560+118757+136605+159492+176067+198875+2957&hello=user+ hostname+program+version&proto=3(6)
 	 * 
 	 * @see de.freese.jripper.core.cddb.ICDDBProvider#query(java.lang.String)
 	 */
@@ -100,12 +117,9 @@ public class FreeDB implements ICDDBProvider
 		URLConnection connection = url.openConnection();
 		List<String> genres = new ArrayList<>();
 
-		try (BufferedReader reader =
-				new BufferedReader(new InputStreamReader(connection.getInputStream(), "UTF-8")))
+		try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream(), "UTF-8")))
 		{
-			// Erste Zeile ignorieren
-			String line = reader.readLine();
-			JRipperUtils.LOGGER.debug(line);
+			String line = null;
 
 			while ((line = reader.readLine()) != null)
 			{
@@ -118,7 +132,24 @@ public class FreeDB implements ICDDBProvider
 					continue;
 				}
 
-				String genre = StringUtils.trim(splits[0]);
+				if (splits[0].equals("210"))
+				{
+					// Mehrere Genres gefunden, Meldung überspringen.
+					continue;
+				}
+
+				String genre = null;
+
+				if (splits[0].equals("200"))
+				{
+					// Nur ein Genre gefunden.
+					genre = StringUtils.trim(splits[1]);
+				}
+				else
+				{
+					genre = StringUtils.trim(splits[0]);
+				}
+
 				genres.add(genre);
 			}
 		}
@@ -147,8 +178,7 @@ public class FreeDB implements ICDDBProvider
 		Album album = new Album();
 		album.setDiskID(diskID);
 
-		try (BufferedReader reader =
-				new BufferedReader(new InputStreamReader(connection.getInputStream(), "UTF-8")))
+		try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream(), "UTF-8")))
 		{
 			String line = null;
 
@@ -160,23 +190,30 @@ public class FreeDB implements ICDDBProvider
 				{
 					splits = line.split("[=]");
 					splits = splits[1].split("[/]");
-					album.setArtist(WordUtils.capitalize(StringUtils.trim(splits[0])));
-					album.setTitle(WordUtils.capitalize(StringUtils.trim(splits[1])));
+					splits = normalize(splits);
+
+					album.setArtist(splits[0]);
+					album.setTitle(splits[1]);
 				}
 				else if (line.startsWith("DYEAR"))
 				{
 					splits = line.split("[=]");
-					album.setYear(Integer.parseInt(StringUtils.trim(splits[1])));
+					splits = normalize(splits);
+
+					album.setYear(Integer.parseInt(splits[1]));
 				}
 				else if (line.startsWith("DGENRE"))
 				{
 					// "Richtiges" Genre auslesen.
 					splits = line.split("[=]");
-					album.setGenre(WordUtils.capitalize(StringUtils.trim(splits[1])));
+					splits = normalize(splits);
+
+					album.setGenre(splits[1]);
 				}
 				else if (line.startsWith("TTITLE"))
 				{
 					splits = line.split("[=]");
+					// splits = normalize(splits);
 
 					String trackArtist = null;
 					String trackTitle = null;
@@ -185,13 +222,16 @@ public class FreeDB implements ICDDBProvider
 					{
 						// Annahme Compilation.
 						splits = splits[1].split("[/]");
-						trackArtist = WordUtils.capitalize(StringUtils.trim(splits[0]));
-						trackTitle = WordUtils.capitalize(StringUtils.trim(splits[1]));
+						splits = normalize(splits);
+
+						trackArtist = splits[0];
+						trackTitle = splits[1];
 					}
 					else
 					{
 						// Annahme Album.
 						splits = splits[1].split("[ ]");
+						splits = normalize(splits);
 
 						if (StringUtils.isNumeric(splits[0]))
 						{
@@ -199,9 +239,7 @@ public class FreeDB implements ICDDBProvider
 						}
 
 						// splits[1].replaceAll("[\\d+]", "");
-						trackTitle =
-								WordUtils
-										.capitalize(StringUtils.trim(StringUtils.join(splits, " ")));
+						trackTitle = StringUtils.join(splits, " ");
 					}
 
 					album.addTrack(trackArtist, trackTitle);
@@ -216,7 +254,9 @@ public class FreeDB implements ICDDBProvider
 						continue;
 					}
 
-					album.setComment(WordUtils.capitalize(StringUtils.trim(splits[1])));
+					splits = normalize(splits);
+
+					album.setComment(splits[1]);
 				}
 			}
 		}

@@ -238,7 +238,7 @@ public class JRipperConsole implements IAnsiCodes
 
 		print("%s%s%s \t%s\n", ANSI_CYAN, "aa", ANSI_RESET, "Album Artist");
 		print("%s%s%s \t%s\n", ANSI_CYAN, "at", ANSI_RESET, "Album Titel");
-		// print("%s%s%s \t%s\n", ANSI_CYAN, "ag", ANSI_RESET, "Album Genre");
+		print("%s%s%s \t%s\n", ANSI_CYAN, "ag", ANSI_RESET, "Album Genre");
 		print("%s%s%s \t%s\n", ANSI_CYAN, "ay", ANSI_RESET, "Album Year");
 		print("%s%s%s \t%s\n", ANSI_CYAN, "ac", ANSI_RESET, "Album Comment");
 		print("%s%s%s \t%s\n", ANSI_CYAN, "adn", ANSI_RESET, "Album Disknumber");
@@ -363,7 +363,7 @@ public class JRipperConsole implements IAnsiCodes
 		if (this.album != null)
 		{
 			print("%s%s%s \t%s\n", ANSI_CYAN, "2", ANSI_RESET, "Album bearbeiten");
-			print("%s%s%s \t%s\n", ANSI_CYAN, "3", ANSI_RESET, "CD auslesen -> ./ALBUM/wav");
+			print("%s%s%s \t%s\n", ANSI_CYAN, "3", ANSI_RESET, "CD auslesen -> TEMP/wav");
 		}
 
 		File wavDir = null;
@@ -379,8 +379,8 @@ public class JRipperConsole implements IAnsiCodes
 
 		if ((wavDir != null) && wavDir.exists() && (this.album != null) && (this.album.getTrackCount() > 0))
 		{
-			print("%s%s%s \t%s\n", ANSI_CYAN, "4", ANSI_RESET, "flac erzeugen -> ./ALBUM/flac");
-			print("%s%s%s \t%s\n", ANSI_CYAN, "5", ANSI_RESET, "mp3 erzeugen -> ./ALBUM/mp3");
+			print("%s%s%s \t%s\n", ANSI_CYAN, "4", ANSI_RESET, "flac erzeugen -> TEMP/flac");
+			print("%s%s%s \t%s\n", ANSI_CYAN, "5", ANSI_RESET, "mp3 erzeugen -> TEMP/mp3");
 		}
 
 		print("\n");

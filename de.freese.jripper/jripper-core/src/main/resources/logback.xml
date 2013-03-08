@@ -74,7 +74,7 @@
 		<appender-ref ref="FILE" />
 	</logger-->
 	
-	<logger name="JRipper" level="DEBUG" />
+	<logger name="JRipper" level="INFO" />
 
 	<root level="INFO">
 		<appender-ref ref="STDOUT" />
