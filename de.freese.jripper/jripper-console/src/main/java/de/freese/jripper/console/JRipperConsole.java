@@ -14,13 +14,14 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 
 import de.freese.jripper.core.JRipperUtils;
-import de.freese.jripper.core.cddb.FreeDB;
+import de.freese.jripper.core.cddb.FreeDBProvider;
 import de.freese.jripper.core.cddb.ICDDBProvider;
-import de.freese.jripper.core.diskid.DiskID;
+import de.freese.jripper.core.diskid.DiskIDProvider;
 import de.freese.jripper.core.encoder.Encoder;
 import de.freese.jripper.core.encoder.EncoderFormat;
 import de.freese.jripper.core.encoder.IEncoder;
 import de.freese.jripper.core.model.Album;
+import de.freese.jripper.core.model.DiskID;
 import de.freese.jripper.core.model.Track;
 import de.freese.jripper.core.ripper.IRipper;
 import de.freese.jripper.core.ripper.Ripper;
@@ -81,7 +82,7 @@ public class JRipperConsole implements IAnsiCodes
 			this.printWriter = new PrintWriter(System.out);
 		}
 
-		this.cddbService = new FreeDB();
+		this.cddbService = new FreeDBProvider();
 	}
 
 	/**
@@ -100,13 +101,16 @@ public class JRipperConsole implements IAnsiCodes
 	/**
 	 * Auslesen der Disc-ID.<br>
 	 * 
-	 * @return String
+	 * @return {@link DiskID}
 	 * @throws Exception Falls was schief geht.
 	 */
-	private String getDiskID() throws Exception
+	private DiskID getDiskID() throws Exception
 	{
 		String device = JRipperUtils.detectCDDVD();
-		String diskID = DiskID.getInstance().getDiskID(device);
+		DiskID diskID = DiskIDProvider.getInstance().getDiskID(device);
+
+		// Auf Treffer prüfen.
+		// diskID = this.cddbService.validateDiskID(diskID);
 
 		return diskID;
 	}
@@ -138,6 +142,11 @@ public class JRipperConsole implements IAnsiCodes
 			// In der Entwicklungsumgebung die ANSI-Codes entfernen.
 			for (int i = 0; i < params.length; i++)
 			{
+				if (params[i] == null)
+				{
+					continue;
+				}
+
 				switch (params[i].toString())
 				{
 					case ANSI_CYAN:
@@ -160,11 +169,11 @@ public class JRipperConsole implements IAnsiCodes
 	/**
 	 * Abfragen der CDDB nach den Genres.<br>
 	 * 
-	 * @param diskID String
+	 * @param diskID {@link DiskID}
 	 * @return String
 	 * @throws Exception Falls was schief geht.
 	 */
-	private String queryCDDB(final String diskID) throws Exception
+	private String queryCDDB(final DiskID diskID) throws Exception
 	{
 		List<String> genres = this.cddbService.query(diskID);
 
@@ -174,12 +183,12 @@ public class JRipperConsole implements IAnsiCodes
 	/**
 	 * Abfragen der CDDB nach dem Album.<br>
 	 * 
-	 * @param diskID String
+	 * @param diskID {@link DiskID}
 	 * @param genre String
 	 * @return {@link Album}
 	 * @throws Exception Falls was schief geht.
 	 */
-	private Album readCDDB(final String diskID, final String genre) throws Exception
+	private Album readCDDB(final DiskID diskID, final String genre) throws Exception
 	{
 		Album album = this.cddbService.read(diskID, genre);
 
@@ -214,14 +223,16 @@ public class JRipperConsole implements IAnsiCodes
 		print("%-15s%s\n", "Title", album.getTitle());
 		print("%-15s%s\n", "Genre", album.getGenre());
 		print("%-15s%d\n", "Year", album.getYear());
-		print("%-15s%d\n", "Disknumber", album.getDiskNumber());
+		print("%-15s%d\n", "Disk Number", album.getDiskNumber());
 		print("%-15s%d\n", "Total Disks", album.getTotalDisks());
 		print("%-15s%s\n", "Comment", album.getComment());
 		print("\n");
 
 		for (Track track : album)
 		{
-			print("%2d. %-20s%s\n", track.getNumber(), track.getArtist(), track.getTitle());
+			// print("%2d. %s %s\n", track.getNumber(), String.format("%-35s", track.getArtist()).replace(' ', '.'), track.getTitle());
+			print("%2d. %s %s\n", track.getNumber(), StringUtils.rightPad(track.getArtist(), 35, '.'), track.getTitle());
+			// print("%2d. %-35s %s\n", track.getNumber(), track.getArtist(), track.getTitle());
 		}
 	}
 
@@ -241,7 +252,7 @@ public class JRipperConsole implements IAnsiCodes
 		print("%s%s%s \t%s\n", ANSI_CYAN, "ag", ANSI_RESET, "Album Genre");
 		print("%s%s%s \t%s\n", ANSI_CYAN, "ay", ANSI_RESET, "Album Year");
 		print("%s%s%s \t%s\n", ANSI_CYAN, "ac", ANSI_RESET, "Album Comment");
-		print("%s%s%s \t%s\n", ANSI_CYAN, "adn", ANSI_RESET, "Album Disknumber");
+		print("%s%s%s \t%s\n", ANSI_CYAN, "adn", ANSI_RESET, "Album Disk Number");
 		print("%s%s%s \t%s\n", ANSI_CYAN, "atd", ANSI_RESET, "Album Total Disks");
 		print("%s%s%s \t%s\n", ANSI_CYAN, "ta(number)", ANSI_RESET, "Track Artist");
 		print("%s%s%s \t%s\n", ANSI_CYAN, "tt(number)", ANSI_RESET, "Track Title");
@@ -396,7 +407,7 @@ public class JRipperConsole implements IAnsiCodes
 			{
 				case "1":
 					this.album = null;
-					String diskID = getDiskID();
+					DiskID diskID = getDiskID();
 					String genre = queryCDDB(diskID);
 					this.album = readCDDB(diskID, genre);
 					showAlbum(this.album);

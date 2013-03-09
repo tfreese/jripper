@@ -30,7 +30,7 @@ public class Album implements Iterable<Track>
 	/**
 	 * 
 	 */
-	private String diskID = null;
+	private DiskID diskID = null;
 
 	/**
 	 * 
@@ -103,9 +103,9 @@ public class Album implements Iterable<Track>
 	}
 
 	/**
-	 * @return String
+	 * @return {@link DiskID}
 	 */
-	public String getDiskID()
+	public DiskID getDiskID()
 	{
 		return this.diskID;
 	}
@@ -188,9 +188,9 @@ public class Album implements Iterable<Track>
 	}
 
 	/**
-	 * @param diskID String
+	 * @param diskID {@link DiskID}
 	 */
-	public void setDiskID(final String diskID)
+	public void setDiskID(final DiskID diskID)
 	{
 		this.diskID = diskID;
 	}

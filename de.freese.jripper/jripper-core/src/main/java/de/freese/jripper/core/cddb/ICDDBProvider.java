@@ -7,6 +7,7 @@ package de.freese.jripper.core.cddb;
 import java.util.List;
 
 import de.freese.jripper.core.model.Album;
+import de.freese.jripper.core.model.DiskID;
 
 /**
  * Interface für einen CDDB Provider (FreeDB, MusicBrainz).
@@ -33,19 +34,19 @@ public interface ICDDBProvider
 	/**
 	 * Liefert die Generes der CD.
 	 * 
-	 * @param diskID String
+	 * @param diskID {@link DiskID}
 	 * @return {@link List}
 	 * @throws Exception Falls was schief geht.
 	 */
-	public List<String> query(String diskID) throws Exception;
+	public List<String> query(DiskID diskID) throws Exception;
 
 	/**
 	 * Liefert die Albentitel der CD.
 	 * 
-	 * @param diskID String
+	 * @param diskID {@link DiskID}
 	 * @param genre String
 	 * @return {@link List}
 	 * @throws Exception Falls was schief geht.
 	 */
-	public Album read(String diskID, String genre) throws Exception;
+	public Album read(DiskID diskID, String genre) throws Exception;
 }

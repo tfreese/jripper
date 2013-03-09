@@ -39,7 +39,7 @@ public class LinuxMP3Encoder extends AbstractProcess implements IEncoder, IProce
 	@Override
 	public void encode(final Album album, final File directory, final PrintWriter printWriter) throws Exception
 	{
-		String diskID = album.getDiskID().split(" ")[0];
+		String diskID = album.getDiskID().getID();
 		List<String> mp3Files = new ArrayList<>();
 		List<String> command = new ArrayList<>();
 

@@ -14,23 +14,23 @@ import org.apache.commons.lang3.SystemUtils;
  * 
  * @author Thomas Freese
  */
-public final class DiskID
+public final class DiskIDProvider
 {
 	/**
 	 * 
 	 */
-	private static final ServiceLoader<IDiskID> SERVICE_LOADER = ServiceLoader.load(IDiskID.class);
+	private static final ServiceLoader<IDiskIDProvider> SERVICE_LOADER = ServiceLoader.load(IDiskIDProvider.class);
 
 	/**
 	 * Je nach Betriebssystem wird die entsprechende Implementierung geliefert.
 	 * 
-	 * @return {@link IDiskID}
+	 * @return {@link IDiskIDProvider}
 	 */
-	public static IDiskID getInstance()
+	public static IDiskIDProvider getInstance()
 	{
-		IDiskID impl = null;
+		IDiskIDProvider impl = null;
 
-		for (IDiskID diskID : SERVICE_LOADER)
+		for (IDiskIDProvider diskID : SERVICE_LOADER)
 		{
 			if (diskID.isSupportedOS(SystemUtils.OS_NAME))
 			{
@@ -48,9 +48,9 @@ public final class DiskID
 	}
 
 	/**
-	 * Erstellt ein neues {@link DiskID} Object.
+	 * Erstellt ein neues {@link DiskIDProvider} Object.
 	 */
-	private DiskID()
+	private DiskIDProvider()
 	{
 		super();
 	}

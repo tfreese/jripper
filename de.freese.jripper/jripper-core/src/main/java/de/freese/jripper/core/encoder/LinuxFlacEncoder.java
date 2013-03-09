@@ -31,13 +31,12 @@ public class LinuxFlacEncoder extends AbstractProcess implements IEncoder
 	}
 
 	/**
-	 * @see de.freese.jripper.core.encoder.IEncoder#encode(de.freese.jripper.core.model.Album,
-	 *      java.io.File, java.io.PrintWriter)
+	 * @see de.freese.jripper.core.encoder.IEncoder#encode(de.freese.jripper.core.model.Album, java.io.File, java.io.PrintWriter)
 	 */
 	@Override
 	public void encode(final Album album, final File directory, final PrintWriter printWriter) throws Exception
 	{
-		String diskID = album.getDiskID().split(" ")[0];
+		String diskID = album.getDiskID().getID();
 		List<String> flacFiles = new ArrayList<>();
 		List<String> command = new ArrayList<>();
 

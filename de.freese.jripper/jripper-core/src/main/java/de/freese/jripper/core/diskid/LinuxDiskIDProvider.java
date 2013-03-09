@@ -14,6 +14,7 @@ import java.util.List;
 import org.apache.commons.lang3.SystemUtils;
 
 import de.freese.jripper.core.IOSProvider;
+import de.freese.jripper.core.model.DiskID;
 import de.freese.jripper.core.process.AbstractProcess;
 import de.freese.jripper.core.process.IProcessCallback;
 
@@ -22,28 +23,25 @@ import de.freese.jripper.core.process.IProcessCallback;
  * 
  * @author Thomas Freese
  */
-public class LinuxDiskID extends AbstractProcess implements IDiskID, IOSProvider,
-		IProcessCallback<String>
+public class LinuxDiskIDProvider extends AbstractProcess implements IDiskIDProvider, IOSProvider, IProcessCallback<String>
 {
 	/**
-	 * Erstellt ein neues {@link LinuxDiskID} Object.
+	 * Erstellt ein neues {@link LinuxDiskIDProvider} Object.
 	 */
-	public LinuxDiskID()
+	public LinuxDiskIDProvider()
 	{
 		super();
 	}
 
 	/**
-	 * @see de.freese.jripper.core.process.IProcessCallback#execute(java.lang.Process,
-	 *      java.io.PrintWriter)
+	 * @see de.freese.jripper.core.process.IProcessCallback#execute(java.lang.Process, java.io.PrintWriter)
 	 */
 	@Override
 	public String execute(final Process process, final PrintWriter printWriter) throws Exception
 	{
 		StringBuilder sb = new StringBuilder();
 
-		try (BufferedReader inputReader =
-				new BufferedReader(new InputStreamReader(process.getInputStream())))
+		try (BufferedReader inputReader = new BufferedReader(new InputStreamReader(process.getInputStream())))
 		{
 			String line = null;
 
@@ -57,10 +55,10 @@ public class LinuxDiskID extends AbstractProcess implements IDiskID, IOSProvider
 	}
 
 	/**
-	 * @see de.freese.jripper.core.diskid.IDiskID#getDiskID(java.lang.String)
+	 * @see de.freese.jripper.core.diskid.IDiskIDProvider#getDiskID(java.lang.String)
 	 */
 	@Override
-	public String getDiskID(final String device) throws Exception
+	public DiskID getDiskID(final String device) throws Exception
 	{
 		List<String> command = new ArrayList<>();
 		command.add("cd-discid");
@@ -73,7 +71,9 @@ public class LinuxDiskID extends AbstractProcess implements IDiskID, IOSProvider
 			throw new IllegalStateException("no music cd found");
 		}
 
-		return id;
+		DiskID diskID = new DiskID(id);
+
+		return diskID;
 	}
 
 	/**
