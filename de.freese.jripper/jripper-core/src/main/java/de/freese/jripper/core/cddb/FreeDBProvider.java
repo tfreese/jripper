@@ -190,14 +190,14 @@ public class FreeDBProvider implements ICDDBProvider
 					{
 						// Mehrere Genres gefunden
 						response = CDDBResponse.EXACT_MATCHES;
+						continue;
 					}
 					else if (splits[0].equals("211"))
 					{
 						// Nicht exakte Treffer -> ungleiche DiskID.
 						response = CDDBResponse.INEXACT_MATCHES;
+						continue;
 					}
-
-					continue;
 				}
 
 				String genre = null;
