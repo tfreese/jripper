@@ -109,9 +109,6 @@ public class JRipperConsole implements IAnsiCodes
 		String device = JRipperUtils.detectCDDVD();
 		DiskID diskID = DiskIDProvider.getInstance().getDiskID(device);
 
-		// Auf Treffer prüfen.
-		// diskID = this.cddbService.validateDiskID(diskID);
-
 		return diskID;
 	}
 
