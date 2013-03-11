@@ -81,11 +81,14 @@ public class FreeDBProvider implements ICDDBProvider
 	 * <ul>
 	 * <li>trim -> toLowerCase -> capitalize
 	 * <li>' Cd ' durch ' CD ' ersetzen
+	 * <li>dj durch DJ ersetzen
 	 * <li>Dj durch DJ ersetzen
 	 * <li>'Feat ' durch 'Feat. ' ersetzen
 	 * <li>':' durch ' - ' ersetzen
 	 * <li>'<' durch '-' ersetzen
 	 * <li>'>' durch '-' ersetzen
+	 * <li>'[' durch '(' ersetzen
+	 * <li>']' durch ')' ersetzen
 	 * <li>Mehrfache Spaces durch einen ersetzen
 	 * <li>nicht erlaubte Zeichen: < > ? " : | \ / *
 	 * </ul>
@@ -101,15 +104,18 @@ public class FreeDBProvider implements ICDDBProvider
 			splits[i] = splits[i].toLowerCase();
 			splits[i] = WordUtils.capitalize(splits[i]);
 			splits[i] = splits[i].replaceAll(" Cd ", " CD ");
+			splits[i] = splits[i].replaceAll("dj ", "DJ ");
 			splits[i] = splits[i].replaceAll("Dj ", "DJ ");
 			splits[i] = splits[i].replaceAll("Feat ", "Feat. ");
 			splits[i] = splits[i].replaceAll(":", " - ");
 			splits[i] = splits[i].replaceAll("<", "-");
 			splits[i] = splits[i].replaceAll(">", "-");
+			splits[i] = splits[i].replaceAll("\\[", "(");
+			splits[i] = splits[i].replaceAll("\\]", ")");
 			splits[i] = StringUtils.normalizeSpace(splits[i]);
 
-			// Nach '(', '-' auch Grossbuchstaben.
-			if (splits[i].contains("(") || splits[i].contains("-"))
+			// Nach '(', '-', '.' auch Grossbuchstaben.
+			if (splits[i].contains("(") || splits[i].contains("-") || splits[i].contains("."))
 			{
 				StringBuilder sb = new StringBuilder();
 
@@ -117,7 +123,7 @@ public class FreeDBProvider implements ICDDBProvider
 				{
 					char sign = splits[i].charAt(j);
 
-					if ((j > 0) && ((splits[i].charAt(j - 1) == '(') || (splits[i].charAt(j - 1) == '-')))
+					if ((j > 0) && ((splits[i].charAt(j - 1) == '(') || (splits[i].charAt(j - 1) == '-') || (splits[i].charAt(j - 1) == '.')))
 					{
 						sign = Character.toUpperCase(sign);
 					}
@@ -127,6 +133,8 @@ public class FreeDBProvider implements ICDDBProvider
 
 				splits[i] = sb.toString();
 			}
+
+			splits[i] = StringUtils.trimToEmpty(splits[i]);
 		}
 
 		return splits;
@@ -312,6 +320,7 @@ public class FreeDBProvider implements ICDDBProvider
 
 						// splits[1].replaceAll("[\\d+]", "");
 						trackTitle = StringUtils.join(splits, " ");
+						trackTitle = StringUtils.trim(trackTitle);
 					}
 
 					album.addTrack(trackArtist, trackTitle);

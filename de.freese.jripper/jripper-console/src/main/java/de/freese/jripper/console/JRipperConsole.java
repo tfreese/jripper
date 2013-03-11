@@ -371,7 +371,7 @@ public class JRipperConsole implements IAnsiCodes
 		if (this.album != null)
 		{
 			print("%s%s%s \t%s\n", ANSI_CYAN, "2", ANSI_RESET, "Album bearbeiten");
-			print("%s%s%s \t%s\n", ANSI_CYAN, "3", ANSI_RESET, "CD auslesen -> TEMP/wav");
+			print("%s%s%s \t%s\n", ANSI_CYAN, "3", ANSI_RESET, "CD auslesen -> TEMP/Album/wav");
 		}
 
 		File wavDir = null;
@@ -387,8 +387,8 @@ public class JRipperConsole implements IAnsiCodes
 
 		if ((wavDir != null) && wavDir.exists() && (this.album != null) && (this.album.getTrackCount() > 0))
 		{
-			print("%s%s%s \t%s\n", ANSI_CYAN, "4", ANSI_RESET, "flac erzeugen -> TEMP/flac");
-			print("%s%s%s \t%s\n", ANSI_CYAN, "5", ANSI_RESET, "mp3 erzeugen -> TEMP/mp3");
+			print("%s%s%s \t%s\n", ANSI_CYAN, "4", ANSI_RESET, "flac erzeugen -> TEMP/Album/flac");
+			print("%s%s%s \t%s\n", ANSI_CYAN, "5", ANSI_RESET, "mp3 erzeugen -> TEMP/Album/mp3");
 		}
 
 		print("\n");
