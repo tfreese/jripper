@@ -13,7 +13,7 @@
 	<artifactId>jripper-console</artifactId>
 	<packaging>jar</packaging>
 
-	<name>${project.artifactId}</name>
+	<name>${project.groupId}:${project.artifactId}</name>
 	<description>Java Ripper Console Modul.</description>
 
 	<dependencies>	
