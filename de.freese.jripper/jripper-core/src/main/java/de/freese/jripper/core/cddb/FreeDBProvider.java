@@ -4,6 +4,9 @@
 
 package de.freese.jripper.core.cddb;
 
+import de.freese.jripper.core.JRipperUtils;
+import de.freese.jripper.core.model.Album;
+import de.freese.jripper.core.model.DiskID;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
@@ -12,13 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
-
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.text.WordUtils;
-
-import de.freese.jripper.core.JRipperUtils;
-import de.freese.jripper.core.model.Album;
-import de.freese.jripper.core.model.DiskID;
 
 /**
  * CDDB Provider für FreeDB.
@@ -89,6 +87,8 @@ public class FreeDBProvider implements ICDDBProvider
 	 * <li>'>' durch '-' ersetzen
 	 * <li>'[' durch '(' ersetzen
 	 * <li>']' durch ')' ersetzen
+	 * <li>'´' durch ''' ersetzen
+	 * <li>'`' durch ''' ersetzen
 	 * <li>Mehrfache Spaces durch einen ersetzen
 	 * <li>nicht erlaubte Zeichen: < > ? " : | \ / *
 	 * </ul>
@@ -112,6 +112,8 @@ public class FreeDBProvider implements ICDDBProvider
 			splits[i] = splits[i].replaceAll(">", "-");
 			splits[i] = splits[i].replaceAll("\\[", "(");
 			splits[i] = splits[i].replaceAll("\\]", ")");
+			splits[i] = splits[i].replaceAll("´", "'");
+			splits[i] = splits[i].replaceAll("`", "'");
 			splits[i] = StringUtils.normalizeSpace(splits[i]);
 
 			// Nach '(', '-', '.' auch Grossbuchstaben.
