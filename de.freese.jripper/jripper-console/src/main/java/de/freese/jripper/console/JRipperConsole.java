@@ -4,15 +4,6 @@
 
 package de.freese.jripper.console;
 
-import java.io.BufferedReader;
-import java.io.Console;
-import java.io.File;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.util.List;
-
-import org.apache.commons.lang3.StringUtils;
-
 import de.freese.jripper.core.JRipperUtils;
 import de.freese.jripper.core.cddb.FreeDBProvider;
 import de.freese.jripper.core.cddb.ICDDBProvider;
@@ -25,6 +16,13 @@ import de.freese.jripper.core.model.DiskID;
 import de.freese.jripper.core.model.Track;
 import de.freese.jripper.core.ripper.IRipper;
 import de.freese.jripper.core.ripper.Ripper;
+import java.io.BufferedReader;
+import java.io.Console;
+import java.io.File;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.util.List;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Console-View für den JRipper.
@@ -113,7 +111,7 @@ public class JRipperConsole implements IAnsiCodes
 	}
 
 	/**
-	 * Liefert dein eingegebenen Wert von der Konsole.
+	 * Liefert den eingegebenen Wert von der Konsole.
 	 * 
 	 * @return String
 	 * @throws Exception Falls was schief geht.

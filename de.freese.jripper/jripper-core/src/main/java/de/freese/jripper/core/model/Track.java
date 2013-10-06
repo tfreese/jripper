@@ -42,11 +42,12 @@ public class Track
 	}
 
 	/**
+	 * Nur bei Compilations gefüllt.
+	 * 
 	 * @return String
 	 */
 	public String getArtist()
 	{
-		// Nur bei Compilations gefüllt.
 		if (StringUtils.isBlank(this.artist))
 		{
 			return this.album.getArtist();
@@ -80,6 +81,8 @@ public class Track
 	}
 
 	/**
+	 * Nur bei Compilations gefüllt.
+	 * 
 	 * @param artist String
 	 */
 	void setArtist(final String artist)

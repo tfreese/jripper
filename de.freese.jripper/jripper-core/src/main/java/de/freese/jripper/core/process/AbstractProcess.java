@@ -9,7 +9,6 @@ import java.io.File;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.List;
-
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -35,14 +34,12 @@ public abstract class AbstractProcess
 		}
 
 		/**
-		 * @see de.freese.jripper.core.process.IProcessCallback#execute(java.lang.Process,
-		 *      java.io.PrintWriter)
+		 * @see de.freese.jripper.core.process.IProcessCallback#execute(java.lang.Process, java.io.PrintWriter)
 		 */
 		@Override
 		public Void execute(final Process process, final PrintWriter printWriter) throws Exception
 		{
-			try (BufferedReader inputReader =
-					new BufferedReader(new InputStreamReader(process.getInputStream())))
+			try (BufferedReader inputReader = new BufferedReader(new InputStreamReader(process.getInputStream())))
 			{
 				String line = null;
 
@@ -102,8 +99,7 @@ public abstract class AbstractProcess
 	 * @return Object
 	 * @throws Exception Falls was schief geht.
 	 */
-	protected <T> T execute(final List<String> command, final File directory,
-							final PrintWriter printWriter, final IProcessCallback<T> callback)
+	protected <T> T execute(final List<String> command, final File directory, final PrintWriter printWriter, final IProcessCallback<T> callback)
 		throws Exception
 	{
 		ProcessBuilder processBuilder = new ProcessBuilder();
@@ -111,7 +107,7 @@ public abstract class AbstractProcess
 		processBuilder.command(command);
 		processBuilder.redirectErrorStream(true);
 		// Map<String, String> env = processBuilder.environment();
-		// env.put("ipps", "true");
+		// env.put("tommy", "true");
 		Process process = processBuilder.start();
 
 		Thread hook = createShutDownHook(process);
