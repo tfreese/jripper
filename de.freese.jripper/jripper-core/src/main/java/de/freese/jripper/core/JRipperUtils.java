@@ -9,8 +9,6 @@ import java.io.File;
 import java.io.IOException;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.SystemUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Util-Klasse.
@@ -19,11 +17,6 @@ import org.slf4j.LoggerFactory;
  */
 public final class JRipperUtils
 {
-	/**
-	 * 
-	 */
-	public static final Logger LOGGER = LoggerFactory.getLogger("JRipper");
-
 	/**
 	 * Erzeugt, wenn nicht vorhanden, das Verzeichnis für die Dateien.<br>
 	 * Format: ArbeitsVerzeichnis/ALBUMTITEL/PFAD<br>

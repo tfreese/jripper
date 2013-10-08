@@ -5,37 +5,38 @@
 package de.freese.jripper.core.process;
 
 import java.io.PrintWriter;
+import org.slf4j.Logger;
 
 /**
  * {@link IProcessMonitor} für einen {@link PrintWriter}.
  * 
  * @author Thomas Freese
  */
-public class PrintWriterProcessMonitor implements IProcessMonitor
+public class LoggerProcessMonitor implements IProcessMonitor
 {
 	/**
 	 * 
 	 */
-	private final PrintWriter printWriter;
+	private final Logger logger;
 
 	/**
-	 * Erstellt ein neues {@link PrintWriterProcessMonitor} Object.
+	 * Erstellt ein neues {@link LoggerProcessMonitor} Object.
 	 * 
-	 * @param printWriter {@link PrintWriter}
+	 * @param logger {@link Logger}
 	 */
-	public PrintWriterProcessMonitor(final PrintWriter printWriter)
+	public LoggerProcessMonitor(final Logger logger)
 	{
 		super();
 
-		this.printWriter = printWriter;
+		this.logger = logger;
 	}
 
 	/**
-	 * @return {@link PrintWriter}
+	 * @return {@link Logger}
 	 */
-	protected PrintWriter getPrintWriter()
+	protected Logger getLogger()
 	{
-		return this.printWriter;
+		return this.logger;
 	}
 
 	/**
@@ -44,8 +45,7 @@ public class PrintWriterProcessMonitor implements IProcessMonitor
 	@Override
 	public void monitorProcess(final String line)
 	{
-		getPrintWriter().println(line);
-		getPrintWriter().flush();
+		getLogger().info(line);
 	}
 
 	/**
@@ -54,7 +54,6 @@ public class PrintWriterProcessMonitor implements IProcessMonitor
 	@Override
 	public void monitorText(final String line)
 	{
-		getPrintWriter().println(line);
-		getPrintWriter().flush();
+		getLogger().info(line);
 	}
 }

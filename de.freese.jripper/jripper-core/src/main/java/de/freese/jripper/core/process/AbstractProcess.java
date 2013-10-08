@@ -4,10 +4,12 @@
 
 package de.freese.jripper.core.process;
 
+import de.freese.jripper.core.JRipper;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStreamReader;
 import java.util.List;
+import org.slf4j.Logger;
 
 /**
  * Basisklasse für alle Implementierungen die den {@link ProcessBuilder} verwenden.
@@ -16,6 +18,11 @@ import java.util.List;
  */
 public abstract class AbstractProcess
 {
+	/**
+	 * 
+	 */
+	public final Logger logger = JRipper.LOGGER; // LoggerFactory.getLogger(getClass());
+
 	/**
 	 * Erstellt ein neues {@link AbstractProcess} Object.
 	 */
@@ -86,5 +93,13 @@ public abstract class AbstractProcess
 		{
 			throw new IllegalStateException("return code: " + exitVal);
 		}
+	}
+
+	/**
+	 * @return {@link Logger}
+	 */
+	protected Logger getLogger()
+	{
+		return this.logger;
 	}
 }

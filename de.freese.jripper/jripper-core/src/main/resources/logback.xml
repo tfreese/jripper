@@ -4,24 +4,21 @@
 	
 	<!--Levels are ordered: TRACE < DEBUG < INFO < WARN < ERROR -->
 	<property name="pattern"
-		value="%date{yyyy-MM-dd HH:mm:ss.SSS} - %-5level[%thread] - %logger{0}.%class{0}[%method] - %message%n" />
+		value="%date{yyyy-MM-dd HH:mm:ss.SSS} - %-5level[%thread] - %logger{0}[%method] - %message%n" />
 
-	<!-- Fuer Bedingungen wird Dependency org.codehaus.janino:janino:[2.6.1,) benoetigt.-->
-	<!--if condition='isNull("log.pattern")'>
+	<if condition='isNull("pattern")'>
 		<then>
-			<property name="log.pattern"
+			<property name="pattern"
 				value="%date{yyyy-MM-dd HH:mm:ss.SSS} - %-5level[%thread] - %logger{0}[%method] - %message%n" />
 		</then>
 		<else>
 		</else>
-	</if-->	
-	<!--if condition='isNull("log.dir")'>
+	</if>	
+	<if condition='isNull("log.dir")'>
 		<then>
 			<property name="log.dir" value="${user.home}/logs" />
 		</then>
-		<else>
-		</else>
-	</if-->
+	</if>
 
 	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
 		<target>System.out</target>
@@ -49,15 +46,14 @@
 		</filter>
 	</appender>
 
-	<!--appender name="FILE"
+	<appender name="FILE"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>${log.dir}/test.log</file>
+		<file>${log.dir}/jripper.log</file>
 		<append>true</append>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>${log.dir}/test.%d{yyyy-MM-dd}.log.gz
-			</fileNamePattern-->
-			<!--maxHistory>30</maxHistory -->
-		<!--/rollingPolicy>
+			<fileNamePattern>${log.dir}/jripper.%d{yyyy-MM-dd}.log.gz</fileNamePattern>
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
 		<encoder>
 			<pattern>${pattern}</pattern>
 			<outputPatternAsHeader>false</outputPatternAsHeader>
@@ -70,11 +66,12 @@
 		</filter>
 	</appender>
 
-	<logger name="cloudsession.CloudSessionCache" level="DEBUG">
-		<appender-ref ref="FILE" />
-	</logger-->
+	<logger name="JRipper" level="DEBUG">
+		<!--appender-ref ref="FILE" /-->
+	</logger>
 	
-	<logger name="JRipper" level="DEBUG" />
+	<!--logger name="de.freese.jripper.core.diskid" level="DEBUG">
+	<logger name="de.freese.jripper.core.cddb" level="DEBUG"/-->
 
 	<root level="INFO">
 		<appender-ref ref="STDOUT" />

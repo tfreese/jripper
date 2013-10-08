@@ -22,7 +22,7 @@ public interface ICDDBProvider
 	 * @return {@link List}
 	 * @throws Exception Falls was schief geht.
 	 */
-	public List<String> query(DiskID diskID) throws Exception;
+	public List<String> queryCDDB(DiskID diskID) throws Exception;
 
 	/**
 	 * Liefert die Albentitel der CD.
@@ -32,5 +32,5 @@ public interface ICDDBProvider
 	 * @return {@link List}
 	 * @throws Exception Falls was schief geht.
 	 */
-	public Album read(DiskID diskID, String genre) throws Exception;
+	public Album readCDDB(DiskID diskID, String genre) throws Exception;
 }

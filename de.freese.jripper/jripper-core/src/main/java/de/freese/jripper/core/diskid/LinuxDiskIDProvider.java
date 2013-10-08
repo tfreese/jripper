@@ -50,6 +50,8 @@ public class LinuxDiskIDProvider extends AbstractProcess implements IDiskIDProvi
 
 		String id = this.sb.toString();
 
+		getLogger().debug(id);
+
 		if (id.contains("No medium"))
 		{
 			throw new IllegalStateException("no music cd found");

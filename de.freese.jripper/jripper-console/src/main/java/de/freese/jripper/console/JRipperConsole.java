@@ -186,7 +186,7 @@ public class JRipperConsole implements IAnsiCodes
 	 */
 	private String queryCDDB(final DiskID diskID) throws Exception
 	{
-		List<String> genres = this.cddbService.query(diskID);
+		List<String> genres = this.cddbService.queryCDDB(diskID);
 
 		return genres.get(0);
 	}
@@ -201,7 +201,7 @@ public class JRipperConsole implements IAnsiCodes
 	 */
 	private Album readCDDB(final DiskID diskID, final String genre) throws Exception
 	{
-		Album album = this.cddbService.read(diskID, genre);
+		Album album = this.cddbService.readCDDB(diskID, genre);
 
 		return album;
 	}

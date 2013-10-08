@@ -7,6 +7,8 @@ package de.freese.jripper.core;
 import de.freese.jripper.core.diskid.IDiskIDProvider;
 import de.freese.jripper.core.encoder.IEncoder;
 import de.freese.jripper.core.ripper.IRipper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Zentrale Klasse.
@@ -15,6 +17,11 @@ import de.freese.jripper.core.ripper.IRipper;
  */
 public class JRipper
 {
+	/**
+	 * 
+	 */
+	public static final Logger LOGGER = LoggerFactory.getLogger("JRipper");
+
 	/**
 	 * 
 	 */

@@ -4,7 +4,7 @@
 
 package de.freese.jripper.core.cddb;
 
-import de.freese.jripper.core.JRipperUtils;
+import de.freese.jripper.core.JRipper;
 import de.freese.jripper.core.model.Album;
 import de.freese.jripper.core.model.DiskID;
 import java.io.BufferedReader;
@@ -17,6 +17,7 @@ import java.util.Set;
 import java.util.TreeSet;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.text.WordUtils;
+import org.slf4j.Logger;
 
 /**
  * CDDB Provider für FreeDB.
@@ -25,6 +26,11 @@ import org.apache.commons.lang3.text.WordUtils;
  */
 public class FreeDBProvider implements ICDDBProvider
 {
+	/**
+	 * 
+	 */
+	private static final String HOST = "localhost";
+
 	// /**
 	// *
 	// */
@@ -53,11 +59,6 @@ public class FreeDBProvider implements ICDDBProvider
 	/**
 	 * 
 	 */
-	private static final String HOST = "localhost";
-
-	/**
-	 * 
-	 */
 	private static final int PORT = 80;
 
 	/**
@@ -69,6 +70,11 @@ public class FreeDBProvider implements ICDDBProvider
 	 * 
 	 */
 	private static final String USER = "anonymous";
+
+	/**
+	 * 
+	 */
+	public final Logger logger = JRipper.LOGGER; // LoggerFactory.getLogger(getClass());
 
 	/**
 	 * 
@@ -162,10 +168,10 @@ public class FreeDBProvider implements ICDDBProvider
 	 * http://freedb.freedb.org/~cddb/cddb.cgi?cmd=cddb+query+7c0b8b0b+11+150+23115+
 	 * 42165+60015+79512+101560+118757+136605+159492+176067+198875+2957&hello=user+ hostname+program+version&proto=3(6)
 	 * 
-	 * @see de.freese.jripper.core.cddb.ICDDBProvider#query(de.freese.jripper.core.model.DiskID)
+	 * @see de.freese.jripper.core.cddb.ICDDBProvider#queryCDDB(de.freese.jripper.core.model.DiskID)
 	 */
 	@Override
-	public List<String> query(final DiskID diskID) throws Exception
+	public List<String> queryCDDB(final DiskID diskID) throws Exception
 	{
 		StringBuilder sb = new StringBuilder();
 		sb.append("/~cddb/cddb.cgi?cmd=cddb+query");
@@ -190,7 +196,7 @@ public class FreeDBProvider implements ICDDBProvider
 
 			while ((line = reader.readLine()) != null)
 			{
-				JRipperUtils.LOGGER.debug(line);
+				this.logger.debug(line);
 
 				if (line.startsWith("."))
 				{
@@ -255,10 +261,10 @@ public class FreeDBProvider implements ICDDBProvider
 	}
 
 	/**
-	 * @see de.freese.jripper.core.cddb.ICDDBProvider#read(de.freese.jripper.core.model.DiskID, java.lang.String)
+	 * @see de.freese.jripper.core.cddb.ICDDBProvider#readCDDB(de.freese.jripper.core.model.DiskID, java.lang.String)
 	 */
 	@Override
-	public Album read(final DiskID diskID, final String genre) throws Exception
+	public Album readCDDB(final DiskID diskID, final String genre) throws Exception
 	{
 		StringBuilder sb = new StringBuilder();
 		sb.append("/~cddb/cddb.cgi?cmd=cddb+read");
@@ -281,7 +287,7 @@ public class FreeDBProvider implements ICDDBProvider
 
 			while ((line = reader.readLine()) != null)
 			{
-				JRipperUtils.LOGGER.debug(line);
+				this.logger.debug(line);
 
 				if (line.startsWith("DTITLE"))
 				{
