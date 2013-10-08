@@ -21,7 +21,8 @@
 
 	<modules>
 		<module>jripper-core</module>	
-		<module>jripper-console</module>	
+		<module>jripper-console</module>
+		<module>jripper-swing</module>	
 	</modules>
 
 	<properties>
