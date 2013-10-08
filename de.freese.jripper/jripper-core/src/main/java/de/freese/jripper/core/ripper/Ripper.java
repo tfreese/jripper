@@ -5,7 +5,6 @@
 package de.freese.jripper.core.ripper;
 
 import java.util.ServiceLoader;
-
 import org.apache.commons.lang3.SystemUtils;
 
 /**
@@ -32,7 +31,7 @@ public final class Ripper
 
 		for (IRipper ripper : SERVICE_LOADER)
 		{
-			if (ripper.isSupportedOS(SystemUtils.OS_NAME))
+			if (ripper.supportsOS(SystemUtils.OS_NAME))
 			{
 				impl = ripper;
 				break;

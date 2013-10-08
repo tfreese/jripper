@@ -4,10 +4,9 @@
 
 package de.freese.jripper.core.cddb;
 
-import java.util.List;
-
 import de.freese.jripper.core.model.Album;
 import de.freese.jripper.core.model.DiskID;
+import java.util.List;
 
 /**
  * Interface für einen CDDB Provider (FreeDB, MusicBrainz).
@@ -16,21 +15,6 @@ import de.freese.jripper.core.model.DiskID;
  */
 public interface ICDDBProvider
 {
-	/**
-	 * 
-	 */
-	public static final String HOST = "localhost";
-
-	/**
-	 * 
-	 */
-	public static final int PORT = 80;
-
-	/**
-	 * 
-	 */
-	public static final String USER = "anonymous";
-
 	/**
 	 * Liefert die Generes der CD.
 	 * 

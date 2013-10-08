@@ -5,15 +5,20 @@
 package de.freese.jripper.console;
 
 import de.freese.jripper.core.JRipperUtils;
+import de.freese.jripper.core.Settings;
 import de.freese.jripper.core.cddb.FreeDBProvider;
 import de.freese.jripper.core.cddb.ICDDBProvider;
 import de.freese.jripper.core.diskid.DiskIDProvider;
 import de.freese.jripper.core.encoder.Encoder;
 import de.freese.jripper.core.encoder.EncoderFormat;
 import de.freese.jripper.core.encoder.IEncoder;
+import de.freese.jripper.core.encoder.LameProcessMonitor;
+import de.freese.jripper.core.encoder.LinuxMP3Encoder;
 import de.freese.jripper.core.model.Album;
 import de.freese.jripper.core.model.DiskID;
 import de.freese.jripper.core.model.Track;
+import de.freese.jripper.core.process.IProcessMonitor;
+import de.freese.jripper.core.process.PrintWriterProcessMonitor;
 import de.freese.jripper.core.ripper.IRipper;
 import de.freese.jripper.core.ripper.Ripper;
 import java.io.BufferedReader;
@@ -93,7 +98,18 @@ public class JRipperConsole implements IAnsiCodes
 	private void encode(final Album album, final PrintWriter printWriter, final EncoderFormat format, final File directory) throws Exception
 	{
 		IEncoder encoder = Encoder.getInstance(format);
-		encoder.encode(album, directory, printWriter);
+		IProcessMonitor monitor = null;
+
+		if (encoder instanceof LinuxMP3Encoder)
+		{
+			monitor = new LameProcessMonitor(printWriter);
+		}
+		else
+		{
+			monitor = new PrintWriterProcessMonitor(printWriter);
+
+		}
+		encoder.encode(album, directory, monitor);
 	}
 
 	/**
@@ -104,7 +120,7 @@ public class JRipperConsole implements IAnsiCodes
 	 */
 	private DiskID getDiskID() throws Exception
 	{
-		String device = JRipperUtils.detectCDDVD();
+		String device = Settings.getInstance().getLaufwerk();
 		DiskID diskID = DiskIDProvider.getInstance().getDiskID(device);
 
 		return diskID;
@@ -197,10 +213,11 @@ public class JRipperConsole implements IAnsiCodes
 	 */
 	private void rip(final Album album, final PrintWriter printWriter) throws Exception
 	{
+		String device = Settings.getInstance().getLaufwerk();
 		IRipper ripper = Ripper.getInstance();
 		File directory = JRipperUtils.getWavDir(album, true);
 
-		ripper.rip(null, album, directory, printWriter);
+		ripper.rip(device, directory, new PrintWriterProcessMonitor(printWriter));
 	}
 
 	/**
@@ -365,11 +382,12 @@ public class JRipperConsole implements IAnsiCodes
 		print("%s\n", "*****************");
 
 		print("%s%s%s \t%s\n", ANSI_CYAN, "1", ANSI_RESET, "FreeDB abfragen");
+		String workDir = Settings.getInstance().getWorkDir();
 
 		if (this.album != null)
 		{
 			print("%s%s%s \t%s\n", ANSI_CYAN, "2", ANSI_RESET, "Album bearbeiten");
-			print("%s%s%s \t%s\n", ANSI_CYAN, "3", ANSI_RESET, "CD auslesen -> TEMP/Album/wav");
+			print("%s%s%s \t%s%s/%s/wav\n", ANSI_CYAN, "3", ANSI_RESET, "CD auslesen -> ", workDir, this.album.getTitle());
 		}
 
 		File wavDir = null;
@@ -385,8 +403,8 @@ public class JRipperConsole implements IAnsiCodes
 
 		if ((wavDir != null) && wavDir.exists() && (this.album != null) && (this.album.getTrackCount() > 0))
 		{
-			print("%s%s%s \t%s\n", ANSI_CYAN, "4", ANSI_RESET, "flac erzeugen -> TEMP/Album/flac");
-			print("%s%s%s \t%s\n", ANSI_CYAN, "5", ANSI_RESET, "mp3 erzeugen -> TEMP/Album/mp3");
+			print("%s%s%s \t%s%s/%s/flac\n", ANSI_CYAN, "4", ANSI_RESET, "flac erzeugen -> ", workDir, this.album.getTitle());
+			print("%s%s%s \t%s%s/%s/map3\n", ANSI_CYAN, "5", ANSI_RESET, "mp3 erzeugen -> ", workDir, this.album.getTitle());
 		}
 
 		print("\n");

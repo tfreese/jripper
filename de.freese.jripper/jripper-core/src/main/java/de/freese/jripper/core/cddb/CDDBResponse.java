@@ -9,7 +9,7 @@ package de.freese.jripper.core.cddb;
  * 
  * @author Thomas Freese
  */
-public enum CDDBResponse
+enum CDDBResponse
 {
 	/**
 	 * 210 - Mehrere Genres gefunden.

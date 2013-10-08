@@ -4,16 +4,15 @@
 
 package de.freese.jripper.core;
 
+import de.freese.jripper.core.diskid.DiskIDProvider;
+import de.freese.jripper.core.diskid.IDiskIDProvider;
+import de.freese.jripper.core.diskid.LinuxDiskIDProvider;
+import de.freese.jripper.core.model.DiskID;
 import org.apache.commons.lang3.SystemUtils;
 import org.junit.Assert;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
-
-import de.freese.jripper.core.diskid.DiskIDProvider;
-import de.freese.jripper.core.diskid.IDiskIDProvider;
-import de.freese.jripper.core.diskid.LinuxDiskIDProvider;
-import de.freese.jripper.core.model.DiskID;
 
 /**
  * Testklasse für die {@link IDiskIDProvider}.
@@ -49,7 +48,7 @@ public class TestDiskID
 	}
 
 	/**
-	 * Liefert je nach Betriebssystem die passende Implementierung.
+	 *
 	 */
 	@Test
 	public void testID1()
@@ -64,7 +63,7 @@ public class TestDiskID
 	}
 
 	/**
-	 * Liefert je nach Betriebssystem die passende Implementierung.
+	 * 
 	 */
 	@Test
 	public void testID2()

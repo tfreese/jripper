@@ -4,54 +4,34 @@
 
 package de.freese.jripper.core.diskid;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.commons.lang3.SystemUtils;
-
 import de.freese.jripper.core.IOSProvider;
+import de.freese.jripper.core.Settings;
 import de.freese.jripper.core.model.DiskID;
 import de.freese.jripper.core.process.AbstractProcess;
-import de.freese.jripper.core.process.IProcessCallback;
+import de.freese.jripper.core.process.IProcessMonitor;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import org.apache.commons.lang3.SystemUtils;
 
 /**
  * Linux Implementierung mit dem Programm "cd-discid".
  * 
  * @author Thomas Freese
  */
-public class LinuxDiskIDProvider extends AbstractProcess implements IDiskIDProvider, IOSProvider, IProcessCallback<String>
+public class LinuxDiskIDProvider extends AbstractProcess implements IDiskIDProvider, IOSProvider, IProcessMonitor
 {
+	/**
+	 * 
+	 */
+	private StringBuilder sb = null;
+
 	/**
 	 * Erstellt ein neues {@link LinuxDiskIDProvider} Object.
 	 */
 	public LinuxDiskIDProvider()
 	{
 		super();
-	}
-
-	/**
-	 * @see de.freese.jripper.core.process.IProcessCallback#execute(java.lang.Process, java.io.PrintWriter)
-	 */
-	@Override
-	public String execute(final Process process, final PrintWriter printWriter) throws Exception
-	{
-		StringBuilder sb = new StringBuilder();
-
-		try (BufferedReader inputReader = new BufferedReader(new InputStreamReader(process.getInputStream())))
-		{
-			String line = null;
-
-			while ((line = inputReader.readLine()) != null)
-			{
-				sb.append(line);
-			}
-		}
-
-		return sb.toString();
 	}
 
 	/**
@@ -64,7 +44,11 @@ public class LinuxDiskIDProvider extends AbstractProcess implements IDiskIDProvi
 		command.add("cd-discid");
 		command.add(device);
 
-		String id = execute(command, new File("."), null, this);
+		this.sb = new StringBuilder();
+
+		execute(command, new File(Settings.getInstance().getWorkDir()), this);
+
+		String id = this.sb.toString();
 
 		if (id.contains("No medium"))
 		{
@@ -77,10 +61,28 @@ public class LinuxDiskIDProvider extends AbstractProcess implements IDiskIDProvi
 	}
 
 	/**
-	 * @see de.freese.jripper.core.IOSProvider#isSupportedOS(java.lang.String)
+	 * @see de.freese.jripper.core.process.IProcessMonitor#monitorProcess(java.lang.String)
 	 */
 	@Override
-	public boolean isSupportedOS(final String os)
+	public void monitorProcess(final String line)
+	{
+		this.sb.append(line);
+	}
+
+	/**
+	 * @see de.freese.jripper.core.process.IProcessMonitor#monitorText(java.lang.String)
+	 */
+	@Override
+	public void monitorText(final String line)
+	{
+		// Empty
+	}
+
+	/**
+	 * @see de.freese.jripper.core.IOSProvider#supportsOS(java.lang.String)
+	 */
+	@Override
+	public boolean supportsOS(final String os)
 	{
 		return SystemUtils.IS_OS_LINUX;
 	}

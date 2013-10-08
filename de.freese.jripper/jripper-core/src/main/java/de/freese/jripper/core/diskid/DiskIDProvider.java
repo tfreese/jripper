@@ -5,7 +5,6 @@
 package de.freese.jripper.core.diskid;
 
 import java.util.ServiceLoader;
-
 import org.apache.commons.lang3.SystemUtils;
 
 /**
@@ -32,7 +31,7 @@ public final class DiskIDProvider
 
 		for (IDiskIDProvider diskID : SERVICE_LOADER)
 		{
-			if (diskID.isSupportedOS(SystemUtils.OS_NAME))
+			if (diskID.supportsOS(SystemUtils.OS_NAME))
 			{
 				impl = diskID;
 				break;

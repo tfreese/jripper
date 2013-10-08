@@ -4,26 +4,22 @@
 
 package de.freese.jripper.core.encoder;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.commons.lang3.SystemUtils;
-
+import de.freese.jripper.core.Settings;
 import de.freese.jripper.core.model.Album;
 import de.freese.jripper.core.model.Track;
 import de.freese.jripper.core.process.AbstractProcess;
-import de.freese.jripper.core.process.IProcessCallback;
+import de.freese.jripper.core.process.IProcessMonitor;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import org.apache.commons.lang3.SystemUtils;
 
 /**
- * Linux Implementierung mit dem Programm "lame".
+ * Linux Implementierung mit dem Programm "lame", für Überprüfung mit "mp3val" und für den ReplayGain mit "mp3gain".
  * 
  * @author Thomas Freese
  */
-public class LinuxMP3Encoder extends AbstractProcess implements IEncoder, IProcessCallback<Void>
+public class LinuxMP3Encoder extends AbstractProcess implements IEncoder
 {
 	/**
 	 * Erstellt ein neues {@link LinuxMP3Encoder} Object.
@@ -34,10 +30,10 @@ public class LinuxMP3Encoder extends AbstractProcess implements IEncoder, IProce
 	}
 
 	/**
-	 * @see de.freese.jripper.core.encoder.IEncoder#encode(de.freese.jripper.core.model.Album, java.io.File, java.io.PrintWriter)
+	 * @see de.freese.jripper.core.encoder.IEncoder#encode(de.freese.jripper.core.model.Album, java.io.File, de.freese.jripper.core.process.IProcessMonitor)
 	 */
 	@Override
-	public void encode(final Album album, final File directory, final PrintWriter printWriter) throws Exception
+	public void encode(final Album album, final File directory, final IProcessMonitor monitor) throws Exception
 	{
 		String diskID = album.getDiskID().getID();
 		List<String> mp3Files = new ArrayList<>();
@@ -54,7 +50,7 @@ public class LinuxMP3Encoder extends AbstractProcess implements IEncoder, IProce
 			// command.add("-s");
 			// command.add("44.1");
 			command.add("-b");
-			command.add("320");
+			command.add(Settings.getInstance().getMp3Bitrate());
 			command.add("--replaygain-accurate");
 			command.add("--add-id3v2");
 			command.add("--pad-id3v2");
@@ -88,94 +84,26 @@ public class LinuxMP3Encoder extends AbstractProcess implements IEncoder, IProce
 
 			command.add(mp3File);
 
-			execute(command, directory, printWriter, this);
+			execute(command, directory, monitor);
 
-			// Überprüfung -> gibs anscheinend nicht für mp3.
-			// command.clear();
-			// command.add("flac");
-			// command.add("-t");
-			// command.add(flacFile);
-			// execute(command, directory, printWriter, null);
+			// Überprüfung.
+			command.clear();
+			command.add("mp3val");
+			command.add(mp3File);
+			command.add("-f");
+			command.add("-nb");
+			execute(command, directory, monitor);
 
 			// mp3info "$OUTPUT"
 		}
 
 		// Replay-Gain.
-		printWriter.printf("\n%s\n", "Generiere Replay-Gain...");
-		printWriter.flush();
+		monitor.monitorText(String.format("\n%s\n", "Generiere Replay-Gain..."));
 		command.clear();
 		command.add("mp3gain");
 		command.addAll(mp3Files);
 		// command.add("*.mp3");
-		execute(command, directory, printWriter, null);
-	}
-
-	// Invalid field value: 'DISCID=b111140e'. Ignored
-	// Invalid field value: 'DISCNUMBER=1'. Ignored
-	// Invalid field value: 'TOTALDISCS=1'. Ignored
-	// Invalid field value: 'DISCTOTAL=1'. Ignored
-	// LAME 3.99.5 64bits (http://lame.sf.net)
-	// Using polyphase lowpass filter, transition band: 20094 Hz - 20627 Hz
-	// Encoding ../wav/track01.cdda.wav
-	// to Karat (Vierzehn Karat - Ihre Größten Hits) - 01 - Der Blaue Planet.mp3
-	// Encoding as 44.1 kHz j-stereo MPEG-1 Layer III (4.4x) 320 kbps qval=0
-	// Frame | CPU time/estim | REAL time/estim | play/CPU | ETA
-	// 0/ ( 0%)| 0:00/ : | 0:00/ : | x| :
-	// 05:25--------------------------------------------------------------------------
-	// kbps % %
-	// 0.0 [A[A[A
-	// 0/12453 ( 0%)| 0:00/ 0:00| 0:00/ 0:00| 0.0000x| 0:00
-	// 05:25--------------------------------------------------------------------------
-	// kbps % %
-	// 0.0 [A[A[A
-	// 100/12453 ( 1%)| 0:00/ 0:21| 0:00/ 0:22| 15.366x| 0:22
-	// 05:22-------------------------------------------------------------------------
-	// kbps LR MS % long switch short %
-	// 320.0 32.0 68.0 91.0 5.0 4.0 [A[A[A
-	// 200/12453 ( 2%)| 0:00/ 0:26| 0:00/ 0:27| 12.150x| 0:26
-	// --05:20------------------------------------------------------------------------
-	// kbps LR MS % long switch short %
-	// 320.0 65.5 34.5 82.2 10.0 7.8 [A[A[A
-	// 300/12453 ( 2%)| 0:00/ 0:28| 0:00/ 0:29| 11.358x| 0:28
-	// --05:17------------------------------------------------------------------------
-	// kbps LR MS % long switch short %
-	// 320.0 74.3 25.7 78.7 11.7 9.7 [A[A[A
-	// 400/12453 ( 3%)| 0:00/ 0:29| 0:00/ 0:30| 10.884x| 0:29
-	/**
-	 * @see de.freese.jripper.core.process.IProcessCallback#execute(java.lang.Process, java.io.PrintWriter)
-	 */
-	@Override
-	public Void execute(final Process process, final PrintWriter printWriter) throws Exception
-	{
-		try (BufferedReader inputReader = new BufferedReader(new InputStreamReader(process.getInputStream())))
-		{
-			String line = null;
-
-			while ((line = inputReader.readLine()) != null)
-			{
-				if (line.startsWith("Encoding") || line.contains("to") || line.contains("Frame"))
-				{
-					printWriter.println(line);
-					printWriter.flush();
-				}
-				else if (line.contains("%)"))
-				{
-					int start = line.indexOf(" (");
-					int end = line.indexOf("%)");
-
-					String prozentS = line.substring(start + 2, end).trim();
-					int prozent = Integer.parseInt(prozentS);
-
-					if ((prozent % 5) == 0)
-					{
-						printWriter.println(line);
-						printWriter.flush();
-					}
-				}
-			}
-		}
-
-		return null;
+		execute(command, directory, monitor);
 	}
 
 	/**
@@ -188,10 +116,10 @@ public class LinuxMP3Encoder extends AbstractProcess implements IEncoder, IProce
 	}
 
 	/**
-	 * @see de.freese.jripper.core.IOSProvider#isSupportedOS(java.lang.String)
+	 * @see de.freese.jripper.core.IOSProvider#supportsOS(java.lang.String)
 	 */
 	@Override
-	public boolean isSupportedOS(final String os)
+	public boolean supportsOS(final String os)
 	{
 		return SystemUtils.IS_OS_LINUX;
 	}

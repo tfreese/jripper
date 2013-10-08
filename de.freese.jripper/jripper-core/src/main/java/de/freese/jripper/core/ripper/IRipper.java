@@ -4,11 +4,9 @@
 
 package de.freese.jripper.core.ripper;
 
-import java.io.File;
-import java.io.PrintWriter;
-
 import de.freese.jripper.core.IOSProvider;
-import de.freese.jripper.core.model.Album;
+import de.freese.jripper.core.process.IProcessMonitor;
+import java.io.File;
 
 /**
  * Interface für einen CD Ripper.
@@ -21,11 +19,9 @@ public interface IRipper extends IOSProvider
 	 * Auslesen der CD in das Verzeichnis.
 	 * 
 	 * @param device String
-	 * @param album {@link Album}
 	 * @param directory {@link File}
-	 * @param printWriter {@link PrintWriter}
+	 * @param monitor {@link IProcessMonitor}
 	 * @throws Exception Falls was schief geht.
 	 */
-	public void rip(String device, Album album, File directory, PrintWriter printWriter)
-		throws Exception;
+	public void rip(String device, File directory, IProcessMonitor monitor) throws Exception;
 }

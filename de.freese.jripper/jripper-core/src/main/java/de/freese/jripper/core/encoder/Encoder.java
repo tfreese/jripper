@@ -5,7 +5,6 @@
 package de.freese.jripper.core.encoder;
 
 import java.util.ServiceLoader;
-
 import org.apache.commons.lang3.SystemUtils;
 
 /**
@@ -19,8 +18,7 @@ public final class Encoder
 	/**
 	 * 
 	 */
-	private static final ServiceLoader<IEncoder> SERVICE_LOADER = ServiceLoader
-			.load(IEncoder.class);
+	private static final ServiceLoader<IEncoder> SERVICE_LOADER = ServiceLoader.load(IEncoder.class);
 
 	/**
 	 * Je nach Betriebssystem wird die entsprechende Implementierung geliefert.
@@ -34,7 +32,7 @@ public final class Encoder
 
 		for (IEncoder encoder : SERVICE_LOADER)
 		{
-			if (encoder.isSupportedOS(SystemUtils.OS_NAME) && encoder.getFormat().equals(format))
+			if (encoder.supportsOS(SystemUtils.OS_NAME) && encoder.getFormat().equals(format))
 			{
 				impl = encoder;
 				break;
@@ -43,8 +41,7 @@ public final class Encoder
 
 		if (impl == null)
 		{
-			throw new NullPointerException("no encoder found for" + SystemUtils.OS_NAME + "/"
-					+ format);
+			throw new NullPointerException("no encoder found for" + SystemUtils.OS_NAME + "/" + format);
 		}
 
 		return impl;

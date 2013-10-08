@@ -10,16 +10,16 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 
 /**
- * Reagier auf ENTER der Konsole und beendet das Programm.
+ * Reagiert auf ENTER der Konsole und beendet das Programm.
  * 
  * @author Thomas Freese
  */
-public class _KeyListenerErsatz implements Runnable
+public class KeyListenerErsatz implements Runnable
 {
 	/**
-	 * Erstellt ein neues {@link _KeyListenerErsatz} Object.
+	 * Erstellt ein neues {@link KeyListenerErsatz} Object.
 	 */
-	public _KeyListenerErsatz()
+	public KeyListenerErsatz()
 	{
 		super();
 	}

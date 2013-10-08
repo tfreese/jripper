@@ -7,7 +7,7 @@ package de.freese.jripper.core.model;
 import org.apache.commons.lang3.StringUtils;
 
 /**
- * Informationen für einen Titel einer CD.
+ * Informationen über einen Titel einer CD.
  * 
  * @author Thomas Freese
  */

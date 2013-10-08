@@ -53,12 +53,27 @@ public class FreeDBProvider implements ICDDBProvider
 	/**
 	 * 
 	 */
+	private static final String HOST = "localhost";
+
+	/**
+	 * 
+	 */
+	private static final int PORT = 80;
+
+	/**
+	 * 
+	 */
 	private static final String SERVER = "freedb.freedb.org";
 
 	/**
 	 * 
 	 */
-	private final String DEFAULT_REQUEST;
+	private static final String USER = "anonymous";
+
+	/**
+	 * 
+	 */
+	private final String requestPostfix;
 
 	/**
 	 * Erstellt ein neues {@link FreeDBProvider} Object.
@@ -71,7 +86,7 @@ public class FreeDBProvider implements ICDDBProvider
 		sb.append("&hello=").append(USER);
 		sb.append("+").append(HOST);
 		sb.append("+jRipper+1.0.0&proto=6");
-		this.DEFAULT_REQUEST = sb.toString();
+		this.requestPostfix = sb.toString();
 	}
 
 /**
@@ -162,7 +177,7 @@ public class FreeDBProvider implements ICDDBProvider
 			sb.append("+").append(split);
 		}
 
-		sb.append(this.DEFAULT_REQUEST);
+		sb.append(this.requestPostfix);
 
 		URL url = new URL("http", SERVER, PORT, sb.toString());
 		URLConnection connection = url.openConnection();
@@ -252,7 +267,7 @@ public class FreeDBProvider implements ICDDBProvider
 		String[] splits = diskID.toString().split("[ ]");
 		sb.append("+").append(splits[0]);
 
-		sb.append(this.DEFAULT_REQUEST);
+		sb.append(this.requestPostfix);
 
 		URL url = new URL("http", SERVER, PORT, sb.toString());
 		URLConnection connection = url.openConnection();
@@ -329,17 +344,18 @@ public class FreeDBProvider implements ICDDBProvider
 				}
 				else if (line.startsWith("EXTD"))
 				{
-					splits = line.split("[=]");
-
-					if (splits.length == 1)
-					{
-						// Kein Kommentar.
-						continue;
-					}
-
-					splits = normalize(splits);
-
-					album.setComment(splits[1]);
+					// Erst mal deaktiviert.
+					// splits = line.split("[=]");
+					//
+					// if (splits.length == 1)
+					// {
+					// // Kein Kommentar.
+					// continue;
+					// }
+					//
+					// splits = normalize(splits);
+					//
+					// album.setComment(splits[1]);
 				}
 			}
 		}

@@ -4,15 +4,13 @@
 
 package de.freese.jripper.core;
 
+import de.freese.jripper.core.model.Album;
 import java.io.File;
 import java.io.IOException;
-
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.SystemUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import de.freese.jripper.core.model.Album;
 
 /**
  * Util-Klasse.
@@ -28,7 +26,7 @@ public final class JRipperUtils
 
 	/**
 	 * Erzeugt, wenn nicht vorhanden, das Verzeichnis für die Dateien.<br>
-	 * Format: ${user.dir}/ALBUMTITEL/PFAD<br>
+	 * Format: ArbeitsVerzeichnis/ALBUMTITEL/PFAD<br>
 	 * Vorhandenen Daten werden gelöscht.
 	 * 
 	 * @param album {@link Album}
@@ -52,7 +50,7 @@ public final class JRipperUtils
 	 * 
 	 * @return String
 	 */
-	public static String detectCDDVD()
+	static String detectCDDVD()
 	{
 		String drive = null;
 
@@ -122,7 +120,7 @@ public final class JRipperUtils
 
 	/**
 	 * Erzeugt, wenn nicht vorhanden, das Verzeichnis für die Dateien.<br>
-	 * Format: ${user.dir}/ALBUMTITEL/PFAD
+	 * Format: ArbeitsVerzeichnis/ALBUMTITEL/PFAD
 	 * 
 	 * @param album {@link Album}
 	 * @param subDir String
@@ -132,14 +130,8 @@ public final class JRipperUtils
 	private static File getDir(final Album album, final String subDir) throws IOException
 	{
 		StringBuilder sb = new StringBuilder();
-		// sb.append(System.getProperty("user.dir"));
-		sb.append(System.getProperty("java.io.tmpdir"));
-
-		if (!isDevelopment())
-		{
-			sb.append(File.separator).append(album.getTitle());
-		}
-
+		sb.append(Settings.getInstance().getWorkDir());
+		sb.append(File.separator).append(album.getTitle());
 		sb.append(File.separator).append(subDir);
 
 		File dir = new File(sb.toString());
@@ -149,7 +141,7 @@ public final class JRipperUtils
 
 	/**
 	 * Liefert das Verzeichnis für die flac-Dateien.<br>
-	 * Format: ${user.dir}/ALBUMTITEL/flac
+	 * Format: ArbeitsVerzeichnis/ALBUMTITEL/flac
 	 * 
 	 * @param album {@link Album}
 	 * @param createOrDelete boolean; Erzeugt das Verzeichnis oder löscht vorhandene Dateien.
@@ -170,7 +162,7 @@ public final class JRipperUtils
 
 	/**
 	 * Liefert das Verzeichnis für die mp3-Dateien.<br>
-	 * Format: ${user.dir}/ALBUMTITEL/mp3
+	 * Format: ArbeitsVerzeichnis/ALBUMTITEL/mp3
 	 * 
 	 * @param album {@link Album}
 	 * @param createOrDelete boolean; Erzeugt das Verzeichnis oder löscht vorhandene Dateien.
@@ -191,7 +183,7 @@ public final class JRipperUtils
 
 	/**
 	 * Liefert das Verzeichnis für die wav-Dateien.<br>
-	 * Format: ${user.dir}/ALBUMTITEL/wav
+	 * Format: ArbeitsVerzeichnis/ALBUMTITEL/wav
 	 * 
 	 * @param album {@link Album}
 	 * @param createOrDelete boolean; Erzeugt das Verzeichnis oder löscht vorhandene Dateien.

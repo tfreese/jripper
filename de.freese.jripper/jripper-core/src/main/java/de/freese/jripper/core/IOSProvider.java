@@ -17,5 +17,5 @@ public interface IOSProvider
 	 * @param os String
 	 * @return String
 	 */
-	public boolean isSupportedOS(String os);
+	public boolean supportsOS(String os);
 }

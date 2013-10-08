@@ -4,16 +4,14 @@
 
 package de.freese.jripper.core.encoder;
 
-import java.io.File;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.commons.lang3.SystemUtils;
-
 import de.freese.jripper.core.model.Album;
 import de.freese.jripper.core.model.Track;
 import de.freese.jripper.core.process.AbstractProcess;
+import de.freese.jripper.core.process.IProcessMonitor;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import org.apache.commons.lang3.SystemUtils;
 
 /**
  * Linux Implementierung mit dem Programm "flac" und für den ReplayGain mit "metaflac".
@@ -31,10 +29,10 @@ public class LinuxFlacEncoder extends AbstractProcess implements IEncoder
 	}
 
 	/**
-	 * @see de.freese.jripper.core.encoder.IEncoder#encode(de.freese.jripper.core.model.Album, java.io.File, java.io.PrintWriter)
+	 * @see de.freese.jripper.core.encoder.IEncoder#encode(de.freese.jripper.core.model.Album, java.io.File, de.freese.jripper.core.process.IProcessMonitor)
 	 */
 	@Override
-	public void encode(final Album album, final File directory, final PrintWriter printWriter) throws Exception
+	public void encode(final Album album, final File directory, final IProcessMonitor monitor) throws Exception
 	{
 		String diskID = album.getDiskID().getID();
 		List<String> flacFiles = new ArrayList<>();
@@ -69,28 +67,27 @@ public class LinuxFlacEncoder extends AbstractProcess implements IEncoder
 			command.add("-o");
 			command.add(flacFile);
 
-			execute(command, directory, printWriter, null);
+			execute(command, directory, monitor);
 
 			// Überprüfung.
 			command.clear();
 			command.add("flac");
 			command.add("-t");
 			command.add(flacFile);
-			execute(command, directory, printWriter, null);
+			execute(command, directory, monitor);
 
 			// metaflac --list "$flacFile"
 		}
 
 		// Replay-Gain.
-		printWriter.printf("\n%s\n", "Generiere Replay-Gain...");
-		printWriter.flush();
+		monitor.monitorText(String.format("\n%s\n", "Generiere Replay-Gain..."));
 		command.clear();
 		command.add("metaflac");
 		command.add("--add-replay-gain");
 		// command.add("--with-filename");
 		command.addAll(flacFiles);
 		// command.add("*.flac");
-		execute(command, directory, printWriter, null);
+		execute(command, directory, monitor);
 	}
 
 	/**
@@ -103,10 +100,10 @@ public class LinuxFlacEncoder extends AbstractProcess implements IEncoder
 	}
 
 	/**
-	 * @see de.freese.jripper.core.IOSProvider#isSupportedOS(java.lang.String)
+	 * @see de.freese.jripper.core.IOSProvider#supportsOS(java.lang.String)
 	 */
 	@Override
-	public boolean isSupportedOS(final String os)
+	public boolean supportsOS(final String os)
 	{
 		return SystemUtils.IS_OS_LINUX;
 	}
