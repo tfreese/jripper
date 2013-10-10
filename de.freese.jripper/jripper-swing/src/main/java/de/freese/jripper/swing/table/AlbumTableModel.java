@@ -95,7 +95,8 @@ public class AlbumTableModel extends AbstractTableModel
 				break;
 			case 3:
 				int minutes = track.getSeconds() / 60;
-				int seconds = track.getSeconds() - (minutes * 60);
+				// int seconds = track.getSeconds() - (minutes * 60);
+				int seconds = track.getSeconds() % 60;
 				value = String.format("%d:%02d", minutes, seconds);
 				break;
 

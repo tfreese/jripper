@@ -32,7 +32,7 @@ public final class Settings
 	/**
 	 * 
 	 */
-	private String framesPerSecond = null;
+	private int framesPerSecond = 75;
 
 	/**
 	 * 
@@ -56,7 +56,7 @@ public final class Settings
 
 		setMp3Bitrate("320");
 		setDevice(JRipperUtils.detectCDDVD());
-		setFramesPerSecond("75");
+		setFramesPerSecond(75);
 	}
 
 	/**
@@ -68,9 +68,9 @@ public final class Settings
 	}
 
 	/**
-	 * @return String
+	 * @return int
 	 */
-	public String getFramesPerSecond()
+	public int getFramesPerSecond()
 	{
 		return this.framesPerSecond;
 	}
@@ -102,9 +102,9 @@ public final class Settings
 	}
 
 	/**
-	 * @param framesPerSecond String
+	 * @param framesPerSecond int
 	 */
-	public void setFramesPerSecond(final String framesPerSecond)
+	public void setFramesPerSecond(final int framesPerSecond)
 	{
 		this.framesPerSecond = framesPerSecond;
 	}

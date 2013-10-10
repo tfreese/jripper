@@ -101,7 +101,7 @@ public class DiskID
 	 */
 	public int getTrackSeconds(final int track)
 	{
-		int framesPerSecond = Integer.parseInt(Settings.getInstance().getFramesPerSecond());
+		int framesPerSecond = Settings.getInstance().getFramesPerSecond();
 		int seconds = 0;
 
 		if (track == 0)
@@ -110,7 +110,7 @@ public class DiskID
 			int frames = this.trackOffsets[0] - this.offset;
 			seconds = frames / framesPerSecond;
 		}
-		else if (track < (this.trackOffsets.length - 1))
+		else if (track < this.trackOffsets.length)
 		{
 			int frames = this.trackOffsets[track] - this.trackOffsets[track - 1] - this.offset;
 			seconds = frames / framesPerSecond;
