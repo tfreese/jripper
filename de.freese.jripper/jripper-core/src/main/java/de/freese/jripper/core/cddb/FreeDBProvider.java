@@ -278,8 +278,9 @@ public class FreeDBProvider implements ICDDBProvider
 		URL url = new URL("http", SERVER, PORT, sb.toString());
 		URLConnection connection = url.openConnection();
 
-		Album album = new Album();
-		album.setDiskID(diskID);
+		Album album = new Album(diskID);
+
+		StringBuilder comment = new StringBuilder();
 
 		try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream(), "UTF-8")))
 		{
@@ -350,21 +351,22 @@ public class FreeDBProvider implements ICDDBProvider
 				}
 				else if (line.startsWith("EXTD"))
 				{
-					// Erst mal deaktiviert.
-					// splits = line.split("[=]");
-					//
-					// if (splits.length == 1)
-					// {
-					// // Kein Kommentar.
-					// continue;
-					// }
-					//
+					splits = line.split("[=]");
+
+					if (splits.length == 1)
+					{
+						// Kein Kommentar.
+						continue;
+					}
+
 					// splits = normalize(splits);
-					//
+					comment.append(splits[1]);// .append("\n");
 					// album.setComment(splits[1]);
 				}
 			}
 		}
+
+		// album.setComment(comment.toString().trim());
 
 		return album;
 	}

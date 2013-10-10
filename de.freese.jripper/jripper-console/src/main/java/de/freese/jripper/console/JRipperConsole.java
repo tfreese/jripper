@@ -37,6 +37,15 @@ import org.apache.commons.lang3.StringUtils;
 public class JRipperConsole implements IAnsiCodes
 {
 	/**
+	 * @param args String[]
+	 */
+	public static void main(final String[] args)
+	{
+		JRipperConsole console = new JRipperConsole();
+		console.showMainMenu();
+	}
+
+	/**
 	 * 
 	 */
 	private Album album = null;
@@ -120,7 +129,7 @@ public class JRipperConsole implements IAnsiCodes
 	 */
 	private DiskID getDiskID() throws Exception
 	{
-		String device = Settings.getInstance().getLaufwerk();
+		String device = Settings.getInstance().getDevice();
 		DiskID diskID = DiskIDProvider.getInstance().getDiskID(device);
 
 		return diskID;
@@ -213,7 +222,7 @@ public class JRipperConsole implements IAnsiCodes
 	 */
 	private void rip(final Album album, final PrintWriter printWriter) throws Exception
 	{
-		String device = Settings.getInstance().getLaufwerk();
+		String device = Settings.getInstance().getDevice();
 		IRipper ripper = Ripper.getInstance();
 		File directory = JRipperUtils.getWavDir(album, true);
 

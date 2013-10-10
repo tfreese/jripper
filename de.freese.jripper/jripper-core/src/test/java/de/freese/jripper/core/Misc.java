@@ -4,6 +4,9 @@
 
 package de.freese.jripper.core;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -38,6 +41,50 @@ public class Misc
 		{
 			String prozent = s.substring(start + 2, end).trim();
 			System.out.println(prozent);
+		}
+
+		// Shell öffnen und Skript ausführen.
+		List<String> command = new ArrayList<>();
+
+		command.add("konsole");
+		// command.add("--nofork");
+		command.add("--new-tab");
+		command.add("--hold");
+		command.add("-e");
+		command.add("/tmp/test.sh");
+
+		// command.add("xterm");
+		// // command.add("-T");
+		// // command.add("MyTest");
+		// // command.add("-n");
+		// // command.add("MyTest minimized");
+		// command.add("-bg");
+		// command.add("black");
+		// command.add("-fg");
+		// command.add("white");
+		// command.add("-geometry");
+		// command.add("250x35");
+		// command.add("-hold");
+		// command.add("-e");
+		// command.add("/tmp/test.sh");
+		// // command.add(";");
+		// // command.add("le_exec");
+
+		try
+		{
+			System.out.println(System.getenv().get("TERM"));
+			ProcessBuilder processBuilder = new ProcessBuilder();
+			processBuilder.directory(new File("/tmp"));
+			processBuilder.command(command);
+			// processBuilder.redirectErrorStream(true);
+			// Map<String, String> env = processBuilder.environment();
+			// env.put("tommy", "true");
+			Process process = processBuilder.start();
+			// process.waitFor();
+		}
+		catch (Exception ex)
+		{
+			ex.printStackTrace();
 		}
 	}
 }

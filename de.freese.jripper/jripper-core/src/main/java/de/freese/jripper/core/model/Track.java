@@ -31,6 +31,11 @@ public class Track
 	/**
 	 * 
 	 */
+	private int seconds = 0;
+
+	/**
+	 * 
+	 */
 	private String title = null;
 
 	/**
@@ -39,6 +44,14 @@ public class Track
 	Track()
 	{
 		super();
+	}
+
+	/**
+	 * @return String
+	 */
+	public String getAlbumTitle()
+	{
+		return this.album.getTitle();
 	}
 
 	/**
@@ -57,11 +70,27 @@ public class Track
 	}
 
 	/**
+	 * @return String
+	 */
+	public String getComment()
+	{
+		return this.album.getComment();
+	}
+
+	/**
 	 * @return int
 	 */
 	public int getNumber()
 	{
 		return this.number;
+	}
+
+	/**
+	 * @return int
+	 */
+	public int getSeconds()
+	{
+		return this.seconds;
 	}
 
 	/**
@@ -96,6 +125,14 @@ public class Track
 	void setNumber(final int number)
 	{
 		this.number = number;
+	}
+
+	/**
+	 * @param seconds int
+	 */
+	void setSeconds(final int seconds)
+	{
+		this.seconds = seconds;
 	}
 
 	/**

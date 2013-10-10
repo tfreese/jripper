@@ -22,7 +22,7 @@ public class DiskIDAlgorythm
 	 */
 	public static void main(final String[] args)
 	{
-		int FRAMES_PER_SECOND = 75;
+		int FRAMES_PER_SECOND = Integer.valueOf(Settings.getInstance().getFramesPerSecond());
 		int[] frames =
 		{
 				150, 24545, 41797, 60822, 80152, 117002, 142550, 169755, 192057, 211360, 239297, 256325, 279075, 306220

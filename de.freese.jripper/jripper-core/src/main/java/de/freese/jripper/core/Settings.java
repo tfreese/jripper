@@ -25,9 +25,14 @@ public final class Settings
 	}
 
 	/**
+	 * Laufwerk
+	 */
+	private String device = null;
+
+	/**
 	 * 
 	 */
-	private String laufwerk = null;
+	private String framesPerSecond = null;
 
 	/**
 	 * 
@@ -35,7 +40,7 @@ public final class Settings
 	private String mp3Bitrate = null;
 
 	/**
-	 * Arbeitsverzeichnis.
+	 * Arbeitsverzeichnis
 	 */
 	private String workDir = null;
 
@@ -50,15 +55,24 @@ public final class Settings
 		// setWorkDir(System.getProperty("user.dir"));
 
 		setMp3Bitrate("320");
-		setLaufwerk(JRipperUtils.detectCDDVD());
+		setDevice(JRipperUtils.detectCDDVD());
+		setFramesPerSecond("75");
 	}
 
 	/**
 	 * @return String
 	 */
-	public String getLaufwerk()
+	public String getDevice()
 	{
-		return this.laufwerk;
+		return this.device;
+	}
+
+	/**
+	 * @return String
+	 */
+	public String getFramesPerSecond()
+	{
+		return this.framesPerSecond;
 	}
 
 	/**
@@ -80,11 +94,19 @@ public final class Settings
 	}
 
 	/**
-	 * @param laufwerk String
+	 * @param device String
 	 */
-	public void setLaufwerk(final String laufwerk)
+	public void setDevice(final String device)
 	{
-		this.laufwerk = laufwerk;
+		this.device = device;
+	}
+
+	/**
+	 * @param framesPerSecond String
+	 */
+	public void setFramesPerSecond(final String framesPerSecond)
+	{
+		this.framesPerSecond = framesPerSecond;
 	}
 
 	/**

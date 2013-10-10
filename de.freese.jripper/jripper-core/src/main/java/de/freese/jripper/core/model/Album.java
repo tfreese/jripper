@@ -7,7 +7,6 @@ package de.freese.jripper.core.model;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -30,7 +29,7 @@ public class Album implements Iterable<Track>
 	/**
 	 * 
 	 */
-	private DiskID diskID = null;
+	private final DiskID diskID;
 
 	/**
 	 * 
@@ -64,10 +63,14 @@ public class Album implements Iterable<Track>
 
 	/**
 	 * Erstellt ein neues {@link Album} Object.
+	 * 
+	 * @param diskID {@link DiskID}
 	 */
-	public Album()
+	public Album(final DiskID diskID)
 	{
 		super();
+
+		this.diskID = diskID;
 	}
 
 	/**
@@ -76,11 +79,15 @@ public class Album implements Iterable<Track>
 	 */
 	public void addTrack(final String artist, final String title)
 	{
+		int trackIndex = this.tracks.size();
+
 		Track track = new Track();
 		track.setAlbum(this);
 		track.setArtist(artist);
 		track.setTitle(title);
-		track.setNumber(this.tracks.size() + 1);
+		track.setNumber(trackIndex + 1);
+		track.setSeconds(getDiskID().getTrackSeconds(trackIndex));
+
 		this.tracks.add(track);
 	}
 
@@ -143,6 +150,17 @@ public class Album implements Iterable<Track>
 	}
 
 	/**
+	 * Liefert den {@link Track} am Index.
+	 * 
+	 * @param index int
+	 * @return {@link Track}
+	 */
+	public Track getTrack(final int index)
+	{
+		return this.tracks.get(index);
+	}
+
+	/**
 	 * Liefert die Anzahl der Tracks.
 	 * 
 	 * @return int
@@ -185,14 +203,6 @@ public class Album implements Iterable<Track>
 	public void setComment(final String comment)
 	{
 		this.comment = comment;
-	}
-
-	/**
-	 * @param diskID {@link DiskID}
-	 */
-	public void setDiskID(final DiskID diskID)
-	{
-		this.diskID = diskID;
 	}
 
 	/**
