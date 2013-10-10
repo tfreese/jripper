@@ -4,9 +4,15 @@
 
 package de.freese.jripper.core;
 
+import de.freese.jripper.core.cddb.FreeDBProvider;
+import de.freese.jripper.core.cddb.ICDDBProvider;
+import de.freese.jripper.core.diskid.DiskIDProvider;
 import de.freese.jripper.core.diskid.IDiskIDProvider;
+import de.freese.jripper.core.encoder.Encoder;
+import de.freese.jripper.core.encoder.EncoderFormat;
 import de.freese.jripper.core.encoder.IEncoder;
 import de.freese.jripper.core.ripper.IRipper;
+import de.freese.jripper.core.ripper.Ripper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,12 +26,26 @@ public class JRipper
 	/**
 	 * 
 	 */
-	public static final Logger LOGGER = LoggerFactory.getLogger("JRipper");
+	private static final JRipper INSTANCE = new JRipper();
+
+	/**
+	 * @return {@link JRipper}
+	 */
+	public static JRipper getInstance()
+	{
+		return INSTANCE;
+	}
+
+	/**
+	 * 
+	 */
+	private ICDDBProvider cddbProvider = null;
 
 	/**
 	 * 
 	 */
 	private IDiskIDProvider diskIDProvider = null;
+
 	/**
 	 * 
 	 */
@@ -37,14 +57,31 @@ public class JRipper
 	/**
 	 * 
 	 */
+	private final Logger logger = LoggerFactory.getLogger("JRipper");
+	/**
+	 * 
+	 */
 	private IRipper ripper = null;
 
 	/**
 	 * Erstellt ein neues {@link JRipper} Object.
 	 */
-	public JRipper()
+	private JRipper()
 	{
 		super();
+	}
+
+	/**
+	 * @return {@link ICDDBProvider}
+	 */
+	public ICDDBProvider getCDDBProvider()
+	{
+		if (this.cddbProvider == null)
+		{
+			this.cddbProvider = new FreeDBProvider();
+		}
+
+		return this.cddbProvider;
 	}
 
 	/**
@@ -52,6 +89,11 @@ public class JRipper
 	 */
 	public IDiskIDProvider getDiskIDProvider()
 	{
+		if (this.diskIDProvider == null)
+		{
+			this.diskIDProvider = DiskIDProvider.getInstance();
+		}
+
 		return this.diskIDProvider;
 	}
 
@@ -60,6 +102,11 @@ public class JRipper
 	 */
 	public IEncoder getEncoderFLAC()
 	{
+		if (this.encoderFLAC == null)
+		{
+			this.encoderFLAC = Encoder.getInstance(EncoderFormat.flac);
+		}
+
 		return this.encoderFLAC;
 	}
 
@@ -68,7 +115,20 @@ public class JRipper
 	 */
 	public IEncoder getEncoderMP3()
 	{
+		if (this.encoderMP3 == null)
+		{
+			this.encoderMP3 = Encoder.getInstance(EncoderFormat.mp3);
+		}
+
 		return this.encoderMP3;
+	}
+
+	/**
+	 * @return {@link Logger}
+	 */
+	public Logger getLogger()
+	{
+		return this.logger;
 	}
 
 	/**
@@ -76,7 +136,20 @@ public class JRipper
 	 */
 	public IRipper getRipper()
 	{
+		if (this.ripper == null)
+		{
+			this.ripper = Ripper.getInstance();
+		}
+
 		return this.ripper;
+	}
+
+	/**
+	 * @param cddbProvider {@link ICDDBProvider}
+	 */
+	public void setCDDBProvider(final ICDDBProvider cddbProvider)
+	{
+		this.cddbProvider = cddbProvider;
 	}
 
 	/**

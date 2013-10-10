@@ -4,13 +4,9 @@
 
 package de.freese.jripper.console;
 
+import de.freese.jripper.core.JRipper;
 import de.freese.jripper.core.JRipperUtils;
 import de.freese.jripper.core.Settings;
-import de.freese.jripper.core.cddb.FreeDBProvider;
-import de.freese.jripper.core.cddb.ICDDBProvider;
-import de.freese.jripper.core.diskid.DiskIDProvider;
-import de.freese.jripper.core.encoder.Encoder;
-import de.freese.jripper.core.encoder.EncoderFormat;
 import de.freese.jripper.core.encoder.IEncoder;
 import de.freese.jripper.core.encoder.LameProcessMonitor;
 import de.freese.jripper.core.encoder.LinuxMP3Encoder;
@@ -20,7 +16,6 @@ import de.freese.jripper.core.model.Track;
 import de.freese.jripper.core.process.IProcessMonitor;
 import de.freese.jripper.core.process.PrintWriterProcessMonitor;
 import de.freese.jripper.core.ripper.IRipper;
-import de.freese.jripper.core.ripper.Ripper;
 import java.io.BufferedReader;
 import java.io.Console;
 import java.io.File;
@@ -49,11 +44,6 @@ public class JRipperConsole implements IAnsiCodes
 	 * 
 	 */
 	private Album album = null;
-
-	/**
-	 * 
-	 */
-	private final ICDDBProvider cddbService;
 
 	/**
 	 * 
@@ -93,20 +83,17 @@ public class JRipperConsole implements IAnsiCodes
 			this.reader = new BufferedReader(new InputStreamReader(System.in));
 			this.printWriter = new PrintWriter(System.out);
 		}
-
-		this.cddbService = new FreeDBProvider();
 	}
 
 	/**
 	 * @param album {@link Album}
 	 * @param printWriter {@link PrintWriter}
-	 * @param format {@link EncoderFormat}
+	 * @param encoder {@link IEncoder}
 	 * @param directory {@link File}
 	 * @throws Exception Falls was schief geht.
 	 */
-	private void encode(final Album album, final PrintWriter printWriter, final EncoderFormat format, final File directory) throws Exception
+	private void encode(final Album album, final PrintWriter printWriter, final IEncoder encoder, final File directory) throws Exception
 	{
-		IEncoder encoder = Encoder.getInstance(format);
 		IProcessMonitor monitor = null;
 
 		if (encoder instanceof LinuxMP3Encoder)
@@ -130,7 +117,7 @@ public class JRipperConsole implements IAnsiCodes
 	private DiskID getDiskID() throws Exception
 	{
 		String device = Settings.getInstance().getDevice();
-		DiskID diskID = DiskIDProvider.getInstance().getDiskID(device);
+		DiskID diskID = JRipper.getInstance().getDiskIDProvider().getDiskID(device);
 
 		return diskID;
 	}
@@ -195,7 +182,7 @@ public class JRipperConsole implements IAnsiCodes
 	 */
 	private String queryCDDB(final DiskID diskID) throws Exception
 	{
-		List<String> genres = this.cddbService.queryCDDB(diskID);
+		List<String> genres = JRipper.getInstance().getCDDBProvider().queryCDDB(diskID);
 
 		return genres.get(0);
 	}
@@ -210,7 +197,7 @@ public class JRipperConsole implements IAnsiCodes
 	 */
 	private Album readCDDB(final DiskID diskID, final String genre) throws Exception
 	{
-		Album album = this.cddbService.readCDDB(diskID, genre);
+		Album album = JRipper.getInstance().getCDDBProvider().readCDDB(diskID, genre);
 
 		return album;
 	}
@@ -223,7 +210,7 @@ public class JRipperConsole implements IAnsiCodes
 	private void rip(final Album album, final PrintWriter printWriter) throws Exception
 	{
 		String device = Settings.getInstance().getDevice();
-		IRipper ripper = Ripper.getInstance();
+		IRipper ripper = JRipper.getInstance().getRipper();
 		File directory = JRipperUtils.getWavDir(album, true);
 
 		ripper.rip(device, directory, new PrintWriterProcessMonitor(printWriter));
@@ -444,12 +431,12 @@ public class JRipperConsole implements IAnsiCodes
 
 				case "4":
 					File flacDir = JRipperUtils.getFlacDir(this.album, true);
-					encode(this.album, this.printWriter, EncoderFormat.flac, flacDir);
+					encode(this.album, this.printWriter, JRipper.getInstance().getEncoderFLAC(), flacDir);
 					break;
 
 				case "5":
 					File mp3Dir = JRipperUtils.getMP3Dir(this.album, true);
-					encode(this.album, this.printWriter, EncoderFormat.mp3, mp3Dir);
+					encode(this.album, this.printWriter, JRipper.getInstance().getEncoderMP3(), mp3Dir);
 					break;
 
 				case "q":

@@ -4,10 +4,9 @@
 
 package de.freese.jripper.swing.task;
 
+import de.freese.jripper.core.JRipper;
 import de.freese.jripper.core.Settings;
-import de.freese.jripper.core.cddb.FreeDBProvider;
 import de.freese.jripper.core.cddb.ICDDBProvider;
-import de.freese.jripper.core.diskid.DiskIDProvider;
 import de.freese.jripper.core.model.Album;
 import de.freese.jripper.core.model.DiskID;
 import de.freese.jripper.swing.table.AlbumTableModel;
@@ -46,9 +45,9 @@ public class CDDBTask extends SwingWorker<Album, Void>
 	protected Album doInBackground() throws Exception
 	{
 		String device = Settings.getInstance().getDevice();
-		DiskID diskID = DiskIDProvider.getInstance().getDiskID(device);
+		DiskID diskID = JRipper.getInstance().getDiskIDProvider().getDiskID(device);
 
-		ICDDBProvider cddbService = new FreeDBProvider();
+		ICDDBProvider cddbService = JRipper.getInstance().getCDDBProvider();
 		List<String> genres = cddbService.queryCDDB(diskID);
 		Album album = cddbService.readCDDB(diskID, genres.get(0));
 

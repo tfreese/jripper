@@ -19,9 +19,9 @@ import org.slf4j.Logger;
 public abstract class AbstractProcess
 {
 	/**
-	 * 
+	 *
 	 */
-	public final Logger logger = JRipper.LOGGER; // LoggerFactory.getLogger(getClass());
+	public final Logger logger = JRipper.getInstance().getLogger();// LoggerFactory.getLogger(getClass());
 
 	/**
 	 * Erstellt ein neues {@link AbstractProcess} Object.

@@ -4,7 +4,6 @@
 
 package de.freese.jripper.core.diskid;
 
-import de.freese.jripper.core.IOSProvider;
 import de.freese.jripper.core.Settings;
 import de.freese.jripper.core.model.DiskID;
 import de.freese.jripper.core.process.AbstractProcess;
@@ -19,7 +18,7 @@ import org.apache.commons.lang3.SystemUtils;
  * 
  * @author Thomas Freese
  */
-public class LinuxDiskIDProvider extends AbstractProcess implements IDiskIDProvider, IOSProvider, IProcessMonitor
+public class LinuxDiskIDProvider extends AbstractProcess implements IDiskIDProvider, IProcessMonitor
 {
 	/**
 	 * 

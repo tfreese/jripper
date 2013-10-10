@@ -72,9 +72,9 @@ public class FreeDBProvider implements ICDDBProvider
 	private static final String USER = "anonymous";
 
 	/**
-	 * 
+	 *
 	 */
-	public final Logger logger = JRipper.LOGGER; // LoggerFactory.getLogger(getClass());
+	public final Logger logger = JRipper.getInstance().getLogger();// LoggerFactory.getLogger(getClass());
 
 	/**
 	 * 
@@ -93,6 +93,14 @@ public class FreeDBProvider implements ICDDBProvider
 		sb.append("+").append(HOST);
 		sb.append("+jRipper+1.0.0&proto=6");
 		this.requestPostfix = sb.toString();
+	}
+
+	/**
+	 * @return {@link Logger}
+	 */
+	private Logger getLogger()
+	{
+		return this.logger;
 	}
 
 /**
@@ -196,7 +204,7 @@ public class FreeDBProvider implements ICDDBProvider
 
 			while ((line = reader.readLine()) != null)
 			{
-				this.logger.debug(line);
+				getLogger().debug(line);
 
 				if (line.startsWith("."))
 				{
@@ -288,7 +296,7 @@ public class FreeDBProvider implements ICDDBProvider
 
 			while ((line = reader.readLine()) != null)
 			{
-				this.logger.debug(line);
+				getLogger().debug(line);
 
 				if (line.startsWith("DTITLE"))
 				{
