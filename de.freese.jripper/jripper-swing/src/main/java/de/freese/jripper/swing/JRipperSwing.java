@@ -5,10 +5,14 @@
 package de.freese.jripper.swing;
 
 import de.freese.jripper.swing.action.ActionCDDBQuery;
+import de.freese.jripper.swing.action.ActionRipping;
 import de.freese.jripper.swing.table.AlbumTableModel;
 import java.awt.BorderLayout;
+import java.awt.Container;
+import java.awt.FlowLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
@@ -64,9 +68,23 @@ public class JRipperSwing
 		JTable table = new JTable();
 		table.setModel(new AlbumTableModel());
 
-		frame.add(new JButton(new ActionCDDBQuery(table)), BorderLayout.NORTH);
+		initMenue(frame, table);
 		frame.add(new JScrollPane(table), BorderLayout.CENTER);
 
 		frame.setVisible(true);
+	}
+
+	/**
+	 * @param container {@link Container}
+	 * @param table {@link JTable}
+	 */
+	private void initMenue(final Container container, final JTable table)
+	{
+		JPanel panel = new JPanel();
+		panel.setLayout(new FlowLayout());
+		panel.add(new JButton(new ActionCDDBQuery(table)));
+		panel.add(new JButton(new ActionRipping(table)));
+
+		container.add(panel, BorderLayout.NORTH);
 	}
 }

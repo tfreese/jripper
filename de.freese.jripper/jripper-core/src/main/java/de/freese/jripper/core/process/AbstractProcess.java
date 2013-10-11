@@ -63,6 +63,11 @@ public abstract class AbstractProcess
 	 */
 	protected void execute(final List<String> command, final File directory, final IProcessMonitor monitor) throws Exception
 	{
+		if (!directory.exists())
+		{
+			directory.mkdirs();
+		}
+
 		ProcessBuilder processBuilder = new ProcessBuilder();
 		processBuilder.directory(directory);
 		processBuilder.command(command);

@@ -51,8 +51,9 @@ public final class Settings
 	{
 		super();
 
-		setWorkDir(System.getProperty("java.io.tmpdir"));
+		// setWorkDir(System.getProperty("java.io.tmpdir"));
 		// setWorkDir(System.getProperty("user.dir"));
+		setWorkDir(System.getProperty("user.home") + "/.jripper");
 
 		setMp3Bitrate("320");
 		setDevice(JRipperUtils.detectCDDVD());

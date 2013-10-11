@@ -7,10 +7,11 @@ package de.freese.jripper.swing.action;
 import de.freese.jripper.swing.task.CDDBTask;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.JTable;
 
 /**
- * Führt die CDDB Query aus.
+ * {@link Action} für die CDDB Query.
  * 
  * @author Thomas Freese
  */

@@ -35,6 +35,14 @@ public class AlbumTableModel extends AbstractTableModel
 	}
 
 	/**
+	 * @return {@link Album}
+	 */
+	public Album getAlbum()
+	{
+		return this.album;
+	}
+
+	/**
 	 * @see javax.swing.table.TableModel#getColumnCount()
 	 */
 	@Override

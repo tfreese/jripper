@@ -8,6 +8,7 @@ import de.freese.jripper.core.model.Album;
 import java.io.File;
 import java.io.IOException;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.SystemUtils;
 
 /**
@@ -112,27 +113,6 @@ public final class JRipperUtils
 	}
 
 	/**
-	 * Erzeugt, wenn nicht vorhanden, das Verzeichnis für die Dateien.<br>
-	 * Format: ArbeitsVerzeichnis/ALBUMTITEL/PFAD
-	 * 
-	 * @param album {@link Album}
-	 * @param subDir String
-	 * @return {@link File}
-	 * @throws IOException Falls was schief geht.
-	 */
-	private static File getDir(final Album album, final String subDir) throws IOException
-	{
-		StringBuilder sb = new StringBuilder();
-		sb.append(Settings.getInstance().getWorkDir());
-		sb.append(File.separator).append(album.getTitle());
-		sb.append(File.separator).append(subDir);
-
-		File dir = new File(sb.toString());
-
-		return dir;
-	}
-
-	/**
 	 * Liefert das Verzeichnis für die flac-Dateien.<br>
 	 * Format: ArbeitsVerzeichnis/ALBUMTITEL/flac
 	 * 
@@ -143,7 +123,7 @@ public final class JRipperUtils
 	 */
 	public static File getFlacDir(final Album album, final boolean createOrDelete) throws IOException
 	{
-		File dir = getDir(album, "flac");
+		File dir = new File(getWorkDir(album), "flac");
 
 		if (createOrDelete)
 		{
@@ -164,7 +144,7 @@ public final class JRipperUtils
 	 */
 	public static File getMP3Dir(final Album album, final boolean createOrDelete) throws IOException
 	{
-		File dir = getDir(album, "mp3");
+		File dir = new File(getWorkDir(album), "mp3");
 
 		if (createOrDelete)
 		{
@@ -185,11 +165,35 @@ public final class JRipperUtils
 	 */
 	public static File getWavDir(final Album album, final boolean createOrDelete) throws IOException
 	{
-		File dir = getDir(album, "wav");
+		File dir = new File(getWorkDir(album), "wav");
 
 		if (createOrDelete)
 		{
 			createOrDeleteDir(album, dir);
+		}
+
+		return dir;
+	}
+
+	/**
+	 * Erzeugt, wenn nicht vorhanden, das Verzeichnis für die Dateien.<br>
+	 * Format: ArbeitsVerzeichnis/ALBUMTITEL
+	 * 
+	 * @param album {@link Album}
+	 * @return {@link File}
+	 * @throws IOException Falls was schief geht.
+	 */
+	public static File getWorkDir(final Album album) throws IOException
+	{
+		StringBuilder sb = new StringBuilder();
+		sb.append(Settings.getInstance().getWorkDir());
+		sb.append(File.separator).append(StringUtils.replace(album.getTitle(), " ", "-"));
+
+		File dir = new File(sb.toString());
+
+		if (!dir.exists())
+		{
+			dir.mkdirs();
 		}
 
 		return dir;

@@ -72,7 +72,7 @@ public class LinuxFlacEncoder extends AbstractProcess implements IEncoder
 			// Überprüfung.
 			command.clear();
 			command.add("flac");
-			command.add("-t");
+			command.add("-tw");
 			command.add(flacFile);
 			execute(command, directory, monitor);
 
