@@ -77,11 +77,7 @@ public class LinuxScripter extends AbstractProcess implements IScripter
 			// pw.printf("BASE_DIR=%s/\n", folder.getAbsoluteFile());
 
 			// cdparanoia
-			pw.println();
-			pw.println("mkdir -p $BASE_DIR/wav");
-			pw.println("cd $BASE_DIR/wav");
-			pw.println("rm -f *.wav");
-			pw.printf("$CDPARANOIA -w -B -d %s\n", Settings.getInstance().getDevice());
+			writeRip(pw);
 
 			// flac
 			pw.println();
@@ -93,7 +89,7 @@ public class LinuxScripter extends AbstractProcess implements IScripter
 
 			// Shell offen lassen
 			pw.println();
-			pw.println("$SHELL");
+			// pw.println("$SHELL");
 		}
 
 		List<String> command = new ArrayList<>();
@@ -112,7 +108,7 @@ public class LinuxScripter extends AbstractProcess implements IScripter
 	private void writeFLAC(final PrintWriter pw, final Album album)
 	{
 		String diskID = album.getDiskID().getID();
-		List<String> files = new ArrayList<>();
+		// List<String> files = new ArrayList<>();
 
 		pw.println("mkdir -p $BASE_DIR/flac");
 		pw.println("cd $BASE_DIR/flac");
@@ -124,6 +120,8 @@ public class LinuxScripter extends AbstractProcess implements IScripter
 			pw.print("$FLAC");
 			pw.print(" -8");
 			pw.print(" -V");
+			pw.print(" -f");
+			pw.print(" -w");
 			// pw.print(" --sample-rate=44.1");
 			pw.println(" --replay-gain \\");
 			pw.printf("\t$BASE_DIR/wav/track%02d.cdda.wav \\\n", track.getNumber());
@@ -142,18 +140,18 @@ public class LinuxScripter extends AbstractProcess implements IScripter
 			pw.printf("\t--tag=DISKID=%s \\\n", diskID);
 
 			String flacFile = String.format("\"%s (%s) - %02d - %s.flac\"", track.getArtist(), album.getTitle(), track.getNumber(), track.getTitle());
-			files.add(flacFile);
+			// files.add(flacFile);
 
 			pw.printf("\t-o %s\n", flacFile);
 		}
 
 		pw.println();
-
+		pw.println("echo");
 		pw.println("echo Überprüfung");
 		pw.println("$FLAC -tw *.flac");
 
 		pw.println();
-
+		pw.println("echo");
 		pw.println("echo Replay-Gain");
 		pw.println("$METAFLAC --add-replay-gain *.flac");
 	}
@@ -164,7 +162,58 @@ public class LinuxScripter extends AbstractProcess implements IScripter
 	 */
 	private void writeMP3(final PrintWriter pw, final Album album)
 	{
-		// TODO
+		String diskID = album.getDiskID().getID();
+		// List<String> files = new ArrayList<>();
+
+		pw.println("mkdir -p $BASE_DIR/mp3");
+		pw.println("cd $BASE_DIR/mp3");
+		pw.println("rm -f *.mp3");
+
+		for (Track track : album)
+		{
+			pw.println();
+			pw.print("$LAME");
+			pw.print(" -m");
+			pw.print(" j");
+			pw.print(" -q");
+			pw.print(" 0");
+			pw.print(" -p");
+			// pw.print(" -s");
+			// pw.print(" 44.1");
+			pw.print(" -b ");
+			pw.print(Settings.getInstance().getMp3Bitrate());
+			pw.print(" --replaygain-accurate");
+			pw.print(" --add-id3v2");
+			pw.print(" --pad-id3v2");
+			pw.println(" --ignore-tag-errors \\");
+			pw.printf("\t--ta \"%s\" \\\n", track.getArtist());
+			pw.printf("\t--tl \"%s\" \\\n", album.getTitle());
+			pw.printf("\t--tt \"%s\" \\\n", track.getTitle());
+			pw.printf("\t--tg \"%s\" \\\n", album.getGenre());
+			pw.printf("\t--ty \"%d\" \\\n", album.getYear());
+			pw.printf("\t--tn \"%d/%d\" \\\n", track.getNumber(), album.getTrackCount());
+			pw.printf("\t--tc \"%s\" \\\n", album.getComment());
+			pw.printf("\t--tv \"DISCID=%s\" \\\n", diskID);
+			pw.printf("\t--tv \"DISCNUMBER=%d\" \\\n", album.getDiskNumber());
+			pw.printf("\t--tv \"TOTALDISCS=%d\" \\\n", album.getTotalDisks());
+			pw.printf("\t--tv \"DISCTOTAL=%d\" \\\n", album.getTotalDisks());  // Für Player-Kompatibilität.
+			pw.printf("\t$BASE_DIR/wav/track%02d.cdda.wav", track.getNumber());
+
+			String flacFile = String.format("\"%s (%s) - %02d - %s.mp3\"", track.getArtist(), album.getTitle(), track.getNumber(), track.getTitle());
+			// files.add(flacFile);
+
+			pw.printf("\t%s\n", flacFile);
+		}
+
+		pw.println();
+		pw.println("echo");
+		pw.println("echo Überprüfung");
+		pw.println("$MP3VAL *.mp3 -f -nb");
+
+		pw.println();
+		pw.println("echo");
+		pw.println("echo Replay-Gain");
+		pw.println("$MP3GAIN -r -k *.mp3");	 // -a
 	}
 
 	/**
@@ -180,6 +229,21 @@ public class LinuxScripter extends AbstractProcess implements IScripter
 		pw.printf("elif [ ! -x $%s ]; then\n", StringUtils.upperCase(programm));
 		pw.printf("\techo \"%s not executable\"\n", programm);
 		pw.println("\texit 5;");
+		pw.println("fi");
+	}
+
+	/**
+	 * @param pw {@link PrintWriter}
+	 */
+	private void writeRip(final PrintWriter pw)
+	{
+		pw.println();
+		pw.println("read -p \"(r)ippen oder (e)ncoden: \" re");
+		pw.println("if [ \"$re\" = \"r\" ]; then");
+		pw.println("\tmkdir -p $BASE_DIR/wav");
+		pw.println("\tcd $BASE_DIR/wav");
+		pw.println("\trm -f *.wav");
+		pw.printf("\t$CDPARANOIA -w -B -d %s\n", Settings.getInstance().getDevice());
 		pw.println("fi");
 	}
 }

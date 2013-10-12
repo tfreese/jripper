@@ -47,6 +47,7 @@ public class LinuxMP3Encoder extends AbstractProcess implements IEncoder
 			command.add("j");
 			command.add("-q");
 			command.add("0");
+			command.add("-p");
 			// command.add("-s");
 			// command.add("44.1");
 			command.add("-b");
@@ -101,6 +102,9 @@ public class LinuxMP3Encoder extends AbstractProcess implements IEncoder
 		monitor.monitorText(String.format("\n%s\n", "Generiere Replay-Gain..."));
 		command.clear();
 		command.add("mp3gain");
+		command.add("-r");
+		command.add("-k");
+		// command.add("-a");
 		command.addAll(mp3Files);
 		// command.add("*.mp3");
 		execute(command, directory, monitor);

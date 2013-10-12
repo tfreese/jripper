@@ -44,6 +44,8 @@ public class LinuxFlacEncoder extends AbstractProcess implements IEncoder
 			command.add("flac");
 			command.add("-8");
 			command.add("-V");
+			command.add("-f");
+			command.add("-w");
 			// command.add("--sample-rate=44.1");
 			command.add("--replay-gain");
 			command.add(String.format("../wav/track%02d.cdda.wav", track.getNumber()));
