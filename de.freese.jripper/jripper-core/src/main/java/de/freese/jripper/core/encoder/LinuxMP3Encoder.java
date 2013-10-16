@@ -51,7 +51,7 @@ public class LinuxMP3Encoder extends AbstractProcess implements IEncoder
 			// command.add("-s");
 			// command.add("44.1");
 			command.add("-b");
-			command.add(Settings.getInstance().getMp3Bitrate());
+			command.add(Integer.toString(Settings.getInstance().getMp3Bitrate()));
 			command.add("--replaygain-accurate");
 			command.add("--add-id3v2");
 			command.add("--pad-id3v2");

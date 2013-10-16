@@ -69,9 +69,7 @@
 	<logger name="JRipper" level="DEBUG">
 		<!--appender-ref ref="FILE" /-->
 	</logger>
-	
-	<!--logger name="de.freese.jripper.core.diskid" level="DEBUG">
-	<logger name="de.freese.jripper.core.cddb" level="DEBUG"/-->
+	<logger name="JRipperSwing" level="DEBUG"/>
 
 	<root level="INFO">
 		<appender-ref ref="STDOUT" />

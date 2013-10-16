@@ -4,8 +4,12 @@
 
 package de.freese.jripper.swing;
 
+import com.jgoodies.binding.adapter.BasicComponentFactory;
+import de.freese.jripper.core.Settings;
 import de.freese.jripper.swing.action.ActionCDDBQuery;
 import de.freese.jripper.swing.action.ActionRipping;
+import de.freese.jripper.swing.model.SettingsBean;
+import de.freese.jripper.swing.model.SettingsModel;
 import de.freese.jripper.swing.table.AlbumTableModel;
 import java.awt.Container;
 import java.awt.FlowLayout;
@@ -13,14 +17,19 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Swing-View für den JRipper.
@@ -29,6 +38,11 @@ import javax.swing.WindowConstants;
  */
 public class JRipperSwing
 {
+	/**
+	 * 
+	 */
+	public static final Logger LOGGER = LoggerFactory.getLogger("JRipperSwing");
+
 	/**
 	 * Liefert default GridBagConstraints mit fill=BOTH, anchor=CENTER und Insets mit (5, 5, 5, 5).
 	 * 
@@ -137,11 +151,25 @@ public class JRipperSwing
 	 */
 	private void initSettings(final Container container)
 	{
-		JPanel panel = new JPanel();
-		panel.setLayout(new FlowLayout());
+		// JPanel panel = new JPanel();
+		// panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+		Box panel = new Box(BoxLayout.Y_AXIS);
 		panel.setBorder(BorderFactory.createTitledBorder("Settings"));
 
-		panel.add(new JLabel("Work Dir.:"));
+		SettingsModel model = new SettingsModel(Settings.getInstance());
+
+		JTextField textField = BasicComponentFactory.createTextField(model.getModel(SettingsBean.PROPERTY_DEVICE));
+		panel.add(textField);
+
+		textField = BasicComponentFactory.createTextField(model.getModel(SettingsBean.PROPERTY_WORKDIR));
+		// field.setPreferredSize(new Dimension(30, 20));
+		panel.add(textField);
+
+		@SuppressWarnings("unchecked")
+		JComboBox<Integer> comboBox = BasicComponentFactory.createComboBox(model.getSelectionInListMp3Bitrate());
+		panel.add(comboBox);
+
+		// panel.add(Box.createVerticalStrut(50));
 
 		GridBagConstraints gbc = getGBC(5, 1);
 		container.add(panel, gbc);

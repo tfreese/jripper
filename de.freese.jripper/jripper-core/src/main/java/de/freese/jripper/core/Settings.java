@@ -37,7 +37,7 @@ public final class Settings
 	/**
 	 * 
 	 */
-	private String mp3Bitrate = null;
+	private int mp3Bitrate = 320;
 
 	/**
 	 * Arbeitsverzeichnis
@@ -55,7 +55,7 @@ public final class Settings
 		// setWorkDir(System.getProperty("user.dir"));
 		setWorkDir(System.getProperty("user.home") + "/.jripper");
 
-		setMp3Bitrate("320");
+		setMp3Bitrate(320);
 		setDevice(JRipperUtils.detectCDDVD());
 		setFramesPerSecond(75);
 	}
@@ -77,9 +77,9 @@ public final class Settings
 	}
 
 	/**
-	 * @return String
+	 * @return int
 	 */
-	public String getMp3Bitrate()
+	public int getMp3Bitrate()
 	{
 		return this.mp3Bitrate;
 	}
@@ -111,9 +111,9 @@ public final class Settings
 	}
 
 	/**
-	 * @param mp3Bitrate String
+	 * @param mp3Bitrate int
 	 */
-	public void setMp3Bitrate(final String mp3Bitrate)
+	public void setMp3Bitrate(final int mp3Bitrate)
 	{
 		this.mp3Bitrate = mp3Bitrate;
 	}
