@@ -9,9 +9,10 @@ import de.freese.jripper.core.Settings;
 import de.freese.jripper.core.cddb.ICDDBProvider;
 import de.freese.jripper.core.model.Album;
 import de.freese.jripper.core.model.DiskID;
-import de.freese.jripper.swing.table.AlbumTableModel;
+import de.freese.jripper.swing.JRipperSwing;
+import de.freese.jripper.swing.model.AlbumBean;
+import de.freese.jripper.swing.model.AlbumModel;
 import java.util.List;
-import javax.swing.JTable;
 import javax.swing.SwingWorker;
 
 /**
@@ -24,18 +25,18 @@ public class CDDBTask extends SwingWorker<Album, Void>
 	/**
 	 * 
 	 */
-	private final JTable table;
+	private final AlbumModel albumModel;
 
 	/**
 	 * Erstellt ein neues {@link CDDBTask} Object.
 	 * 
-	 * @param table {@link JTable}
+	 * @param albumModel {@link AlbumModel}
 	 */
-	public CDDBTask(final JTable table)
+	public CDDBTask(final AlbumModel albumModel)
 	{
 		super();
 
-		this.table = table;
+		this.albumModel = albumModel;
 	}
 
 	/**
@@ -63,12 +64,12 @@ public class CDDBTask extends SwingWorker<Album, Void>
 		try
 		{
 			Album album = get();
-			AlbumTableModel tableModel = (AlbumTableModel) this.table.getModel();
-			tableModel.setAlbum(album);
+
+			this.albumModel.setBean(new AlbumBean(album));
 		}
 		catch (Exception ex)
 		{
-			ex.printStackTrace();
+			JRipperSwing.LOGGER.error(null, ex);
 		}
 	}
 }

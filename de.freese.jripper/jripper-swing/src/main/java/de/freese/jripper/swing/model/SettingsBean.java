@@ -5,41 +5,48 @@
 package de.freese.jripper.swing.model;
 
 import com.jgoodies.binding.beans.Model;
+import com.jgoodies.common.bean.Bean;
 import com.jgoodies.common.collect.ArrayListModel;
 import com.jgoodies.common.collect.ObservableList;
 import de.freese.jripper.core.Settings;
 import de.freese.jripper.swing.JRipperSwing;
 import java.util.Arrays;
+import java.util.Collections;
 import javax.swing.ListModel;
 import org.slf4j.Logger;
 
 /**
- * {@link Model} für die {@link Settings}.
+ * {@link Bean} für die {@link Settings}.
  * 
  * @author Thomas Freese
  */
-public class SettingsBean extends Model
+public class SettingsBean extends Model// Bean
 {
 	/**
 	 * 
 	 */
 	public static final String PROPERTY_DEVICE = "device";
+
 	/**
 	 * 
 	 */
 	public static final String PROPERTY_FPS = "framesPerSecond";
+
 	/**
 	 * 
 	 */
 	public static final String PROPERTY_MP3BITRATE = "mp3Bitrate";
+
 	/**
 	 * 
 	 */
 	public static final String PROPERTY_WORKDIR = "workDir";
+
 	/**
 	 *
 	 */
 	private static final long serialVersionUID = -6983595958713155054L;
+
 	/**
 	 * 
 	 */
@@ -68,6 +75,7 @@ public class SettingsBean extends Model
 
 		this.listModelMp3Bitrate = new ArrayListModel<>();
 		this.listModelMp3Bitrate.addAll(Arrays.asList(32, 40, 48, 56, 64, 80, 96, 112, 128, 160, 192, 224, 256, 320));
+		Collections.sort(this.listModelMp3Bitrate, Collections.reverseOrder());
 	}
 
 	/**

@@ -114,7 +114,7 @@ public class Track
 	 * 
 	 * @param artist String
 	 */
-	void setArtist(final String artist)
+	public void setArtist(final String artist)
 	{
 		this.artist = artist;
 	}
@@ -138,7 +138,7 @@ public class Track
 	/**
 	 * @param title String
 	 */
-	void setTitle(final String title)
+	public void setTitle(final String title)
 	{
 		this.title = title;
 	}

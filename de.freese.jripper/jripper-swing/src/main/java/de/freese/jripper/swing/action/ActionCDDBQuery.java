@@ -4,11 +4,11 @@
 
 package de.freese.jripper.swing.action;
 
+import de.freese.jripper.swing.model.AlbumModel;
 import de.freese.jripper.swing.task.CDDBTask;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
-import javax.swing.JTable;
 
 /**
  * {@link Action} für die CDDB Query.
@@ -25,18 +25,18 @@ public class ActionCDDBQuery extends AbstractAction
 	/**
 	 * 
 	 */
-	private final JTable table;
+	private final AlbumModel albumModel;
 
 	/**
 	 * Erstellt ein neues {@link ActionCDDBQuery} Object.
 	 * 
-	 * @param table {@link JTable}
+	 * @param albumModel {@link AlbumModel}
 	 */
-	public ActionCDDBQuery(final JTable table)
+	public ActionCDDBQuery(final AlbumModel albumModel)
 	{
 		super();
 
-		this.table = table;
+		this.albumModel = albumModel;
 
 		putValue(NAME, "CDDB Query");
 	}
@@ -47,7 +47,7 @@ public class ActionCDDBQuery extends AbstractAction
 	@Override
 	public void actionPerformed(final ActionEvent e)
 	{
-		CDDBTask task = new CDDBTask(this.table);
+		CDDBTask task = new CDDBTask(this.albumModel);
 		task.execute();
 	}
 }

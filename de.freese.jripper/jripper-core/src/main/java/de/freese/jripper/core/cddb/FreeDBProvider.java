@@ -367,14 +367,22 @@ public class FreeDBProvider implements ICDDBProvider
 						continue;
 					}
 
-					// splits = normalize(splits);
-					comment.append(splits[1]);// .append("\n");
-					// album.setComment(splits[1]);
+					splits = StringUtils.splitByWholeSeparator(splits[1], "\\n");
+
+					for (int i = 0; i < splits.length; i++)
+					{
+						comment.append(splits[i]);
+
+						if (i < (splits.length - 1))
+						{
+							comment.append("\n");
+						}
+					}
 				}
 			}
 		}
 
-		// album.setComment(comment.toString().trim());
+		album.setComment(comment.toString().trim());
 
 		return album;
 	}

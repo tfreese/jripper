@@ -8,24 +8,28 @@ import com.jgoodies.binding.adapter.BasicComponentFactory;
 import de.freese.jripper.core.Settings;
 import de.freese.jripper.swing.action.ActionCDDBQuery;
 import de.freese.jripper.swing.action.ActionRipping;
+import de.freese.jripper.swing.model.AlbumBean;
+import de.freese.jripper.swing.model.AlbumModel;
 import de.freese.jripper.swing.model.SettingsBean;
 import de.freese.jripper.swing.model.SettingsModel;
 import de.freese.jripper.swing.table.AlbumTableModel;
+import java.awt.BorderLayout;
 import java.awt.Container;
-import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Insets;
+import java.text.NumberFormat;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 import org.slf4j.Logger;
@@ -42,32 +46,6 @@ public class JRipperSwing
 	 * 
 	 */
 	public static final Logger LOGGER = LoggerFactory.getLogger("JRipperSwing");
-
-	/**
-	 * Liefert default GridBagConstraints mit fill=BOTH, anchor=CENTER und Insets mit (5, 5, 5, 5).
-	 * 
-	 * @param col int, siehe auch Konstanten in GridBagConstraints
-	 * @param row int, siehe auch Konstanten in GridBagConstraints
-	 * @return {@link GridBagConstraints}
-	 */
-	public static GridBagConstraints getGBC(final int col, final int row)
-	{
-		GridBagConstraints constraints = new GridBagConstraints();
-
-		constraints.gridx = col;
-		constraints.gridy = row;
-		constraints.gridwidth = 1;
-		constraints.gridheight = 1;
-		constraints.weightx = 1.0;
-		constraints.weighty = 1.0;
-		constraints.ipadx = 0;
-		constraints.ipady = 0;
-		constraints.fill = GridBagConstraints.BOTH;
-		constraints.anchor = GridBagConstraints.CENTER;
-		constraints.insets = new Insets(5, 5, 5, 5);
-
-		return constraints;
-	}
 
 	/**
 	 * @param container {@link Container}
@@ -111,39 +89,110 @@ public class JRipperSwing
 		frame.setSize(1024, 768);
 		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		frame.setLocationRelativeTo(null);
+		frame.setLayout(new BorderLayout());
 
-		frame.setLayout(new GridBagLayout());
+		AlbumModel albumModel = new AlbumModel();
 
-		JTable table = new JTable();
-		table.setModel(new AlbumTableModel());
-
-		initMenue(frame, table);
+		initMenue(frame, albumModel);
 		initSettings(frame);
-
-		GridBagConstraints gbc = getGBC(0, 1);
-		gbc.gridwidth = 4;
-		frame.add(new JScrollPane(table), gbc);
+		initAlbum(frame, albumModel);
 
 		frame.setVisible(true);
 	}
 
 	/**
 	 * @param container {@link Container}
-	 * @param table {@link JTable}
+	 * @param albumModel {@link AlbumModel}
 	 */
-	private void initMenue(final Container container, final JTable table)
+	@SuppressWarnings("unchecked")
+	private void initAlbum(final Container container, final AlbumModel albumModel)
 	{
 		JPanel panel = new JPanel();
-		panel.setLayout(new FlowLayout());
-		panel.add(new JButton(new ActionCDDBQuery(table)));
-		panel.add(new JButton(new ActionRipping(table)));
+		panel.setLayout(new GridBagLayout());
 
-		GridBagConstraints gbc = getGBC(0, 0);
-		gbc.gridwidth = 6;
-		gbc.weighty = 0.0D;
-		gbc.fill = GridBagConstraints.HORIZONTAL;
-		gbc.anchor = GridBagConstraints.NORTH;
-		container.add(panel, gbc);
+		// Album
+		JPanel panelAlbum = new JPanel();
+		panelAlbum.setLayout(new GridBagLayout());
+		panelAlbum.setBorder(BorderFactory.createTitledBorder("Album"));
+
+		// Artist
+		GridBagConstraints gbc = new GBCBuilder(0, 0);
+		panelAlbum.add(new JLabel("Artist"), gbc);
+
+		gbc = new GBCBuilder(1, 0).fillHorizontal();
+		panelAlbum.add(BasicComponentFactory.createTextField(albumModel.getModel(AlbumBean.PROPERTY_ARTIST)), gbc);
+
+		// Title
+		gbc = new GBCBuilder(0, 1);
+		panelAlbum.add(new JLabel("Title"), gbc);
+
+		gbc = new GBCBuilder(1, 1).fillHorizontal();
+		panelAlbum.add(BasicComponentFactory.createTextField(albumModel.getModel(AlbumBean.PROPERTY_TITLE)), gbc);
+
+		// Year
+		gbc = new GBCBuilder(0, 2);
+		panelAlbum.add(new JLabel("Year"), gbc);
+
+		gbc = new GBCBuilder(1, 2).fillHorizontal();
+		NumberFormat numberFormat = NumberFormat.getIntegerInstance();
+		numberFormat.setGroupingUsed(false);
+		panelAlbum.add(BasicComponentFactory.createIntegerField(albumModel.getModel(AlbumBean.PROPERTY_YEAR), numberFormat), gbc);
+
+		// Comment
+		gbc = new GBCBuilder(0, 3);
+		panelAlbum.add(new JLabel("Comment"), gbc);
+
+		gbc = new GBCBuilder(1, 3).fillBoth();
+		JTextArea textArea = BasicComponentFactory.createTextArea(albumModel.getModel(AlbumBean.PROPERTY_COMMENT));
+		textArea.setRows(10);
+		panelAlbum.add(new JScrollPane(textArea), gbc);
+
+		gbc = new GBCBuilder(0, 0).fillHorizontal();
+		panel.add(panelAlbum, gbc);
+
+		// Tabelle
+		AlbumTableModel tableModel = new AlbumTableModel(albumModel.getListModelTracks());
+
+		JTable table = new JTable();
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		table.setModel(tableModel);
+
+		// GridBagConstraints gbc = new GBCBuilder(0, 0).anchorCenter().fillBoth();
+		// panel.add(new JScrollPane(table), gbc);
+		gbc = new GBCBuilder(0, 1).fillBoth();
+		panel.add(new JScrollPane(table), gbc);
+
+		container.add(panel, BorderLayout.CENTER);
+	}
+
+	/**
+	 * @param container {@link Container}
+	 * @param albumModel {@link AlbumModel}
+	 */
+	private void initMenue(final Container container, final AlbumModel albumModel)
+	{
+		JPanel panel = new JPanel();
+		panel.setLayout(new GridBagLayout());
+
+		// Dummy
+		GridBagConstraints gbc = new GBCBuilder(0, 0).weightx(1);
+		panel.add(Box.createGlue(), gbc);
+
+		gbc = new GBCBuilder(1, 0).anchorCenter().gridwidth(2).fillHorizontal();
+		panel.add(new JButton(new ActionCDDBQuery(albumModel)), gbc);
+
+		// Dummy
+		gbc = new GBCBuilder(3, 0).weightx(1);
+		panel.add(Box.createGlue(), gbc);
+
+		gbc = new GBCBuilder(4, 0).anchorCenter().gridwidth(2).fillHorizontal();
+		panel.add(new JButton(new ActionRipping(albumModel)), gbc);
+
+		// Dummy
+		gbc = new GBCBuilder(6, 0).weightx(1);
+		panel.add(Box.createGlue(), gbc);
+
+		container.add(panel, BorderLayout.NORTH);
 	}
 
 	/**
@@ -151,27 +200,31 @@ public class JRipperSwing
 	 */
 	private void initSettings(final Container container)
 	{
-		// JPanel panel = new JPanel();
-		// panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-		Box panel = new Box(BoxLayout.Y_AXIS);
+		JPanel panel = new JPanel();
+		panel.setLayout(new GridBagLayout());
 		panel.setBorder(BorderFactory.createTitledBorder("Settings"));
 
 		SettingsModel model = new SettingsModel(Settings.getInstance());
 
+		GridBagConstraints gbc = new GBCBuilder(0, 0).fillHorizontal();
 		JTextField textField = BasicComponentFactory.createTextField(model.getModel(SettingsBean.PROPERTY_DEVICE));
-		panel.add(textField);
+		panel.add(textField, gbc);
 
+		gbc = new GBCBuilder(0, 1).fillHorizontal();
 		textField = BasicComponentFactory.createTextField(model.getModel(SettingsBean.PROPERTY_WORKDIR));
-		// field.setPreferredSize(new Dimension(30, 20));
-		panel.add(textField);
+		panel.add(textField, gbc);
 
+		gbc = new GBCBuilder(0, 2).fillHorizontal();
 		@SuppressWarnings("unchecked")
 		JComboBox<Integer> comboBox = BasicComponentFactory.createComboBox(model.getSelectionInListMp3Bitrate());
-		panel.add(comboBox);
+		panel.add(comboBox, gbc);
 
-		// panel.add(Box.createVerticalStrut(50));
+		// Alles nach oben drücken;
+		gbc = new GBCBuilder(0, GridBagConstraints.RELATIVE).fillVertical();
+		panel.add(Box.createGlue(), gbc);
 
-		GridBagConstraints gbc = getGBC(5, 1);
-		container.add(panel, gbc);
+		// gbc = new GBCBuilder(5, 1).anchorCenter().gridwidth(2).gridheight(5).fillBoth();
+		// container.add(panel, gbc);
+		container.add(panel, BorderLayout.EAST);
 	}
 }
