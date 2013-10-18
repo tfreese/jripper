@@ -7,7 +7,6 @@ package de.freese.jripper.swing.model;
 import com.jgoodies.binding.beans.Model;
 import com.jgoodies.common.bean.Bean;
 import de.freese.jripper.core.model.Album;
-import de.freese.jripper.core.model.Track;
 import de.freese.jripper.swing.JRipperSwing;
 import org.slf4j.Logger;
 
@@ -123,10 +122,10 @@ public class AlbumBean extends Model// Bean
 		}
 
 		// Alle Tracks aktualisieren.
-		for (Track track : this.album)
-		{
-			track.setArtist(artist);
-		}
+		// for (Track track : this.album)
+		// {
+		// track.setArtist(artist);
+		// }
 
 		firePropertyChange(PROPERTY_ARTIST, oldValue, artist);
 	}

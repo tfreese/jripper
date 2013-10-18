@@ -179,6 +179,16 @@ public class Album implements Iterable<Track>
 	}
 
 	/**
+	 * Liefert true, wenn das Album eine Compilation ist.
+	 * 
+	 * @return boolean
+	 */
+	public boolean isCompilation()
+	{
+		return StringUtils.isBlank(this.artist);
+	}
+
+	/**
 	 * @see java.lang.Iterable#iterator()
 	 */
 	@Override

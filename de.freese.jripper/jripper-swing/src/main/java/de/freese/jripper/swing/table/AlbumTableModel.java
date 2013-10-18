@@ -64,4 +64,44 @@ public class AlbumTableModel extends AbstractTableAdapter<Track>
 
 		return value;
 	}
+
+	/**
+	 * @see javax.swing.table.AbstractTableModel#isCellEditable(int, int)
+	 */
+	@Override
+	public boolean isCellEditable(final int rowIndex, final int columnIndex)
+	{
+		switch (columnIndex)
+		{
+			case 1:
+				return getRow(rowIndex).getAlbum().isCompilation();
+			case 2:
+				return true;
+			default:
+				return false;
+		}
+	}
+
+	/**
+	 * @see javax.swing.table.AbstractTableModel#setValueAt(java.lang.Object, int, int)
+	 */
+	@Override
+	public void setValueAt(final Object aValue, final int rowIndex, final int columnIndex)
+	{
+		Track track = getRow(rowIndex);
+
+		switch (columnIndex)
+		{
+			case 1:
+				track.setArtist(aValue.toString());
+				break;
+			case 2:
+				track.setTitle(aValue.toString());
+				break;
+			default:
+				break;
+		}
+
+		fireTableCellUpdated(rowIndex, columnIndex);
+	}
 }

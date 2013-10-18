@@ -47,11 +47,11 @@ public class Track
 	}
 
 	/**
-	 * @return String
+	 * @return {@link Album}
 	 */
-	public String getAlbumTitle()
+	public Album getAlbum()
 	{
-		return this.album.getTitle();
+		return this.album;
 	}
 
 	/**
@@ -63,18 +63,10 @@ public class Track
 	{
 		if (StringUtils.isBlank(this.artist))
 		{
-			return this.album.getArtist();
+			return getAlbum().getArtist();
 		}
 
 		return this.artist;
-	}
-
-	/**
-	 * @return String
-	 */
-	public String getComment()
-	{
-		return this.album.getComment();
 	}
 
 	/**

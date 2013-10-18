@@ -106,11 +106,13 @@ public class FreeDBProvider implements ICDDBProvider
 /**
 	 * Normalisiert die Texte.<br>
 	 * <ul>
-	 * <li>trim -> toLowerCase -> capitalize
-	 * <li>' Cd ' durch ' CD ' ersetzen
+	 * <li>trimToEmpty
+	 * <li>toLowerCase
+	 * <li>capitalize
+	 * <li>' cd ' durch ' CD ' ersetzen
+	 * <li>'(cd ' durch '(CD ' ersetzen
 	 * <li>dj durch DJ ersetzen
-	 * <li>Dj durch DJ ersetzen
-	 * <li>'Feat ' durch 'Feat. ' ersetzen
+	 * <li>' feat ' durch ' Feat. ' ersetzen
 	 * <li>':' durch ' - ' ersetzen
 	 * <li>'<' durch '-' ersetzen
 	 * <li>'>' durch '-' ersetzen
@@ -132,17 +134,17 @@ public class FreeDBProvider implements ICDDBProvider
 			splits[i] = StringUtils.trimToEmpty(splits[i]);
 			splits[i] = splits[i].toLowerCase();
 			splits[i] = WordUtils.capitalize(splits[i]);
-			splits[i] = splits[i].replaceAll(" Cd ", " CD ");
-			splits[i] = splits[i].replaceAll("dj ", "DJ ");
-			splits[i] = splits[i].replaceAll("Dj ", "DJ ");
-			splits[i] = splits[i].replaceAll("Feat ", "Feat. ");
-			splits[i] = splits[i].replaceAll(":", " - ");
-			splits[i] = splits[i].replaceAll("<", "-");
-			splits[i] = splits[i].replaceAll(">", "-");
-			splits[i] = splits[i].replaceAll("\\[", "(");
-			splits[i] = splits[i].replaceAll("\\]", ")");
-			splits[i] = splits[i].replaceAll("´", "'");
-			splits[i] = splits[i].replaceAll("`", "'");
+			splits[i] = splits[i].replace(" cd ", " CD ");
+			splits[i] = splits[i].replace("(cd ", "(CD ");
+			splits[i] = splits[i].replace("Dj ", "DJ ");
+			splits[i] = splits[i].replace(" feat ", " Feat. ");
+			splits[i] = splits[i].replace(":", " - ");
+			splits[i] = splits[i].replace("<", "-");
+			splits[i] = splits[i].replace(">", "-");
+			splits[i] = splits[i].replace("[", "(");
+			splits[i] = splits[i].replace("]", ")");
+			splits[i] = splits[i].replace("´", "'");
+			splits[i] = splits[i].replace("`", "'");
 			splits[i] = StringUtils.normalizeSpace(splits[i]);
 
 			// Nach '(', '-', '.' auch Grossbuchstaben.
@@ -301,8 +303,14 @@ public class FreeDBProvider implements ICDDBProvider
 				if (line.startsWith("DTITLE"))
 				{
 					splits = line.split("[=]");
-					splits = splits[1].split("[/]");
+					splits = StringUtils.split(splits[1], "/", 2);
+					// splits = splits[1].split("[/]");
 					splits = normalize(splits);
+
+					if ("Various".equals(splits[0]))
+					{
+						splits[0] = null;
+					}
 
 					album.setArtist(splits[0]);
 					album.setTitle(splits[1]);
