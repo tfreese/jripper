@@ -46,6 +46,8 @@ public class LinuxScripter extends AbstractProcess implements IScripter
 	@Override
 	public File generate(final Album album, final File folder) throws Exception
 	{
+		Settings settings = Settings.getInstance();
+
 		File script = new File(folder, StringUtils.replace(album.getTitle(), " ", "-") + ".sh");
 
 		if (script.exists())
@@ -60,16 +62,24 @@ public class LinuxScripter extends AbstractProcess implements IScripter
 			pw.println();
 
 			writeProgramChecks(pw, "cdparanoia");
-			pw.println();
-			writeProgramChecks(pw, "flac");
-			pw.println();
-			writeProgramChecks(pw, "metaflac");
-			pw.println();
-			writeProgramChecks(pw, "lame");
-			pw.println();
-			writeProgramChecks(pw, "mp3val");
-			pw.println();
-			writeProgramChecks(pw, "mp3gain");
+
+			if (settings.isFlacEnabled())
+			{
+				pw.println();
+				writeProgramChecks(pw, "flac");
+				pw.println();
+				writeProgramChecks(pw, "metaflac");
+			}
+
+			if (settings.isMp3Enabled())
+			{
+				pw.println();
+				writeProgramChecks(pw, "lame");
+				pw.println();
+				writeProgramChecks(pw, "mp3val");
+				pw.println();
+				writeProgramChecks(pw, "mp3gain");
+			}
 
 			// Variablen
 			pw.println();
@@ -80,12 +90,18 @@ public class LinuxScripter extends AbstractProcess implements IScripter
 			writeRip(pw);
 
 			// flac
-			pw.println();
-			writeFLAC(pw, album);
+			if (settings.isFlacEnabled())
+			{
+				pw.println();
+				writeFLAC(pw, album);
+			}
 
 			// mp3
-			pw.println();
-			writeMP3(pw, album);
+			if (settings.isMp3Enabled())
+			{
+				pw.println();
+				writeMP3(pw, album);
+			}
 
 			// Shell offen lassen
 			pw.println();
@@ -118,7 +134,7 @@ public class LinuxScripter extends AbstractProcess implements IScripter
 		{
 			pw.println();
 			pw.print("$FLAC");
-			pw.print(" -8");
+			pw.print(String.format(" -%d", Settings.getInstance().getFlacCompression()));
 			pw.print(" -V");
 			pw.print(" -f");
 			pw.print(" -w");
@@ -173,15 +189,11 @@ public class LinuxScripter extends AbstractProcess implements IScripter
 		{
 			pw.println();
 			pw.print("$LAME");
-			pw.print(" -m");
-			pw.print(" j");
-			pw.print(" -q");
-			pw.print(" 0");
+			pw.print(" -m j");
+			pw.print(" -q 0");
 			pw.print(" -p");
-			// pw.print(" -s");
-			// pw.print(" 44.1");
-			pw.print(" -b ");
-			pw.print(Settings.getInstance().getMp3Bitrate());
+			// pw.print(" -s 44.1");
+			pw.print(String.format(" -b %d", Settings.getInstance().getMp3Bitrate()));
 			pw.print(" --replaygain-accurate");
 			pw.print(" --add-id3v2");
 			pw.print(" --pad-id3v2");

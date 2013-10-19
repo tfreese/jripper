@@ -30,13 +30,26 @@ public class SettingsBean extends Model// Bean
 	/**
 	 * 
 	 */
+	public static final String PROPERTY_FLAC_COMPRESSION = "flacCompression";
+
+	/**
+	 * 
+	 */
+	public static final String PROPERTY_FLAC_ENBLED = "flacEnabled";
+
+	/**
+	 * 
+	 */
 	public static final String PROPERTY_FPS = "framesPerSecond";
 
 	/**
 	 * 
 	 */
-	public static final String PROPERTY_MP3BITRATE = "mp3Bitrate";
-
+	public static final String PROPERTY_MP3_BITRATE = "mp3Bitrate";
+	/**
+	 * 
+	 */
+	public static final String PROPERTY_MP3_ENBLED = "mp3Enabled";
 	/**
 	 * 
 	 */
@@ -87,6 +100,16 @@ public class SettingsBean extends Model// Bean
 	}
 
 	/**
+	 * 0-8
+	 * 
+	 * @return int
+	 */
+	public int getFlacCompression()
+	{
+		return this.settings.getFlacCompression();
+	}
+
+	/**
 	 * @return int
 	 */
 	public int getFramesPerSecond()
@@ -122,6 +145,22 @@ public class SettingsBean extends Model// Bean
 	}
 
 	/**
+	 * @return boolean
+	 */
+	public boolean isFlacEnabled()
+	{
+		return this.settings.isFlacEnabled();
+	}
+
+	/**
+	 * @return boolean
+	 */
+	public boolean isMp3Enabled()
+	{
+		return this.settings.isMp3Enabled();
+	}
+
+	/**
 	 * @param device String
 	 */
 	public void setDevice(final String device)
@@ -135,6 +174,40 @@ public class SettingsBean extends Model// Bean
 		}
 
 		firePropertyChange(PROPERTY_DEVICE, oldValue, device);
+	}
+
+	/**
+	 * 0-8
+	 * 
+	 * @param flacCompression int
+	 */
+	public void setFlacCompression(final int flacCompression)
+	{
+		Object oldValue = getFlacCompression();
+		this.settings.setFlacCompression(flacCompression);
+
+		if (this.logger.isDebugEnabled())
+		{
+			this.logger.debug("oldValue={}, newValue={}", oldValue, flacCompression);
+		}
+
+		firePropertyChange(PROPERTY_FLAC_COMPRESSION, oldValue, flacCompression);
+	}
+
+	/**
+	 * @param flacEnabled boolean
+	 */
+	public void setFlacEnabled(final boolean flacEnabled)
+	{
+		Object oldValue = isFlacEnabled();
+		this.settings.setFlacEnabled(flacEnabled);
+
+		if (this.logger.isDebugEnabled())
+		{
+			this.logger.debug("oldValue={}, newValue={}", oldValue, flacEnabled);
+		}
+
+		firePropertyChange(PROPERTY_FLAC_ENBLED, oldValue, flacEnabled);
 	}
 
 	/**
@@ -166,7 +239,23 @@ public class SettingsBean extends Model// Bean
 			this.logger.debug("oldValue={}, newValue={}", oldValue, mp3Bitrate);
 		}
 
-		firePropertyChange(PROPERTY_MP3BITRATE, oldValue, mp3Bitrate);
+		firePropertyChange(PROPERTY_MP3_BITRATE, oldValue, mp3Bitrate);
+	}
+
+	/**
+	 * @param mp3Enabled boolean
+	 */
+	public void setMp3Enabled(final boolean mp3Enabled)
+	{
+		Object oldValue = isMp3Enabled();
+		this.settings.setMp3Enabled(mp3Enabled);
+
+		if (this.logger.isDebugEnabled())
+		{
+			this.logger.debug("oldValue={}, newValue={}", oldValue, mp3Enabled);
+		}
+
+		firePropertyChange(PROPERTY_MP3_ENBLED, oldValue, mp3Enabled);
 	}
 
 	/**

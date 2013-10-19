@@ -5,6 +5,7 @@
 package de.freese.jripper.swing;
 
 import com.jgoodies.binding.adapter.BasicComponentFactory;
+import com.jgoodies.binding.adapter.BoundedRangeAdapter;
 import de.freese.jripper.core.Settings;
 import de.freese.jripper.swing.action.ActionCDDBQuery;
 import de.freese.jripper.swing.action.ActionChooseWorkDir;
@@ -23,6 +24,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.text.NumberFormat;
+import java.util.Dictionary;
 import java.util.Map.Entry;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -33,6 +35,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSlider;
 import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
@@ -99,7 +102,8 @@ public class JRipperSwing
 		JFrame frame = new JFrame();
 		frame.setTitle("JRipper");
 		// frame.setSize(1024, 768);
-		frame.setSize(1280, 1024);
+		// frame.setSize(1280, 1024);
+		frame.setSize(1280, 768);
 		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		frame.setLocationRelativeTo(null);
 		frame.setLayout(new BorderLayout());
@@ -126,10 +130,7 @@ public class JRipperSwing
 	@SuppressWarnings("unchecked")
 	private void initAlbum(final JSplitPane splitPane, final AlbumModel albumModel)
 	{
-		// JPanel panel = new JPanel();
-		// panel.setLayout(new GridBagLayout());
-
-		JSplitPane splitPane2 = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+		final JSplitPane splitPane2 = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
 		splitPane2.setOneTouchExpandable(true);
 
 		// Album
@@ -160,7 +161,6 @@ public class JRipperSwing
 		textArea.setRows(10);
 		panelAlbum.add(new JScrollPane(textArea), new GBCBuilder(1, 3).fillBoth());
 
-		// panel.add(panelAlbum, new GBCBuilder(0, 0).fillBoth());
 		splitPane2.setLeftComponent(panelAlbum);
 
 		// Tabelle
@@ -178,10 +178,21 @@ public class JRipperSwing
 		table.getColumnModel().getColumn(3).setMinWidth(60);
 		table.getColumnModel().getColumn(3).setMaxWidth(60);
 
-		// panel.add(new JScrollPane(table), new GBCBuilder(0, 1).fillBoth().weighty(2.0D));
 		splitPane2.setRightComponent(new JScrollPane(table));
 
 		splitPane.setLeftComponent(splitPane2);
+
+		SwingUtilities.invokeLater(new Runnable()
+		{
+			/**
+			 * @see java.lang.Runnable#run()
+			 */
+			@Override
+			public void run()
+			{
+				splitPane2.setDividerLocation(0.5D);
+			}
+		});
 	}
 
 	/**
@@ -235,14 +246,48 @@ public class JRipperSwing
 		button.setMargin(new Insets(0, 0, 0, 0));
 		panel.add(button, new GBCBuilder(2, 1));
 
+		// FLAC
+		JPanel panelFlac = new JPanel();
+		panelFlac.setLayout(new GridBagLayout());
+		panelFlac.setBorder(BorderFactory.createTitledBorder("Flac"));
+
+		// Enabled
+		panelFlac.add(BasicComponentFactory.createCheckBox(model.getModel(SettingsBean.PROPERTY_FLAC_ENBLED), "Enabled"), new GBCBuilder(0, 0));
+
+		// Compression
+		panelFlac.add(new JLabel("Compression"), new GBCBuilder(0, 1));
+		JSlider slider = new JSlider();
+		slider.setModel(new BoundedRangeAdapter(model.getModel(SettingsBean.PROPERTY_FLAC_COMPRESSION), 0, 0, 8));
+		slider.setMajorTickSpacing(2);
+		// slider.setSnapToTicks(true);
+		slider.setPaintLabels(true);
+		@SuppressWarnings("unchecked")
+		Dictionary<Integer, JLabel> labelTable = slider.getLabelTable(); // new Hashtable<>();
+		labelTable.put(0, new JLabel("fast"));
+		labelTable.put(8, new JLabel("best"));
+		slider.setLabelTable(labelTable);
+		panelFlac.add(slider, new GBCBuilder(1, 1).fillHorizontal());
+
+		panel.add(panelFlac, new GBCBuilder(0, 2).gridwidth(3).fillHorizontal());
+
+		// MP3
+		JPanel panelMP3 = new JPanel();
+		panelMP3.setLayout(new GridBagLayout());
+		panelMP3.setBorder(BorderFactory.createTitledBorder("MP3"));
+
+		// Enabled
+		panelMP3.add(BasicComponentFactory.createCheckBox(model.getModel(SettingsBean.PROPERTY_MP3_ENBLED), "Enabled"), new GBCBuilder(0, 0));
+
 		// Bitrate
-		panel.add(new JLabel("Bitrate"), new GBCBuilder(0, 2));
+		panelMP3.add(new JLabel("Bitrate"), new GBCBuilder(0, 1));
 
 		@SuppressWarnings("unchecked")
 		JComboBox<Integer> comboBox = BasicComponentFactory.createComboBox(model.getSelectionInListMp3Bitrate());
-		panel.add(comboBox, new GBCBuilder(1, 2).fillHorizontal());
+		panelMP3.add(comboBox, new GBCBuilder(1, 1).fillHorizontal());
 
-		// Alles nach oben drücken;
+		panel.add(panelMP3, new GBCBuilder(0, 3).gridwidth(3).fillHorizontal());
+
+		// Alles nach oben drücken
 		panel.add(Box.createGlue(), new GBCBuilder(0, GridBagConstraints.RELATIVE).fillVertical());
 
 		splitPane.setRightComponent(panel);

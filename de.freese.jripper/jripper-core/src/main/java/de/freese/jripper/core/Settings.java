@@ -30,6 +30,16 @@ public final class Settings
 	private String device = null;
 
 	/**
+	 * 0-8
+	 */
+	private int flacCompression = 8;
+
+	/**
+	 * 
+	 */
+	private boolean flacEnabled = true;
+
+	/**
 	 * 
 	 */
 	private int framesPerSecond = 75;
@@ -38,6 +48,10 @@ public final class Settings
 	 * 
 	 */
 	private int mp3Bitrate = 320;
+	/**
+	 * 
+	 */
+	private boolean mp3Enabled = false;
 
 	/**
 	 * Arbeitsverzeichnis
@@ -58,6 +72,7 @@ public final class Settings
 		setMp3Bitrate(320);
 		setDevice(JRipperUtils.detectCDDVD());
 		setFramesPerSecond(75);
+		setFlacCompression(8);
 	}
 
 	/**
@@ -66,6 +81,16 @@ public final class Settings
 	public String getDevice()
 	{
 		return this.device;
+	}
+
+	/**
+	 * 0-8
+	 * 
+	 * @return int
+	 */
+	public int getFlacCompression()
+	{
+		return this.flacCompression;
 	}
 
 	/**
@@ -95,11 +120,45 @@ public final class Settings
 	}
 
 	/**
+	 * @return boolean
+	 */
+	public boolean isFlacEnabled()
+	{
+		return this.flacEnabled;
+	}
+
+	/**
+	 * @return boolean
+	 */
+	public boolean isMp3Enabled()
+	{
+		return this.mp3Enabled;
+	}
+
+	/**
 	 * @param device String
 	 */
 	public void setDevice(final String device)
 	{
 		this.device = device;
+	}
+
+	/**
+	 * 0-8
+	 * 
+	 * @param flacCompression int
+	 */
+	public void setFlacCompression(final int flacCompression)
+	{
+		this.flacCompression = flacCompression;
+	}
+
+	/**
+	 * @param flacEnabled boolean
+	 */
+	public void setFlacEnabled(final boolean flacEnabled)
+	{
+		this.flacEnabled = flacEnabled;
 	}
 
 	/**
@@ -116,6 +175,14 @@ public final class Settings
 	public void setMp3Bitrate(final int mp3Bitrate)
 	{
 		this.mp3Bitrate = mp3Bitrate;
+	}
+
+	/**
+	 * @param mp3Enabled boolean
+	 */
+	public void setMp3Enabled(final boolean mp3Enabled)
+	{
+		this.mp3Enabled = mp3Enabled;
 	}
 
 	/**

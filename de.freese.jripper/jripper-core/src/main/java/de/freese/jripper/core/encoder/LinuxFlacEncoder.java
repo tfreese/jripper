@@ -4,6 +4,7 @@
 
 package de.freese.jripper.core.encoder;
 
+import de.freese.jripper.core.Settings;
 import de.freese.jripper.core.model.Album;
 import de.freese.jripper.core.model.Track;
 import de.freese.jripper.core.process.AbstractProcess;
@@ -42,7 +43,7 @@ public class LinuxFlacEncoder extends AbstractProcess implements IEncoder
 		{
 			command.clear();
 			command.add("flac");
-			command.add("-8");
+			command.add(String.format("-%d", Settings.getInstance().getFlacCompression()));
 			command.add("-V");
 			command.add("-f");
 			command.add("-w");

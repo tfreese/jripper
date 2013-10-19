@@ -34,7 +34,7 @@ public class SettingsModel extends PresentationModel<SettingsBean>
 	{
 		super(new SettingsBean(settings));
 
-		this.selectionInListMp3Bitrate = new SelectionInList<>(getBean().getListModelMp3Bitrate(), getModel(SettingsBean.PROPERTY_MP3BITRATE));
+		this.selectionInListMp3Bitrate = new SelectionInList<>(getBean().getListModelMp3Bitrate(), getModel(SettingsBean.PROPERTY_MP3_BITRATE));
 	}
 
 	/**
