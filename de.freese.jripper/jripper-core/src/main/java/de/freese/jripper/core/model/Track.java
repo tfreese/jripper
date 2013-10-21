@@ -16,7 +16,7 @@ public class Track
 	/**
 	 * 
 	 */
-	private Album album = null;
+	private IAlbum album = null;
 
 	/**
 	 * Nur bei Compilations gefüllt.
@@ -47,9 +47,9 @@ public class Track
 	}
 
 	/**
-	 * @return {@link Album}
+	 * @return {@link IAlbum}
 	 */
-	public Album getAlbum()
+	public IAlbum getAlbum()
 	{
 		return this.album;
 	}
@@ -94,9 +94,9 @@ public class Track
 	}
 
 	/**
-	 * @param album {@link Album}
+	 * @param album {@link IAlbum}
 	 */
-	void setAlbum(final Album album)
+	void setAlbum(final IAlbum album)
 	{
 		this.album = album;
 	}

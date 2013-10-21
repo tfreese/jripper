@@ -53,6 +53,16 @@ public class GBCBuilder extends GridBagConstraints
 	/**
 	 * @return {@link GBCBuilder}
 	 */
+	public GBCBuilder anchorEast()
+	{
+		this.anchor = EAST;
+
+		return this;
+	}
+
+	/**
+	 * @return {@link GBCBuilder}
+	 */
 	public GBCBuilder anchorNorth()
 	{
 		this.anchor = NORTH;

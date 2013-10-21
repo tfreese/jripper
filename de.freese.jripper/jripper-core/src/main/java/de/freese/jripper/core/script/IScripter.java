@@ -4,7 +4,7 @@
 
 package de.freese.jripper.core.script;
 
-import de.freese.jripper.core.model.Album;
+import de.freese.jripper.core.model.IAlbum;
 import java.io.File;
 
 /**
@@ -25,10 +25,10 @@ public interface IScripter
 	/**
 	 * Erstellt das Skript mit Ausführungsrechten.
 	 * 
-	 * @param album {@link Album}
+	 * @param album {@link IAlbum}
 	 * @param folder {@link File}
 	 * @return {@link File}
 	 * @throws Exception Falls was schief geht.
 	 */
-	public File generate(Album album, File folder) throws Exception;
+	public File generate(IAlbum album, File folder) throws Exception;
 }

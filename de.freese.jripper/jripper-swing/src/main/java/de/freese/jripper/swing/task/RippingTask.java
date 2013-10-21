@@ -5,7 +5,7 @@
 package de.freese.jripper.swing.task;
 
 import de.freese.jripper.core.JRipperUtils;
-import de.freese.jripper.core.model.Album;
+import de.freese.jripper.core.model.IAlbum;
 import de.freese.jripper.core.script.IScripter;
 import de.freese.jripper.core.script.LinuxScripter;
 import java.io.File;
@@ -21,14 +21,14 @@ public class RippingTask extends SwingWorker<Void, Void>
 	/**
 	 * 
 	 */
-	private final Album album;
+	private final IAlbum album;
 
 	/**
 	 * Erstellt ein neues {@link RippingTask} Object.
 	 * 
-	 * @param album {@link Album}
+	 * @param album {@link IAlbum}
 	 */
-	public RippingTask(final Album album)
+	public RippingTask(final IAlbum album)
 	{
 		super();
 

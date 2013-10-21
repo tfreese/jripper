@@ -4,7 +4,7 @@
 
 package de.freese.jripper.core;
 
-import de.freese.jripper.core.model.Album;
+import de.freese.jripper.core.model.IAlbum;
 import java.io.File;
 import java.io.IOException;
 import org.apache.commons.io.FileUtils;
@@ -23,11 +23,11 @@ public final class JRipperUtils
 	 * Format: ArbeitsVerzeichnis/ALBUMTITEL/PFAD<br>
 	 * Vorhandenen Daten werden gelöscht.
 	 * 
-	 * @param album {@link Album}
+	 * @param album {@link IAlbum}
 	 * @param directory {@link File}
 	 * @throws IOException Falls was schief geht.
 	 */
-	private static void createOrDeleteDir(final Album album, final File directory) throws IOException
+	private static void createOrDeleteDir(final IAlbum album, final File directory) throws IOException
 	{
 		if (directory.exists())
 		{
@@ -116,12 +116,12 @@ public final class JRipperUtils
 	 * Liefert das Verzeichnis für die flac-Dateien.<br>
 	 * Format: ArbeitsVerzeichnis/ALBUMTITEL/flac
 	 * 
-	 * @param album {@link Album}
+	 * @param album {@link IAlbum}
 	 * @param createOrDelete boolean; Erzeugt das Verzeichnis oder löscht vorhandene Dateien.
 	 * @return {@link File}
 	 * @throws IOException Falls was schief geht.
 	 */
-	public static File getFlacDir(final Album album, final boolean createOrDelete) throws IOException
+	public static File getFlacDir(final IAlbum album, final boolean createOrDelete) throws IOException
 	{
 		File dir = new File(getWorkDir(album), "flac");
 
@@ -137,12 +137,12 @@ public final class JRipperUtils
 	 * Liefert das Verzeichnis für die mp3-Dateien.<br>
 	 * Format: ArbeitsVerzeichnis/ALBUMTITEL/mp3
 	 * 
-	 * @param album {@link Album}
+	 * @param album {@link IAlbum}
 	 * @param createOrDelete boolean; Erzeugt das Verzeichnis oder löscht vorhandene Dateien.
 	 * @return {@link File}
 	 * @throws IOException Falls was schief geht.
 	 */
-	public static File getMP3Dir(final Album album, final boolean createOrDelete) throws IOException
+	public static File getMP3Dir(final IAlbum album, final boolean createOrDelete) throws IOException
 	{
 		File dir = new File(getWorkDir(album), "mp3");
 
@@ -158,12 +158,12 @@ public final class JRipperUtils
 	 * Liefert das Verzeichnis für die wav-Dateien.<br>
 	 * Format: ArbeitsVerzeichnis/ALBUMTITEL/wav
 	 * 
-	 * @param album {@link Album}
+	 * @param album {@link IAlbum}
 	 * @param createOrDelete boolean; Erzeugt das Verzeichnis oder löscht vorhandene Dateien.
 	 * @return {@link File}
 	 * @throws IOException Falls was schief geht.
 	 */
-	public static File getWavDir(final Album album, final boolean createOrDelete) throws IOException
+	public static File getWavDir(final IAlbum album, final boolean createOrDelete) throws IOException
 	{
 		File dir = new File(getWorkDir(album), "wav");
 
@@ -179,11 +179,11 @@ public final class JRipperUtils
 	 * Erzeugt, wenn nicht vorhanden, das Verzeichnis für die Dateien.<br>
 	 * Format: ArbeitsVerzeichnis/ALBUMTITEL
 	 * 
-	 * @param album {@link Album}
+	 * @param album {@link IAlbum}
 	 * @return {@link File}
 	 * @throws IOException Falls was schief geht.
 	 */
-	public static File getWorkDir(final Album album) throws IOException
+	public static File getWorkDir(final IAlbum album) throws IOException
 	{
 		StringBuilder sb = new StringBuilder();
 		sb.append(Settings.getInstance().getWorkDir());

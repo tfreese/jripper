@@ -16,7 +16,7 @@
 	</if>	
 	<if condition='isNull("log.dir")'>
 		<then>
-			<property name="log.dir" value="${user.home}/logs" />
+			<property name="log.dir" value="${user.home}/.jripper" />
 		</then>
 	</if>
 
@@ -67,10 +67,12 @@
 	</appender>
 
 	<logger name="JRipper" level="DEBUG">
-		<!--appender-ref ref="FILE" /-->
+		<appender-ref ref="FILE" />
 	</logger>
-	<logger name="JRipperSwing" level="DEBUG"/>
-
+	<logger name="JRipperSwing" level="DEBUG">
+		<appender-ref ref="FILE" />
+	</logger>
+	
 	<root level="INFO">
 		<appender-ref ref="STDOUT" />
 		<appender-ref ref="STDERR" />

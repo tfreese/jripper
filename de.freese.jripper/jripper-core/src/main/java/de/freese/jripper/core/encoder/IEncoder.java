@@ -5,7 +5,7 @@
 package de.freese.jripper.core.encoder;
 
 import de.freese.jripper.core.IOSProvider;
-import de.freese.jripper.core.model.Album;
+import de.freese.jripper.core.model.IAlbum;
 import de.freese.jripper.core.process.IProcessMonitor;
 import java.io.File;
 
@@ -17,12 +17,12 @@ import java.io.File;
 public interface IEncoder extends IOSProvider
 {
 	/**
-	 * @param album {@link Album}
+	 * @param album {@link IAlbum}
 	 * @param directory {@link File}
 	 * @param monitor {@link IProcessMonitor}
 	 * @throws Exception Falls was schief geht.
 	 */
-	public void encode(Album album, File directory, IProcessMonitor monitor) throws Exception;
+	public void encode(IAlbum album, File directory, IProcessMonitor monitor) throws Exception;
 
 	/**
 	 * @return {@link EncoderFormat}

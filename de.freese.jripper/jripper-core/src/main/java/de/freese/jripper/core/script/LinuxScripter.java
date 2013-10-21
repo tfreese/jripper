@@ -5,9 +5,10 @@
 package de.freese.jripper.core.script;
 
 import de.freese.jripper.core.Settings;
-import de.freese.jripper.core.model.Album;
+import de.freese.jripper.core.model.IAlbum;
 import de.freese.jripper.core.model.Track;
 import de.freese.jripper.core.process.AbstractProcess;
+import de.freese.jripper.core.process.EmptyProcessMonitor;
 import de.freese.jripper.core.process.LoggerProcessMonitor;
 import java.io.File;
 import java.io.PrintWriter;
@@ -36,19 +37,43 @@ public class LinuxScripter extends AbstractProcess implements IScripter
 	@Override
 	public void execute(final File script) throws Exception
 	{
-		// TODO Auto-generated method stub
+		List<String> command = new ArrayList<>();
+		// command.add("konsole");
+		// // command.add("--nofork");
+		// command.add("--new-tab");
+		// command.add("--hold");
+		// command.add("-e");
+		// command.add(script.getAbsolutePath());
 
+		command.add("xterm"); // System.getenv().get("TERM")
+		// // command.add("-T");
+		// // command.add("MyTest");
+		// // command.add("-n");
+		// // command.add("MyTest minimized");
+		command.add("-bg");
+		command.add("black");
+		command.add("-fg");
+		command.add("white");
+		command.add("-geometry");
+		command.add("250x35");
+		command.add("-hold");
+		command.add("-e");
+		command.add(script.getAbsolutePath());
+		// // command.add(";");
+		// // command.add("le_exec");
+
+		execute(command, script.getParentFile(), new EmptyProcessMonitor());
 	}
 
 	/**
-	 * @see de.freese.jripper.core.script.IScripter#generate(de.freese.jripper.core.model.Album, java.io.File)
+	 * @see de.freese.jripper.core.script.IScripter#generate(de.freese.jripper.core.model.IAlbum, java.io.File)
 	 */
 	@Override
-	public File generate(final Album album, final File folder) throws Exception
+	public File generate(final IAlbum album, final File folder) throws Exception
 	{
 		Settings settings = Settings.getInstance();
 
-		File script = new File(folder, StringUtils.replace(album.getTitle(), " ", "-") + ".sh");
+		File script = new File(folder, getPath(album) + ".sh");
 
 		if (script.exists())
 		{
@@ -118,10 +143,24 @@ public class LinuxScripter extends AbstractProcess implements IScripter
 	}
 
 	/**
-	 * @param pw {@link PrintWriter}
-	 * @param album {@link Album}
+	 * formattiert den Pfad des Albums.
+	 * 
+	 * @param album {@link IAlbum}
+	 * @return String
 	 */
-	private void writeFLAC(final PrintWriter pw, final Album album)
+	private String getPath(final IAlbum album)
+	{
+		String path = StringUtils.replace(album.getTitle(), " ", "-");
+		path = StringUtils.replace(path, "/", "-");
+
+		return path;
+	}
+
+	/**
+	 * @param pw {@link PrintWriter}
+	 * @param album {@link IAlbum}
+	 */
+	private void writeFLAC(final PrintWriter pw, final IAlbum album)
 	{
 		String diskID = album.getDiskID().getID();
 		// List<String> files = new ArrayList<>();
@@ -168,15 +207,16 @@ public class LinuxScripter extends AbstractProcess implements IScripter
 
 		pw.println();
 		pw.println("echo");
-		pw.println("echo Replay-Gain");
+		pw.println("echo \"Replay-Gain ...\"");
 		pw.println("$METAFLAC --add-replay-gain *.flac");
+		pw.println("echo \"...ready\"");
 	}
 
 	/**
 	 * @param pw {@link PrintWriter}
-	 * @param album {@link Album}
+	 * @param album {@link IAlbum}
 	 */
-	private void writeMP3(final PrintWriter pw, final Album album)
+	private void writeMP3(final PrintWriter pw, final IAlbum album)
 	{
 		String diskID = album.getDiskID().getID();
 		// List<String> files = new ArrayList<>();
@@ -224,8 +264,9 @@ public class LinuxScripter extends AbstractProcess implements IScripter
 
 		pw.println();
 		pw.println("echo");
-		pw.println("echo Replay-Gain");
+		pw.println("echo \"Replay-Gain ...\"");
 		pw.println("$MP3GAIN -r -k *.mp3");	 // -a
+		pw.println("echo \"...ready\"");
 	}
 
 	/**

@@ -6,13 +6,8 @@ package de.freese.jripper.swing.model;
 
 import com.jgoodies.binding.beans.Model;
 import com.jgoodies.common.bean.Bean;
-import com.jgoodies.common.collect.ArrayListModel;
-import com.jgoodies.common.collect.ObservableList;
 import de.freese.jripper.core.Settings;
 import de.freese.jripper.swing.JRipperSwing;
-import java.util.Arrays;
-import java.util.Collections;
-import javax.swing.ListModel;
 import org.slf4j.Logger;
 
 /**
@@ -63,11 +58,6 @@ public class SettingsBean extends Model// Bean
 	/**
 	 * 
 	 */
-	private ObservableList<Integer> listModelMp3Bitrate = null;
-
-	/**
-	 * 
-	 */
 	private final Logger logger = JRipperSwing.LOGGER;
 
 	/**
@@ -85,10 +75,6 @@ public class SettingsBean extends Model// Bean
 		super();
 
 		this.settings = settings;
-
-		this.listModelMp3Bitrate = new ArrayListModel<>();
-		this.listModelMp3Bitrate.addAll(Arrays.asList(32, 40, 48, 56, 64, 80, 96, 112, 128, 160, 192, 224, 256, 320));
-		Collections.sort(this.listModelMp3Bitrate, Collections.reverseOrder());
 	}
 
 	/**
@@ -115,15 +101,6 @@ public class SettingsBean extends Model// Bean
 	public int getFramesPerSecond()
 	{
 		return this.settings.getFramesPerSecond();
-	}
-
-	/**
-	 * @return {@link ObservableList}<Integer>
-	 */
-	@SuppressWarnings("unchecked")
-	public ListModel<Integer> getListModelMp3Bitrate()
-	{
-		return this.listModelMp3Bitrate;
 	}
 
 	/**

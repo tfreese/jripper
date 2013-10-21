@@ -4,7 +4,7 @@
 
 package de.freese.jripper.swing.action;
 
-import de.freese.jripper.core.model.Album;
+import de.freese.jripper.core.model.IAlbum;
 import de.freese.jripper.swing.model.AlbumModel;
 import de.freese.jripper.swing.task.RippingTask;
 import java.awt.event.ActionEvent;
@@ -38,7 +38,7 @@ public class ActionRipping extends AbstractAction
 
 		this.albumModel = albumModel;
 
-		putValue(NAME, "Rip + Encode");
+		putValue(NAME, "Rip / Encode");
 	}
 
 	/**
@@ -47,7 +47,7 @@ public class ActionRipping extends AbstractAction
 	@Override
 	public void actionPerformed(final ActionEvent e)
 	{
-		Album album = this.albumModel.getBean().getAlbum();
+		IAlbum album = this.albumModel.getBean();
 
 		RippingTask task = new RippingTask(album);
 		task.execute();

@@ -14,7 +14,7 @@ import org.apache.commons.lang3.StringUtils;
  * 
  * @author Thomas Freese
  */
-public class Album implements Iterable<Track>
+public class Album implements IAlbum
 {
 	/**
 	 * Bei Compilations null.
@@ -92,104 +92,106 @@ public class Album implements Iterable<Track>
 	}
 
 	/**
-	 * Bei Compilations null.
-	 * 
-	 * @return String
+	 * @see de.freese.jripper.core.model.IAlbum#getArtist()
 	 */
+	@Override
 	public String getArtist()
 	{
 		return this.artist;
 	}
 
 	/**
-	 * @return String
+	 * @see de.freese.jripper.core.model.IAlbum#getComment()
 	 */
+	@Override
 	public String getComment()
 	{
 		return StringUtils.defaultIfBlank(this.comment, "");
 	}
 
 	/**
-	 * @return {@link DiskID}
+	 * @see de.freese.jripper.core.model.IAlbum#getDiskID()
 	 */
+	@Override
 	public DiskID getDiskID()
 	{
 		return this.diskID;
 	}
 
 	/**
-	 * @return int
+	 * @see de.freese.jripper.core.model.IAlbum#getDiskNumber()
 	 */
+	@Override
 	public int getDiskNumber()
 	{
 		return this.diskNumber;
 	}
 
 	/**
-	 * @return String
+	 * @see de.freese.jripper.core.model.IAlbum#getGenre()
 	 */
+	@Override
 	public String getGenre()
 	{
 		return this.genre;
 	}
 
 	/**
-	 * @return String
+	 * @see de.freese.jripper.core.model.IAlbum#getTitle()
 	 */
+	@Override
 	public String getTitle()
 	{
 		return this.title;
 	}
 
 	/**
-	 * @return int
+	 * @see de.freese.jripper.core.model.IAlbum#getTotalDisks()
 	 */
+	@Override
 	public int getTotalDisks()
 	{
 		return this.totalDisks;
 	}
 
 	/**
-	 * Liefert den {@link Track} am Index.
-	 * 
-	 * @param index int
-	 * @return {@link Track}
+	 * @see de.freese.jripper.core.model.IAlbum#getTrack(int)
 	 */
+	@Override
 	public Track getTrack(final int index)
 	{
 		return this.tracks.get(index);
 	}
 
 	/**
-	 * Liefert die Anzahl der Tracks.
-	 * 
-	 * @return int
+	 * @see de.freese.jripper.core.model.IAlbum#getTrackCount()
 	 */
+	@Override
 	public int getTrackCount()
 	{
 		return this.tracks.size();
 	}
 
 	/**
-	 * @return int
+	 * @see de.freese.jripper.core.model.IAlbum#getYear()
 	 */
+	@Override
 	public int getYear()
 	{
 		return this.year;
 	}
 
 	/**
-	 * Liefert true, wenn das Album eine Compilation ist.
-	 * 
-	 * @return boolean
+	 * @see de.freese.jripper.core.model.IAlbum#isCompilation()
 	 */
+	@Override
 	public boolean isCompilation()
 	{
 		return StringUtils.isBlank(this.artist);
 	}
 
 	/**
-	 * @see java.lang.Iterable#iterator()
+	 * @see de.freese.jripper.core.model.IAlbum#iterator()
 	 */
 	@Override
 	public Iterator<Track> iterator()
@@ -198,50 +200,54 @@ public class Album implements Iterable<Track>
 	}
 
 	/**
-	 * Bei Compilations null.
-	 * 
-	 * @param artist String
+	 * @see de.freese.jripper.core.model.IAlbum#setArtist(java.lang.String)
 	 */
+	@Override
 	public void setArtist(final String artist)
 	{
 		this.artist = artist;
 	}
 
 	/**
-	 * @param comment String
+	 * @see de.freese.jripper.core.model.IAlbum#setComment(java.lang.String)
 	 */
+	@Override
 	public void setComment(final String comment)
 	{
 		this.comment = comment;
 	}
 
 	/**
-	 * @param diskNumber int
+	 * @see de.freese.jripper.core.model.IAlbum#setDiskNumber(int)
 	 */
+	@Override
 	public void setDiskNumber(final int diskNumber)
 	{
 		this.diskNumber = diskNumber;
 	}
 
 	/**
-	 * @param genre String
+	 * @see de.freese.jripper.core.model.IAlbum#setGenre(java.lang.String)
 	 */
+	@Override
 	public void setGenre(final String genre)
 	{
 		this.genre = genre;
 	}
 
 	/**
-	 * @param title String
+	 * @see de.freese.jripper.core.model.IAlbum#setTitle(java.lang.String)
 	 */
+	@Override
 	public void setTitle(final String title)
 	{
 		this.title = title;
 	}
 
 	/**
-	 * @param totalDisks int
+	 * @see de.freese.jripper.core.model.IAlbum#setTotalDisks(int)
 	 */
+	@Override
 	public void setTotalDisks(final int totalDisks)
 	{
 		this.totalDisks = totalDisks;
@@ -268,8 +274,9 @@ public class Album implements Iterable<Track>
 	}
 
 	/**
-	 * @param year int
+	 * @see de.freese.jripper.core.model.IAlbum#setYear(int)
 	 */
+	@Override
 	public void setYear(final int year)
 	{
 		this.year = year;

@@ -6,6 +6,7 @@ package de.freese.jripper.swing;
 
 import com.jgoodies.binding.adapter.BasicComponentFactory;
 import com.jgoodies.binding.adapter.BoundedRangeAdapter;
+import com.jgoodies.binding.adapter.SpinnerAdapterFactory;
 import de.freese.jripper.core.Settings;
 import de.freese.jripper.swing.action.ActionCDDBQuery;
 import de.freese.jripper.swing.action.ActionChooseWorkDir;
@@ -23,19 +24,19 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.text.NumberFormat;
+import java.util.Calendar;
 import java.util.Dictionary;
 import java.util.Map.Entry;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSlider;
+import javax.swing.JSpinner;
 import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
@@ -138,28 +139,63 @@ public class JRipperSwing
 		panelAlbum.setLayout(new GridBagLayout());
 		panelAlbum.setBorder(BorderFactory.createTitledBorder("Album"));
 
+		int row = 0;
+
 		// Artist
-		panelAlbum.add(new JLabel("Artist"), new GBCBuilder(0, 0));
+		panelAlbum.add(new JLabel("Artist"), new GBCBuilder(0, row));
 		JTextField textField = BasicComponentFactory.createTextField(albumModel.getModel(AlbumBean.PROPERTY_ARTIST));
-		panelAlbum.add(textField, new GBCBuilder(1, 0).fillHorizontal());
+		panelAlbum.add(textField, new GBCBuilder(GridBagConstraints.RELATIVE, row).gridwidth(9).fillHorizontal());
+
+		row++;
 
 		// Title
-		panelAlbum.add(new JLabel("Title"), new GBCBuilder(0, 1));
+		panelAlbum.add(new JLabel("Title"), new GBCBuilder(0, row));
 		textField = BasicComponentFactory.createTextField(albumModel.getModel(AlbumBean.PROPERTY_TITLE));
-		panelAlbum.add(textField, new GBCBuilder(1, 1).fillHorizontal());
+		panelAlbum.add(textField, new GBCBuilder(GridBagConstraints.RELATIVE, row).gridwidth(9).fillHorizontal());
+
+		row++;
+
+		// Genre
+		panelAlbum.add(new JLabel("Genre"), new GBCBuilder(0, row));
+		textField = BasicComponentFactory.createTextField(albumModel.getModel(AlbumBean.PROPERTY_GENRE));
+		panelAlbum.add(textField, new GBCBuilder(GridBagConstraints.RELATIVE, row).gridwidth(3).fillHorizontal());
+		panelAlbum.add(new JLabel("Defaults"), new GBCBuilder(GridBagConstraints.RELATIVE, row).insets(2, 20, 2, 2).anchorEast());
+		panelAlbum.add(BasicComponentFactory.createComboBox(albumModel.getSelectionInListGenres()), new GBCBuilder(GridBagConstraints.RELATIVE, row));
+
+		row++;
+
+		// Disk
+		panelAlbum.add(new JLabel("Disk"), new GBCBuilder(0, row));
+		JSpinner spinner = new JSpinner();
+		spinner.setModel(SpinnerAdapterFactory.createNumberAdapter(albumModel.getModel(AlbumBean.PROPERTY_DISKNUMBER), 1, 1, 50, 1));
+		panelAlbum.add(spinner, new GBCBuilder(GridBagConstraints.RELATIVE, row));
+		panelAlbum.add(new JLabel("/"), new GBCBuilder(GridBagConstraints.RELATIVE, row));
+		spinner = new JSpinner();
+		spinner.setModel(SpinnerAdapterFactory.createNumberAdapter(albumModel.getModel(AlbumBean.PROPERTY_TOTALDISKS), 1, 1, 50, 1));
+		panelAlbum.add(spinner, new GBCBuilder(GridBagConstraints.RELATIVE, row));
+
+		row++;
 
 		// Year
-		panelAlbum.add(new JLabel("Year"), new GBCBuilder(0, 2));
-		NumberFormat numberFormat = NumberFormat.getIntegerInstance();
-		numberFormat.setGroupingUsed(false);
-		JFormattedTextField formattedTextField = BasicComponentFactory.createIntegerField(albumModel.getModel(AlbumBean.PROPERTY_YEAR), numberFormat);
-		panelAlbum.add(formattedTextField, new GBCBuilder(1, 2).fillHorizontal());
+		panelAlbum.add(new JLabel("Year"), new GBCBuilder(0, row));
+		spinner = new JSpinner();
+		int currentYear = Calendar.getInstance().get(Calendar.YEAR);
+		spinner.setModel(SpinnerAdapterFactory.createNumberAdapter(albumModel.getModel(AlbumBean.PROPERTY_YEAR), currentYear, 1900, 3000, 1));
+		spinner.setEditor(new JSpinner.NumberEditor(spinner, "0000"));
+		panelAlbum.add(spinner, new GBCBuilder(GridBagConstraints.RELATIVE, row).gridwidth(3));
+
+		// NumberFormat numberFormat = NumberFormat.getIntegerInstance();
+		// numberFormat.setGroupingUsed(false);
+		// JFormattedTextField formattedTextField = BasicComponentFactory.createIntegerField(albumModel.getModel(AlbumBean.PROPERTY_YEAR), numberFormat);
+		// panelAlbum.add(formattedTextField, new GBCBuilder(GridBagConstraints.RELATIVE, row).gridwidth(3));//.fillHorizontal());
+
+		row++;
 
 		// Comment
-		panelAlbum.add(new JLabel("Comment"), new GBCBuilder(0, 3));
+		panelAlbum.add(new JLabel("Comment"), new GBCBuilder(0, row));
 		JTextArea textArea = BasicComponentFactory.createTextArea(albumModel.getModel(AlbumBean.PROPERTY_COMMENT));
 		textArea.setRows(10);
-		panelAlbum.add(new JScrollPane(textArea), new GBCBuilder(1, 3).fillBoth());
+		panelAlbum.add(new JScrollPane(textArea), new GBCBuilder(GridBagConstraints.RELATIVE, row).gridwidth(9).fillBoth());
 
 		splitPane2.setLeftComponent(panelAlbum);
 

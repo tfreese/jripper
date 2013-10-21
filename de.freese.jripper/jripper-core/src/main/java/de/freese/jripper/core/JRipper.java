@@ -11,6 +11,8 @@ import de.freese.jripper.core.diskid.IDiskIDProvider;
 import de.freese.jripper.core.encoder.Encoder;
 import de.freese.jripper.core.encoder.EncoderFormat;
 import de.freese.jripper.core.encoder.IEncoder;
+import de.freese.jripper.core.genre.IGenreProvider;
+import de.freese.jripper.core.genre.LinuxGenreProvider;
 import de.freese.jripper.core.ripper.IRipper;
 import de.freese.jripper.core.ripper.Ripper;
 import org.slf4j.Logger;
@@ -54,6 +56,10 @@ public class JRipper
 	 * 
 	 */
 	private IEncoder encoderMP3 = null;
+	/**
+	 * 
+	 */
+	private IGenreProvider genreProvider = null;
 	/**
 	 * 
 	 */
@@ -124,6 +130,19 @@ public class JRipper
 	}
 
 	/**
+	 * @return {@link IGenreProvider}
+	 */
+	public IGenreProvider getGenreProvider()
+	{
+		if (this.genreProvider == null)
+		{
+			this.genreProvider = new LinuxGenreProvider();
+		}
+
+		return this.genreProvider;
+	}
+
+	/**
 	 * @return {@link Logger}
 	 */
 	public Logger getLogger()
@@ -174,6 +193,14 @@ public class JRipper
 	public void setEncoderMP3(final IEncoder encoderMP3)
 	{
 		this.encoderMP3 = encoderMP3;
+	}
+
+	/**
+	 * @param genreProvider {@link IGenreProvider}
+	 */
+	public void setGenreProvider(final IGenreProvider genreProvider)
+	{
+		this.genreProvider = genreProvider;
 	}
 
 	/**

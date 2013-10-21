@@ -12,6 +12,7 @@ import de.freese.jripper.core.encoder.LameProcessMonitor;
 import de.freese.jripper.core.encoder.LinuxMP3Encoder;
 import de.freese.jripper.core.model.Album;
 import de.freese.jripper.core.model.DiskID;
+import de.freese.jripper.core.model.IAlbum;
 import de.freese.jripper.core.model.Track;
 import de.freese.jripper.core.process.IProcessMonitor;
 import de.freese.jripper.core.process.PrintWriterProcessMonitor;
@@ -86,13 +87,13 @@ public class JRipperConsole implements IAnsiCodes
 	}
 
 	/**
-	 * @param album {@link Album}
+	 * @param album {@link IAlbum}
 	 * @param printWriter {@link PrintWriter}
 	 * @param encoder {@link IEncoder}
 	 * @param directory {@link File}
 	 * @throws Exception Falls was schief geht.
 	 */
-	private void encode(final Album album, final PrintWriter printWriter, final IEncoder encoder, final File directory) throws Exception
+	private void encode(final IAlbum album, final PrintWriter printWriter, final IEncoder encoder, final File directory) throws Exception
 	{
 		IProcessMonitor monitor = null;
 
@@ -203,11 +204,11 @@ public class JRipperConsole implements IAnsiCodes
 	}
 
 	/**
-	 * @param album {@link Album}
+	 * @param album {@link IAlbum}
 	 * @param printWriter {@link PrintWriter}
 	 * @throws Exception Falls was schief geht.
 	 */
-	private void rip(final Album album, final PrintWriter printWriter) throws Exception
+	private void rip(final IAlbum album, final PrintWriter printWriter) throws Exception
 	{
 		String device = Settings.getInstance().getDevice();
 		IRipper ripper = JRipper.getInstance().getRipper();
@@ -219,9 +220,9 @@ public class JRipperConsole implements IAnsiCodes
 	/**
 	 * Zeigt den Inhalt des Albums.
 	 * 
-	 * @param album {@link Album}
+	 * @param album {@link IAlbum}
 	 */
-	private void showAlbum(final Album album)
+	private void showAlbum(final IAlbum album)
 	{
 		print("%s\n", "*****************");
 		print("%s\n", "Album Inhalt");
