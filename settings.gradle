@@ -1,0 +1,5 @@
+rootProject.name = "jripper"
+
+include "jripper-core"
+include "jripper-console"
+include "jripper-swing"

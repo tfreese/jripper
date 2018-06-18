@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="false" scan="false" scanPeriod="60 seconds">
+    <!--statusListener class="ch.qos.logback.core.status.OnConsoleStatusListener" /-->
+
+    <!--Levels are ordered: TRACE < DEBUG < INFO < WARN < ERROR -->
+    <property name="pattern" value="%date{yyyy-MM-dd HH:mm:ss.SSS} - %-5level[%thread] - %logger{0}[%method] - %message%n" />
+    <property name="log.dir" value="${user.dir}/log" />
+
+    <if condition='isNull("pattern")'>
+        <then>
+            <property name="pattern" value="%date{HH:mm:ss.SSS} - %.-1level - %-35.-35logger{0} - %message%n" />
+        </then>
+        <else>
+        </else>
+    </if>
+    <if condition='isNull("log.dir")'>
+        <then>
+            <property name="log.dir" value="${user.home}/.jripper" />
+        </then>
+    </if>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <target>System.out</target>
+        <immediateFlush>false</immediateFlush>
+        <encoder>
+            <pattern>${pattern}</pattern>
+            <outputPatternAsHeader>false</outputPatternAsHeader>            
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>DENY</onMatch>
+            <onMismatch>ACCEPT</onMismatch>
+        </filter>
+    </appender>
+
+    <appender name="STDERR" class="ch.qos.logback.core.ConsoleAppender">
+        <target>System.err</target>
+        <immediateFlush>false</immediateFlush>
+        <encoder>
+            <pattern>${pattern}</pattern>
+            <outputPatternAsHeader>false</outputPatternAsHeader>            
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
+    </appender>
+
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.dir}/jripper.log</file>
+        <append>true</append>
+        <immediateFlush>true</immediateFlush>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${log.dir}/jripper.%d{yyyy-MM-dd}.log.gz</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${pattern}</pattern>
+            <outputPatternAsHeader>false</outputPatternAsHeader>            
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>DENY</onMatch>
+            <onMismatch>ACCEPT</onMismatch>
+        </filter>
+    </appender>
+
+    <logger name="JRipper" level="DEBUG">
+        <appender-ref ref="FILE" />
+    </logger>
+    <logger name="JRipperSwing" level="INFO">
+        <appender-ref ref="FILE" />
+    </logger>
+
+    <root level="INFO">
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="STDERR" />
+    </root>
+</configuration>
