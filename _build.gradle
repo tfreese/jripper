@@ -56,7 +56,7 @@ project("jripper-swing") {
         compile("com.jgoodies:jgoodies-binding:$version_jgoodies_binding")
     }
     
-    ext.mainClassName = "de.freese.jripper.swing.JRipperSwing"
+    ext.mainClass = "de.freese.jripper.swing.JRipperSwing"
     
     // Eigener Task zur Ausführung, wenn ohne "application" Plugin ausgeführt werden soll.
     task run(type:JavaExec) {
