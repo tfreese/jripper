@@ -65,8 +65,8 @@ public final class Settings
 	{
 		super();
 
-		// setWorkDir(System.getProperty("java.io.tmpdir") + "/jripper");
-		setWorkDir(System.getProperty("user.home") + "/mediathek/neues/jripper");
+		setWorkDir(System.getProperty("java.io.tmpdir") + "/jripper");
+		// setWorkDir(System.getProperty("user.home") + "/mediathek/neues/jripper");
 		// setWorkDir(System.getProperty("user.dir") + "/jripper");
 		// setWorkDir(System.getProperty("user.home") + "/jripper");
 
