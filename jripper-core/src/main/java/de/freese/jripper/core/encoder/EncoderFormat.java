@@ -6,17 +6,18 @@ package de.freese.jripper.core.encoder;
 
 /**
  * Enum für mögliche Encodertypen.
- * 
+ *
  * @author Thomas Freese
  */
 public enum EncoderFormat
 {
-	/**
-	 * 
-	 */
-	flac,
-	/**
-	 * 
-	 */
-	mp3;
+    /**
+     * 
+     */
+    flac,
+
+    /**
+     * 
+     */
+    mp3;
 }

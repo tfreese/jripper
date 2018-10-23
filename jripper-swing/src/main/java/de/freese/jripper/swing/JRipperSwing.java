@@ -12,6 +12,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Dictionary;
 import java.util.Map.Entry;
@@ -39,6 +40,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.jgoodies.binding.adapter.BoundedRangeAdapter;
 import com.jgoodies.binding.adapter.SpinnerAdapterFactory;
+import de.freese.binding.SwingBindings;
+import de.freese.binding.collections.DefaultObservableList;
+import de.freese.binding.property.Property;
+import de.freese.binding.property.SimpleIntegerProperty;
+import de.freese.binding.swing.combobox.DefaultObservableListComboBoxModel;
 import de.freese.jripper.core.Settings;
 import de.freese.jripper.swing.action.ActionCDDBQuery;
 import de.freese.jripper.swing.action.ActionChooseWorkDir;
@@ -89,6 +95,16 @@ public class JRipperSwing
             view.init();
         });
     }
+
+    /**
+     *
+     */
+    private de.freese.binding.collections.ObservableList<Integer> mp3BitRates = new DefaultObservableList<>(new ArrayList<>());
+
+    /**
+     *
+     */
+    private Property<Integer> selectedMp3BitRate = new SimpleIntegerProperty();
 
     /**
      * Erstellt ein neues {@link JRipperSwing} Object.
@@ -261,7 +277,8 @@ public class JRipperSwing
         panel.setLayout(new GridBagLayout());
         panel.setBorder(BorderFactory.createTitledBorder("Settings"));
 
-        SettingsModel model = new SettingsModel(Settings.getInstance());
+        Settings settings = Settings.getInstance();
+        SettingsModel model = new SettingsModel(settings);
 
         // Device
         panel.add(new JLabel("Device"), new GBCBuilder(0, 0));
@@ -313,7 +330,15 @@ public class JRipperSwing
         // Bitrate
         panelMP3.add(new JLabel("Bitrate"), new GBCBuilder(0, 1));
 
-        JComboBox<Integer> comboBox = JGoodiesComponentFactory.createComboBox(model.getSelectionInListMp3Bitrate());
+        this.mp3BitRates.addAll(settings.getMp3BitRates());
+
+        JComboBox<Integer> comboBox = new JComboBox<>();
+        comboBox.setModel(new DefaultObservableListComboBoxModel<>(this.mp3BitRates));
+
+        SwingBindings.bindBidirectional(comboBox, this.selectedMp3BitRate);
+        this.selectedMp3BitRate.addListener((observable, oldValue, newValue) -> settings.setMp3Bitrate(newValue));
+        this.selectedMp3BitRate.setValue(this.mp3BitRates.get(0));
+
         panelMP3.add(comboBox, new GBCBuilder(1, 1).fillHorizontal());
 
         panel.add(panelMP3, new GBCBuilder(0, 3).gridwidth(3).fillHorizontal());
@@ -331,7 +356,9 @@ public class JRipperSwing
     {
         try
         {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            // UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            // UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
+            // UIManager.setLookAndFeel("com.sun.java.swing.plaf.motif.MotifLookAndFeel");
         }
         catch (Exception ex)
         {

@@ -65,14 +65,17 @@
     </appender>
 
     <logger name="JRipper" level="DEBUG">
-        <appender-ref ref="FILE" />
+        <!--appender-ref ref="FILE" /-->
     </logger>
     <logger name="JRipperSwing" level="INFO">
         <appender-ref ref="FILE" />
     </logger>
+    
+    <logger name="de.freese.binding" level="DEBUG" />    
 
     <root level="INFO">
         <appender-ref ref="STDOUT" />
         <appender-ref ref="STDERR" />
+        <appender-ref ref="FILE" />
     </root>
 </configuration>

@@ -26,9 +26,14 @@ import de.freese.jripper.core.ripper.Ripper;
 public class JRipper
 {
     /**
-     * 
+     *
      */
     private static final JRipper INSTANCE = new JRipper();
+
+    /**
+     *
+     */
+    public static final Logger LOGGER = LoggerFactory.getLogger("JRipper");
 
     /**
      * @return {@link JRipper}
@@ -39,36 +44,31 @@ public class JRipper
     }
 
     /**
-     * 
+     *
      */
     private ICDDBProvider cddbProvider = null;
 
     /**
-     * 
+     *
      */
     private IDiskIDProvider diskIDProvider = null;
-
     /**
-     * 
+     *
      */
     private IEncoder encoderFLAC = null;
+
     /**
-     * 
+     *
      */
     private IEncoder encoderMP3 = null;
 
     /**
-     * 
+     *
      */
     private IGenreProvider genreProvider = null;
 
     /**
-     * 
-     */
-    private final Logger logger = LoggerFactory.getLogger("JRipper");
-
-    /**
-     * 
+     *
      */
     private IRipper ripper = null;
 
@@ -150,7 +150,7 @@ public class JRipper
      */
     public Logger getLogger()
     {
-        return this.logger;
+        return JRipper.LOGGER;
     }
 
     /**
