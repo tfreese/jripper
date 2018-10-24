@@ -5,6 +5,8 @@
 package de.freese.jripper.core;
 
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Klasse mit der Konfiguation.
@@ -49,12 +51,17 @@ public final class Settings
     /**
      *
      */
+    private final Logger logger = LoggerFactory.getLogger(Settings.class);;
+
+    /**
+     *
+     */
     private int mp3Bitrate = 320;
+
     /**
      *
      */
     private List<Integer> mp3BitRates = null;
-
     /**
      *
      */
@@ -114,6 +121,14 @@ public final class Settings
     }
 
     /**
+     * @return {@link Logger}
+     */
+    protected Logger getLogger()
+    {
+        return this.logger;
+    }
+
+    /**
      * @return int
      */
     public int getMp3Bitrate()
@@ -163,6 +178,8 @@ public final class Settings
     public void setDevice(final String device)
     {
         this.device = device;
+
+        getLogger().debug("device = {}", device);
     }
 
     /**
@@ -173,6 +190,8 @@ public final class Settings
     public void setFlacCompression(final int flacCompression)
     {
         this.flacCompression = flacCompression;
+
+        getLogger().debug("flacCompression = {}", flacCompression);
     }
 
     /**
@@ -181,6 +200,8 @@ public final class Settings
     public void setFlacEnabled(final boolean flacEnabled)
     {
         this.flacEnabled = flacEnabled;
+
+        getLogger().debug("flacEnabled = {}", flacEnabled);
     }
 
     /**
@@ -189,6 +210,8 @@ public final class Settings
     public void setFramesPerSecond(final int framesPerSecond)
     {
         this.framesPerSecond = framesPerSecond;
+
+        getLogger().debug("framesPerSecond = {}", framesPerSecond);
     }
 
     /**
@@ -198,7 +221,7 @@ public final class Settings
     {
         this.mp3Bitrate = mp3Bitrate;
 
-        JRipper.LOGGER.debug("mp3Bitrate = {}", mp3Bitrate);
+        getLogger().debug("mp3Bitrate = {}", mp3Bitrate);
     }
 
     /**
@@ -207,6 +230,8 @@ public final class Settings
     public void setMp3Enabled(final boolean mp3Enabled)
     {
         this.mp3Enabled = mp3Enabled;
+
+        getLogger().debug("mp3Enabled = {}", mp3Enabled);
     }
 
     /**
@@ -217,5 +242,7 @@ public final class Settings
     public void setWorkDir(final String workDir)
     {
         this.workDir = workDir;
+
+        getLogger().debug("workDir = {}", workDir);
     }
 }

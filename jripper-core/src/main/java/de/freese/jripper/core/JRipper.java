@@ -7,16 +7,16 @@ package de.freese.jripper.core;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import de.freese.jripper.core.cddb.FreeDBProvider;
-import de.freese.jripper.core.cddb.ICDDBProvider;
+import de.freese.jripper.core.cddb.CDDBProvider;
+import de.freese.jripper.core.diskid.DiskIDProviderFactory;
 import de.freese.jripper.core.diskid.DiskIDProvider;
-import de.freese.jripper.core.diskid.IDiskIDProvider;
-import de.freese.jripper.core.encoder.Encoder;
+import de.freese.jripper.core.encoder.EncoderFactory;
 import de.freese.jripper.core.encoder.EncoderFormat;
-import de.freese.jripper.core.encoder.IEncoder;
-import de.freese.jripper.core.genre.IGenreProvider;
+import de.freese.jripper.core.encoder.Encoder;
+import de.freese.jripper.core.genre.GenreProvider;
 import de.freese.jripper.core.genre.LinuxGenreProvider;
-import de.freese.jripper.core.ripper.IRipper;
 import de.freese.jripper.core.ripper.Ripper;
+import de.freese.jripper.core.ripper.RipperFactory;
 
 /**
  * Zentrale Klasse.
@@ -46,31 +46,31 @@ public class JRipper
     /**
      *
      */
-    private ICDDBProvider cddbProvider = null;
+    private CDDBProvider cddbProvider = null;
 
     /**
      *
      */
-    private IDiskIDProvider diskIDProvider = null;
+    private DiskIDProvider diskIDProvider = null;
     /**
      *
      */
-    private IEncoder encoderFLAC = null;
+    private Encoder encoderFLAC = null;
 
     /**
      *
      */
-    private IEncoder encoderMP3 = null;
+    private Encoder encoderMP3 = null;
 
     /**
      *
      */
-    private IGenreProvider genreProvider = null;
+    private GenreProvider genreProvider = null;
 
     /**
      *
      */
-    private IRipper ripper = null;
+    private Ripper ripper = null;
 
     /**
      * Erstellt ein neues {@link JRipper} Object.
@@ -81,9 +81,9 @@ public class JRipper
     }
 
     /**
-     * @return {@link ICDDBProvider}
+     * @return {@link CDDBProvider}
      */
-    public ICDDBProvider getCDDBProvider()
+    public CDDBProvider getCDDBProvider()
     {
         if (this.cddbProvider == null)
         {
@@ -94,48 +94,48 @@ public class JRipper
     }
 
     /**
-     * @return {@link IDiskIDProvider}
+     * @return {@link DiskIDProvider}
      */
-    public IDiskIDProvider getDiskIDProvider()
+    public DiskIDProvider getDiskIDProvider()
     {
         if (this.diskIDProvider == null)
         {
-            this.diskIDProvider = DiskIDProvider.getInstance();
+            this.diskIDProvider = DiskIDProviderFactory.getInstance();
         }
 
         return this.diskIDProvider;
     }
 
     /**
-     * @return {@link IEncoder}
+     * @return {@link Encoder}
      */
-    public IEncoder getEncoderFLAC()
+    public Encoder getEncoderFLAC()
     {
         if (this.encoderFLAC == null)
         {
-            this.encoderFLAC = Encoder.getInstance(EncoderFormat.flac);
+            this.encoderFLAC = EncoderFactory.getInstance(EncoderFormat.flac);
         }
 
         return this.encoderFLAC;
     }
 
     /**
-     * @return {@link IEncoder}
+     * @return {@link Encoder}
      */
-    public IEncoder getEncoderMP3()
+    public Encoder getEncoderMP3()
     {
         if (this.encoderMP3 == null)
         {
-            this.encoderMP3 = Encoder.getInstance(EncoderFormat.mp3);
+            this.encoderMP3 = EncoderFactory.getInstance(EncoderFormat.mp3);
         }
 
         return this.encoderMP3;
     }
 
     /**
-     * @return {@link IGenreProvider}
+     * @return {@link GenreProvider}
      */
-    public IGenreProvider getGenreProvider()
+    public GenreProvider getGenreProvider()
     {
         if (this.genreProvider == null)
         {
@@ -154,62 +154,62 @@ public class JRipper
     }
 
     /**
-     * @return {@link IRipper}
+     * @return {@link Ripper}
      */
-    public IRipper getRipper()
+    public Ripper getRipper()
     {
         if (this.ripper == null)
         {
-            this.ripper = Ripper.getInstance();
+            this.ripper = RipperFactory.getInstance();
         }
 
         return this.ripper;
     }
 
     /**
-     * @param cddbProvider {@link ICDDBProvider}
+     * @param cddbProvider {@link CDDBProvider}
      */
-    public void setCDDBProvider(final ICDDBProvider cddbProvider)
+    public void setCDDBProvider(final CDDBProvider cddbProvider)
     {
         this.cddbProvider = cddbProvider;
     }
 
     /**
-     * @param diskIDProvider {@link IDiskIDProvider}
+     * @param diskIDProvider {@link DiskIDProvider}
      */
-    public void setDiskIDProvider(final IDiskIDProvider diskIDProvider)
+    public void setDiskIDProvider(final DiskIDProvider diskIDProvider)
     {
         this.diskIDProvider = diskIDProvider;
     }
 
     /**
-     * @param encoderFLAC {@link IEncoder}
+     * @param encoderFLAC {@link Encoder}
      */
-    public void setEncoderFLAC(final IEncoder encoderFLAC)
+    public void setEncoderFLAC(final Encoder encoderFLAC)
     {
         this.encoderFLAC = encoderFLAC;
     }
 
     /**
-     * @param encoderMP3 {@link IEncoder}
+     * @param encoderMP3 {@link Encoder}
      */
-    public void setEncoderMP3(final IEncoder encoderMP3)
+    public void setEncoderMP3(final Encoder encoderMP3)
     {
         this.encoderMP3 = encoderMP3;
     }
 
     /**
-     * @param genreProvider {@link IGenreProvider}
+     * @param genreProvider {@link GenreProvider}
      */
-    public void setGenreProvider(final IGenreProvider genreProvider)
+    public void setGenreProvider(final GenreProvider genreProvider)
     {
         this.genreProvider = genreProvider;
     }
 
     /**
-     * @param ripper {@link IRipper}
+     * @param ripper {@link Ripper}
      */
-    public void setRipper(final IRipper ripper)
+    public void setRipper(final Ripper ripper)
     {
         this.ripper = ripper;
     }

@@ -10,7 +10,7 @@ package de.freese.jripper.core;
  * @author Thomas Freese
  */
 @FunctionalInterface
-public interface IOSProvider
+public interface OSProvider
 {
     /**
      * Liefert true, wenn das Betriebssystem unterstützt wird.

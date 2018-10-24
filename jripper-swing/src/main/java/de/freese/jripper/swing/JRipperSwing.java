@@ -12,13 +12,13 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Dictionary;
 import java.util.Map.Entry;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -38,21 +38,24 @@ import javax.swing.WindowConstants;
 import javax.swing.plaf.FontUIResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.jgoodies.binding.adapter.BoundedRangeAdapter;
 import com.jgoodies.binding.adapter.SpinnerAdapterFactory;
 import de.freese.binding.SwingBindings;
 import de.freese.binding.collections.DefaultObservableList;
+import de.freese.binding.collections.ObservableList;
 import de.freese.binding.property.Property;
+import de.freese.binding.property.SimpleBooleanProperty;
 import de.freese.binding.property.SimpleIntegerProperty;
+import de.freese.binding.property.SimpleObjectProperty;
+import de.freese.binding.property.SimpleStringProperty;
 import de.freese.binding.swing.combobox.DefaultObservableListComboBoxModel;
 import de.freese.jripper.core.Settings;
+import de.freese.jripper.core.model.Album;
+import de.freese.jripper.core.model.Track;
 import de.freese.jripper.swing.action.ActionCDDBQuery;
 import de.freese.jripper.swing.action.ActionChooseWorkDir;
 import de.freese.jripper.swing.action.ActionRipping;
 import de.freese.jripper.swing.model.AlbumBean;
 import de.freese.jripper.swing.model.AlbumModel;
-import de.freese.jripper.swing.model.SettingsBean;
-import de.freese.jripper.swing.model.SettingsModel;
 import de.freese.jripper.swing.table.AlbumTableModel;
 import de.freese.jripper.swing.table.AlbumTableRenderer;
 
@@ -99,12 +102,12 @@ public class JRipperSwing
     /**
      *
      */
-    private de.freese.binding.collections.ObservableList<Integer> mp3BitRates = new DefaultObservableList<>(new ArrayList<>());
+    private final Property<Album> albumProperty = new SimpleObjectProperty<>();
 
     /**
      *
      */
-    private Property<Integer> selectedMp3BitRate = new SimpleIntegerProperty();
+    private final ObservableList<Track> albumTracks = new DefaultObservableList<>();
 
     /**
      * Erstellt ein neues {@link JRipperSwing} Object.
@@ -151,9 +154,19 @@ public class JRipperSwing
      * @param splitPane {@link JSplitPane}
      * @param albumModel {@link AlbumModel}
      */
-    @SuppressWarnings("unchecked")
     private void initAlbum(final JSplitPane splitPane, final AlbumModel albumModel)
     {
+        this.albumProperty.addListener((observable, oldValue, newValue) -> {
+            Album newAlbum = newValue;
+
+            this.albumTracks.clear();
+
+            for (Track track : newAlbum)
+            {
+                this.albumTracks.add(track);
+            }
+        });
+
         final JSplitPane splitPane2 = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
         splitPane2.setOneTouchExpandable(true);
 
@@ -222,7 +235,7 @@ public class JRipperSwing
         splitPane2.setLeftComponent(panelAlbum);
 
         // Tabelle
-        AlbumTableModel tableModel = new AlbumTableModel(albumModel.getListModelTracks());
+        AlbumTableModel tableModel = new AlbumTableModel(this.albumTracks);
 
         JTable table = new JTable();
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -278,18 +291,32 @@ public class JRipperSwing
         panel.setBorder(BorderFactory.createTitledBorder("Settings"));
 
         Settings settings = Settings.getInstance();
-        SettingsModel model = new SettingsModel(settings);
 
         // Device
         panel.add(new JLabel("Device"), new GBCBuilder(0, 0));
-        JTextField textField = JGoodiesComponentFactory.createTextField(model.getModel(SettingsBean.PROPERTY_DEVICE));
-        panel.add(textField, new GBCBuilder(1, 0).fillHorizontal());
+
+        Property<String> deviceProperty = new SimpleStringProperty();
+
+        JTextField textFieldDevice = new JTextField(settings.getDevice());
+
+        SwingBindings.bindBidirectional(textFieldDevice, deviceProperty);
+        deviceProperty.addListener((observable, oldValue, newValue) -> settings.setDevice(newValue));
+
+        panel.add(textFieldDevice, new GBCBuilder(1, 0).fillHorizontal());
 
         // Work. Dir.
         panel.add(new JLabel("Work.-Dir."), new GBCBuilder(0, 1));
-        textField = JGoodiesComponentFactory.createTextField(model.getModel(SettingsBean.PROPERTY_WORKDIR));
-        panel.add(textField, new GBCBuilder(1, 1).fillHorizontal());
-        JButton button = new JButton(new ActionChooseWorkDir(splitPane.getParent(), model.getModel(SettingsBean.PROPERTY_WORKDIR)));
+
+        Property<String> workDirProperty = new SimpleStringProperty();
+
+        JTextField textFieldWorkDir = new JTextField(settings.getWorkDir());
+
+        SwingBindings.bindBidirectional(textFieldWorkDir, workDirProperty);
+        workDirProperty.addListener((observable, oldValue, newValue) -> settings.setWorkDir(newValue));
+
+        panel.add(textFieldWorkDir, new GBCBuilder(1, 1).fillHorizontal());
+
+        JButton button = new JButton(new ActionChooseWorkDir(splitPane.getParent(), workDirProperty));
         button.setBorder(BorderFactory.createEmptyBorder());
         button.setFocusPainted(false);
         button.setMargin(new Insets(0, 0, 0, 0));
@@ -301,12 +328,21 @@ public class JRipperSwing
         panelFlac.setBorder(BorderFactory.createTitledBorder("Flac"));
 
         // Enabled
-        panelFlac.add(JGoodiesComponentFactory.createCheckBox(model.getModel(SettingsBean.PROPERTY_FLAC_ENBLED), "Enabled"), new GBCBuilder(0, 0));
+        Property<Boolean> flacEnabledProperty = new SimpleBooleanProperty();
+        JCheckBox checkBoxFlac = new JCheckBox("Enabled");
+        checkBoxFlac.setSelected(settings.isFlacEnabled());
+
+        SwingBindings.bindToProperty(checkBoxFlac, flacEnabledProperty);
+        flacEnabledProperty.addListener((observable, oldValue, newValue) -> settings.setFlacEnabled(newValue));
+
+        panelFlac.add(checkBoxFlac, new GBCBuilder(0, 0));
 
         // Compression
+        Property<Integer> flacCompressionProperty = new SimpleIntegerProperty();
+
         panelFlac.add(new JLabel("Compression"), new GBCBuilder(0, 1));
-        JSlider slider = new JSlider();
-        slider.setModel(new BoundedRangeAdapter(model.getModel(SettingsBean.PROPERTY_FLAC_COMPRESSION), 0, 0, 8));
+
+        JSlider slider = new JSlider(0, 8, settings.getFlacCompression());
         slider.setMajorTickSpacing(2);
         // slider.setSnapToTicks(true);
         slider.setPaintLabels(true);
@@ -315,6 +351,10 @@ public class JRipperSwing
         labelTable.put(0, new JLabel("fast"));
         labelTable.put(8, new JLabel("best"));
         slider.setLabelTable(labelTable);
+
+        SwingBindings.bindToProperty(slider, flacCompressionProperty);
+        flacCompressionProperty.addListener((observable, oldValue, newValue) -> settings.setFlacCompression(newValue));
+
         panelFlac.add(slider, new GBCBuilder(1, 1).fillHorizontal());
 
         panel.add(panelFlac, new GBCBuilder(0, 2).gridwidth(3).fillHorizontal());
@@ -325,19 +365,27 @@ public class JRipperSwing
         panelMP3.setBorder(BorderFactory.createTitledBorder("MP3"));
 
         // Enabled
-        panelMP3.add(JGoodiesComponentFactory.createCheckBox(model.getModel(SettingsBean.PROPERTY_MP3_ENBLED), "Enabled"), new GBCBuilder(0, 0));
+        Property<Boolean> mp3EnabledProperty = new SimpleBooleanProperty();
+        JCheckBox checkBoxMp3 = new JCheckBox("Enabled");
+        checkBoxMp3.setSelected(settings.isMp3Enabled());
+
+        SwingBindings.bindToProperty(checkBoxMp3, mp3EnabledProperty);
+        mp3EnabledProperty.addListener((observable, oldValue, newValue) -> settings.setMp3Enabled(newValue));
+
+        panelMP3.add(checkBoxMp3, new GBCBuilder(0, 0));
 
         // Bitrate
+        de.freese.binding.collections.ObservableList<Integer> mp3BitRatesObservableList = new DefaultObservableList<>(settings.getMp3BitRates());
+        Property<Integer> mp3BitRateProperty = new SimpleIntegerProperty();
+
         panelMP3.add(new JLabel("Bitrate"), new GBCBuilder(0, 1));
 
-        this.mp3BitRates.addAll(settings.getMp3BitRates());
-
         JComboBox<Integer> comboBox = new JComboBox<>();
-        comboBox.setModel(new DefaultObservableListComboBoxModel<>(this.mp3BitRates));
+        comboBox.setModel(new DefaultObservableListComboBoxModel<>(mp3BitRatesObservableList));
+        comboBox.setSelectedItem(mp3BitRatesObservableList.get(0));
 
-        SwingBindings.bindBidirectional(comboBox, this.selectedMp3BitRate);
-        this.selectedMp3BitRate.addListener((observable, oldValue, newValue) -> settings.setMp3Bitrate(newValue));
-        this.selectedMp3BitRate.setValue(this.mp3BitRates.get(0));
+        SwingBindings.bindToProperty(comboBox, mp3BitRateProperty);
+        mp3BitRateProperty.addListener((observable, oldValue, newValue) -> settings.setMp3Bitrate(newValue));
 
         panelMP3.add(comboBox, new GBCBuilder(1, 1).fillHorizontal());
 

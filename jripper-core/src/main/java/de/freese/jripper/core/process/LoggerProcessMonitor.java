@@ -8,11 +8,11 @@ import java.io.PrintWriter;
 import org.slf4j.Logger;
 
 /**
- * {@link IProcessMonitor} für einen {@link PrintWriter}.
+ * {@link ProcessMonitor} für einen {@link PrintWriter}.
  * 
  * @author Thomas Freese
  */
-public class LoggerProcessMonitor implements IProcessMonitor
+public class LoggerProcessMonitor implements ProcessMonitor
 {
 	/**
 	 * 
@@ -40,7 +40,7 @@ public class LoggerProcessMonitor implements IProcessMonitor
 	}
 
 	/**
-	 * @see de.freese.jripper.core.process.IProcessMonitor#monitorProcess(java.lang.String)
+	 * @see de.freese.jripper.core.process.ProcessMonitor#monitorProcess(java.lang.String)
 	 */
 	@Override
 	public void monitorProcess(final String line)
@@ -49,7 +49,7 @@ public class LoggerProcessMonitor implements IProcessMonitor
 	}
 
 	/**
-	 * @see de.freese.jripper.core.process.IProcessMonitor#monitorText(java.lang.String)
+	 * @see de.freese.jripper.core.process.ProcessMonitor#monitorText(java.lang.String)
 	 */
 	@Override
 	public void monitorText(final String line)

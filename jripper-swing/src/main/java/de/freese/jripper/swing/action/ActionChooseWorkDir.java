@@ -4,70 +4,65 @@
 
 package de.freese.jripper.swing.action;
 
-import com.jgoodies.binding.value.ValueModel;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JFileChooser;
+import de.freese.binding.property.Property;
 
 /**
  * {@link Action} für die Auswahl des Arbeitsverzeichnisses.
- * 
+ *
  * @author Thomas Freese
  */
 public class ActionChooseWorkDir extends AbstractAction
 {
-	/**
-	 *
-	 */
-	private static final long serialVersionUID = 3262325088354448846L;
+    /**
+     *
+     */
+    private static final long serialVersionUID = 3262325088354448846L;
 
-	/**
-	 * 
-	 */
-	private final Component parent;
-	/**
-	 * 
-	 */
-	private final ValueModel valueModel;
+    /**
+     * 
+     */
+    private final Component parent;
+    /**
+     * 
+     */
+    private final Property<String> workDirProperty;
 
-	/**
-	 * Erstellt ein neues {@link ActionChooseWorkDir} Object.
-	 * 
-	 * @param parent {@link Component}
-	 * @param valueModel {@link ValueModel}
-	 */
-	public ActionChooseWorkDir(final Component parent, final ValueModel valueModel)
-	{
-		super("\u2026");
+    /**
+     * Erstellt ein neues {@link ActionChooseWorkDir} Object.
+     * 
+     * @param parent {@link Component}
+     * @param workDirProperty {@link Property}
+     */
+    public ActionChooseWorkDir(final Component parent, final Property<String> workDirProperty)
+    {
+        super("\u2026");
 
-		this.parent = parent;
-		this.valueModel = valueModel;
-	}
+        this.parent = parent;
+        this.workDirProperty = workDirProperty;
+    }
 
-	/**
-	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-	 */
-	@Override
-	public void actionPerformed(final ActionEvent e)
-	{
-		JFileChooser fileChooser = new JFileChooser();
-		fileChooser.setCurrentDirectory(new File(this.valueModel.getValue().toString()));
-		fileChooser.setAcceptAllFileFilterUsed(false);
-		fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+    /**
+     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+     */
+    @Override
+    public void actionPerformed(final ActionEvent e)
+    {
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setCurrentDirectory(new File(this.workDirProperty.getValue()));
+        fileChooser.setAcceptAllFileFilterUsed(false);
+        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 
-		ValueModel valueModel = this.valueModel;
-		// Trigger trigger = new Trigger();
-		// ValueModel valueModel = new BufferedValueModel(this.valueModel, trigger);
+        int returnVal = fileChooser.showDialog(this.parent, "Work.-Dir.");
 
-		int returnVal = fileChooser.showDialog(this.parent, "Work.-Dir.");
-
-		if (returnVal == JFileChooser.APPROVE_OPTION)
-		{
-			valueModel.setValue(fileChooser.getSelectedFile().getAbsolutePath());
-			// trigger.triggerCommit();
-		}
-	}
+        if (returnVal == JFileChooser.APPROVE_OPTION)
+        {
+            this.workDirProperty.setValue(fileChooser.getSelectedFile().getAbsolutePath());
+        }
+    }
 }

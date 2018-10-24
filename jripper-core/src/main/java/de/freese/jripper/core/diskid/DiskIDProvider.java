@@ -4,53 +4,22 @@
 
 package de.freese.jripper.core.diskid;
 
-import java.util.ServiceLoader;
-import org.apache.commons.lang3.SystemUtils;
+import de.freese.jripper.core.OSProvider;
+import de.freese.jripper.core.model.DiskID;
 
 /**
- * Zentrale Klasse für die Bereitstellung der DiskID.<br>
- * Je nach Betriebssystem wird die entsprechende Implementierung verwendet.
- * 
+ * Liefert die DiskID der CD für die CDDB Abfrage.
+ *
  * @author Thomas Freese
  */
-public final class DiskIDProvider
+public interface DiskIDProvider extends OSProvider
 {
-	/**
-	 * 
-	 */
-	private static final ServiceLoader<IDiskIDProvider> SERVICE_LOADER = ServiceLoader.load(IDiskIDProvider.class);
-
-	/**
-	 * Je nach Betriebssystem wird die entsprechende Implementierung geliefert.
-	 * 
-	 * @return {@link IDiskIDProvider}
-	 */
-	public static IDiskIDProvider getInstance()
-	{
-		IDiskIDProvider impl = null;
-
-		for (IDiskIDProvider diskID : SERVICE_LOADER)
-		{
-			if (diskID.supportsOS(SystemUtils.OS_NAME))
-			{
-				impl = diskID;
-				break;
-			}
-		}
-
-		if (impl == null)
-		{
-			throw new NullPointerException("no diskID found for" + SystemUtils.OS_NAME);
-		}
-
-		return impl;
-	}
-
-	/**
-	 * Erstellt ein neues {@link DiskIDProvider} Object.
-	 */
-	private DiskIDProvider()
-	{
-		super();
-	}
+    /**
+     * Liefert die DiskID der CD.
+     *
+     * @param device String
+     * @return {@link DiskID}
+     * @throws Exception Falls was schief geht.
+     */
+    public DiskID getDiskID(String device) throws Exception;
 }

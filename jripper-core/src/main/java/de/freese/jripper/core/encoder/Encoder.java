@@ -1,57 +1,31 @@
 /**
- * Created: 02.03.2013
+ * Created: 25.02.2013
  */
 
 package de.freese.jripper.core.encoder;
 
-import java.util.ServiceLoader;
-import org.apache.commons.lang3.SystemUtils;
+import de.freese.jripper.core.OSProvider;
+import de.freese.jripper.core.model.Album;
+import de.freese.jripper.core.process.ProcessMonitor;
+import java.io.File;
 
 /**
- * Zentrale Klasse für die Bereitstellung der Encoder.<br>
- * Je nach Betriebssystem wird die entsprechende Implementierung verwendet.
+ * Interface für die möglichen Encoder.
  * 
  * @author Thomas Freese
  */
-public final class Encoder
+public interface Encoder extends OSProvider
 {
 	/**
-	 * 
+	 * @param album {@link Album}
+	 * @param directory {@link File}
+	 * @param monitor {@link ProcessMonitor}
+	 * @throws Exception Falls was schief geht.
 	 */
-	private static final ServiceLoader<IEncoder> SERVICE_LOADER = ServiceLoader.load(IEncoder.class);
+	public void encode(Album album, File directory, ProcessMonitor monitor) throws Exception;
 
 	/**
-	 * Je nach Betriebssystem wird die entsprechende Implementierung geliefert.
-	 * 
-	 * @param format {@link EncoderFormat}
-	 * @return {@link IEncoder}
+	 * @return {@link EncoderFormat}
 	 */
-	public static IEncoder getInstance(final EncoderFormat format)
-	{
-		IEncoder impl = null;
-
-		for (IEncoder encoder : SERVICE_LOADER)
-		{
-			if (encoder.supportsOS(SystemUtils.OS_NAME) && encoder.getFormat().equals(format))
-			{
-				impl = encoder;
-				break;
-			}
-		}
-
-		if (impl == null)
-		{
-			throw new NullPointerException("no encoder found for" + SystemUtils.OS_NAME + "/" + format);
-		}
-
-		return impl;
-	}
-
-	/**
-	 * Erstellt ein neues {@link Encoder} Object.
-	 */
-	private Encoder()
-	{
-		super();
-	}
+	public EncoderFormat getFormat();
 }

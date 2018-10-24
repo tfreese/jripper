@@ -4,12 +4,12 @@
 
 package de.freese.jripper.core.encoder;
 
-import de.freese.jripper.core.process.IProcessMonitor;
+import de.freese.jripper.core.process.ProcessMonitor;
 import de.freese.jripper.core.process.PrintWriterProcessMonitor;
 import java.io.PrintWriter;
 
 /**
- * {@link IProcessMonitor} für LAME.
+ * {@link ProcessMonitor} für LAME.
  * 
  * @author Thomas Freese
  */

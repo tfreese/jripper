@@ -3,8 +3,8 @@
  */
 package de.freese.jripper.core;
 
+import de.freese.jripper.core.diskid.DiskIDProviderFactory;
 import de.freese.jripper.core.diskid.DiskIDProvider;
-import de.freese.jripper.core.diskid.IDiskIDProvider;
 import de.freese.jripper.core.diskid.LinuxDiskIDProvider;
 import de.freese.jripper.core.model.DiskID;
 import org.apache.commons.lang3.StringUtils;
@@ -15,7 +15,7 @@ import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
 /**
- * Testklasse für die {@link IDiskIDProvider}.
+ * Testklasse für die {@link DiskIDProvider}.
  *
  * @author Thomas Freese
  */
@@ -38,7 +38,7 @@ public class TestDiskID
     {
         try
         {
-            IDiskIDProvider diskID = DiskIDProvider.getInstance();
+            DiskIDProvider diskID = DiskIDProviderFactory.getInstance();
             Assert.assertNotNull(diskID);
         }
         catch (Exception ex)
@@ -96,7 +96,7 @@ public class TestDiskID
             return;
         }
 
-        IDiskIDProvider diskIDProvider = new LinuxDiskIDProvider();
+        DiskIDProvider diskIDProvider = new LinuxDiskIDProvider();
 
         try
         {

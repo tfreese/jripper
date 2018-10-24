@@ -58,10 +58,10 @@ public abstract class AbstractProcess
 	/**
 	 * @param directory File
 	 * @param command {@link List}
-	 * @param monitor {@link IProcessMonitor}
+	 * @param monitor {@link ProcessMonitor}
 	 * @throws Exception Falls was schief geht.
 	 */
-	protected void execute(final List<String> command, final File directory, final IProcessMonitor monitor) throws Exception
+	protected void execute(final List<String> command, final File directory, final ProcessMonitor monitor) throws Exception
 	{
 		if (!directory.exists())
 		{

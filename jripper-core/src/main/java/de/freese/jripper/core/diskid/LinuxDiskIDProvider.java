@@ -7,7 +7,7 @@ package de.freese.jripper.core.diskid;
 import de.freese.jripper.core.Settings;
 import de.freese.jripper.core.model.DiskID;
 import de.freese.jripper.core.process.AbstractProcess;
-import de.freese.jripper.core.process.IProcessMonitor;
+import de.freese.jripper.core.process.ProcessMonitor;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +18,7 @@ import org.apache.commons.lang3.SystemUtils;
  * 
  * @author Thomas Freese
  */
-public class LinuxDiskIDProvider extends AbstractProcess implements IDiskIDProvider, IProcessMonitor
+public class LinuxDiskIDProvider extends AbstractProcess implements DiskIDProvider, ProcessMonitor
 {
 	/**
 	 * 
@@ -34,7 +34,7 @@ public class LinuxDiskIDProvider extends AbstractProcess implements IDiskIDProvi
 	}
 
 	/**
-	 * @see de.freese.jripper.core.diskid.IDiskIDProvider#getDiskID(java.lang.String)
+	 * @see de.freese.jripper.core.diskid.DiskIDProvider#getDiskID(java.lang.String)
 	 */
 	@Override
 	public DiskID getDiskID(final String device) throws Exception
@@ -62,7 +62,7 @@ public class LinuxDiskIDProvider extends AbstractProcess implements IDiskIDProvi
 	}
 
 	/**
-	 * @see de.freese.jripper.core.process.IProcessMonitor#monitorProcess(java.lang.String)
+	 * @see de.freese.jripper.core.process.ProcessMonitor#monitorProcess(java.lang.String)
 	 */
 	@Override
 	public void monitorProcess(final String line)
@@ -71,7 +71,7 @@ public class LinuxDiskIDProvider extends AbstractProcess implements IDiskIDProvi
 	}
 
 	/**
-	 * @see de.freese.jripper.core.process.IProcessMonitor#monitorText(java.lang.String)
+	 * @see de.freese.jripper.core.process.ProcessMonitor#monitorText(java.lang.String)
 	 */
 	@Override
 	public void monitorText(final String line)
@@ -80,7 +80,7 @@ public class LinuxDiskIDProvider extends AbstractProcess implements IDiskIDProvi
 	}
 
 	/**
-	 * @see de.freese.jripper.core.IOSProvider#supportsOS(java.lang.String)
+	 * @see de.freese.jripper.core.OSProvider#supportsOS(java.lang.String)
 	 */
 	@Override
 	public boolean supportsOS(final String os)

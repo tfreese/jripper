@@ -9,11 +9,11 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
-import de.freese.jripper.core.ripper.IRipper;
 import de.freese.jripper.core.ripper.Ripper;
+import de.freese.jripper.core.ripper.RipperFactory;
 
 /**
- * Testklasse für die {@link IRipper}.
+ * Testklasse für die {@link Ripper}.
  * 
  * @author Thomas Freese
  */
@@ -36,7 +36,7 @@ public class TestRipper
 	{
 		try
 		{
-			IRipper ripper = Ripper.getInstance();
+			Ripper ripper = RipperFactory.getInstance();
 			Assert.assertNotNull(ripper);
 		}
 		catch (Exception ex)

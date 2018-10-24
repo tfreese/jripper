@@ -11,7 +11,7 @@ import java.io.InputStream;
  * 
  * @author Thomas Freese
  */
-public interface IProcessMonitor
+public interface ProcessMonitor
 {
 	/**
 	 * Zeile des Process {@link InputStream}.

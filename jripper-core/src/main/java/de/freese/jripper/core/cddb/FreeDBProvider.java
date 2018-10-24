@@ -18,7 +18,7 @@ import java.util.TreeSet;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import de.freese.jripper.core.JRipper;
-import de.freese.jripper.core.model.Album;
+import de.freese.jripper.core.model.AlbumImpl;
 import de.freese.jripper.core.model.DiskID;
 
 /**
@@ -26,7 +26,7 @@ import de.freese.jripper.core.model.DiskID;
  *
  * @author Thomas Freese
  */
-public class FreeDBProvider implements ICDDBProvider
+public class FreeDBProvider implements CDDBProvider
 {
     /**
      *
@@ -179,10 +179,10 @@ public class FreeDBProvider implements ICDDBProvider
     }
 
     /**
-     * @see de.freese.jripper.core.cddb.ICDDBProvider#queryAlbum(de.freese.jripper.core.model.DiskID, java.lang.String)
+     * @see de.freese.jripper.core.cddb.CDDBProvider#queryAlbum(de.freese.jripper.core.model.DiskID, java.lang.String)
      */
     @Override
-    public Album queryAlbum(final DiskID diskID, final String genre) throws Exception
+    public AlbumImpl queryAlbum(final DiskID diskID, final String genre) throws Exception
     {
         StringBuilder sb = new StringBuilder();
         sb.append("/~cddb/cddb.cgi?cmd=cddb+read");
@@ -236,7 +236,7 @@ public class FreeDBProvider implements ICDDBProvider
             }
         }
 
-        Album album = new Album(diskID);
+        AlbumImpl album = new AlbumImpl(diskID);
 
         for (Entry<String, String> entry : responseMap.entrySet())
         {
@@ -365,7 +365,7 @@ public class FreeDBProvider implements ICDDBProvider
      * http://freedb.freedb.org/~cddb/cddb.cgi?cmd=cddb+query+7c0b8b0b+11+150+23115+
      * 42165+60015+79512+101560+118757+136605+159492+176067+198875+2957&hello=user+ hostname+program+version&proto=3(6)
      *
-     * @see de.freese.jripper.core.cddb.ICDDBProvider#queryGenres(de.freese.jripper.core.model.DiskID)
+     * @see de.freese.jripper.core.cddb.CDDBProvider#queryGenres(de.freese.jripper.core.model.DiskID)
      */
     @Override
     public List<String> queryGenres(final DiskID diskID) throws Exception

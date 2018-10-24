@@ -1,34 +1,32 @@
 /**
- * Created: 10.10.2013
+ * Created: 24.10.2018
  */
 
 package de.freese.jripper.swing.table;
 
-import javax.swing.ListModel;
-import javax.swing.table.TableModel;
-import com.jgoodies.binding.adapter.AbstractTableAdapter;
+import java.util.List;
+import de.freese.binding.collections.ObservableList;
+import de.freese.binding.swing.table.AbstractObservableListTableModel;
 import de.freese.jripper.core.model.Track;
 
 /**
- * {@link TableModel} des Albums.
- *
  * @author Thomas Freese
  */
-public class AlbumTableModel extends AbstractTableAdapter<Track>
+public class AlbumTableModel extends AbstractObservableListTableModel<Track>
 {
     /**
      *
      */
-    private static final long serialVersionUID = 3590076395406196810L;
+    private static final long serialVersionUID = -9186435568274885834L;
 
     /**
      * Erstellt ein neues {@link AlbumTableModel} Object.
      *
-     * @param listModel {@link ListModel}
+     * @param list {@link ObservableList}
      */
-    public AlbumTableModel(final ListModel<Track> listModel)
+    public AlbumTableModel(final ObservableList<Track> list)
     {
-        super(listModel, "No.", "Artist", "Title", "Time");
+        super(List.of("No.", "Artist", "Title", "Time"), list);
     }
 
     /**
@@ -37,7 +35,7 @@ public class AlbumTableModel extends AbstractTableAdapter<Track>
     @Override
     public Object getValueAt(final int rowIndex, final int columnIndex)
     {
-        Track track = getRow(rowIndex);
+        Track track = getObjectAt(rowIndex);
         Object value = null;
 
         switch (columnIndex)
@@ -63,45 +61,5 @@ public class AlbumTableModel extends AbstractTableAdapter<Track>
         }
 
         return value;
-    }
-
-    /**
-     * @see javax.swing.table.AbstractTableModel#isCellEditable(int, int)
-     */
-    @Override
-    public boolean isCellEditable(final int rowIndex, final int columnIndex)
-    {
-        switch (columnIndex)
-        {
-            case 1:
-                return getRow(rowIndex).getAlbum().isCompilation();
-            case 2:
-                return true;
-            default:
-                return false;
-        }
-    }
-
-    /**
-     * @see javax.swing.table.AbstractTableModel#setValueAt(java.lang.Object, int, int)
-     */
-    @Override
-    public void setValueAt(final Object aValue, final int rowIndex, final int columnIndex)
-    {
-        Track track = getRow(rowIndex);
-
-        switch (columnIndex)
-        {
-            case 1:
-                track.setArtist(aValue.toString());
-                break;
-            case 2:
-                track.setTitle(aValue.toString());
-                break;
-            default:
-                break;
-        }
-
-        fireTableCellUpdated(rowIndex, columnIndex);
     }
 }

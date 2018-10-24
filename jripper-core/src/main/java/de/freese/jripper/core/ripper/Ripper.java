@@ -4,53 +4,24 @@
 
 package de.freese.jripper.core.ripper;
 
-import java.util.ServiceLoader;
-import org.apache.commons.lang3.SystemUtils;
+import de.freese.jripper.core.OSProvider;
+import de.freese.jripper.core.process.ProcessMonitor;
+import java.io.File;
 
 /**
- * Zentrale Klasse für die Bereitstellung des Rippers.<br>
- * Je nach Betriebssystem wird die entsprechende Implementierung verwendet.
+ * Interface für einen CD Ripper.
  * 
  * @author Thomas Freese
  */
-public final class Ripper
+public interface Ripper extends OSProvider
 {
 	/**
+	 * Auslesen der CD in das Verzeichnis.
 	 * 
+	 * @param device String
+	 * @param directory {@link File}
+	 * @param monitor {@link ProcessMonitor}
+	 * @throws Exception Falls was schief geht.
 	 */
-	private static final ServiceLoader<IRipper> SERVICE_LOADER = ServiceLoader.load(IRipper.class);
-
-	/**
-	 * Je nach Betriebssystem wird die entsprechende Implementierung geliefert.
-	 * 
-	 * @return {@link IRipper}
-	 */
-	public static IRipper getInstance()
-	{
-		IRipper impl = null;
-
-		for (IRipper ripper : SERVICE_LOADER)
-		{
-			if (ripper.supportsOS(SystemUtils.OS_NAME))
-			{
-				impl = ripper;
-				break;
-			}
-		}
-
-		if (impl == null)
-		{
-			throw new NullPointerException("no ripper found for" + SystemUtils.OS_NAME);
-		}
-
-		return impl;
-	}
-
-	/**
-	 * Erstellt ein neues {@link Ripper} Object.
-	 */
-	private Ripper()
-	{
-		super();
-	}
+	public void rip(String device, File directory, ProcessMonitor monitor) throws Exception;
 }

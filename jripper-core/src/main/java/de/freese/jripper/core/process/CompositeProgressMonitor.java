@@ -8,16 +8,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * {@link IProcessMonitor} der mehrere Monitore zusammenfasst.
+ * {@link ProcessMonitor} der mehrere Monitore zusammenfasst.
  * 
  * @author Thomas Freese
  */
-public class CompositeProgressMonitor implements IProcessMonitor
+public class CompositeProgressMonitor implements ProcessMonitor
 {
 	/**
 	 * 
 	 */
-	private final List<IProcessMonitor> monitore;
+	private final List<ProcessMonitor> monitore;
 
 	/**
 	 * Erstellt ein neues {@link CompositeProgressMonitor} Object.
@@ -32,38 +32,38 @@ public class CompositeProgressMonitor implements IProcessMonitor
 	/**
 	 * Hinzufügern neuer Monitore.
 	 * 
-	 * @param monitor {@link IProcessMonitor}
-	 * @param monitore {@link IProcessMonitor}[]
+	 * @param monitor {@link ProcessMonitor}
+	 * @param monitore {@link ProcessMonitor}[]
 	 */
-	public void addMonitor(final IProcessMonitor monitor, final IProcessMonitor...monitore)
+	public void addMonitor(final ProcessMonitor monitor, final ProcessMonitor...monitore)
 	{
 		this.monitore.add(monitor);
 
-		for (IProcessMonitor pm : monitore)
+		for (ProcessMonitor pm : monitore)
 		{
 			this.monitore.add(pm);
 		}
 	}
 
 	/**
-	 * @see de.freese.jripper.core.process.IProcessMonitor#monitorProcess(java.lang.String)
+	 * @see de.freese.jripper.core.process.ProcessMonitor#monitorProcess(java.lang.String)
 	 */
 	@Override
 	public void monitorProcess(final String line)
 	{
-		for (IProcessMonitor monitor : this.monitore)
+		for (ProcessMonitor monitor : this.monitore)
 		{
 			monitor.monitorProcess(line);
 		}
 	}
 
 	/**
-	 * @see de.freese.jripper.core.process.IProcessMonitor#monitorText(java.lang.String)
+	 * @see de.freese.jripper.core.process.ProcessMonitor#monitorText(java.lang.String)
 	 */
 	@Override
 	public void monitorText(final String line)
 	{
-		for (IProcessMonitor monitor : this.monitore)
+		for (ProcessMonitor monitor : this.monitore)
 		{
 			monitor.monitorText(line);
 		}

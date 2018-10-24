@@ -13,14 +13,14 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.SystemUtils;
 import de.freese.jripper.core.Settings;
 import de.freese.jripper.core.process.AbstractProcess;
-import de.freese.jripper.core.process.IProcessMonitor;
+import de.freese.jripper.core.process.ProcessMonitor;
 
 /**
  * Liefert die Genres der lame-Definition.
  *
  * @author Thomas Freese
  */
-public class LinuxGenreProvider extends AbstractProcess implements IGenreProvider, IProcessMonitor
+public class LinuxGenreProvider extends AbstractProcess implements GenreProvider, ProcessMonitor
 {
     /**
      * 
@@ -38,7 +38,7 @@ public class LinuxGenreProvider extends AbstractProcess implements IGenreProvide
     }
 
     /**
-     * @see de.freese.jripper.core.genre.IGenreProvider#getGenres()
+     * @see de.freese.jripper.core.genre.GenreProvider#getGenres()
      */
     @Override
     public Set<String> getGenres() throws Exception
@@ -57,7 +57,7 @@ public class LinuxGenreProvider extends AbstractProcess implements IGenreProvide
     }
 
     /**
-     * @see de.freese.jripper.core.process.IProcessMonitor#monitorProcess(java.lang.String)
+     * @see de.freese.jripper.core.process.ProcessMonitor#monitorProcess(java.lang.String)
      */
     @Override
     public void monitorProcess(final String line)
@@ -67,7 +67,7 @@ public class LinuxGenreProvider extends AbstractProcess implements IGenreProvide
     }
 
     /**
-     * @see de.freese.jripper.core.process.IProcessMonitor#monitorText(java.lang.String)
+     * @see de.freese.jripper.core.process.ProcessMonitor#monitorText(java.lang.String)
      */
     @Override
     public void monitorText(final String line)
@@ -76,7 +76,7 @@ public class LinuxGenreProvider extends AbstractProcess implements IGenreProvide
     }
 
     /**
-     * @see de.freese.jripper.core.IOSProvider#supportsOS(java.lang.String)
+     * @see de.freese.jripper.core.OSProvider#supportsOS(java.lang.String)
      */
     @Override
     public boolean supportsOS(final String os)

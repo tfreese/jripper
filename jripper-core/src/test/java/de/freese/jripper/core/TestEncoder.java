@@ -10,12 +10,12 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
-import de.freese.jripper.core.encoder.Encoder;
+import de.freese.jripper.core.encoder.EncoderFactory;
 import de.freese.jripper.core.encoder.EncoderFormat;
-import de.freese.jripper.core.encoder.IEncoder;
+import de.freese.jripper.core.encoder.Encoder;
 
 /**
- * Testklasse für die {@link IEncoder}.
+ * Testklasse für die {@link Encoder}.
  * 
  * @author Thomas Freese
  */
@@ -43,7 +43,7 @@ public class TestEncoder
 
 		try
 		{
-			IEncoder encoder = Encoder.getInstance(EncoderFormat.flac);
+			Encoder encoder = EncoderFactory.getInstance(EncoderFormat.flac);
 			Assert.assertNotNull(encoder);
 		}
 		catch (Exception ex)
@@ -65,7 +65,7 @@ public class TestEncoder
 
 		try
 		{
-			IEncoder encoder = Encoder.getInstance(EncoderFormat.mp3);
+			Encoder encoder = EncoderFactory.getInstance(EncoderFormat.mp3);
 			Assert.assertNotNull(encoder);
 		}
 		catch (Exception ex)

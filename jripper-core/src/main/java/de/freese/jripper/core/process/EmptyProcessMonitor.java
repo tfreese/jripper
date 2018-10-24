@@ -5,11 +5,11 @@
 package de.freese.jripper.core.process;
 
 /**
- * Leerer {@link IProcessMonitor}.
+ * Leerer {@link ProcessMonitor}.
  * 
  * @author Thomas Freese
  */
-public class EmptyProcessMonitor implements IProcessMonitor
+public class EmptyProcessMonitor implements ProcessMonitor
 {
 	/**
 	 * Erstellt ein neues {@link EmptyProcessMonitor} Object.
@@ -20,7 +20,7 @@ public class EmptyProcessMonitor implements IProcessMonitor
 	}
 
 	/**
-	 * @see de.freese.jripper.core.process.IProcessMonitor#monitorProcess(java.lang.String)
+	 * @see de.freese.jripper.core.process.ProcessMonitor#monitorProcess(java.lang.String)
 	 */
 	@Override
 	public void monitorProcess(final String line)
@@ -29,7 +29,7 @@ public class EmptyProcessMonitor implements IProcessMonitor
 	}
 
 	/**
-	 * @see de.freese.jripper.core.process.IProcessMonitor#monitorText(java.lang.String)
+	 * @see de.freese.jripper.core.process.ProcessMonitor#monitorText(java.lang.String)
 	 */
 	@Override
 	public void monitorText(final String line)

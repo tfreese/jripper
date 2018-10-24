@@ -9,14 +9,14 @@ import java.util.ArrayList;
 import java.util.List;
 import org.apache.commons.lang3.SystemUtils;
 import de.freese.jripper.core.process.AbstractProcess;
-import de.freese.jripper.core.process.IProcessMonitor;
+import de.freese.jripper.core.process.ProcessMonitor;
 
 /**
  * Linux Implementierung mit dem Programm "cdparanoia".
  * 
  * @author Thomas Freese
  */
-public class LinuxCDParanoia extends AbstractProcess implements IRipper
+public class LinuxCDParanoia extends AbstractProcess implements Ripper
 {
 	/**
 	 * Erstellt ein neues {@link LinuxCDParanoia} Object.
@@ -27,10 +27,10 @@ public class LinuxCDParanoia extends AbstractProcess implements IRipper
 	}
 
 	/**
-	 * @see de.freese.jripper.core.ripper.IRipper#rip(java.lang.String, java.io.File, de.freese.jripper.core.process.IProcessMonitor)
+	 * @see de.freese.jripper.core.ripper.Ripper#rip(java.lang.String, java.io.File, de.freese.jripper.core.process.ProcessMonitor)
 	 */
 	@Override
-	public void rip(final String device, final File directory, final IProcessMonitor monitor) throws Exception
+	public void rip(final String device, final File directory, final ProcessMonitor monitor) throws Exception
 	{
 		List<String> command = new ArrayList<>();
 		command.add("cdparanoia");
@@ -49,7 +49,7 @@ public class LinuxCDParanoia extends AbstractProcess implements IRipper
 	}
 
 	/**
-	 * @see de.freese.jripper.core.IOSProvider#supportsOS(java.lang.String)
+	 * @see de.freese.jripper.core.OSProvider#supportsOS(java.lang.String)
 	 */
 	@Override
 	public boolean supportsOS(final String os)

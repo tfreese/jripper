@@ -6,10 +6,10 @@ package de.freese.jripper.core.encoder;
 
 import de.freese.jripper.core.JRipperUtils;
 import de.freese.jripper.core.Settings;
-import de.freese.jripper.core.model.IAlbum;
+import de.freese.jripper.core.model.Album;
 import de.freese.jripper.core.model.Track;
 import de.freese.jripper.core.process.AbstractProcess;
-import de.freese.jripper.core.process.IProcessMonitor;
+import de.freese.jripper.core.process.ProcessMonitor;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +20,7 @@ import org.apache.commons.lang3.SystemUtils;
  * 
  * @author Thomas Freese
  */
-public class LinuxFlacEncoder extends AbstractProcess implements IEncoder
+public class LinuxFlacEncoder extends AbstractProcess implements Encoder
 {
 	/**
 	 * Erstellt ein neues {@link LinuxFlacEncoder} Object.
@@ -31,10 +31,10 @@ public class LinuxFlacEncoder extends AbstractProcess implements IEncoder
 	}
 
 	/**
-	 * @see de.freese.jripper.core.encoder.IEncoder#encode(de.freese.jripper.core.model.IAlbum, java.io.File, de.freese.jripper.core.process.IProcessMonitor)
+	 * @see de.freese.jripper.core.encoder.Encoder#encode(de.freese.jripper.core.model.Album, java.io.File, de.freese.jripper.core.process.ProcessMonitor)
 	 */
 	@Override
-	public void encode(final IAlbum album, final File directory, final IProcessMonitor monitor) throws Exception
+	public void encode(final Album album, final File directory, final ProcessMonitor monitor) throws Exception
 	{
 		String diskID = album.getDiskID().getID();
 		List<String> flacFiles = new ArrayList<>();
@@ -96,7 +96,7 @@ public class LinuxFlacEncoder extends AbstractProcess implements IEncoder
 	}
 
 	/**
-	 * @see de.freese.jripper.core.encoder.IEncoder#getFormat()
+	 * @see de.freese.jripper.core.encoder.Encoder#getFormat()
 	 */
 	@Override
 	public EncoderFormat getFormat()
@@ -105,7 +105,7 @@ public class LinuxFlacEncoder extends AbstractProcess implements IEncoder
 	}
 
 	/**
-	 * @see de.freese.jripper.core.IOSProvider#supportsOS(java.lang.String)
+	 * @see de.freese.jripper.core.OSProvider#supportsOS(java.lang.String)
 	 */
 	@Override
 	public boolean supportsOS(final String os)

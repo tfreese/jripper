@@ -4,7 +4,7 @@
 
 package de.freese.jripper.core.genre;
 
-import de.freese.jripper.core.IOSProvider;
+import de.freese.jripper.core.OSProvider;
 import de.freese.jripper.core.model.DiskID;
 import java.util.Set;
 
@@ -13,7 +13,7 @@ import java.util.Set;
  * 
  * @author Thomas Freese
  */
-public interface IGenreProvider extends IOSProvider
+public interface GenreProvider extends OSProvider
 {
 	/**
 	 * Liefert mögliche Genres.

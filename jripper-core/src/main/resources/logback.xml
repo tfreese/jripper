@@ -3,7 +3,8 @@
     <!--statusListener class="ch.qos.logback.core.status.OnConsoleStatusListener" /-->
 
     <!--Levels are ordered: TRACE < DEBUG < INFO < WARN < ERROR -->
-    <property name="pattern" value="%date{yyyy-MM-dd HH:mm:ss.SSS} - %-5level[%thread] - %logger{0}[%method] - %message%n" />
+    <!-- %date{yyyy-MM-dd HH:mm:ss.SSS} -->
+    <property name="pattern" value="%date{HH:mm:ss.SSS} - %-5level[%thread] - %logger{0}[%method] - %message%n" />
     <property name="log.dir" value="${user.dir}/log" />
 
     <if condition='isNull("pattern")'>
@@ -50,28 +51,29 @@
         <append>true</append>
         <immediateFlush>true</immediateFlush>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${log.dir}/jripper.%d{yyyy-MM-dd}.log.gz</fileNamePattern>
+            <fileNamePattern>${log.dir}/%d{yyyy-MM,aux}/jripper.%d{yyyy-MM-dd}.log.gz</fileNamePattern>
             <maxHistory>30</maxHistory>
         </rollingPolicy>
         <encoder>
             <pattern>${pattern}</pattern>
             <outputPatternAsHeader>false</outputPatternAsHeader>            
         </encoder>
-        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+        <!--filter class="ch.qos.logback.classic.filter.LevelFilter">
             <level>ERROR</level>
             <onMatch>DENY</onMatch>
             <onMismatch>ACCEPT</onMismatch>
-        </filter>
+        </filter-->
     </appender>
 
     <logger name="JRipper" level="DEBUG">
-        <!--appender-ref ref="FILE" /-->
+        <appender-ref ref="FILE" />
     </logger>
     <logger name="JRipperSwing" level="INFO">
         <appender-ref ref="FILE" />
     </logger>
     
-    <logger name="de.freese.binding" level="DEBUG" />    
+    <logger name="de.freese.binding" level="DEBUG" /> 
+    <logger name="de.freese.jripper" level="DEBUG" />    
 
     <root level="INFO">
         <appender-ref ref="STDOUT" />

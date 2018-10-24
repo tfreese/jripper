@@ -4,7 +4,7 @@
 
 package de.freese.jripper.core.cddb;
 
-import de.freese.jripper.core.model.Album;
+import de.freese.jripper.core.model.AlbumImpl;
 import de.freese.jripper.core.model.DiskID;
 import java.util.List;
 
@@ -13,7 +13,7 @@ import java.util.List;
  * 
  * @author Thomas Freese
  */
-public interface ICDDBProvider
+public interface CDDBProvider
 {
 	/**
 	 * Liefert die Albentitel der CD.
@@ -23,7 +23,7 @@ public interface ICDDBProvider
 	 * @return {@link List}
 	 * @throws Exception Falls was schief geht.
 	 */
-	public Album queryAlbum(DiskID diskID, String genre) throws Exception;
+	public AlbumImpl queryAlbum(DiskID diskID, String genre) throws Exception;
 
 	/**
 	 * Liefert die Genres der CD.

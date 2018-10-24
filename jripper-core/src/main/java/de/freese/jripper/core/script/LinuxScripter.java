@@ -11,7 +11,7 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import de.freese.jripper.core.JRipperUtils;
 import de.freese.jripper.core.Settings;
-import de.freese.jripper.core.model.IAlbum;
+import de.freese.jripper.core.model.Album;
 import de.freese.jripper.core.model.Track;
 import de.freese.jripper.core.process.AbstractProcess;
 import de.freese.jripper.core.process.EmptyProcessMonitor;
@@ -63,10 +63,10 @@ public class LinuxScripter extends AbstractProcess implements IScripter
 	}
 
 	/**
-	 * @see de.freese.jripper.core.script.IScripter#generate(de.freese.jripper.core.model.IAlbum, java.io.File)
+	 * @see de.freese.jripper.core.script.IScripter#generate(de.freese.jripper.core.model.Album, java.io.File)
 	 */
 	@Override
-	public File generate(final IAlbum album, final File folder) throws Exception
+	public File generate(final Album album, final File folder) throws Exception
 	{
 		Settings settings = Settings.getInstance();
 
@@ -143,10 +143,10 @@ public class LinuxScripter extends AbstractProcess implements IScripter
 	/**
 	 * Formattiert den Pfad des Albums.
 	 * 
-	 * @param album {@link IAlbum}
+	 * @param album {@link Album}
 	 * @return String
 	 */
-	private String getPath(final IAlbum album)
+	private String getPath(final Album album)
 	{
 		// String path = StringUtils.replace(album.getTitle(), " ", "-");
 		// path = StringUtils.replace(path, "/", "-");
@@ -157,9 +157,9 @@ public class LinuxScripter extends AbstractProcess implements IScripter
 
 	/**
 	 * @param pw {@link PrintWriter}
-	 * @param album {@link IAlbum}
+	 * @param album {@link Album}
 	 */
-	private void writeFLAC(final PrintWriter pw, final IAlbum album)
+	private void writeFLAC(final PrintWriter pw, final Album album)
 	{
 		String diskID = album.getDiskID().getID();
 		// List<String> files = new ArrayList<>();
@@ -214,9 +214,9 @@ public class LinuxScripter extends AbstractProcess implements IScripter
 
 	/**
 	 * @param pw {@link PrintWriter}
-	 * @param album {@link IAlbum}
+	 * @param album {@link Album}
 	 */
-	private void writeMP3(final PrintWriter pw, final IAlbum album)
+	private void writeMP3(final PrintWriter pw, final Album album)
 	{
 		String diskID = album.getDiskID().getID();
 		// List<String> files = new ArrayList<>();

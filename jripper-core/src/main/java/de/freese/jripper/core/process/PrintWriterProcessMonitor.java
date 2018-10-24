@@ -7,11 +7,11 @@ package de.freese.jripper.core.process;
 import java.io.PrintWriter;
 
 /**
- * {@link IProcessMonitor} für einen {@link PrintWriter}.
+ * {@link ProcessMonitor} für einen {@link PrintWriter}.
  * 
  * @author Thomas Freese
  */
-public class PrintWriterProcessMonitor implements IProcessMonitor
+public class PrintWriterProcessMonitor implements ProcessMonitor
 {
 	/**
 	 * 
@@ -39,7 +39,7 @@ public class PrintWriterProcessMonitor implements IProcessMonitor
 	}
 
 	/**
-	 * @see de.freese.jripper.core.process.IProcessMonitor#monitorProcess(java.lang.String)
+	 * @see de.freese.jripper.core.process.ProcessMonitor#monitorProcess(java.lang.String)
 	 */
 	@Override
 	public void monitorProcess(final String line)
@@ -49,7 +49,7 @@ public class PrintWriterProcessMonitor implements IProcessMonitor
 	}
 
 	/**
-	 * @see de.freese.jripper.core.process.IProcessMonitor#monitorText(java.lang.String)
+	 * @see de.freese.jripper.core.process.ProcessMonitor#monitorText(java.lang.String)
 	 */
 	@Override
 	public void monitorText(final String line)
