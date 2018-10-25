@@ -12,7 +12,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.Calendar;
+import java.time.LocalDate;
 import java.util.Dictionary;
 import java.util.Map.Entry;
 import javax.swing.BorderFactory;
@@ -31,6 +31,7 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingUtilities;
 import javax.swing.UIDefaults;
 import javax.swing.UIManager;
@@ -38,7 +39,6 @@ import javax.swing.WindowConstants;
 import javax.swing.plaf.FontUIResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.jgoodies.binding.adapter.SpinnerAdapterFactory;
 import de.freese.binding.SwingBindings;
 import de.freese.binding.collections.DefaultObservableList;
 import de.freese.binding.collections.ObservableList;
@@ -50,14 +50,14 @@ import de.freese.binding.property.SimpleStringProperty;
 import de.freese.binding.swing.combobox.DefaultObservableListComboBoxModel;
 import de.freese.jripper.core.Settings;
 import de.freese.jripper.core.model.Album;
+import de.freese.jripper.core.model.AlbumImpl;
 import de.freese.jripper.core.model.Track;
 import de.freese.jripper.swing.action.ActionCDDBQuery;
 import de.freese.jripper.swing.action.ActionChooseWorkDir;
 import de.freese.jripper.swing.action.ActionRipping;
-import de.freese.jripper.swing.model.AlbumBean;
-import de.freese.jripper.swing.model.AlbumModel;
 import de.freese.jripper.swing.table.AlbumTableModel;
 import de.freese.jripper.swing.table.AlbumTableRenderer;
+import de.freese.jripper.swing.task.LoadGenresTask;
 
 /**
  * Swing-View für den JRipper.
@@ -102,7 +102,7 @@ public class JRipperSwing
     /**
      *
      */
-    private final Property<Album> albumProperty = new SimpleObjectProperty<>();
+    private final Property<Album> albumProperty = new SimpleObjectProperty<>(this, "album", new AlbumImpl());
 
     /**
      *
@@ -115,6 +115,14 @@ public class JRipperSwing
     public JRipperSwing()
     {
         super();
+    }
+
+    /**
+     * @return {@link Album}
+     */
+    private Album getAlbum()
+    {
+        return this.albumProperty.getValue();
     }
 
     /**
@@ -135,16 +143,14 @@ public class JRipperSwing
         frame.setLocationRelativeTo(null);
         frame.setLayout(new BorderLayout());
 
-        AlbumModel albumModel = new AlbumModel();
-
-        initMenue(frame, albumModel);
+        initMenue(frame, this.albumProperty);
 
         JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
         splitPane.setOneTouchExpandable(true);
         frame.add(splitPane, BorderLayout.CENTER);
 
         initSettings(splitPane);
-        initAlbum(splitPane, albumModel);
+        initAlbum(splitPane, this.albumProperty);
 
         frame.setVisible(true);
         splitPane.setDividerLocation(0.75D);
@@ -152,12 +158,28 @@ public class JRipperSwing
 
     /**
      * @param splitPane {@link JSplitPane}
-     * @param albumModel {@link AlbumModel}
+     * @param albumProperty {@link Property}
      */
-    private void initAlbum(final JSplitPane splitPane, final AlbumModel albumModel)
+    private void initAlbum(final JSplitPane splitPane, final Property<Album> albumProperty)
     {
+        Property<String> artistTextFieldProperty = new SimpleStringProperty();
+        Property<String> titleTextFieldProperty = new SimpleStringProperty();
+        Property<String> genreTextFieldProperty = new SimpleStringProperty();
+        Property<Integer> diskNumberSpinnerProperty = new SimpleIntegerProperty();
+        Property<Integer> totalDisksSpinnerProperty = new SimpleIntegerProperty();
+        Property<Integer> yearSpinnerProperty = new SimpleIntegerProperty();
+        Property<String> commentTextAreaProperty = new SimpleStringProperty();
+
         this.albumProperty.addListener((observable, oldValue, newValue) -> {
             Album newAlbum = newValue;
+
+            artistTextFieldProperty.setValue(newAlbum.getArtist());
+            titleTextFieldProperty.setValue(newAlbum.getTitle());
+            genreTextFieldProperty.setValue(newAlbum.getGenre());
+            diskNumberSpinnerProperty.setValue(newAlbum.getDiskNumber());
+            totalDisksSpinnerProperty.setValue(newAlbum.getTotalDisks());
+            yearSpinnerProperty.setValue(newAlbum.getYear());
+            commentTextAreaProperty.setValue(newAlbum.getComment());
 
             this.albumTracks.clear();
 
@@ -179,46 +201,85 @@ public class JRipperSwing
 
         // Artist
         panelAlbum.add(new JLabel("Artist"), new GBCBuilder(0, row));
-        JTextField textField = JGoodiesComponentFactory.createTextField(albumModel.getModel(AlbumBean.PROPERTY_ARTIST));
-        panelAlbum.add(textField, new GBCBuilder(GridBagConstraints.RELATIVE, row).gridwidth(9).fillHorizontal());
+        JTextField artistTextField = new JTextField();
+
+        SwingBindings.bindBidirectional(artistTextField, artistTextFieldProperty);
+        artistTextFieldProperty.addListener((observable, oldValue, newValue) -> getAlbum().setArtist(newValue));
+
+        panelAlbum.add(artistTextField, new GBCBuilder(GridBagConstraints.RELATIVE, row).gridwidth(9).fillHorizontal());
 
         row++;
 
         // Title
         panelAlbum.add(new JLabel("Title"), new GBCBuilder(0, row));
-        textField = JGoodiesComponentFactory.createTextField(albumModel.getModel(AlbumBean.PROPERTY_TITLE));
-        panelAlbum.add(textField, new GBCBuilder(GridBagConstraints.RELATIVE, row).gridwidth(9).fillHorizontal());
+        JTextField titleTextField = new JTextField();
+
+        SwingBindings.bindBidirectional(titleTextField, titleTextFieldProperty);
+        titleTextFieldProperty.addListener((observable, oldValue, newValue) -> getAlbum().setTitle(newValue));
+
+        panelAlbum.add(titleTextField, new GBCBuilder(GridBagConstraints.RELATIVE, row).gridwidth(9).fillHorizontal());
 
         row++;
 
         // Genre
+        Property<String> genreComboBoxProperty = new SimpleStringProperty();
+        de.freese.binding.collections.ObservableList<String> genresObservableList = new DefaultObservableList<>();
+
         panelAlbum.add(new JLabel("Genre"), new GBCBuilder(0, row));
-        textField = JGoodiesComponentFactory.createTextField(albumModel.getModel(AlbumBean.PROPERTY_GENRE));
-        panelAlbum.add(textField, new GBCBuilder(GridBagConstraints.RELATIVE, row).gridwidth(3).fillHorizontal());
+        JTextField genreTextField = new JTextField();
+
+        SwingBindings.bindBidirectional(genreTextField, genreTextFieldProperty);
+        genreTextFieldProperty.addListener((observable, oldValue, newValue) -> getAlbum().setGenre(newValue));
+
+        panelAlbum.add(genreTextField, new GBCBuilder(GridBagConstraints.RELATIVE, row).gridwidth(3).fillHorizontal());
         panelAlbum.add(new JLabel("Defaults"), new GBCBuilder(GridBagConstraints.RELATIVE, row).insets(2, 20, 2, 2).anchorEast());
-        panelAlbum.add(JGoodiesComponentFactory.createComboBox(albumModel.getSelectionInListGenres()), new GBCBuilder(GridBagConstraints.RELATIVE, row));
+
+        JComboBox<String> comboBoxGenres = new JComboBox<>();
+        comboBoxGenres.setModel(new DefaultObservableListComboBoxModel<>(genresObservableList));
+        // comboBox.setSelectedItem(genresObservableList.get(0));
+
+        SwingBindings.bindToProperty(comboBoxGenres, genreComboBoxProperty);
+        genreComboBoxProperty.addListener((observable, oldValue, newValue) -> {
+            genreTextField.setText(newValue);
+            getAlbum().setGenre(newValue);
+        });
+
+        panelAlbum.add(comboBoxGenres, new GBCBuilder(GridBagConstraints.RELATIVE, row));
+
+        LoadGenresTask loadGenresTask = new LoadGenresTask(genresObservableList);
+        loadGenresTask.execute();
 
         row++;
 
         // Disk
         panelAlbum.add(new JLabel("Disk"), new GBCBuilder(0, row));
-        JSpinner spinner = new JSpinner();
-        spinner.setModel(SpinnerAdapterFactory.createNumberAdapter(albumModel.getModel(AlbumBean.PROPERTY_DISKNUMBER), 1, 1, 50, 1));
-        panelAlbum.add(spinner, new GBCBuilder(GridBagConstraints.RELATIVE, row));
+        JSpinner diskNumberSpinner = new JSpinner(new SpinnerNumberModel(1, 1, 50, 1));
+
+        SwingBindings.bindBidirectional(diskNumberSpinner, diskNumberSpinnerProperty);
+        diskNumberSpinnerProperty.addListener((observable, oldValue, newValue) -> getAlbum().setDiskNumber(newValue));
+
+        panelAlbum.add(diskNumberSpinner, new GBCBuilder(GridBagConstraints.RELATIVE, row));
         panelAlbum.add(new JLabel("/"), new GBCBuilder(GridBagConstraints.RELATIVE, row));
-        spinner = new JSpinner();
-        spinner.setModel(SpinnerAdapterFactory.createNumberAdapter(albumModel.getModel(AlbumBean.PROPERTY_TOTALDISKS), 1, 1, 50, 1));
-        panelAlbum.add(spinner, new GBCBuilder(GridBagConstraints.RELATIVE, row));
+
+        JSpinner totalDiskspinner = new JSpinner(new SpinnerNumberModel(1, 1, 50, 1));
+
+        SwingBindings.bindBidirectional(totalDiskspinner, totalDisksSpinnerProperty);
+        totalDisksSpinnerProperty.addListener((observable, oldValue, newValue) -> getAlbum().setTotalDisks(newValue));
+
+        panelAlbum.add(totalDiskspinner, new GBCBuilder(GridBagConstraints.RELATIVE, row));
 
         row++;
 
         // Year
         panelAlbum.add(new JLabel("Year"), new GBCBuilder(0, row));
-        spinner = new JSpinner();
-        int currentYear = Calendar.getInstance().get(Calendar.YEAR);
-        spinner.setModel(SpinnerAdapterFactory.createNumberAdapter(albumModel.getModel(AlbumBean.PROPERTY_YEAR), currentYear, 1900, 3000, 1));
-        spinner.setEditor(new JSpinner.NumberEditor(spinner, "0000"));
-        panelAlbum.add(spinner, new GBCBuilder(GridBagConstraints.RELATIVE, row).gridwidth(3));
+        int currentYear = LocalDate.now().getYear();
+        JSpinner yearSpinner = new JSpinner(new SpinnerNumberModel(currentYear, 1900, 3000, 1));
+        yearSpinner.setEditor(new JSpinner.NumberEditor(yearSpinner, "0000"));
+
+        SwingBindings.bindBidirectional(yearSpinner, yearSpinnerProperty);
+        yearSpinnerProperty.addListener((observable, oldValue, newValue) -> getAlbum().setYear(newValue));
+
+        panelAlbum.add(yearSpinner, new GBCBuilder(GridBagConstraints.RELATIVE, row).gridwidth(3));
 
         // NumberFormat numberFormat = NumberFormat.getIntegerInstance();
         // numberFormat.setGroupingUsed(false);
@@ -228,9 +289,13 @@ public class JRipperSwing
 
         // Comment
         panelAlbum.add(new JLabel("Comment"), new GBCBuilder(0, row));
-        JTextArea textArea = JGoodiesComponentFactory.createTextArea(albumModel.getModel(AlbumBean.PROPERTY_COMMENT));
-        textArea.setRows(10);
-        panelAlbum.add(new JScrollPane(textArea), new GBCBuilder(GridBagConstraints.RELATIVE, row).gridwidth(9).fillBoth());
+        JTextArea commentTextArea = new JTextArea();
+        commentTextArea.setRows(10);
+
+        SwingBindings.bindBidirectional(commentTextArea, commentTextAreaProperty);
+        commentTextAreaProperty.addListener((observable, oldValue, newValue) -> getAlbum().setComment(newValue));
+
+        panelAlbum.add(new JScrollPane(commentTextArea), new GBCBuilder(GridBagConstraints.RELATIVE, row).gridwidth(9).fillBoth());
 
         splitPane2.setLeftComponent(panelAlbum);
 
@@ -258,21 +323,21 @@ public class JRipperSwing
 
     /**
      * @param container {@link Container}
-     * @param albumModel {@link AlbumModel}
+     * @param albumProperty {@link Property}
      */
-    private void initMenue(final Container container, final AlbumModel albumModel)
+    private void initMenue(final Container container, final Property<Album> albumProperty)
     {
         JPanel panel = new JPanel();
         panel.setLayout(new GridBagLayout());
 
         // Dummy
         panel.add(Box.createGlue(), new GBCBuilder(0, 0).weightx(1));
-        JButton button = new JButton(new ActionCDDBQuery(albumModel));
+        JButton button = new JButton(new ActionCDDBQuery(albumProperty));
         panel.add(button, new GBCBuilder(1, 0).anchorCenter().gridwidth(2).fillHorizontal());
 
         // Dummy
         panel.add(Box.createGlue(), new GBCBuilder(3, 0).weightx(1));
-        button = new JButton(new ActionRipping(albumModel));
+        button = new JButton(new ActionRipping(albumProperty));
         panel.add(button, new GBCBuilder(4, 0).anchorCenter().gridwidth(2).fillHorizontal());
 
         // Dummy

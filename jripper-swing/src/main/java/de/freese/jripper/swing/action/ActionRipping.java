@@ -7,8 +7,8 @@ package de.freese.jripper.swing.action;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+import de.freese.binding.property.Property;
 import de.freese.jripper.core.model.Album;
-import de.freese.jripper.swing.model.AlbumModel;
 import de.freese.jripper.swing.task.RippingTask;
 
 /**
@@ -23,20 +23,20 @@ public class ActionRipping extends AbstractAction
      */
     private static final long serialVersionUID = -4794748623915093242L;
     /**
-     * 
+     *
      */
-    private final AlbumModel albumModel;
+    private final Property<Album> albumProperty;
 
     /**
      * Erstellt ein neues {@link ActionRipping} Object.
-     * 
-     * @param albumModel {@link AlbumModel}
+     *
+     * @param albumProperty {@link Property}
      */
-    public ActionRipping(final AlbumModel albumModel)
+    public ActionRipping(final Property<Album> albumProperty)
     {
         super();
 
-        this.albumModel = albumModel;
+        this.albumProperty = albumProperty;
 
         putValue(NAME, "Rip / Encode");
     }
@@ -47,7 +47,7 @@ public class ActionRipping extends AbstractAction
     @Override
     public void actionPerformed(final ActionEvent e)
     {
-        Album album = this.albumModel.getBean();
+        Album album = this.albumProperty.getValue();
 
         RippingTask task = new RippingTask(album);
         task.execute();

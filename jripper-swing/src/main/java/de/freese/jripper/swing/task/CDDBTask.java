@@ -5,15 +5,15 @@
 package de.freese.jripper.swing.task;
 
 import java.util.List;
+import java.util.Objects;
 import javax.swing.SwingWorker;
+import de.freese.binding.property.Property;
 import de.freese.jripper.core.JRipper;
 import de.freese.jripper.core.Settings;
 import de.freese.jripper.core.cddb.CDDBProvider;
 import de.freese.jripper.core.model.Album;
 import de.freese.jripper.core.model.DiskID;
 import de.freese.jripper.swing.JRipperSwing;
-import de.freese.jripper.swing.model.AlbumBean;
-import de.freese.jripper.swing.model.AlbumModel;
 
 /**
  * {@link SwingWorker} für die CDDB Query.
@@ -23,20 +23,20 @@ import de.freese.jripper.swing.model.AlbumModel;
 public class CDDBTask extends SwingWorker<Album, Void>
 {
     /**
-     * 
+     *
      */
-    private final AlbumModel albumModel;
+    private final Property<Album> albumProperty;
 
     /**
      * Erstellt ein neues {@link CDDBTask} Object.
-     * 
-     * @param albumModel {@link AlbumModel}
+     *
+     * @param albumProperty {@link Property}
      */
-    public CDDBTask(final AlbumModel albumModel)
+    public CDDBTask(final Property<Album> albumProperty)
     {
         super();
 
-        this.albumModel = albumModel;
+        this.albumProperty = Objects.requireNonNull(albumProperty, "albumProperty required");
     }
 
     /**
@@ -65,7 +65,7 @@ public class CDDBTask extends SwingWorker<Album, Void>
         {
             Album album = get();
 
-            this.albumModel.setBean(new AlbumBean(album));
+            this.albumProperty.setValue(album);
         }
         catch (Exception ex)
         {

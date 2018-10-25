@@ -9,6 +9,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Zusammenfassendes Objekt für eine CD.
@@ -18,53 +20,68 @@ import org.apache.commons.lang3.StringUtils;
 public class AlbumImpl implements Album
 {
     /**
+    *
+    */
+    private static final Logger LOGGER = LoggerFactory.getLogger(AlbumImpl.class);;
+
+    /**
      * Bei Compilations null.
      */
     private String artist = null;
 
     /**
-     * 
+     *
      */
     private String comment = null;
 
     /**
-     * 
+     *
      */
     private final DiskID diskID;
 
     /**
-     * 
+     *
      */
     private int diskNumber = 1;
 
     /**
-     * 
+     *
      */
     private String genre = null;
 
     /**
-     * 
+     *
      */
     private String title = null;
 
     /**
-     * 
+     *
      */
     private int totalDisks = 1;
 
     /**
-     * 
+     *
      */
     private List<Track> tracks = new ArrayList<>();
 
     /**
-     * 
+     *
      */
     private int year = 0;
 
     /**
      * Erstellt ein neues {@link AlbumImpl} Object.
-     * 
+     */
+    public AlbumImpl()
+    {
+        super();
+
+        this.diskID = null;
+    }
+
+    /**
+     * Erstellt ein neues {@link AlbumImpl} Object.
+     *
      * @param diskID {@link DiskID}
      */
     public AlbumImpl(final DiskID diskID)
@@ -207,6 +224,8 @@ public class AlbumImpl implements Album
     public void setArtist(final String artist)
     {
         this.artist = artist;
+
+        LOGGER.debug("artist = {}", artist);
     }
 
     /**
@@ -216,6 +235,8 @@ public class AlbumImpl implements Album
     public void setComment(final String comment)
     {
         this.comment = comment;
+
+        LOGGER.debug("comment = {}", comment);
     }
 
     /**
@@ -225,6 +246,8 @@ public class AlbumImpl implements Album
     public void setDiskNumber(final int diskNumber)
     {
         this.diskNumber = diskNumber;
+
+        LOGGER.debug("diskNumber = {}", diskNumber);
     }
 
     /**
@@ -234,6 +257,8 @@ public class AlbumImpl implements Album
     public void setGenre(final String genre)
     {
         this.genre = genre;
+
+        LOGGER.debug("genre = {}", genre);
     }
 
     /**
@@ -243,6 +268,8 @@ public class AlbumImpl implements Album
     public void setTitle(final String title)
     {
         this.title = title;
+
+        LOGGER.debug("title = {}", title);
     }
 
     /**
@@ -252,6 +279,8 @@ public class AlbumImpl implements Album
     public void setTotalDisks(final int totalDisks)
     {
         this.totalDisks = totalDisks;
+
+        LOGGER.debug("totalDisks = {}", totalDisks);
     }
 
     /**
@@ -262,6 +291,8 @@ public class AlbumImpl implements Album
     {
         Track track = this.tracks.get(index);
         track.setArtist(artist);
+
+        LOGGER.debug("index/artist = {}/{}", index, artist);
     }
 
     /**
@@ -272,6 +303,8 @@ public class AlbumImpl implements Album
     {
         Track track = this.tracks.get(index);
         track.setTitle(title);
+
+        LOGGER.debug("index/title = {}/{}", index, title);
     }
 
     /**
@@ -281,5 +314,7 @@ public class AlbumImpl implements Album
     public void setYear(final int year)
     {
         this.year = year;
+
+        LOGGER.debug("year = {}", year);
     }
 }

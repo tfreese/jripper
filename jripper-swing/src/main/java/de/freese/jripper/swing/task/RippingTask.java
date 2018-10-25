@@ -5,6 +5,7 @@
 package de.freese.jripper.swing.task;
 
 import java.io.File;
+import java.util.Objects;
 import javax.swing.SwingWorker;
 import de.freese.jripper.core.JRipperUtils;
 import de.freese.jripper.core.model.Album;
@@ -19,20 +20,20 @@ import de.freese.jripper.core.script.LinuxScripter;
 public class RippingTask extends SwingWorker<Void, Void>
 {
     /**
-     * 
+     *
      */
     private final Album album;
 
     /**
      * Erstellt ein neues {@link RippingTask} Object.
-     * 
+     *
      * @param album {@link Album}
      */
     public RippingTask(final Album album)
     {
         super();
 
-        this.album = album;
+        this.album = Objects.requireNonNull(album, "album required");
     }
 
     /**
