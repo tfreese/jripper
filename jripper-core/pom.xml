@@ -20,27 +20,24 @@
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
-            <version>${version:commons-io:commons-io}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
-            <version>${version:org.apache.commons:commons-lang}</version>
         </dependency>
 
         <!-- runtime scope -->
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
-            <version>${version:ch.qos.logback:logback}</version>
             <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>org.codehaus.janino</groupId>
             <artifactId>janino</artifactId>
-            <version>${version:org.codehaus.janino:janino}</version>
             <scope>runtime</scope>
         </dependency>
+        
         <!-- provided scope -->
         <!-- test scope -->
     </dependencies>

@@ -19,7 +19,6 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
-                <version>${version:org.codehaus.mojo:exec-maven-plugin}</version>
                 <configuration>
                     <executable>java</executable>
                     <mainClass>de.freese.jripper.swing.JRipperSwing</mainClass>
