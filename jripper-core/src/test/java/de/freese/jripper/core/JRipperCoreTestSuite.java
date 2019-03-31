@@ -4,32 +4,29 @@
 
 package de.freese.jripper.core;
 
-import junit.framework.JUnit4TestAdapter;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectClasses;
+import org.junit.platform.suite.api.SuiteDisplayName;
+import org.junit.runner.RunWith;
 
 /**
  * @author Thomas Freese
  */
+@RunWith(JUnitPlatform.class)
+@SuiteDisplayName("TestSuite for Binding")
+// @SelectPackages("de.freese.jripper.core")
+@SelectClasses(
+{
+        TestDiskID.class, TestEncoder.class, TestRipper.class
+})
+
 public class JRipperCoreTestSuite
 {
-	/**
-	 * @return {@link Test}
-	 */
-	public static Test suite()
-	{
-		TestSuite suite = new TestSuite("de.freese.jripper.core");
-		suite.addTest(new JUnit4TestAdapter(TestDiskID.class));
-		suite.addTest(new JUnit4TestAdapter(TestRipper.class));
-
-		return suite;
-	}
-
-	/**
-	 * Erstellt ein neues {@link JRipperCoreTestSuite} Object.
-	 */
-	private JRipperCoreTestSuite()
-	{
-		super();
-	}
+    /**
+     * Erstellt ein neues {@link JRipperCoreTestSuite} Object.
+     */
+    private JRipperCoreTestSuite()
+    {
+        super();
+    }
 }

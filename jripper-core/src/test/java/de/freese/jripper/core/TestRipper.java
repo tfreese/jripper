@@ -4,73 +4,75 @@
 
 package de.freese.jripper.core;
 
-import org.junit.Assert;
-import org.junit.FixMethodOrder;
-import org.junit.Test;
-import org.junit.runners.MethodSorters;
-
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.fail;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.condition.EnabledOnOs;
+import org.junit.jupiter.api.condition.OS;
+import de.freese.jripper.core.diskid.DiskIDProvider;
+import de.freese.jripper.core.diskid.LinuxDiskIDProvider;
+import de.freese.jripper.core.model.DiskID;
 import de.freese.jripper.core.ripper.Ripper;
 import de.freese.jripper.core.ripper.RipperFactory;
 
 /**
  * Testklasse für die {@link Ripper}.
- * 
+ *
  * @author Thomas Freese
  */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@TestMethodOrder(MethodOrderer.Alphanumeric.class)
 public class TestRipper
 {
-	/**
-	 * Erstellt ein neues {@link TestRipper} Object.
-	 */
-	public TestRipper()
-	{
-		super();
-	}
+    /**
+     * Erstellt ein neues {@link TestRipper} Object.
+     */
+    public TestRipper()
+    {
+        super();
+    }
 
-	/**
-	 * Liefert je nach Betriebssystem die passende Implementierung.
-	 */
-	@Test
-	public void testGetService()
-	{
-		try
-		{
-			Ripper ripper = RipperFactory.getInstance();
-			Assert.assertNotNull(ripper);
-		}
-		catch (Exception ex)
-		{
-			Assert.fail();
-		}
-	}
+    /**
+     * Liefert je nach Betriebssystem die passende Implementierung.
+     */
+    @Test
+    public void testGetService()
+    {
+        try
+        {
+            Ripper ripper = RipperFactory.getInstance();
+            assertNotNull(ripper);
+        }
+        catch (Exception ex)
+        {
+            fail();
+        }
+    }
 
-	/**
-	 * Linux.
-	 */
-	@Test
-	public void testLinux()
-	{
-		// TODO Test für Ripper !?
-		// if (!SystemUtils.IS_OS_LINUX)
-		// {
-		// return;
-		// }
-		//
-		// IDiskID service = new LinuxDiskID();
-		//
-		// try
-		// {
-		// String id = service.getDiskID(JRipperUtils.detectCDDVD());
-		// Assert.assertNotNull(id);
-		// }
-		// catch (IllegalStateException ex)
-		// {
-		// // Keine CD im Laufwerk.
-		// }
-		// catch (Exception ex)
-		// {
-		// Assert.fail();
-		// }
-	}
+    /**
+     * Linux.
+     */
+    @Test
+    @EnabledOnOs(OS.LINUX)
+    public void testLinux()
+    {
+        // TODO Test für Ripper !?
+        //
+        DiskIDProvider service = new LinuxDiskIDProvider();
+
+        try
+        {
+            DiskID diskID = service.getDiskID(JRipperUtils.detectCDDVD());
+            assertNotNull(diskID);
+        }
+        catch (IllegalStateException ex)
+        {
+            // Keine CD im Laufwerk.
+        }
+        catch (Exception ex)
+        {
+            fail();
+        }
+    }
 }

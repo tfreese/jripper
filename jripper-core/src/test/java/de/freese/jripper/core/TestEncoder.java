@@ -4,73 +4,67 @@
 
 package de.freese.jripper.core;
 
-import org.apache.commons.lang3.SystemUtils;
-import org.junit.Assert;
-import org.junit.FixMethodOrder;
-import org.junit.Test;
-import org.junit.runners.MethodSorters;
-
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.fail;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.condition.EnabledOnOs;
+import org.junit.jupiter.api.condition.OS;
+import de.freese.jripper.core.encoder.Encoder;
 import de.freese.jripper.core.encoder.EncoderFactory;
 import de.freese.jripper.core.encoder.EncoderFormat;
-import de.freese.jripper.core.encoder.Encoder;
 
 /**
  * Testklasse für die {@link Encoder}.
- * 
+ *
  * @author Thomas Freese
  */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@TestMethodOrder(MethodOrderer.Alphanumeric.class)
 public class TestEncoder
 {
-	/**
-	 * Erstellt ein neues {@link TestEncoder} Object.
-	 */
-	public TestEncoder()
-	{
-		super();
-	}
+    /**
+     * Erstellt ein neues {@link TestEncoder} Object.
+     */
+    public TestEncoder()
+    {
+        super();
+    }
 
-	/**
-	 * Linux.
-	 */
-	@Test
-	public void testLinuxFlac()
-	{
-		if (!SystemUtils.IS_OS_LINUX)
-		{
-			return;
-		}
+    /**
+     * Linux.
+     */
+    @Test
+    @EnabledOnOs(OS.LINUX)
+    public void testLinuxFlac()
+    {
+        try
+        {
+            Encoder encoder = EncoderFactory.getInstance(EncoderFormat.flac);
+            assertNotNull(encoder);
+        }
+        catch (Exception ex)
+        {
+            fail();
+        }
+    }
 
-		try
-		{
-			Encoder encoder = EncoderFactory.getInstance(EncoderFormat.flac);
-			Assert.assertNotNull(encoder);
-		}
-		catch (Exception ex)
-		{
-			Assert.fail();
-		}
-	}
+    /**
+     * Linux.
+     */
+    @Test
+    @EnabledOnOs(OS.LINUX)
+    public void testLinuxMP3()
+    {
 
-	/**
-	 * Linux.
-	 */
-	@Test
-	public void testLinuxMP3()
-	{
-		if (!SystemUtils.IS_OS_LINUX)
-		{
-			return;
-		}
-
-		try
-		{
-			Encoder encoder = EncoderFactory.getInstance(EncoderFormat.mp3);
-			Assert.assertNotNull(encoder);
-		}
-		catch (Exception ex)
-		{
-			Assert.fail();
-		}
-	}
+        try
+        {
+            Encoder encoder = EncoderFactory.getInstance(EncoderFormat.mp3);
+            assertNotNull(encoder);
+        }
+        catch (Exception ex)
+        {
+            fail();
+        }
+    }
 }
