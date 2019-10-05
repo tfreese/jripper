@@ -4,6 +4,11 @@
 
 package de.freese.jripper.core.script;
 
+import java.io.File;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
+import org.apache.commons.lang3.StringUtils;
 import de.freese.jripper.core.JRipperUtils;
 import de.freese.jripper.core.Settings;
 import de.freese.jripper.core.model.Album;
@@ -11,30 +16,24 @@ import de.freese.jripper.core.model.Track;
 import de.freese.jripper.core.process.AbstractProcess;
 import de.freese.jripper.core.process.EmptyProcessMonitor;
 import de.freese.jripper.core.process.LoggerProcessMonitor;
-import org.apache.commons.lang3.StringUtils;
-
-import java.io.File;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
- * {@link IScripter} für Linux.
+ * {@link ScriptGenerator} für Linux.
  *
  * @author Thomas Freese
  */
-public class LinuxScripter extends AbstractProcess implements IScripter
+public class ScriptGeneratorLinux extends AbstractProcess implements ScriptGenerator
 {
     /**
-     * Erstellt ein neues {@link LinuxScripter} Object.
+     * Erstellt ein neues {@link ScriptGeneratorLinux} Object.
      */
-    public LinuxScripter()
+    public ScriptGeneratorLinux()
     {
         super();
     }
 
     /**
-     * @see de.freese.jripper.core.script.IScripter#execute(java.io.File)
+     * @see de.freese.jripper.core.script.ScriptGenerator#execute(java.io.File)
      */
     @Override
     public void execute(final File script) throws Exception
@@ -64,7 +63,7 @@ public class LinuxScripter extends AbstractProcess implements IScripter
     }
 
     /**
-     * @see de.freese.jripper.core.script.IScripter#generate(de.freese.jripper.core.model.Album, java.io.File)
+     * @see de.freese.jripper.core.script.ScriptGenerator#generate(de.freese.jripper.core.model.Album, java.io.File)
      */
     @Override
     public File generate(final Album album, final File folder) throws Exception
@@ -145,7 +144,6 @@ public class LinuxScripter extends AbstractProcess implements IScripter
      * Formattiert den Pfad des Albums.
      *
      * @param album {@link Album}
-     *
      * @return String
      */
     private String getPath(final Album album)
@@ -158,7 +156,7 @@ public class LinuxScripter extends AbstractProcess implements IScripter
     }
 
     /**
-     * @param pw    {@link PrintWriter}
+     * @param pw {@link PrintWriter}
      * @param album {@link Album}
      */
     private void writeFLAC(final PrintWriter pw, final Album album)
@@ -175,9 +173,9 @@ public class LinuxScripter extends AbstractProcess implements IScripter
             pw.println();
             pw.print("$FLAC");
             pw.print(String.format(" -%d", Settings.getInstance().getFlacCompression()));
-            pw.print(" -V");
-            pw.print(" -f");
-            pw.print(" -w");
+            pw.print(" -V"); // verify
+            pw.print(" -f"); // force
+            pw.print(" -w"); // warnings-as-errors
             // pw.print(" --sample-rate=44.1");
             pw.println(" --replay-gain \\");
             pw.printf("\t\"$BASE_DIR\"/wav/track%02d.cdda.wav \\%n", track.getNumber());
@@ -215,7 +213,7 @@ public class LinuxScripter extends AbstractProcess implements IScripter
     }
 
     /**
-     * @param pw    {@link PrintWriter}
+     * @param pw {@link PrintWriter}
      * @param album {@link Album}
      */
     private void writeMP3(final PrintWriter pw, final Album album)
@@ -232,7 +230,7 @@ public class LinuxScripter extends AbstractProcess implements IScripter
             pw.println();
             pw.print("$LAME");
             pw.print(" -m j"); // Mode = Joint-Stereo
-            //pw.print(" -q 0"); // VBR
+            // pw.print(" -q 0"); // VBR
             pw.print(" -p"); // CRC Error-Protection
             // pw.print(" -s 44.1"); // Sampling-Rate
             pw.print(String.format(" -b %d", Settings.getInstance().getMp3Bitrate())); // CBR
@@ -273,7 +271,7 @@ public class LinuxScripter extends AbstractProcess implements IScripter
     }
 
     /**
-     * @param pw       {@link PrintWriter}
+     * @param pw {@link PrintWriter}
      * @param programm String
      */
     private void writeProgramChecks(final PrintWriter pw, final String programm)
@@ -300,7 +298,7 @@ public class LinuxScripter extends AbstractProcess implements IScripter
         pw.println("\tmkdir -p \"$BASE_DIR\"/wav");
         pw.println("\tcd \"$BASE_DIR\"/wav");
         pw.println("\trm -f ./*.wav");
-        pw.printf("\t$CDPARANOIA -w -B -d %s%n", Settings.getInstance().getDevice()); // -S 2 = Nur 2x Geschwindigkeit.
+        pw.printf("\t$CDPARANOIA -w -B -z -d %s%n", Settings.getInstance().getDevice()); // -S 2 = Nur 2x Geschwindigkeit.
         pw.println("fi");
     }
 }

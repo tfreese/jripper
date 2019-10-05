@@ -54,9 +54,8 @@ public class TestEncoder
      */
     @Test
     @EnabledOnOs(OS.LINUX)
-    public void testLinuxMP3()
+    public void testLinuxMp3()
     {
-
         try
         {
             Encoder encoder = EncoderFactory.getInstance(EncoderFormat.mp3);

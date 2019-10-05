@@ -6,15 +6,15 @@ package de.freese.jripper.core;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import de.freese.jripper.core.cddb.FreeDBProvider;
-import de.freese.jripper.core.cddb.CDDBProvider;
+import de.freese.jripper.core.cddb.CddbProviderFreeDb;
+import de.freese.jripper.core.cddb.CddbProvider;
 import de.freese.jripper.core.diskid.DiskIDProviderFactory;
 import de.freese.jripper.core.diskid.DiskIDProvider;
 import de.freese.jripper.core.encoder.EncoderFactory;
 import de.freese.jripper.core.encoder.EncoderFormat;
 import de.freese.jripper.core.encoder.Encoder;
 import de.freese.jripper.core.genre.GenreProvider;
-import de.freese.jripper.core.genre.LinuxGenreProvider;
+import de.freese.jripper.core.genre.GenreProviderLinux;
 import de.freese.jripper.core.ripper.Ripper;
 import de.freese.jripper.core.ripper.RipperFactory;
 
@@ -46,7 +46,7 @@ public class JRipper
     /**
      *
      */
-    private CDDBProvider cddbProvider = null;
+    private CddbProvider cddbProvider = null;
 
     /**
      *
@@ -55,12 +55,12 @@ public class JRipper
     /**
      *
      */
-    private Encoder encoderFLAC = null;
+    private Encoder encoderFlac = null;
 
     /**
      *
      */
-    private Encoder encoderMP3 = null;
+    private Encoder encoderMp3 = null;
 
     /**
      *
@@ -81,13 +81,13 @@ public class JRipper
     }
 
     /**
-     * @return {@link CDDBProvider}
+     * @return {@link CddbProvider}
      */
-    public CDDBProvider getCDDBProvider()
+    public CddbProvider getCddbProvider()
     {
         if (this.cddbProvider == null)
         {
-            this.cddbProvider = new FreeDBProvider();
+            this.cddbProvider = new CddbProviderFreeDb();
         }
 
         return this.cddbProvider;
@@ -109,27 +109,27 @@ public class JRipper
     /**
      * @return {@link Encoder}
      */
-    public Encoder getEncoderFLAC()
+    public Encoder getEncoderFlac()
     {
-        if (this.encoderFLAC == null)
+        if (this.encoderFlac == null)
         {
-            this.encoderFLAC = EncoderFactory.getInstance(EncoderFormat.flac);
+            this.encoderFlac = EncoderFactory.getInstance(EncoderFormat.flac);
         }
 
-        return this.encoderFLAC;
+        return this.encoderFlac;
     }
 
     /**
      * @return {@link Encoder}
      */
-    public Encoder getEncoderMP3()
+    public Encoder getEncoderMp3()
     {
-        if (this.encoderMP3 == null)
+        if (this.encoderMp3 == null)
         {
-            this.encoderMP3 = EncoderFactory.getInstance(EncoderFormat.mp3);
+            this.encoderMp3 = EncoderFactory.getInstance(EncoderFormat.mp3);
         }
 
-        return this.encoderMP3;
+        return this.encoderMp3;
     }
 
     /**
@@ -139,7 +139,7 @@ public class JRipper
     {
         if (this.genreProvider == null)
         {
-            this.genreProvider = new LinuxGenreProvider();
+            this.genreProvider = new GenreProviderLinux();
         }
 
         return this.genreProvider;
@@ -167,9 +167,9 @@ public class JRipper
     }
 
     /**
-     * @param cddbProvider {@link CDDBProvider}
+     * @param cddbProvider {@link CddbProvider}
      */
-    public void setCDDBProvider(final CDDBProvider cddbProvider)
+    public void setCddbProvider(final CddbProvider cddbProvider)
     {
         this.cddbProvider = cddbProvider;
     }
@@ -185,17 +185,17 @@ public class JRipper
     /**
      * @param encoderFLAC {@link Encoder}
      */
-    public void setEncoderFLAC(final Encoder encoderFLAC)
+    public void setEncoderFlac(final Encoder encoderFLAC)
     {
-        this.encoderFLAC = encoderFLAC;
+        this.encoderFlac = encoderFLAC;
     }
 
     /**
      * @param encoderMP3 {@link Encoder}
      */
-    public void setEncoderMP3(final Encoder encoderMP3)
+    public void setEncoderMp3(final Encoder encoderMP3)
     {
-        this.encoderMP3 = encoderMP3;
+        this.encoderMp3 = encoderMP3;
     }
 
     /**

@@ -52,7 +52,7 @@ import de.freese.jripper.core.Settings;
 import de.freese.jripper.core.model.Album;
 import de.freese.jripper.core.model.AlbumImpl;
 import de.freese.jripper.core.model.Track;
-import de.freese.jripper.swing.action.ActionCDDBQuery;
+import de.freese.jripper.swing.action.ActionCddbQuery;
 import de.freese.jripper.swing.action.ActionChooseWorkDir;
 import de.freese.jripper.swing.action.ActionRipping;
 import de.freese.jripper.swing.table.AlbumTableModel;
@@ -82,6 +82,11 @@ public class JRipperSwing
             System.exit(0);
         }
     }
+
+    /**
+     *
+     */
+    public static JFrame frame = null;
 
     /**
      *
@@ -132,7 +137,7 @@ public class JRipperSwing
     {
         initUIDefaults();
 
-        JFrame frame = new JFrame();
+        frame = new JFrame();
         frame.setTitle("JRipper");
         // frame.setSize(1024, 768);
         // frame.setSize(1280, 1024);
@@ -332,7 +337,7 @@ public class JRipperSwing
 
         // Dummy
         panel.add(Box.createGlue(), new GBCBuilder(0, 0).weightx(1));
-        JButton button = new JButton(new ActionCDDBQuery(albumProperty));
+        JButton button = new JButton(new ActionCddbQuery(albumProperty));
         panel.add(button, new GBCBuilder(1, 0).anchorCenter().gridwidth(2).fillHorizontal());
 
         // Dummy

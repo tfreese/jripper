@@ -84,7 +84,7 @@ public final class Settings
         // setWorkDir(System.getProperty("user.dir") + "/jripper");
         // setWorkDir(System.getProperty("user.home") + "/jripper");
 
-        setDevice(JRipperUtils.detectCDDVD());
+        setDevice(JRipperUtils.detectCdDevice());
         setFramesPerSecond(75);
         setFlacEnabled(true);
         setFlacCompression(8);

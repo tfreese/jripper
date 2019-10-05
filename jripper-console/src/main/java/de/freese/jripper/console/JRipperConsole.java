@@ -10,14 +10,14 @@ import java.io.File;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
-import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import de.freese.jripper.core.JRipper;
 import de.freese.jripper.core.JRipperUtils;
 import de.freese.jripper.core.Settings;
+import de.freese.jripper.core.cddb.CddbResponse;
 import de.freese.jripper.core.encoder.Encoder;
+import de.freese.jripper.core.encoder.EncoderLinuxMp3;
 import de.freese.jripper.core.encoder.LameProcessMonitor;
-import de.freese.jripper.core.encoder.LinuxMP3Encoder;
 import de.freese.jripper.core.model.Album;
 import de.freese.jripper.core.model.AlbumImpl;
 import de.freese.jripper.core.model.DiskID;
@@ -101,7 +101,7 @@ public class JRipperConsole implements IAnsiCodes
     {
         ProcessMonitor monitor = null;
 
-        if (encoder instanceof LinuxMP3Encoder)
+        if (encoder instanceof EncoderLinuxMp3)
         {
             monitor = new LameProcessMonitor(printWriter);
         }
@@ -187,9 +187,9 @@ public class JRipperConsole implements IAnsiCodes
      */
     private String queryCDDB(final DiskID diskID) throws Exception
     {
-        List<String> genres = JRipper.getInstance().getCDDBProvider().queryGenres(diskID);
+        CddbResponse cddbResponse = JRipper.getInstance().getCddbProvider().queryGenres(diskID);
 
-        return genres.get(0);
+        return cddbResponse.getGenres().get(0);
     }
 
     /**
@@ -202,9 +202,9 @@ public class JRipperConsole implements IAnsiCodes
      */
     private Album readCDDB(final DiskID diskID, final String genre) throws Exception
     {
-        Album album = JRipper.getInstance().getCDDBProvider().queryAlbum(diskID, genre);
+        CddbResponse cddbResponse = JRipper.getInstance().getCddbProvider().queryAlbum(diskID, genre);
 
-        return album;
+        return cddbResponse.getAlbum();
     }
 
     /**
@@ -436,12 +436,12 @@ public class JRipperConsole implements IAnsiCodes
 
                 case "4":
                     File flacDir = JRipperUtils.getFlacDir(this.album, true);
-                    encode(this.album, this.printWriter, JRipper.getInstance().getEncoderFLAC(), flacDir);
+                    encode(this.album, this.printWriter, JRipper.getInstance().getEncoderFlac(), flacDir);
                     break;
 
                 case "5":
-                    File mp3Dir = JRipperUtils.getMP3Dir(this.album, true);
-                    encode(this.album, this.printWriter, JRipper.getInstance().getEncoderMP3(), mp3Dir);
+                    File mp3Dir = JRipperUtils.getMp3Dir(this.album, true);
+                    encode(this.album, this.printWriter, JRipper.getInstance().getEncoderMp3(), mp3Dir);
                     break;
 
                 case "q":

@@ -16,12 +16,12 @@ import de.freese.jripper.core.process.ProcessMonitor;
  * 
  * @author Thomas Freese
  */
-public class LinuxCDParanoia extends AbstractProcess implements Ripper
+public class RipperLinuxCdParanoia extends AbstractProcess implements Ripper
 {
 	/**
-	 * Erstellt ein neues {@link LinuxCDParanoia} Object.
+	 * Erstellt ein neues {@link RipperLinuxCdParanoia} Object.
 	 */
-	public LinuxCDParanoia()
+	public RipperLinuxCdParanoia()
 	{
 		super();
 	}

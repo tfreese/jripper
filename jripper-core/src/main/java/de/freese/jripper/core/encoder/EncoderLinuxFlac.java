@@ -20,12 +20,12 @@ import org.apache.commons.lang3.SystemUtils;
  * 
  * @author Thomas Freese
  */
-public class LinuxFlacEncoder extends AbstractProcess implements Encoder
+public class EncoderLinuxFlac extends AbstractProcess implements Encoder
 {
 	/**
-	 * Erstellt ein neues {@link LinuxFlacEncoder} Object.
+	 * Erstellt ein neues {@link EncoderLinuxFlac} Object.
 	 */
-	public LinuxFlacEncoder()
+	public EncoderLinuxFlac()
 	{
 		super();
 	}

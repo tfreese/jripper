@@ -20,12 +20,12 @@ import org.apache.commons.lang3.SystemUtils;
  * 
  * @author Thomas Freese
  */
-public class LinuxMP3Encoder extends AbstractProcess implements Encoder
+public class EncoderLinuxMp3 extends AbstractProcess implements Encoder
 {
 	/**
-	 * Erstellt ein neues {@link LinuxMP3Encoder} Object.
+	 * Erstellt ein neues {@link EncoderLinuxMp3} Object.
 	 */
-	public LinuxMP3Encoder()
+	public EncoderLinuxMp3()
 	{
 		super();
 	}

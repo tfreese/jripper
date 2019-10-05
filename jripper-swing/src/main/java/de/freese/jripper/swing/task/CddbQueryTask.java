@@ -4,13 +4,14 @@
 
 package de.freese.jripper.swing.task;
 
-import java.util.List;
 import java.util.Objects;
+import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 import de.freese.binding.property.Property;
 import de.freese.jripper.core.JRipper;
 import de.freese.jripper.core.Settings;
-import de.freese.jripper.core.cddb.CDDBProvider;
+import de.freese.jripper.core.cddb.CddbProvider;
+import de.freese.jripper.core.cddb.CddbResponse;
 import de.freese.jripper.core.model.Album;
 import de.freese.jripper.core.model.DiskID;
 import de.freese.jripper.swing.JRipperSwing;
@@ -20,7 +21,7 @@ import de.freese.jripper.swing.JRipperSwing;
  *
  * @author Thomas Freese
  */
-public class CDDBTask extends SwingWorker<Album, Void>
+public class CddbQueryTask extends SwingWorker<CddbResponse, Void>
 {
     /**
      *
@@ -28,11 +29,11 @@ public class CDDBTask extends SwingWorker<Album, Void>
     private final Property<Album> albumProperty;
 
     /**
-     * Erstellt ein neues {@link CDDBTask} Object.
+     * Erstellt ein neues {@link CddbQueryTask} Object.
      *
      * @param albumProperty {@link Property}
      */
-    public CDDBTask(final Property<Album> albumProperty)
+    public CddbQueryTask(final Property<Album> albumProperty)
     {
         super();
 
@@ -43,16 +44,23 @@ public class CDDBTask extends SwingWorker<Album, Void>
      * @see javax.swing.SwingWorker#doInBackground()
      */
     @Override
-    protected Album doInBackground() throws Exception
+    protected CddbResponse doInBackground() throws Exception
     {
         String device = Settings.getInstance().getDevice();
         DiskID diskID = JRipper.getInstance().getDiskIDProvider().getDiskID(device);
 
-        CDDBProvider cddbService = JRipper.getInstance().getCDDBProvider();
-        List<String> genres = cddbService.queryGenres(diskID);
-        Album album = cddbService.queryAlbum(diskID, genres.get(0));
+        CddbProvider cddbService = JRipper.getInstance().getCddbProvider();
+        CddbResponse cddbResponse = cddbService.queryGenres(diskID);
 
-        return album;
+        if (cddbResponse.getErrorMessage() != null)
+        {
+            // Fehler -> Abbruch
+            return cddbResponse;
+        }
+
+        cddbResponse = cddbService.queryAlbum(diskID, cddbResponse.getGenres().get(0));
+
+        return cddbResponse;
     }
 
     /**
@@ -63,7 +71,17 @@ public class CDDBTask extends SwingWorker<Album, Void>
     {
         try
         {
-            Album album = get();
+            CddbResponse cddbResponse = get();
+
+            if (cddbResponse.getErrorMessage() != null)
+            {
+                String message = cddbResponse.getErrorMessage();
+                JOptionPane.showMessageDialog(JRipperSwing.frame, message, "Warning", JOptionPane.WARNING_MESSAGE);
+
+                return;
+            }
+
+            Album album = cddbResponse.getAlbum();
 
             this.albumProperty.setValue(album);
         }

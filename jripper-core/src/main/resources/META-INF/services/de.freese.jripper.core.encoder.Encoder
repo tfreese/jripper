@@ -1,2 +1,2 @@
-de.freese.jripper.core.encoder.LinuxFlacEncoder
-de.freese.jripper.core.encoder.LinuxMP3Encoder
+de.freese.jripper.core.encoder.EncoderLinuxFlac
+de.freese.jripper.core.encoder.EncoderLinuxMp3

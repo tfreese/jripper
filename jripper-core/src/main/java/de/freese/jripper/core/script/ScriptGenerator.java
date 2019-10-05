@@ -12,7 +12,7 @@ import java.io.File;
  * 
  * @author Thomas Freese
  */
-public interface IScripter
+public interface ScriptGenerator
 {
 	/**
 	 * Führt das Skript aus.

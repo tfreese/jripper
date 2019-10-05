@@ -18,7 +18,7 @@ import org.apache.commons.lang3.SystemUtils;
  * 
  * @author Thomas Freese
  */
-public class LinuxDiskIDProvider extends AbstractProcess implements DiskIDProvider, ProcessMonitor
+public class DiskIDProviderLinux extends AbstractProcess implements DiskIDProvider, ProcessMonitor
 {
 	/**
 	 * 
@@ -26,9 +26,9 @@ public class LinuxDiskIDProvider extends AbstractProcess implements DiskIDProvid
 	private StringBuilder sb = null;
 
 	/**
-	 * Erstellt ein neues {@link LinuxDiskIDProvider} Object.
+	 * Erstellt ein neues {@link DiskIDProviderLinux} Object.
 	 */
-	public LinuxDiskIDProvider()
+	public DiskIDProviderLinux()
 	{
 		super();
 	}

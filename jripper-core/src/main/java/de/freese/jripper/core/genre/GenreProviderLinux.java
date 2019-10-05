@@ -20,7 +20,7 @@ import de.freese.jripper.core.process.ProcessMonitor;
  *
  * @author Thomas Freese
  */
-public class LinuxGenreProvider extends AbstractProcess implements GenreProvider, ProcessMonitor
+public class GenreProviderLinux extends AbstractProcess implements GenreProvider, ProcessMonitor
 {
     /**
      * 
@@ -28,9 +28,9 @@ public class LinuxGenreProvider extends AbstractProcess implements GenreProvider
     private final Set<String> genres;
 
     /**
-     * Erstellt ein neues {@link LinuxGenreProvider} Object.
+     * Erstellt ein neues {@link GenreProviderLinux} Object.
      */
-    public LinuxGenreProvider()
+    public GenreProviderLinux()
     {
         super();
 

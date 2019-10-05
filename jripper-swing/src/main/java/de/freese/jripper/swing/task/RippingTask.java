@@ -9,8 +9,8 @@ import java.util.Objects;
 import javax.swing.SwingWorker;
 import de.freese.jripper.core.JRipperUtils;
 import de.freese.jripper.core.model.Album;
-import de.freese.jripper.core.script.IScripter;
-import de.freese.jripper.core.script.LinuxScripter;
+import de.freese.jripper.core.script.ScriptGenerator;
+import de.freese.jripper.core.script.ScriptGeneratorLinux;
 
 /**
  * {@link SwingWorker} für das Rippen und Codieren.
@@ -42,9 +42,9 @@ public class RippingTask extends SwingWorker<Void, Void>
     @Override
     protected Void doInBackground() throws Exception
     {
-        IScripter scripter = new LinuxScripter();
-        File script = scripter.generate(this.album, JRipperUtils.getWorkDir(this.album));
-        scripter.execute(script);
+        ScriptGenerator scriptGenerator = new ScriptGeneratorLinux();
+        File script = scriptGenerator.generate(this.album, JRipperUtils.getWorkDir(this.album));
+        scriptGenerator.execute(script);
 
         return null;
     }

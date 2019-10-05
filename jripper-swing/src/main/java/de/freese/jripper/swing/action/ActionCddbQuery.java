@@ -9,14 +9,14 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 import de.freese.binding.property.Property;
 import de.freese.jripper.core.model.Album;
-import de.freese.jripper.swing.task.CDDBTask;
+import de.freese.jripper.swing.task.CddbQueryTask;
 
 /**
  * {@link Action} für die CDDB Query.
  *
  * @author Thomas Freese
  */
-public class ActionCDDBQuery extends AbstractAction
+public class ActionCddbQuery extends AbstractAction
 {
     /**
      *
@@ -29,11 +29,11 @@ public class ActionCDDBQuery extends AbstractAction
     private final Property<Album> albumProperty;
 
     /**
-     * Erstellt ein neues {@link ActionCDDBQuery} Object.
+     * Erstellt ein neues {@link ActionCddbQuery} Object.
      * 
      * @param albumProperty {@link Property}
      */
-    public ActionCDDBQuery(final Property<Album> albumProperty)
+    public ActionCddbQuery(final Property<Album> albumProperty)
     {
         super();
 
@@ -48,7 +48,7 @@ public class ActionCDDBQuery extends AbstractAction
     @Override
     public void actionPerformed(final ActionEvent e)
     {
-        CDDBTask task = new CDDBTask(this.albumProperty);
+        CddbQueryTask task = new CddbQueryTask(this.albumProperty);
         task.execute();
     }
 }

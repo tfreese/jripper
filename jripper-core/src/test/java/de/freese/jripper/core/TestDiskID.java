@@ -7,13 +7,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.fail;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.SystemUtils;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.condition.EnabledOnOs;
+import org.junit.jupiter.api.condition.OS;
 import de.freese.jripper.core.diskid.DiskIDProvider;
 import de.freese.jripper.core.diskid.DiskIDProviderFactory;
-import de.freese.jripper.core.diskid.LinuxDiskIDProvider;
+import de.freese.jripper.core.diskid.DiskIDProviderLinux;
 import de.freese.jripper.core.model.DiskID;
 
 /**
@@ -83,14 +84,13 @@ public class TestDiskID
      * Linux.
      */
     @Test
+    @EnabledOnOs(
+    {
+            OS.LINUX, OS.WINDOWS
+    })
     public void testLinux()
     {
-        if (!SystemUtils.IS_OS_LINUX)
-        {
-            return;
-        }
-
-        String device = JRipperUtils.detectCDDVD();
+        String device = JRipperUtils.detectCdDevice();
 
         if (StringUtils.isBlank(device))
         {
@@ -98,7 +98,7 @@ public class TestDiskID
             return;
         }
 
-        DiskIDProvider diskIDProvider = new LinuxDiskIDProvider();
+        DiskIDProvider diskIDProvider = new DiskIDProviderLinux();
 
         try
         {

@@ -12,7 +12,7 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.condition.EnabledOnOs;
 import org.junit.jupiter.api.condition.OS;
 import de.freese.jripper.core.diskid.DiskIDProvider;
-import de.freese.jripper.core.diskid.LinuxDiskIDProvider;
+import de.freese.jripper.core.diskid.DiskIDProviderLinux;
 import de.freese.jripper.core.model.DiskID;
 import de.freese.jripper.core.ripper.Ripper;
 import de.freese.jripper.core.ripper.RipperFactory;
@@ -57,13 +57,11 @@ public class TestRipper
     @EnabledOnOs(OS.LINUX)
     public void testLinux()
     {
-        // TODO Test für Ripper !?
-        //
-        DiskIDProvider service = new LinuxDiskIDProvider();
+        DiskIDProvider service = new DiskIDProviderLinux();
 
         try
         {
-            DiskID diskID = service.getDiskID(JRipperUtils.detectCDDVD());
+            DiskID diskID = service.getDiskID(JRipperUtils.detectCdDevice());
             assertNotNull(diskID);
         }
         catch (IllegalStateException ex)

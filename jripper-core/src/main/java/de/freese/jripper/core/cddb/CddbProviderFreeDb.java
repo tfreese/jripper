@@ -9,7 +9,6 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -26,7 +25,7 @@ import de.freese.jripper.core.model.DiskID;
  *
  * @author Thomas Freese
  */
-public class FreeDBProvider implements CDDBProvider
+public class CddbProviderFreeDb implements CddbProvider
 {
     /**
      *
@@ -84,9 +83,9 @@ public class FreeDBProvider implements CDDBProvider
     private final String requestPostfix;
 
     /**
-     * Erstellt ein neues {@link FreeDBProvider} Object.
+     * Erstellt ein neues {@link CddbProviderFreeDb} Object.
      */
-    public FreeDBProvider()
+    public CddbProviderFreeDb()
     {
         super();
 
@@ -179,11 +178,13 @@ public class FreeDBProvider implements CDDBProvider
     }
 
     /**
-     * @see de.freese.jripper.core.cddb.CDDBProvider#queryAlbum(de.freese.jripper.core.model.DiskID, java.lang.String)
+     * @see de.freese.jripper.core.cddb.CddbProvider#queryAlbum(de.freese.jripper.core.model.DiskID, java.lang.String)
      */
     @Override
-    public AlbumImpl queryAlbum(final DiskID diskID, final String genre) throws Exception
+    public CddbResponse queryAlbum(final DiskID diskID, final String genre) throws Exception
     {
+        CddbResponse cddbResponse = new CddbResponse();
+
         StringBuilder sb = new StringBuilder();
         sb.append("/~cddb/cddb.cgi?cmd=cddb+read");
         sb.append("+").append(genre);
@@ -194,6 +195,9 @@ public class FreeDBProvider implements CDDBProvider
         sb.append(this.requestPostfix);
 
         URL url = new URL("http", SERVER, PORT, sb.toString());
+
+        getLogger().debug("Query {}", url);
+
         URLConnection connection = url.openConnection();
 
         Map<String, String> responseMap = new TreeMap<>(new TrackTitleComparator());
@@ -357,7 +361,9 @@ public class FreeDBProvider implements CDDBProvider
         responseMap.clear();
         responseMap = null;
 
-        return album;
+        cddbResponse.setAlbum(album);
+
+        return cddbResponse;
     }
 
     /**
@@ -365,11 +371,13 @@ public class FreeDBProvider implements CDDBProvider
      * http://freedb.freedb.org/~cddb/cddb.cgi?cmd=cddb+query+7c0b8b0b+11+150+23115+
      * 42165+60015+79512+101560+118757+136605+159492+176067+198875+2957&hello=user+ hostname+program+version&proto=3(6)
      *
-     * @see de.freese.jripper.core.cddb.CDDBProvider#queryGenres(de.freese.jripper.core.model.DiskID)
+     * @see de.freese.jripper.core.cddb.CddbProvider#queryGenres(de.freese.jripper.core.model.DiskID)
      */
     @Override
-    public List<String> queryGenres(final DiskID diskID) throws Exception
+    public CddbResponse queryGenres(final DiskID diskID) throws Exception
     {
+        CddbResponse cddbResponse = new CddbResponse();
+
         StringBuilder sb = new StringBuilder();
         sb.append("/~cddb/cddb.cgi?cmd=cddb+query");
 
@@ -383,9 +391,12 @@ public class FreeDBProvider implements CDDBProvider
         sb.append(this.requestPostfix);
 
         URL url = new URL("http", SERVER, PORT, sb.toString());
+
+        getLogger().debug("Query {}", url);
+
         URLConnection connection = url.openConnection();
         Set<String> genres = new TreeSet<>();
-        CDDBResponse response = null;
+        int responseCode = 0;
 
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream(), "UTF-8")))
         {
@@ -394,6 +405,13 @@ public class FreeDBProvider implements CDDBProvider
             while ((line = reader.readLine()) != null)
             {
                 getLogger().debug(line);
+
+                if (line.startsWith(Integer.toString(CddbResponse.NO_MATCH)))
+                {
+                    // Nichts gefunden -> Abbruch
+                    cddbResponse.setErrorMessage(line);
+                    break;
+                }
 
                 if (line.startsWith("."))
                 {
@@ -407,36 +425,36 @@ public class FreeDBProvider implements CDDBProvider
                     continue;
                 }
 
-                if (response == null)
+                if (responseCode == 0)
                 {
-                    if (splits[0].equals("200"))
+                    if (splits[0].equals(Integer.toString(CddbResponse.MATCH)))
                     {
                         // Nur ein Genre gefunden.
-                        response = CDDBResponse.MATCH;
+                        responseCode = CddbResponse.MATCH;
                     }
-                    else if (splits[0].equals("210"))
+                    else if (splits[0].equals(Integer.toString(CddbResponse.EXACT_MATCHES)))
                     {
                         // Mehrere Genres gefunden
-                        response = CDDBResponse.EXACT_MATCHES;
+                        responseCode = CddbResponse.EXACT_MATCHES;
                         continue;
                     }
-                    else if (splits[0].equals("211"))
+                    else if (splits[0].equals(Integer.toString(CddbResponse.INEXACT_MATCHES)))
                     {
                         // Nicht exakte Treffer -> ungleiche DiskID.
-                        response = CDDBResponse.INEXACT_MATCHES;
+                        responseCode = CddbResponse.INEXACT_MATCHES;
                         continue;
                     }
                 }
 
                 String genre = null;
 
-                switch (response)
+                switch (responseCode)
                 {
-                    case EXACT_MATCHES:
-                    case INEXACT_MATCHES:
+                    case CddbResponse.EXACT_MATCHES:
+                    case CddbResponse.INEXACT_MATCHES:
                         genre = StringUtils.trim(splits[0]);
                         break;
-                    case MATCH:
+                    case CddbResponse.MATCH:
                         genre = StringUtils.trim(splits[1]);
                         break;
                     default:
@@ -445,15 +463,21 @@ public class FreeDBProvider implements CDDBProvider
 
                 genres.add(genre);
 
-                if (CDDBResponse.INEXACT_MATCHES.equals(response))
+                if (responseCode == CddbResponse.INEXACT_MATCHES)
                 {
                     // Erstes Genre nehmen, DiskID aktualisieren und Abbruch.
-                    diskID.setID(StringUtils.trim(splits[1]));
+                    genre = StringUtils.trim(splits[1]);
+                    diskID.setID(genre);
                     break;
                 }
             }
         }
 
-        return new ArrayList<>(genres);
+        if (!genres.isEmpty())
+        {
+            cddbResponse.setGenres(new ArrayList<>(genres));
+        }
+
+        return cddbResponse;
     }
 }
