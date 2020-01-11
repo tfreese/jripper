@@ -8,7 +8,7 @@ subprojects {
 }
 
 project("jripper-core") {
-	apply plugin: 'java-library'
+	apply plugin: "java-library"
 	description = "Java Ripper Core Modul"
 	dependencies {
 		api("commons-io:commons-io")
