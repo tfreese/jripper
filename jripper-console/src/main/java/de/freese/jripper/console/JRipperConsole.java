@@ -63,6 +63,7 @@ public class JRipperConsole implements IAnsiCodes
      *
      * @throws UnsupportedEncodingException Falls was schief geht.
      */
+    @SuppressWarnings("resource")
     public JRipperConsole() throws UnsupportedEncodingException
     {
         super();
