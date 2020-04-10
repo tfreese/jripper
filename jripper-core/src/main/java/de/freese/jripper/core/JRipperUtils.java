@@ -6,7 +6,11 @@ package de.freese.jripper.core;
 
 import java.io.File;
 import java.io.IOException;
-import org.apache.commons.io.FileUtils;
+import java.nio.file.FileVisitResult;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.SystemUtils;
 import de.freese.jripper.core.model.Album;
@@ -27,16 +31,58 @@ public final class JRipperUtils
      * @param directory {@link File}
      * @throws IOException Falls was schief geht.
      */
-    private static void createOrDeleteDir(final Album album, final File directory) throws IOException
+    private static void createOrCleanDir(final Album album, final File directory) throws IOException
     {
         if (directory.exists())
         {
-            FileUtils.cleanDirectory(directory);
+            deleteDirectoryRecursiv(directory.toPath());
         }
         else
         {
             directory.mkdirs();
         }
+    }
+
+    /**
+     * Löscht das Verzeichnis rekursiv inklusive Dateien und Unterverzeichnisse.
+     *
+     * @param path {@link Path}
+     * @throws IOException Falls was schief geht.
+     */
+    public static void deleteDirectoryRecursiv(final Path path) throws IOException
+    {
+        if (!Files.exists(path))
+        {
+            return;
+        }
+
+        if (!Files.isDirectory(path))
+        {
+            throw new IllegalArgumentException("path is not a dirctory: " + path);
+        }
+
+        Files.walkFileTree(path, new SimpleFileVisitor<Path>()
+        {
+            /**
+             * @see java.nio.file.SimpleFileVisitor#postVisitDirectory(java.lang.Object, java.io.IOException)
+             */
+            @Override
+            public FileVisitResult postVisitDirectory(final Path dir, final IOException exc) throws IOException
+            {
+                Files.delete(dir);
+                return FileVisitResult.CONTINUE;
+            }
+
+            /**
+             * @see java.nio.file.SimpleFileVisitor#visitFile(java.lang.Object, java.nio.file.attribute.BasicFileAttributes)
+             */
+            @Override
+            public FileVisitResult visitFile(final Path file, final BasicFileAttributes attrs) throws IOException
+            {
+                Files.delete(file);
+                return FileVisitResult.CONTINUE;
+            }
+        });
     }
 
     /**
@@ -132,7 +178,7 @@ public final class JRipperUtils
 
         if (createOrDelete)
         {
-            createOrDeleteDir(album, dir);
+            createOrCleanDir(album, dir);
         }
 
         return dir;
@@ -153,7 +199,7 @@ public final class JRipperUtils
 
         if (createOrDelete)
         {
-            createOrDeleteDir(album, dir);
+            createOrCleanDir(album, dir);
         }
 
         return dir;
@@ -174,7 +220,7 @@ public final class JRipperUtils
 
         if (createOrDelete)
         {
-            createOrDeleteDir(album, dir);
+            createOrCleanDir(album, dir);
         }
 
         return dir;
