@@ -9,6 +9,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
 import org.junit.jupiter.api.condition.EnabledOnOs;
 import org.junit.jupiter.api.condition.OS;
 import de.freese.jripper.core.diskid.DiskIDProvider;
@@ -55,6 +56,7 @@ public class TestRipper
      */
     @Test
     @EnabledOnOs(OS.LINUX)
+    @EnabledIfEnvironmentVariable(named = "SESSION_MANAGER", matches = ".*mainah.*") // Nur auf Desktop-PC mit CD-Laufwerk
     public void testLinux()
     {
         DiskIDProvider service = new DiskIDProviderLinux();
