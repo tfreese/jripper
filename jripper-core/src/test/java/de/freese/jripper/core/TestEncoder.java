@@ -20,23 +20,15 @@ import de.freese.jripper.core.encoder.EncoderFormat;
  *
  * @author Thomas Freese
  */
-@TestMethodOrder(MethodOrderer.Alphanumeric.class)
-public class TestEncoder
+@TestMethodOrder(MethodOrderer.MethodName.class)
+class TestEncoder
 {
-    /**
-     * Erstellt ein neues {@link TestEncoder} Object.
-     */
-    public TestEncoder()
-    {
-        super();
-    }
-
     /**
      * Linux.
      */
     @Test
     @EnabledOnOs(OS.LINUX)
-    public void testLinuxFlac()
+    void testLinuxFlac()
     {
         try
         {
@@ -54,7 +46,7 @@ public class TestEncoder
      */
     @Test
     @EnabledOnOs(OS.LINUX)
-    public void testLinuxMp3()
+    void testLinuxMp3()
     {
         try
         {

@@ -22,22 +22,15 @@ import de.freese.jripper.core.model.DiskID;
  *
  * @author Thomas Freese
  */
-@TestMethodOrder(MethodOrderer.Alphanumeric.class)
-public class TestDiskID
+@TestMethodOrder(MethodOrderer.MethodName.class)
+class TestDiskID
 {
-    /**
-     * Erstellt ein neues {@link TestDiskID} Object.
-     */
-    public TestDiskID()
-    {
-        super();
-    }
 
     /**
      * Liefert je nach Betriebssystem die passende Implementierung.
      */
     @Test
-    public void testGetService()
+    void testGetService()
     {
         try
         {
@@ -54,7 +47,7 @@ public class TestDiskID
      *
      */
     @Test
-    public void testID1()
+    void testID1()
     {
         String id = "b111140e 14 150 24545 41797 60822 80152 117002 142550 169755 192057 211360 239297 256325 279075 306220 4374";
         DiskID diskID = new DiskID(id);
@@ -69,7 +62,7 @@ public class TestDiskID
      *
      */
     @Test
-    public void testID2()
+    void testID2()
     {
         String id = "ae0ff80e 14 150 10972 37962 56825 81450 103550 127900 153025 179675 200425 225187 247687 270712 295700 4090";
         DiskID diskID = new DiskID(id);
@@ -88,7 +81,7 @@ public class TestDiskID
     {
             OS.LINUX, OS.WINDOWS
     })
-    public void testLinux()
+    void testLinux()
     {
         String device = JRipperUtils.detectCdDevice();
 

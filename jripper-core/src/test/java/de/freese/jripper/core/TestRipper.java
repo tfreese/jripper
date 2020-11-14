@@ -23,22 +23,15 @@ import de.freese.jripper.core.ripper.RipperFactory;
  *
  * @author Thomas Freese
  */
-@TestMethodOrder(MethodOrderer.Alphanumeric.class)
-public class TestRipper
+@TestMethodOrder(MethodOrderer.MethodName.class)
+class TestRipper
 {
-    /**
-     * Erstellt ein neues {@link TestRipper} Object.
-     */
-    public TestRipper()
-    {
-        super();
-    }
 
     /**
      * Liefert je nach Betriebssystem die passende Implementierung.
      */
     @Test
-    public void testGetService()
+    void testGetService()
     {
         try
         {
@@ -57,7 +50,7 @@ public class TestRipper
     @Test
     @EnabledOnOs(OS.LINUX)
     @EnabledIfEnvironmentVariable(named = "SESSION_MANAGER", matches = ".*mainah.*") // Nur auf Desktop-PC mit CD-Laufwerk
-    public void testLinux()
+    void testLinux()
     {
         DiskIDProvider service = new DiskIDProviderLinux();
 
