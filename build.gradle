@@ -1,58 +1,72 @@
 // Tasks im SubModul ausführen: gradle MODUL:clean build
 
 subprojects {
-	dependencies {
-		implementation(platform("de.freese:maven-bom:$version_mavenBom"))
-		//implementation("org.springframework.boot:spring-boot-starter")
+    apply plugin: 'java'
+    apply plugin: "maven-publish"
+    apply plugin: "de.freese.gradle.conventions"
+    apply plugin: "io.spring.dependency-management"
+
+    dependencyManagement {
+        imports {
+            mavenBom "org.springframework.boot:spring-boot-dependencies:$version_springBoot"
+        }
+
+        dependencies {
+            dependency "commons-io:commons-io:$version_commonsIo"
+        }
     }
 }
 
 project("jripper-core") {
-	apply plugin: "java-library"
-	description = "Java Ripper Core Modul"
-	dependencies {
-		api("commons-io:commons-io")
-		api("org.apache.commons:commons-lang3")
-		api("org.slf4j:slf4j-api")
+    apply plugin: "java-library"
+    description = "Java Ripper Core Modul"
+    dependencies {
+        api("commons-io:commons-io")
+        api("org.apache.commons:commons-lang3")
+        api("org.slf4j:slf4j-api")
 
-		runtimeOnly("ch.qos.logback:logback-classic")
-		runtimeOnly("org.codehaus.janino:janino")
+        runtimeOnly("ch.qos.logback:logback-classic")
+        runtimeOnly("org.codehaus.janino:janino")
 
-		testImplementation("org.junit.jupiter:junit-jupiter-engine")
-		testImplementation("org.junit.platform:junit-platform-runner")
-		testImplementation("org.junit.platform:junit-platform-suite-api")
-	}    
-    
+        testImplementation("org.junit.jupiter:junit-jupiter-engine")
+        testImplementation("org.junit.platform:junit-platform-runner")
+        testImplementation("org.junit.platform:junit-platform-suite-api")
+    }
+
     //test.enabled = false
     //test {
-        //exclude 'de/freese/jripper/core/**'
-        //exclude 'de/freese/jripper/core/TestDiskID.class'
-        //exclude 'de/freese/jripper/core/TestRipper.class'
+    //exclude 'de/freese/jripper/core/**'
+    //exclude 'de/freese/jripper/core/TestDiskID.class'
+    //exclude 'de/freese/jripper/core/TestRipper.class'
     //}
 }
 
 project("jripper-console") {
-	description = "Java Ripper Console Modul"
-	dependencies {
-		implementation(project(":jripper-core"))
-	}
+    description = "Java Ripper Console Modul"
+    dependencies {
+        implementation(project(":jripper-core"))
+    }
 }
 
 project("jripper-swing") {
-	description = "Java Ripper Swing Modul"
-	dependencies {
-		implementation(project(":jripper-core"))
+    apply plugin: "application"
+    description = "Java Ripper Swing Modul"
+    dependencies {
+        implementation(project(":jripper-core"))
 
-		implementation("de.freese:binding:$project.archiveVersion")
-		implementation("com.jgoodies:jgoodies-binding")
-	}
+        implementation("de.freese:binding:$project.version")
+    }
 
-	ext.mainClass = "de.freese.jripper.swing.JRipperSwing"
+    application {
+        mainClass = "de.freese.jripper.swing.JRipperSwing"
+    }
 
-	// Eigener Task zur Ausführung, wenn ohne "application" Plugin ausgeführt werden soll.
-	task run(type:JavaExec) {
-		classpath = sourceSets.main.runtimeClasspath
-		main = mainClass
-		//args "arg1", "arg2"
-	}    
+    //ext.mainClass = "de.freese.jripper.swing.JRipperSwing"
+    //
+    // Eigener Task zur Ausführung, wenn ohne "application" Plugin ausgeführt werden soll.
+    //task run(type:JavaExec) {
+    //	classpath = sourceSets.main.runtimeClasspath
+    //	main = mainClass
+    //	//args "arg1", "arg2"
+    //}
 }
