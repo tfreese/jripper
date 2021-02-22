@@ -49,7 +49,7 @@ project("jripper-console") {
 }
 
 project("jripper-swing") {
-    apply plugin: "application"
+    apply plugin: "org.springframework.boot"
     description = "Java Ripper Swing Modul"
     dependencies {
         implementation(project(":jripper-core"))
@@ -57,16 +57,14 @@ project("jripper-swing") {
         implementation("de.freese:binding:$project.version")
     }
 
-    application {
-        mainClass = "de.freese.jripper.swing.JRipperSwing"
-    }
-
-    //ext.mainClass = "de.freese.jripper.swing.JRipperSwing"
-    //
-    // Eigener Task zur Ausführung, wenn ohne "application" Plugin ausgeführt werden soll.
-    //task run(type:JavaExec) {
-    //	classpath = sourceSets.main.runtimeClasspath
-    //	main = mainClass
-    //	//args "arg1", "arg2"
-    //}
+	// Sonst würde nur das BootJar erstellt werden.
+	jar {
+		enabled = true
+	}
+	
+	// Start: gradle bootRun --args='--spring.profiles.active=dev'
+	bootJar {
+	    mainClass = "de.freese.jripper.swing.JRipperSwing"
+	    classifier = 'boot'
+	}
 }
