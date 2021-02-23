@@ -2,8 +2,6 @@
 
 subprojects {
     apply plugin: 'java'
-    apply plugin: "maven-publish"
-    apply plugin: "de.freese.gradle.conventions"
     apply plugin: "io.spring.dependency-management"
 
     dependencyManagement {
@@ -56,15 +54,9 @@ project("jripper-swing") {
 
         implementation("de.freese:binding:$project.version")
     }
-
-	// Sonst würde nur das BootJar erstellt werden.
-	jar {
-		enabled = true
-	}
 	
 	// Start: gradle bootRun --args='--spring.profiles.active=dev'
 	bootJar {
 	    mainClass = "de.freese.jripper.swing.JRipperSwing"
-	    classifier = 'boot'
 	}
 }
