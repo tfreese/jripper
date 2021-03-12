@@ -1,7 +1,6 @@
 /**
  * Created: 01.03.2013
  */
-
 package de.freese.jripper.core.model;
 
 import java.util.Objects;
@@ -15,29 +14,29 @@ import org.apache.commons.lang3.StringUtils;
 public class Track
 {
     /**
-     * 
+     *
      */
-    private Album album = null;
+    private Album album;
 
     /**
      * Nur bei Compilations gefüllt.
      */
-    private String artist = null;
+    private String artist;
 
     /**
-     * 
+     *
      */
-    private int number = 0;
+    private int number;
 
     /**
-     * 
+     *
      */
-    private int seconds = 0;
+    private int seconds;
 
     /**
-     * 
+     *
      */
-    private String title = null;
+    private String title;
 
     /**
      * Erstellt ein neues {@link Track} Object.
@@ -57,7 +56,7 @@ public class Track
 
     /**
      * Nur bei Compilations gefüllt.
-     * 
+     *
      * @return String
      */
     public String getArtist()
@@ -104,7 +103,7 @@ public class Track
 
     /**
      * Nur bei Compilations gefüllt.
-     * 
+     *
      * @param artist String
      */
     public void setArtist(final String artist)

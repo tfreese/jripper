@@ -18,33 +18,33 @@ import de.freese.jripper.core.Settings;
 public class DiskID
 {
     /**
-     * 
+     *
      */
-    private String id = null;
+    private String id;
 
     /**
-     * 
+     *
      */
-    private int offset = 0;
+    private int offset;
 
     /**
-     * 
+     *
      */
-    private int seconds = 0;
+    private int seconds;
 
     /**
-     * 
+     *
      */
-    private int trackCount = 0;
+    private int trackCount;
 
     /**
-     * 
+     *
      */
-    private int[] trackOffsets = null;
+    private int[] trackOffsets;
 
     /**
      * Erstellt ein neues {@link DiskID} Object.
-     * 
+     *
      * @param diskID String
      */
     public DiskID(final String diskID)
@@ -96,7 +96,7 @@ public class DiskID
 
     /**
      * Liefert die Trackdauer in Sekunden.
-     * 
+     *
      * @param track int
      * @return int
      */

@@ -6,13 +6,13 @@ package de.freese.jripper.core;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import de.freese.jripper.core.cddb.CddbProviderFreeDb;
 import de.freese.jripper.core.cddb.CddbProvider;
-import de.freese.jripper.core.diskid.DiskIDProviderFactory;
+import de.freese.jripper.core.cddb.CddbProviderFreeDb;
 import de.freese.jripper.core.diskid.DiskIDProvider;
+import de.freese.jripper.core.diskid.DiskIDProviderFactory;
+import de.freese.jripper.core.encoder.Encoder;
 import de.freese.jripper.core.encoder.EncoderFactory;
 import de.freese.jripper.core.encoder.EncoderFormat;
-import de.freese.jripper.core.encoder.Encoder;
 import de.freese.jripper.core.genre.GenreProvider;
 import de.freese.jripper.core.genre.GenreProviderLinux;
 import de.freese.jripper.core.ripper.Ripper;
@@ -23,7 +23,7 @@ import de.freese.jripper.core.ripper.RipperFactory;
  *
  * @author Thomas Freese
  */
-public class JRipper
+public final class JRipper
 {
     /**
      *
@@ -46,31 +46,31 @@ public class JRipper
     /**
      *
      */
-    private CddbProvider cddbProvider = null;
+    private CddbProvider cddbProvider;
 
     /**
      *
      */
-    private DiskIDProvider diskIDProvider = null;
+    private DiskIDProvider diskIDProvider;
     /**
      *
      */
-    private Encoder encoderFlac = null;
+    private Encoder encoderFlac;
 
     /**
      *
      */
-    private Encoder encoderMp3 = null;
+    private Encoder encoderMp3;
 
     /**
      *
      */
-    private GenreProvider genreProvider = null;
+    private GenreProvider genreProvider;
 
     /**
      *
      */
-    private Ripper ripper = null;
+    private Ripper ripper;
 
     /**
      * Erstellt ein neues {@link JRipper} Object.
@@ -113,7 +113,7 @@ public class JRipper
     {
         if (this.encoderFlac == null)
         {
-            this.encoderFlac = EncoderFactory.getInstance(EncoderFormat.flac);
+            this.encoderFlac = EncoderFactory.getInstance(EncoderFormat.FLAC);
         }
 
         return this.encoderFlac;
@@ -126,7 +126,7 @@ public class JRipper
     {
         if (this.encoderMp3 == null)
         {
-            this.encoderMp3 = EncoderFactory.getInstance(EncoderFormat.mp3);
+            this.encoderMp3 = EncoderFactory.getInstance(EncoderFormat.MP3);
         }
 
         return this.encoderMp3;

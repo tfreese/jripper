@@ -1,7 +1,6 @@
 /**
  * Created: 26.02.2013
  */
-
 package de.freese.jripper.core.model;
 
 import java.util.ArrayList;
@@ -22,17 +21,17 @@ public class AlbumImpl implements Album
     /**
     *
     */
-    private static final Logger LOGGER = LoggerFactory.getLogger(AlbumImpl.class);;
+    private static final Logger LOGGER = LoggerFactory.getLogger(AlbumImpl.class);
 
     /**
      * Bei Compilations null.
      */
-    private String artist = null;
+    private String artist;
 
     /**
      *
      */
-    private String comment = null;
+    private String comment;
 
     /**
      *
@@ -47,12 +46,12 @@ public class AlbumImpl implements Album
     /**
      *
      */
-    private String genre = null;
+    private String genre;
 
     /**
      *
      */
-    private String title = null;
+    private String title;
 
     /**
      *
@@ -67,7 +66,7 @@ public class AlbumImpl implements Album
     /**
      *
      */
-    private int year = 0;
+    private int year;
 
     /**
      * Erstellt ein neues {@link AlbumImpl} Object.

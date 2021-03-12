@@ -1,7 +1,6 @@
 /**
  * Created: 09.03.2013
  */
-
 package de.freese.jripper.core.cddb;
 
 import java.util.List;
@@ -38,25 +37,17 @@ public class CddbResponse
     /**
     *
     */
-    private Album album = null;
+    private Album album;
 
     /**
      *
      */
-    private String errorMessage = null;
+    private String errorMessage;
 
     /**
      *
      */
-    private List<String> genres = null;
-
-    /**
-     * Erstellt ein neues {@link CddbResponse} Object.
-     */
-    public CddbResponse()
-    {
-        super();
-    }
+    private List<String> genres;
 
     /**
      * @return {@link Album}

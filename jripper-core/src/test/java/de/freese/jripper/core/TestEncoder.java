@@ -24,7 +24,7 @@ import de.freese.jripper.core.encoder.EncoderFormat;
 class TestEncoder
 {
     /**
-     * Linux.
+     *
      */
     @Test
     @EnabledOnOs(OS.LINUX)
@@ -32,7 +32,7 @@ class TestEncoder
     {
         try
         {
-            Encoder encoder = EncoderFactory.getInstance(EncoderFormat.flac);
+            Encoder encoder = EncoderFactory.getInstance(EncoderFormat.FLAC);
             assertNotNull(encoder);
         }
         catch (Exception ex)
@@ -42,7 +42,7 @@ class TestEncoder
     }
 
     /**
-     * Linux.
+     *
      */
     @Test
     @EnabledOnOs(OS.LINUX)
@@ -50,7 +50,7 @@ class TestEncoder
     {
         try
         {
-            Encoder encoder = EncoderFactory.getInstance(EncoderFormat.mp3);
+            Encoder encoder = EncoderFactory.getInstance(EncoderFormat.MP3);
             assertNotNull(encoder);
         }
         catch (Exception ex)

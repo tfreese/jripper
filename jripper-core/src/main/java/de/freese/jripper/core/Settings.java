@@ -31,7 +31,7 @@ public final class Settings
     /**
      * Laufwerk
      */
-    private String device = null;
+    private String device;
 
     /**
      * 0-8
@@ -51,7 +51,7 @@ public final class Settings
     /**
      *
      */
-    private final Logger logger = LoggerFactory.getLogger(Settings.class);;
+    private final Logger logger = LoggerFactory.getLogger(Settings.class);
 
     /**
      *
@@ -61,7 +61,7 @@ public final class Settings
     /**
      *
      */
-    private List<Integer> mp3BitRates = null;
+    private List<Integer> mp3BitRates;
     /**
      *
      */
@@ -70,7 +70,7 @@ public final class Settings
     /**
      * Arbeitsverzeichnis
      */
-    private String workDir = null;
+    private String workDir;
 
     /**
      * Erstellt ein neues {@link Settings} Object.
@@ -123,7 +123,7 @@ public final class Settings
     /**
      * @return {@link Logger}
      */
-    protected Logger getLogger()
+    private Logger getLogger()
     {
         return this.logger;
     }

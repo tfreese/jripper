@@ -232,9 +232,8 @@ public final class JRipperUtils
      *
      * @param album {@link Album}
      * @return {@link File}
-     * @throws IOException Falls was schief geht.
      */
-    public static File getWorkDir(final Album album) throws IOException
+    public static File getWorkDir(final Album album)
     {
         StringBuilder sb = new StringBuilder();
         sb.append(Settings.getInstance().getWorkDir());

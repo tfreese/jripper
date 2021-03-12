@@ -8,6 +8,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -202,7 +203,7 @@ public class CddbProviderFreeDb implements CddbProvider
 
         Map<String, String> responseMap = new TreeMap<>(new TrackTitleComparator());
 
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream(), "UTF-8")))
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8)))
         {
             String line = null;
 
@@ -398,7 +399,7 @@ public class CddbProviderFreeDb implements CddbProvider
         Set<String> genres = new TreeSet<>();
         int responseCode = 0;
 
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream(), "UTF-8")))
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8)))
         {
             String line = null;
 

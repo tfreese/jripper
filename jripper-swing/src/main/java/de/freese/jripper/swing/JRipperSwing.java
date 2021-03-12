@@ -86,7 +86,7 @@ public class JRipperSwing
     /**
      *
      */
-    public static JFrame frame = null;
+    public static JFrame frame;
 
     /**
      *
@@ -228,7 +228,7 @@ public class JRipperSwing
 
         // Genre
         Property<String> genreComboBoxProperty = new SimpleStringProperty();
-        de.freese.binding.collections.ObservableList<String> genresObservableList = new DefaultObservableList<>();
+        ObservableList<String> genresObservableList = new DefaultObservableList<>();
 
         panelAlbum.add(new JLabel("Genre"), new GBCBuilder(0, row));
         JTextField genreTextField = new JTextField();
@@ -445,7 +445,7 @@ public class JRipperSwing
         panelMP3.add(checkBoxMp3, new GBCBuilder(0, 0));
 
         // Bitrate
-        de.freese.binding.collections.ObservableList<Integer> mp3BitRatesObservableList = new DefaultObservableList<>(settings.getMp3BitRates());
+        ObservableList<Integer> mp3BitRatesObservableList = new DefaultObservableList<>(settings.getMp3BitRates());
         Property<Integer> mp3BitRateProperty = new SimpleIntegerProperty();
 
         panelMP3.add(new JLabel("Bitrate"), new GBCBuilder(0, 1));
@@ -517,7 +517,7 @@ public class JRipperSwing
         }
 
         // Ausnahmen
-        Font font_bold = font.deriveFont(Font.BOLD);
-        UIManager.put("TitledBorder.font", font_bold);
+        Font fontBold = font.deriveFont(Font.BOLD);
+        UIManager.put("TitledBorder.font", fontBold);
     }
 }

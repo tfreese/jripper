@@ -1,7 +1,6 @@
 /**
  * Created: 26.02.2013
  */
-
 package de.freese.jripper.console;
 
 import java.io.BufferedReader;
@@ -10,6 +9,7 @@ import java.io.File;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import org.apache.commons.lang3.StringUtils;
 import de.freese.jripper.core.JRipper;
 import de.freese.jripper.core.JRipperUtils;
@@ -46,7 +46,7 @@ public class JRipperConsole implements IAnsiCodes
     /**
      *
      */
-    private Album album = null;
+    private Album album;
 
     /**
      *
@@ -86,8 +86,8 @@ public class JRipperConsole implements IAnsiCodes
         else
         {
             // In Eclipse kann Console null sein.
-            this.reader = new BufferedReader(new InputStreamReader(System.in, "UTF-8"));
-            this.printWriter = new PrintWriter(System.out);
+            this.reader = new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8));
+            this.printWriter = new PrintWriter(System.out, true, StandardCharsets.UTF_8);
         }
     }
 

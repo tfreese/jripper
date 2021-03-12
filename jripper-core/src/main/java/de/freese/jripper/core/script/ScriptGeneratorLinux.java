@@ -6,6 +6,7 @@ package de.freese.jripper.core.script;
 
 import java.io.File;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;
@@ -77,7 +78,7 @@ public class ScriptGeneratorLinux extends AbstractProcess implements ScriptGener
             script.delete();
         }
 
-        try (PrintWriter pw = new PrintWriter(script))
+        try (PrintWriter pw = new PrintWriter(script, StandardCharsets.UTF_8))
         {
             // Shebang
             pw.println("#!/bin/sh");
@@ -197,7 +198,7 @@ public class ScriptGeneratorLinux extends AbstractProcess implements ScriptGener
             flacFile = JRipperUtils.validateFileName(flacFile);
             // files.add(flacFile);
 
-            pw.printf("\t-o %s\n", flacFile);
+            pw.printf("\t-o %s%n", flacFile);
         }
 
         pw.println();
@@ -255,7 +256,7 @@ public class ScriptGeneratorLinux extends AbstractProcess implements ScriptGener
             mp3File = JRipperUtils.validateFileName(mp3File);
             // files.add(mp3File);
 
-            pw.printf("\t%s\n", mp3File);
+            pw.printf("\t%s%n", mp3File);
         }
 
         pw.println();

@@ -12,12 +12,12 @@ package de.freese.jripper.core.encoder;
 public enum EncoderFormat
 {
     /**
-     * 
+     *
      */
-    flac,
+    FLAC,
 
     /**
-     * 
+     *
      */
-    mp3;
+    MP3;
 }
