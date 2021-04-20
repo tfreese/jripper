@@ -6,12 +6,15 @@ package de.freese.jripper.core;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.fail;
+
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
 import org.junit.jupiter.api.condition.EnabledOnOs;
 import org.junit.jupiter.api.condition.OS;
+
 import de.freese.jripper.core.diskid.DiskIDProvider;
 import de.freese.jripper.core.diskid.DiskIDProviderLinux;
 import de.freese.jripper.core.model.DiskID;
@@ -50,6 +53,7 @@ class TestRipper
     @Test
     @EnabledOnOs(OS.LINUX)
     @EnabledIfEnvironmentVariable(named = "SESSION_MANAGER", matches = ".*mainah.*") // Nur auf Desktop-PC mit CD-Laufwerk
+    @Disabled("Momentan kein CD/CDV/BluRay Laufwerk verbaut")
     void testLinux()
     {
         DiskIDProvider service = new DiskIDProviderLinux();
