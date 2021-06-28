@@ -21,12 +21,15 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
                 <configuration>
+                    <toolchain>jdk</toolchain>
                     <executable>java</executable>
-                    <mainClass>de.freese.jripper.swing.JRipperSwing</mainClass>
-                    <!--arguments>
-                            <argument>..</argument>
-                    </arguments-->
-                </configuration>
+                    <classpathScope>runtime</classpathScope>
+                    <arguments>
+                        <argument>-classpath</argument>
+                        <classpath />
+                        <argument>de.freese.jripper.swing.JRipperSwing</argument>
+                    </arguments>
+                </configuration>                
             </plugin>
         </plugins>
     </build>
