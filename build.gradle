@@ -1,7 +1,7 @@
 // Tasks im SubModul ausführen: gradle MODUL:clean build
 
 subprojects {
-    apply plugin: 'java'
+    apply plugin: "java"
     apply plugin: "io.spring.dependency-management"
 
     dependencyManagement {
@@ -33,9 +33,9 @@ project("jripper-core") {
 
     //test.enabled = false
     //test {
-    //exclude 'de/freese/jripper/core/**'
-    //exclude 'de/freese/jripper/core/TestDiskID.class'
-    //exclude 'de/freese/jripper/core/TestRipper.class'
+    //exclude "de/freese/jripper/core/**"
+    //exclude "de/freese/jripper/core/TestDiskID.class"
+    //exclude "de/freese/jripper/core/TestRipper.class"
     //}
 }
 
