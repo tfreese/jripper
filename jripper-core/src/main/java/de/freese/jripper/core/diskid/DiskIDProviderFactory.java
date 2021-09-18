@@ -5,7 +5,8 @@
 package de.freese.jripper.core.diskid;
 
 import java.util.ServiceLoader;
-import org.apache.commons.lang3.SystemUtils;
+
+import de.freese.jripper.core.JRipperUtils;
 
 /**
  * Zentrale Klasse für die Bereitstellung der DiskID.<br>
@@ -16,13 +17,13 @@ import org.apache.commons.lang3.SystemUtils;
 public final class DiskIDProviderFactory
 {
     /**
-     * 
+     *
      */
     private static final ServiceLoader<DiskIDProvider> SERVICE_LOADER = ServiceLoader.load(DiskIDProvider.class);
 
     /**
      * Je nach Betriebssystem wird die entsprechende Implementierung geliefert.
-     * 
+     *
      * @return {@link DiskIDProvider}
      */
     public static DiskIDProvider getInstance()
@@ -31,7 +32,7 @@ public final class DiskIDProviderFactory
 
         for (DiskIDProvider diskID : SERVICE_LOADER)
         {
-            if (diskID.supportsOS(SystemUtils.OS_NAME))
+            if (diskID.supportsOS(JRipperUtils.getOsName()))
             {
                 impl = diskID;
                 break;
@@ -40,7 +41,7 @@ public final class DiskIDProviderFactory
 
         if (impl == null)
         {
-            throw new NullPointerException("no diskID found for " + SystemUtils.OS_NAME);
+            throw new NullPointerException("no diskID found for " + JRipperUtils.getOsName());
         }
 
         return impl;

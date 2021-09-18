@@ -5,7 +5,8 @@
 package de.freese.jripper.core.ripper;
 
 import java.util.ServiceLoader;
-import org.apache.commons.lang3.SystemUtils;
+
+import de.freese.jripper.core.JRipperUtils;
 
 /**
  * Zentrale Klasse für die Bereitstellung des Rippers.<br>
@@ -16,13 +17,13 @@ import org.apache.commons.lang3.SystemUtils;
 public final class RipperFactory
 {
     /**
-     * 
+     *
      */
     private static final ServiceLoader<Ripper> SERVICE_LOADER = ServiceLoader.load(Ripper.class);
 
     /**
      * Je nach Betriebssystem wird die entsprechende Implementierung geliefert.
-     * 
+     *
      * @return {@link Ripper}
      */
     public static Ripper getInstance()
@@ -31,7 +32,7 @@ public final class RipperFactory
 
         for (Ripper ripper : SERVICE_LOADER)
         {
-            if (ripper.supportsOS(SystemUtils.OS_NAME))
+            if (ripper.supportsOS(JRipperUtils.getOsName()))
             {
                 impl = ripper;
                 break;
@@ -40,7 +41,7 @@ public final class RipperFactory
 
         if (impl == null)
         {
-            throw new NullPointerException("no ripper found for " + SystemUtils.OS_NAME);
+            throw new NullPointerException("no ripper found for " + JRipperUtils.getOsName());
         }
 
         return impl;

@@ -6,7 +6,8 @@ package de.freese.jripper.core.ripper;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import org.apache.commons.lang3.SystemUtils;
+
+import de.freese.jripper.core.JRipperUtils;
 import de.freese.jripper.core.process.AbstractProcess;
 import de.freese.jripper.core.process.ProcessMonitor;
 
@@ -45,6 +46,6 @@ public class RipperLinuxCdParanoia extends AbstractProcess implements Ripper
     @Override
     public boolean supportsOS(final String os)
     {
-        return SystemUtils.IS_OS_LINUX;
+        return JRipperUtils.isLinux();
     }
 }

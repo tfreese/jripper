@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
-import org.apache.commons.lang3.StringUtils;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -123,7 +123,7 @@ public class AlbumImpl implements Album
     @Override
     public String getComment()
     {
-        return StringUtils.defaultIfBlank(this.comment, "");
+        return Objects.toString(this.comment, "");
     }
 
     /**
@@ -204,7 +204,7 @@ public class AlbumImpl implements Album
     @Override
     public boolean isCompilation()
     {
-        return StringUtils.isBlank(this.artist);
+        return (this.artist == null) || this.artist.isBlank();
     }
 
     /**

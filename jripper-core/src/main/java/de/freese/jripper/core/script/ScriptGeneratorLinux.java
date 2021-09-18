@@ -9,7 +9,7 @@ import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
-import org.apache.commons.lang3.StringUtils;
+
 import de.freese.jripper.core.JRipperUtils;
 import de.freese.jripper.core.Settings;
 import de.freese.jripper.core.model.Album;
@@ -25,14 +25,6 @@ import de.freese.jripper.core.process.LoggerProcessMonitor;
  */
 public class ScriptGeneratorLinux extends AbstractProcess implements ScriptGenerator
 {
-    /**
-     * Erstellt ein neues {@link ScriptGeneratorLinux} Object.
-     */
-    public ScriptGeneratorLinux()
-    {
-        super();
-    }
-
     /**
      * @see de.freese.jripper.core.script.ScriptGenerator#execute(java.io.File)
      */
@@ -145,6 +137,7 @@ public class ScriptGeneratorLinux extends AbstractProcess implements ScriptGener
      * Formattiert den Pfad des Albums.
      *
      * @param album {@link Album}
+     *
      * @return String
      */
     private String getPath(final Album album)
@@ -277,15 +270,15 @@ public class ScriptGeneratorLinux extends AbstractProcess implements ScriptGener
      */
     private void writeProgramChecks(final PrintWriter pw, final String programm)
     {
-        pw.printf("%s=\"$(which %s)\"%n", StringUtils.upperCase(programm), programm);
+        pw.printf("%s=\"$(which %s)\"%n", programm.toUpperCase(), programm);
         pw.println("if [ $? != 0 ]; then");
         pw.printf("\techo \"%s not installed\"%n", programm);
         pw.println("\texit 5;");
-        pw.printf("elif [ ! -x \"$%s\" ]; then%n", StringUtils.upperCase(programm));
+        pw.printf("elif [ ! -x \"$%s\" ]; then%n", programm.toUpperCase());
         pw.printf("\techo \"%s not executable\"%n", programm);
         pw.println("\texit 5;");
         pw.println("fi");
-        pw.printf("readonly %s%n", StringUtils.upperCase(programm));
+        pw.printf("readonly %s%n", programm.toUpperCase());
     }
 
     /**

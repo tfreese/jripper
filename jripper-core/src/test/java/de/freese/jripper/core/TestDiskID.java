@@ -6,12 +6,13 @@ package de.freese.jripper.core;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.fail;
-import org.apache.commons.lang3.StringUtils;
+
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.condition.EnabledOnOs;
 import org.junit.jupiter.api.condition.OS;
+
 import de.freese.jripper.core.diskid.DiskIDProvider;
 import de.freese.jripper.core.diskid.DiskIDProviderFactory;
 import de.freese.jripper.core.diskid.DiskIDProviderLinux;
@@ -85,7 +86,7 @@ class TestDiskID
     {
         String device = JRipperUtils.detectCdDevice();
 
-        if (StringUtils.isBlank(device))
+        if ((device == null) || device.isBlank())
         {
             // Buildserver haben nicht zwangsläufig ein DVD Laufwerk.
             return;

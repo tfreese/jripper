@@ -11,8 +11,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.SystemUtils;
+
 import de.freese.jripper.core.model.Album;
 
 /**
@@ -23,12 +22,28 @@ import de.freese.jripper.core.model.Album;
 public final class JRipperUtils
 {
     /**
+     * @param value String
+     *
+     * @return String
+     */
+    public static String capitalize(final String value)
+    {
+        if ((value == null) || value.isBlank())
+        {
+            return value;
+        }
+
+        return value.substring(0, 1).toUpperCase() + value.substring(1);
+    }
+
+    /**
      * Erzeugt, wenn nicht vorhanden, das Verzeichnis für die Dateien.<br>
      * Format: ArbeitsVerzeichnis/ALBUMTITEL/PFAD<br>
      * Vorhandenen Daten werden gelöscht.
      *
      * @param album {@link Album}
      * @param directory {@link File}
+     *
      * @throws IOException Falls was schief geht.
      */
     private static void createOrCleanDir(final Album album, final File directory) throws IOException
@@ -47,6 +62,7 @@ public final class JRipperUtils
      * Löscht das Verzeichnis rekursiv inklusive Dateien und Unterverzeichnisse.
      *
      * @param path {@link Path}
+     *
      * @throws IOException Falls was schief geht.
      */
     public static void deleteDirectoryRecursiv(final Path path) throws IOException
@@ -94,7 +110,7 @@ public final class JRipperUtils
     {
         String drive = null;
 
-        if (SystemUtils.IS_OS_LINUX)
+        if (isLinux())
         {
             File f = new File("/dev/dvd");
 
@@ -123,7 +139,7 @@ public final class JRipperUtils
                 }
             }
         }
-        else if (SystemUtils.IS_OS_WINDOWS)
+        else if (isWindows())
         {
             // FileSystemView fsv = FileSystemView.getFileSystemView();
             //
@@ -169,7 +185,9 @@ public final class JRipperUtils
      *
      * @param album {@link Album}
      * @param createOrDelete boolean; Erzeugt das Verzeichnis oder löscht vorhandene Dateien.
+     *
      * @return {@link File}
+     *
      * @throws IOException Falls was schief geht.
      */
     public static File getFlacDir(final Album album, final boolean createOrDelete) throws IOException
@@ -190,7 +208,9 @@ public final class JRipperUtils
      *
      * @param album {@link Album}
      * @param createOrDelete boolean; Erzeugt das Verzeichnis oder löscht vorhandene Dateien.
+     *
      * @return {@link File}
+     *
      * @throws IOException Falls was schief geht.
      */
     public static File getMp3Dir(final Album album, final boolean createOrDelete) throws IOException
@@ -206,12 +226,22 @@ public final class JRipperUtils
     }
 
     /**
+     * @return String
+     */
+    public static String getOsName()
+    {
+        return System.getProperty("os.name");
+    }
+
+    /**
      * Liefert das Verzeichnis für die wav-Dateien.<br>
      * Format: ArbeitsVerzeichnis/ALBUMTITEL/wav
      *
      * @param album {@link Album}
      * @param createOrDelete boolean; Erzeugt das Verzeichnis oder löscht vorhandene Dateien.
+     *
      * @return {@link File}
+     *
      * @throws IOException Falls was schief geht.
      */
     public static File getWavDir(final Album album, final boolean createOrDelete) throws IOException
@@ -231,6 +261,7 @@ public final class JRipperUtils
      * Format: ArbeitsVerzeichnis/ALBUMTITEL
      *
      * @param album {@link Album}
+     *
      * @return {@link File}
      */
     public static File getWorkDir(final Album album)
@@ -262,15 +293,114 @@ public final class JRipperUtils
     }
 
     /**
+     * @return boolean
+     */
+    public static boolean isLinux()
+    {
+        String os = getOsName().toLowerCase();
+
+        return os.contains("linux");
+    }
+
+    /**
+     * @param cs {@link CharSequence}
+     *
+     * @return boolean
+     */
+    public static boolean isNumeric(final CharSequence cs)
+    {
+        if ((cs == null) || cs.isEmpty())
+        {
+            return false;
+        }
+
+        final int length = cs.length();
+
+        for (int i = 0; i < length; i++)
+        {
+            if (!Character.isDigit(cs.charAt(i)))
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * @return boolean
+     */
+    public static boolean isWindows()
+    {
+        String os = getOsName().toLowerCase();
+
+        return os.startsWith("win");
+    }
+
+    /**
+     * @param value String
+     *
+     * @return String
+     */
+    public static String normalizeSpace(final String value)
+    {
+        if ((value == null) || value.isBlank())
+        {
+            return null;
+        }
+
+        String str = value;
+
+        while (str.contains("  "))
+        {
+            str = str.replace("  ", " ");
+        }
+
+        return str;
+    }
+
+    /**
+     * @param value String
+     *
+     * @return String
+     */
+    public static String trim(final String value)
+    {
+        if ((value == null) || value.isBlank())
+        {
+            return null;
+        }
+
+        return value.trim();
+    }
+
+    /**
+     * @param value String
+     *
+     * @return String
+     */
+    public static String uncapitalize(final String value)
+    {
+        if ((value == null) || value.isBlank())
+        {
+            return value;
+        }
+
+        return value.substring(0, 1).toLowerCase() + value.substring(1);
+    }
+
+    /**
      * Liefert einen gültigen Dateinamen ohne mehrfache Spaces, '/' und andere Sonderzeichen.
      *
      * @param fileName String
+     *
      * @return String
      */
     public static String validateFileName(final String fileName)
     {
-        String name = StringUtils.replace(fileName, "/", "_");
-        name = StringUtils.normalizeSpace(name);
+        String name = fileName.replace("/", "_");
+
+        name = normalizeSpace(name);
 
         return name;
     }

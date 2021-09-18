@@ -12,12 +12,18 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
-import org.apache.commons.lang3.StringUtils;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import org.slf4j.Logger;
+
 import de.freese.jripper.core.JRipper;
+import de.freese.jripper.core.JRipperUtils;
 import de.freese.jripper.core.model.AlbumImpl;
 import de.freese.jripper.core.model.DiskID;
 
@@ -127,19 +133,20 @@ public class CddbProviderFreeDb implements CddbProvider
      * </ul>
      *
      * @param text String
+     *
      * @return String, oder null wenn leer
      */
     private String normalize(final String text)
     {
-        if (StringUtils.isBlank(text))
+        if ((text == null) || text.isBlank())
         {
             return null;
         }
 
         String value = text;
-        value = StringUtils.trimToEmpty(value);
+        value = Optional.ofNullable(JRipperUtils.trim(value)).orElse("");
         value = value.toLowerCase();
-        value = StringUtils.capitalize(value);
+        value = JRipperUtils.capitalize(value);
         value = value.replace(" cd ", " CD ");
         value = value.replace("(cd ", "(CD ");
         value = value.replace("Dj ", "DJ ");
@@ -151,7 +158,7 @@ public class CddbProviderFreeDb implements CddbProvider
         value = value.replace("]", ")");
         value = value.replace("´", "'");
         value = value.replace("`", "'");
-        value = StringUtils.normalizeSpace(value);
+        value = JRipperUtils.normalizeSpace(value);
 
         // Nach '(', '-', '.' auch Grossbuchstaben.
         if (value.contains("(") || value.contains("-") || value.contains("."))
@@ -173,7 +180,7 @@ public class CddbProviderFreeDb implements CddbProvider
             value = sb.toString();
         }
 
-        value = StringUtils.trimToEmpty(value);
+        value = Optional.ofNullable(JRipperUtils.trim(value)).orElse("");
 
         return value;
     }
@@ -211,19 +218,13 @@ public class CddbProviderFreeDb implements CddbProvider
             {
                 getLogger().debug(line);
 
-                if (line.startsWith("#"))
-                {
-                    // Kommentar
-                    continue;
-                }
-
-                if (!line.contains("="))
+                if (line.startsWith("#") || !line.contains("="))
                 {
                     // Kein KeyValue
                     continue;
                 }
 
-                splits = StringUtils.split(line, "=", 2);
+                splits = line.split("[=]", 2);
 
                 if (splits.length == 1)
                 {
@@ -235,7 +236,7 @@ public class CddbProviderFreeDb implements CddbProvider
                 String value = splits[1];
 
                 // Value mit möglichem Vorgänger verknüpfen.
-                value = StringUtils.defaultIfBlank(responseMap.get(key), "") + value;
+                value = Objects.toString(responseMap.get(key), "") + value;
 
                 responseMap.put(key, value);
             }
@@ -251,8 +252,8 @@ public class CddbProviderFreeDb implements CddbProvider
             if ("DTITLE".equals(key))
             {
                 // Format: ARTIST / ALBUM
-                String artistTitle = StringUtils.substringBefore(value, " / ");
-                String albumTitle = StringUtils.substringAfter(value, " / ");
+                String artistTitle = value.substring(0, value.indexOf(" / "));
+                String albumTitle = value.substring(value.indexOf(" / ") + 1);
 
                 artistTitle = normalize(artistTitle);
                 albumTitle = normalize(albumTitle);
@@ -271,7 +272,7 @@ public class CddbProviderFreeDb implements CddbProvider
                 // continue;
                 // }
 
-                if (StringUtils.length(artistTitle) <= 3)
+                if ((artistTitle != null) && (artistTitle.length() <= 3))
                 {
                     artistTitle = artistTitle.toUpperCase();
                 }
@@ -283,7 +284,7 @@ public class CddbProviderFreeDb implements CddbProvider
             {
                 String year = normalize(value);
 
-                if (StringUtils.isNotBlank(year))
+                if ((year != null) && !year.isBlank())
                 {
                     album.setYear(Integer.parseInt(year));
                 }
@@ -293,20 +294,20 @@ public class CddbProviderFreeDb implements CddbProvider
                 // "Richtiges" Genre auslesen.
                 String genre2 = normalize(value);
 
-                if (StringUtils.isNotBlank(genre2))
+                if ((genre2 != null) && !genre2.isBlank())
                 {
                     album.setGenre(genre2);
                 }
             }
             else if ("EXTD".equals(key))
             {
-                if (StringUtils.isBlank(value))
+                if ((value == null) || value.isBlank())
                 {
                     // Kein Kommentar.
                     continue;
                 }
 
-                splits = StringUtils.splitByWholeSeparator(value, "\\n");
+                splits = value.lines().toArray(String[]::new);
                 StringBuilder comment = new StringBuilder();
 
                 for (int i = 0; i < splits.length; i++)
@@ -344,14 +345,14 @@ public class CddbProviderFreeDb implements CddbProvider
                         splits[i] = normalize(splits[i]);
                     }
 
-                    if (StringUtils.isNumeric(splits[0]))
+                    if (JRipperUtils.isNumeric(splits[0]))
                     {
                         splits[0] = "";
                     }
 
                     // splits[1].replaceAll("[\\d+]", "");
-                    trackTitle = StringUtils.join(splits, " ");
-                    trackTitle = StringUtils.trim(trackTitle);
+                    trackTitle = Stream.of(splits).collect(Collectors.joining(" "));
+                    trackTitle = JRipperUtils.trim(trackTitle);
                 }
 
                 // Wenn TrackArtist=null wird AlbumArtist genommen.
@@ -453,10 +454,10 @@ public class CddbProviderFreeDb implements CddbProvider
                 {
                     case CddbResponse.EXACT_MATCHES:
                     case CddbResponse.INEXACT_MATCHES:
-                        genre = StringUtils.trim(splits[0]);
+                        genre = JRipperUtils.trim(splits[0]);
                         break;
                     case CddbResponse.MATCH:
-                        genre = StringUtils.trim(splits[1]);
+                        genre = JRipperUtils.trim(splits[1]);
                         break;
                     default:
                         break;
@@ -467,7 +468,7 @@ public class CddbProviderFreeDb implements CddbProvider
                 if (responseCode == CddbResponse.INEXACT_MATCHES)
                 {
                     // Erstes Genre nehmen, DiskID aktualisieren und Abbruch.
-                    genre = StringUtils.trim(splits[1]);
+                    genre = JRipperUtils.trim(splits[1]);
                     diskID.setID(genre);
                     break;
                 }

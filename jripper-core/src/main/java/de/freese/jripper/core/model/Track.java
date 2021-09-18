@@ -4,7 +4,6 @@
 package de.freese.jripper.core.model;
 
 import java.util.Objects;
-import org.apache.commons.lang3.StringUtils;
 
 /**
  * Informationen über einen Titel einer CD.
@@ -61,7 +60,7 @@ public class Track
      */
     public String getArtist()
     {
-        if (StringUtils.isBlank(this.artist))
+        if ((this.artist == null) || this.artist.isBlank())
         {
             return getAlbum().getArtist();
         }

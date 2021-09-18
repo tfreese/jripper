@@ -10,7 +10,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
-import org.apache.commons.lang3.StringUtils;
+
 import de.freese.jripper.core.JRipper;
 import de.freese.jripper.core.JRipperUtils;
 import de.freese.jripper.core.Settings;
@@ -35,6 +35,7 @@ public class JRipperConsole implements IAnsiCodes
 {
     /**
      * @param args String[]
+     *
      * @throws UnsupportedEncodingException Falls was schief geht.
      */
     public static void main(final String[] args) throws UnsupportedEncodingException
@@ -96,6 +97,7 @@ public class JRipperConsole implements IAnsiCodes
      * @param printWriter {@link PrintWriter}
      * @param encoder {@link Encoder}
      * @param directory {@link File}
+     *
      * @throws Exception Falls was schief geht.
      */
     private void encode(final Album album, final PrintWriter printWriter, final Encoder encoder, final File directory) throws Exception
@@ -118,6 +120,7 @@ public class JRipperConsole implements IAnsiCodes
      * Auslesen der Disc-ID.<br>
      *
      * @return {@link DiskID}
+     *
      * @throws Exception Falls was schief geht.
      */
     private DiskID getDiskID() throws Exception
@@ -132,6 +135,7 @@ public class JRipperConsole implements IAnsiCodes
      * Liefert den eingegebenen Wert von der Konsole.
      *
      * @return String
+     *
      * @throws Exception Falls was schief geht.
      */
     private String getInput() throws Exception
@@ -146,6 +150,7 @@ public class JRipperConsole implements IAnsiCodes
     /**
      * @param format String
      * @param params Object[]
+     *
      * @see String#format(String, Object...)
      */
     private void print(final String format, final Object...params)
@@ -183,7 +188,9 @@ public class JRipperConsole implements IAnsiCodes
      * Abfragen der CDDB nach den Genres.<br>
      *
      * @param diskID {@link DiskID}
+     *
      * @return String
+     *
      * @throws Exception Falls was schief geht.
      */
     private String queryCDDB(final DiskID diskID) throws Exception
@@ -198,7 +205,9 @@ public class JRipperConsole implements IAnsiCodes
      *
      * @param diskID {@link DiskID}
      * @param genre String
+     *
      * @return {@link Album}
+     *
      * @throws Exception Falls was schief geht.
      */
     private Album readCDDB(final DiskID diskID, final String genre) throws Exception
@@ -211,6 +220,7 @@ public class JRipperConsole implements IAnsiCodes
     /**
      * @param album {@link Album}
      * @param printWriter {@link PrintWriter}
+     *
      * @throws Exception Falls was schief geht.
      */
     private void rip(final Album album, final PrintWriter printWriter) throws Exception
@@ -244,9 +254,7 @@ public class JRipperConsole implements IAnsiCodes
 
         for (Track track : album)
         {
-            // print("%2d. %s %s\n", track.getNumber(), String.format("%-35s", track.getArtist()).replace(' ', '.'), track.getTitle());
-            print("%2d. %s %s\n", track.getNumber(), StringUtils.rightPad(track.getArtist(), 35, '.'), track.getTitle());
-            // print("%2d. %-35s %s\n", track.getNumber(), track.getArtist(), track.getTitle());
+            print("%2d. %s %s%n", track.getNumber(), String.format("%-35s", track.getArtist()).replace(' ', '.'), track.getTitle());
         }
     }
 
@@ -331,7 +339,7 @@ public class JRipperConsole implements IAnsiCodes
                     if (input.startsWith("ta"))
                     {
                         input = input.replace("ta", "").replace(".", "");
-                        input = StringUtils.trim(input);
+                        input = JRipperUtils.trim(input);
                         int index = Integer.parseInt(input) - 1;
 
                         print("%s - ", "Neuer Wert");
@@ -341,7 +349,7 @@ public class JRipperConsole implements IAnsiCodes
                     else if (input.startsWith("tt"))
                     {
                         input = input.replace("tt", "").replace(".", "");
-                        input = StringUtils.trim(input);
+                        input = JRipperUtils.trim(input);
                         int index = Integer.parseInt(input) - 1;
 
                         print("%s - ", "Neuer Wert");

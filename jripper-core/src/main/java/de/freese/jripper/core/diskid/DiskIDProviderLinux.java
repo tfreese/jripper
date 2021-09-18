@@ -6,7 +6,8 @@ package de.freese.jripper.core.diskid;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import org.apache.commons.lang3.SystemUtils;
+
+import de.freese.jripper.core.JRipperUtils;
 import de.freese.jripper.core.Settings;
 import de.freese.jripper.core.model.DiskID;
 import de.freese.jripper.core.process.AbstractProcess;
@@ -20,7 +21,7 @@ import de.freese.jripper.core.process.ProcessMonitor;
 public class DiskIDProviderLinux extends AbstractProcess implements DiskIDProvider, ProcessMonitor
 {
     /**
-     * 
+     *
      */
     private StringBuilder sb;
 
@@ -76,6 +77,6 @@ public class DiskIDProviderLinux extends AbstractProcess implements DiskIDProvid
     @Override
     public boolean supportsOS(final String os)
     {
-        return SystemUtils.IS_OS_LINUX;
+        return JRipperUtils.isLinux();
     }
 }
