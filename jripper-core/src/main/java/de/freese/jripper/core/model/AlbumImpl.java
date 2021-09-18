@@ -100,7 +100,7 @@ public class AlbumImpl implements Album
 
         Track track = new Track();
         track.setAlbum(this);
-        track.setArtist(artist);
+        track.setArtist(artist == null ? getArtist() : artist);
         track.setTitle(title);
         track.setNumber(trackIndex + 1);
         track.setSeconds(getDiskID().getTrackSeconds(trackIndex));

@@ -70,9 +70,9 @@ public class CddbProviderFreeDb implements CddbProvider
     private static final int PORT = 80;
 
     /**
-     *
+     * freedb.freedb.org gibs nicht mehr.
      */
-    private static final String SERVER = "freedb.freedb.org";
+    private static final String SERVER = "gnudb.gnudb.org";
 
     /**
      *
@@ -253,7 +253,7 @@ public class CddbProviderFreeDb implements CddbProvider
             {
                 // Format: ARTIST / ALBUM
                 String artistTitle = value.substring(0, value.indexOf(" / "));
-                String albumTitle = value.substring(value.indexOf(" / ") + 1);
+                String albumTitle = value.substring(value.indexOf(" / ") + 2);
 
                 artistTitle = normalize(artistTitle);
                 albumTitle = normalize(albumTitle);
