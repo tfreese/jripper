@@ -1,6 +1,4 @@
-/**
- * Created: 10.10.2013
- */
+// Created: 10.10.2013
 package de.freese.jripper.swing;
 
 import java.awt.BorderLayout;
@@ -15,6 +13,7 @@ import java.awt.event.WindowEvent;
 import java.time.LocalDate;
 import java.util.Dictionary;
 import java.util.Map.Entry;
+
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.JButton;
@@ -37,8 +36,10 @@ import javax.swing.UIDefaults;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 import javax.swing.plaf.FontUIResource;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import de.freese.binding.SwingBindings;
 import de.freese.binding.collections.DefaultObservableList;
 import de.freese.binding.collections.ObservableList;
@@ -71,13 +72,13 @@ public class JRipperSwing
      *
      * @author Thomas Freese
      */
-    private class MainFrameListener extends WindowAdapter
+    private static class MainFrameListener extends WindowAdapter
     {
         /**
          * @see java.awt.event.WindowAdapter#windowClosing(java.awt.event.WindowEvent)
          */
         @Override
-        public void windowClosing(final WindowEvent e)
+        public void windowClosing(final WindowEvent event)
         {
             System.exit(0);
         }
@@ -113,14 +114,6 @@ public class JRipperSwing
      *
      */
     private final ObservableList<Track> albumTracks = new DefaultObservableList<>();
-
-    /**
-     * Erstellt ein neues {@link JRipperSwing} Object.
-     */
-    public JRipperSwing()
-    {
-        super();
-    }
 
     /**
      * @return {@link Album}
@@ -337,11 +330,13 @@ public class JRipperSwing
 
         // Dummy
         panel.add(Box.createGlue(), new GBCBuilder(0, 0).weightx(1));
+
         JButton button = new JButton(new ActionCddbQuery(albumProperty));
         panel.add(button, new GBCBuilder(1, 0).anchorCenter().gridwidth(2).fillHorizontal());
 
         // Dummy
         panel.add(Box.createGlue(), new GBCBuilder(3, 0).weightx(1));
+
         button = new JButton(new ActionRipping(albumProperty));
         panel.add(button, new GBCBuilder(4, 0).anchorCenter().gridwidth(2).fillHorizontal());
 
@@ -417,7 +412,7 @@ public class JRipperSwing
         // slider.setSnapToTicks(true);
         slider.setPaintLabels(true);
         @SuppressWarnings("unchecked")
-        Dictionary<Integer, JLabel> labelTable = slider.getLabelTable(); // new Hashtable<>();
+        Dictionary<Integer, JLabel> labelTable = slider.getLabelTable();
         labelTable.put(0, new JLabel("fast"));
         labelTable.put(8, new JLabel("best"));
         slider.setLabelTable(labelTable);

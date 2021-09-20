@@ -1,6 +1,4 @@
-/**
- * Created: 07.10.2013
- */
+// Created: 07.10.2013
 package de.freese.jripper.core.process;
 
 import java.util.ArrayList;
@@ -14,7 +12,7 @@ import java.util.List;
 public class CompositeProgressMonitor implements ProcessMonitor
 {
     /**
-     * 
+     *
      */
     private final List<ProcessMonitor> monitore;
 
@@ -30,7 +28,7 @@ public class CompositeProgressMonitor implements ProcessMonitor
 
     /**
      * Hinzufügern neuer Monitore.
-     * 
+     *
      * @param monitor {@link ProcessMonitor}
      * @param monitore {@link ProcessMonitor}[]
      */

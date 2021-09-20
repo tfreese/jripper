@@ -1,7 +1,4 @@
-/**
- * Created: 07.10.2013
- */
-
+// Created: 07.10.2013
 package de.freese.jripper.core.process;
 
 import java.io.PrintWriter;
@@ -14,13 +11,13 @@ import java.io.PrintWriter;
 public class PrintWriterProcessMonitor implements ProcessMonitor
 {
     /**
-     * 
+     *
      */
     private final PrintWriter printWriter;
 
     /**
      * Erstellt ein neues {@link PrintWriterProcessMonitor} Object.
-     * 
+     *
      * @param printWriter {@link PrintWriter}
      */
     public PrintWriterProcessMonitor(final PrintWriter printWriter)
@@ -41,7 +38,6 @@ public class PrintWriterProcessMonitor implements ProcessMonitor
     /**
      * @see de.freese.jripper.core.process.ProcessMonitor#monitorProcess(java.lang.String)
      */
-    @SuppressWarnings("resource")
     @Override
     public void monitorProcess(final String line)
     {
@@ -52,7 +48,6 @@ public class PrintWriterProcessMonitor implements ProcessMonitor
     /**
      * @see de.freese.jripper.core.process.ProcessMonitor#monitorText(java.lang.String)
      */
-    @SuppressWarnings("resource")
     @Override
     public void monitorText(final String line)
     {

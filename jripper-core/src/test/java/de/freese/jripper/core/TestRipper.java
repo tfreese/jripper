@@ -1,7 +1,4 @@
-/**
- * Created: 25.02.2013
- */
-
+// Created:25.02.2013
 package de.freese.jripper.core;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -29,7 +26,6 @@ import de.freese.jripper.core.ripper.RipperFactory;
 @TestMethodOrder(MethodOrderer.MethodName.class)
 class TestRipper
 {
-
     /**
      * Liefert je nach Betriebssystem die passende Implementierung.
      */

@@ -1,9 +1,5 @@
-/**
- * Created: 07.10.2013
- */
+// Created: 07.10.2013
 package de.freese.jripper.core.process;
-
-import java.io.InputStream;
 
 /**
  * Interface für alle JobMonitore.
@@ -13,16 +9,16 @@ import java.io.InputStream;
 public interface ProcessMonitor
 {
     /**
-     * Zeile des Process {@link InputStream}.
-     * 
+     * Zeile des Process.
+     *
      * @param line String
      */
-    public void monitorProcess(String line);
+    void monitorProcess(String line);
 
     /**
      * Beliebiger Text.
-     * 
+     *
      * @param line String
      */
-    public void monitorText(String line);
+    void monitorText(String line);
 }

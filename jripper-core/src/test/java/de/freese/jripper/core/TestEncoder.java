@@ -1,16 +1,15 @@
-/**
- * Created: 25.02.2013
- */
-
+// Created: 25.02.2013
 package de.freese.jripper.core;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.fail;
+
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.condition.EnabledOnOs;
 import org.junit.jupiter.api.condition.OS;
+
 import de.freese.jripper.core.encoder.Encoder;
 import de.freese.jripper.core.encoder.EncoderFactory;
 import de.freese.jripper.core.encoder.EncoderFormat;

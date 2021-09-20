@@ -1,15 +1,14 @@
-/**
- * Created: 18.10.2013
- */
-
+// Created: 18.10.2013
 package de.freese.jripper.swing.action;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.io.File;
+
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JFileChooser;
+
 import de.freese.binding.property.Property;
 
 /**
@@ -25,17 +24,17 @@ public class ActionChooseWorkDir extends AbstractAction
     private static final long serialVersionUID = 3262325088354448846L;
 
     /**
-     * 
+     *
      */
     private final Component parent;
     /**
-     * 
+     *
      */
     private final Property<String> workDirProperty;
 
     /**
      * Erstellt ein neues {@link ActionChooseWorkDir} Object.
-     * 
+     *
      * @param parent {@link Component}
      * @param workDirProperty {@link Property}
      */
@@ -51,7 +50,7 @@ public class ActionChooseWorkDir extends AbstractAction
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */
     @Override
-    public void actionPerformed(final ActionEvent e)
+    public void actionPerformed(final ActionEvent event)
     {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setCurrentDirectory(new File(this.workDirProperty.getValue()));

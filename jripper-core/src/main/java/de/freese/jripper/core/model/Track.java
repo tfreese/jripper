@@ -1,6 +1,4 @@
-/**
- * Created: 01.03.2013
- */
+// Created: 01.03.2013
 package de.freese.jripper.core.model;
 
 import java.util.Objects;
@@ -16,22 +14,18 @@ public class Track
      *
      */
     private Album album;
-
     /**
      * Nur bei Compilations gefüllt.
      */
     private String artist;
-
     /**
      *
      */
     private int number;
-
     /**
      *
      */
     private int seconds;
-
     /**
      *
      */

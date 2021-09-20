@@ -1,6 +1,4 @@
-/**
- * Created: 02.03.2013
- */
+// Created: 02.03.2013
 package de.freese.jripper.core.encoder;
 
 import java.io.File;
@@ -83,6 +81,7 @@ public class EncoderLinuxFlac extends AbstractProcess implements Encoder
         // command.add("--with-filename");
         command.addAll(flacFiles);
         // command.add("*.flac");
+
         execute(command, directory, monitor);
     }
 

@@ -1,6 +1,4 @@
-/**
- * Created: 25.02.2013
- */
+// Created: 25.02.2013
 package de.freese.jripper.core;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -23,14 +21,11 @@ import de.freese.jripper.core.diskid.DiskIDProviderLinux;
 import de.freese.jripper.core.model.DiskID;
 
 /**
- * Testklasse für die {@link DiskIDProvider}.
- *
  * @author Thomas Freese
  */
 @TestMethodOrder(MethodOrderer.MethodName.class)
-class TestDiskID
+class TestCddbProvider
 {
-
     /**
      * Liefert je nach Betriebssystem die passende Implementierung.
      */
@@ -74,6 +69,7 @@ class TestDiskID
         response = cddbProvider.queryAlbum(diskID, "rock");
         assertNotNull(response);
         assertNotNull(response.getAlbum());
+        assertEquals(14, response.getAlbum().getTrackCount());
     }
 
     /**
@@ -102,6 +98,7 @@ class TestDiskID
         response = cddbProvider.queryAlbum(diskID, "misc");
         assertNotNull(response);
         assertNotNull(response.getAlbum());
+        assertEquals(14, response.getAlbum().getTrackCount());
     }
 
     /**

@@ -7,9 +7,9 @@ package de.freese.jripper.core.cddb;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
@@ -186,13 +186,15 @@ public class CddbProviderFreeDb implements CddbProvider
     }
 
     /**
+     * Beispiel Query:<br>
+     * https://gnudb.gnudb.org/~cddb/cddb.cgi?cmd=cddb+read+rock+b111140e&hello=anonymous+localhost+jRipper+1.0.0&proto=6<br>
+     * https://gnudb.gnudb.org/~cddb/cddb.cgi?cmd=cddb+read+misc+ae0ff80e&hello=anonymous+localhost+jRipper+1.0.0&proto=6<br>
+     *
      * @see de.freese.jripper.core.cddb.CddbProvider#queryAlbum(de.freese.jripper.core.model.DiskID, java.lang.String)
      */
     @Override
     public CddbResponse queryAlbum(final DiskID diskID, final String genre) throws Exception
     {
-        CddbResponse cddbResponse = new CddbResponse();
-
         StringBuilder sb = new StringBuilder();
         sb.append("/~cddb/cddb.cgi?cmd=cddb+read");
         sb.append("+").append(genre);
@@ -206,15 +208,28 @@ public class CddbProviderFreeDb implements CddbProvider
 
         getLogger().debug("Query {}", url);
 
-        URLConnection connection = url.openConnection();
+        List<String> lines = new ArrayList<>();
 
-        Map<String, String> responseMap = new TreeMap<>(new TrackTitleComparator());
-
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8)))
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(url.openConnection().getInputStream(), StandardCharsets.UTF_8)))
         {
-            String line = null;
+            reader.lines().forEach(lines::add);
+        }
 
-            while ((line = reader.readLine()) != null)
+        String firstLine = lines.remove(0);
+        int status = Integer.parseInt(firstLine.split("[ ]")[0]);
+
+        CddbResponse cddbResponse = new CddbResponse(status);
+
+        if ((status == CddbResponse.NO_MATCH) || (status == CddbResponse.SYNTAX_ERROR))
+        {
+            // Nichts gefunden -> Abbruch
+            cddbResponse.setErrorMessage(firstLine);
+        }
+        else
+        {
+            Map<String, String> responseMap = new TreeMap<>(new TrackTitleComparator());
+
+            for (String line : lines)
             {
                 getLogger().debug(line);
 
@@ -240,155 +255,157 @@ public class CddbProviderFreeDb implements CddbProvider
 
                 responseMap.put(key, value);
             }
-        }
 
-        AlbumImpl album = new AlbumImpl(diskID);
+            AlbumImpl album = new AlbumImpl(diskID);
 
-        for (Entry<String, String> entry : responseMap.entrySet())
-        {
-            String key = entry.getKey();
-            String value = entry.getValue();
-
-            if ("DTITLE".equals(key))
+            for (Entry<String, String> entry : responseMap.entrySet())
             {
-                // Format: ARTIST / ALBUM
-                String artistTitle = value.substring(0, value.indexOf(" / "));
-                String albumTitle = value.substring(value.indexOf(" / ") + 2);
+                String key = entry.getKey();
+                String value = entry.getValue();
 
-                artistTitle = normalize(artistTitle);
-                albumTitle = normalize(albumTitle);
-
-                if ("Various".equals(artistTitle))
+                if ("DTITLE".equals(key))
                 {
-                    artistTitle = null;
-                }
+                    // Format: ARTIST / ALBUM
+                    String artistTitle = value.substring(0, value.indexOf(" / "));
+                    String albumTitle = value.substring(value.indexOf(" / ") + 2);
 
-                // if ((splits.length == 1) && StringUtils.isNoneBlank(album.getTitle()))
-                // {
-                // // 2. Titel
-                // String title = StringUtils.join(album.getTitle(), " ", artistTitle);
-                // album.setTitle(title);
-                //
-                // continue;
-                // }
+                    artistTitle = normalize(artistTitle);
+                    albumTitle = normalize(albumTitle);
 
-                if ((artistTitle != null) && (artistTitle.length() <= 3))
-                {
-                    artistTitle = artistTitle.toUpperCase();
-                }
-
-                album.setArtist(artistTitle);
-                album.setTitle(albumTitle);
-            }
-            else if ("DYEAR".equals(key))
-            {
-                String year = normalize(value);
-
-                if ((year != null) && !year.isBlank())
-                {
-                    album.setYear(Integer.parseInt(year));
-                }
-            }
-            else if ("DGENRE".equals(key))
-            {
-                // "Richtiges" Genre auslesen.
-                String genre2 = normalize(value);
-
-                if ((genre2 != null) && !genre2.isBlank())
-                {
-                    album.setGenre(genre2);
-                }
-            }
-            else if ("EXTD".equals(key))
-            {
-                if ((value == null) || value.isBlank())
-                {
-                    // Kein Kommentar.
-                    continue;
-                }
-
-                splits = value.lines().toArray(String[]::new);
-                StringBuilder comment = new StringBuilder();
-
-                for (int i = 0; i < splits.length; i++)
-                {
-                    comment.append(splits[i]);
-
-                    if (i < (splits.length - 1))
+                    if ("Various".equals(artistTitle))
                     {
-                        comment.append("\n");
+                        artistTitle = null;
+                    }
+
+                    // if ((splits.length == 1) && StringUtils.isNoneBlank(album.getTitle()))
+                    // {
+                    // // 2. Titel
+                    // String title = StringUtils.join(album.getTitle(), " ", artistTitle);
+                    // album.setTitle(title);
+                    //
+                    // continue;
+                    // }
+
+                    if ((artistTitle != null) && (artistTitle.length() <= 3))
+                    {
+                        artistTitle = artistTitle.toUpperCase();
+                    }
+
+                    album.setArtist(artistTitle);
+                    album.setTitle(albumTitle);
+                }
+                else if ("DYEAR".equals(key))
+                {
+                    String year = normalize(value);
+
+                    if ((year != null) && !year.isBlank())
+                    {
+                        album.setYear(Integer.parseInt(year));
                     }
                 }
-
-                album.setComment(comment.toString().trim());
-            }
-            else if (key.startsWith("TTITLE"))
-            {
-                String trackArtist = null;
-                String trackTitle = null;
-
-                if (value.contains("/"))
+                else if ("DGENRE".equals(key))
                 {
-                    // Annahme Compilation.
-                    splits = value.split("[/]");
+                    // "Richtiges" Genre auslesen.
+                    String genre2 = normalize(value);
 
-                    trackArtist = normalize(splits[0]);
-                    trackTitle = normalize(splits[1]);
+                    if ((genre2 != null) && !genre2.isBlank())
+                    {
+                        album.setGenre(genre2);
+                    }
                 }
-                else
+                else if ("EXTD".equals(key))
                 {
-                    // Annahme Album.
-                    splits = value.split("[ ]");
+                    if ((value == null) || value.isBlank())
+                    {
+                        // Kein Kommentar.
+                        continue;
+                    }
+
+                    splits = value.lines().toArray(String[]::new);
+                    StringBuilder comment = new StringBuilder();
 
                     for (int i = 0; i < splits.length; i++)
                     {
-                        splits[i] = normalize(splits[i]);
+                        comment.append(splits[i]);
+
+                        if (i < (splits.length - 1))
+                        {
+                            comment.append("\n");
+                        }
                     }
 
-                    if (JRipperUtils.isNumeric(splits[0]))
-                    {
-                        splits[0] = "";
-                    }
-
-                    // splits[1].replaceAll("[\\d+]", "");
-                    trackTitle = Stream.of(splits).collect(Collectors.joining(" "));
-                    trackTitle = JRipperUtils.trim(trackTitle);
+                    album.setComment(comment.toString().trim());
                 }
+                else if (key.startsWith("TTITLE"))
+                {
+                    String trackArtist = null;
+                    String trackTitle = null;
 
-                // Wenn TrackArtist=null wird AlbumArtist genommen.
-                album.addTrack(trackArtist, trackTitle);
+                    if (value.contains("/"))
+                    {
+                        // Annahme Compilation.
+                        splits = value.split("[/]");
+
+                        trackArtist = normalize(splits[0]);
+                        trackTitle = normalize(splits[1]);
+                    }
+                    else
+                    {
+                        // Annahme Album.
+                        splits = value.split("[ ]");
+
+                        for (int i = 0; i < splits.length; i++)
+                        {
+                            splits[i] = normalize(splits[i]);
+                        }
+
+                        if (JRipperUtils.isNumeric(splits[0]))
+                        {
+                            splits[0] = "";
+                        }
+
+                        // splits[1].replaceAll("[\\d+]", "");
+                        trackTitle = Stream.of(splits).collect(Collectors.joining(" "));
+                        trackTitle = JRipperUtils.trim(trackTitle);
+                    }
+
+                    // Wenn TrackArtist=null wird AlbumArtist genommen.
+                    album.addTrack(trackArtist, trackTitle);
+                }
             }
+
+            responseMap.clear();
+            responseMap = null;
+
+            cddbResponse.setAlbum(album);
         }
-
-        responseMap.clear();
-        responseMap = null;
-
-        cddbResponse.setAlbum(album);
 
         return cddbResponse;
     }
 
     /**
      * Beispiel Query:<br>
-     * http://freedb.freedb.org/~cddb/cddb.cgi?cmd=cddb+query+7c0b8b0b+11+150+23115+
-     * 42165+60015+79512+101560+118757+136605+159492+176067+198875+2957&hello=user+ hostname+program+version&proto=3(6)
+     * https://gnudb.gnudb.org/~cddb/cddb.cgi?cmd=cddb+query+b111140e+14+150+24545+41797+60822+80152+117002+142550+169755+192057+211360+239297+256325+279075+306220+4374&hello=anonymous+localhost+jRipper+1.0.0&proto=6<br>
+     * https://gnudb.gnudb.org/~cddb/cddb.cgi?cmd=cddb+query+ae0ff80e+14+150+10972+37962+56825+81450+103550+127900+153025+179675+200425+225187+247687+270712+295700+4090&hello=anonymous+localhost+jRipper+1.0.0&proto=6<br>
      *
      * @see de.freese.jripper.core.cddb.CddbProvider#queryGenres(de.freese.jripper.core.model.DiskID)
      */
     @Override
     public CddbResponse queryGenres(final DiskID diskID) throws Exception
     {
-        CddbResponse cddbResponse = new CddbResponse();
-
         StringBuilder sb = new StringBuilder();
         sb.append("/~cddb/cddb.cgi?cmd=cddb+query");
 
-        String[] splits = diskID.toString().split("[ ]");
+        sb.append("+").append(diskID.getID());
+        sb.append("+").append(diskID.getTrackCount());
+        sb.append("+").append(diskID.getOffset());
 
-        for (String split : splits)
+        for (int offset : diskID.getTrackOffsets())
         {
-            sb.append("+").append(split);
+            sb.append("+").append(offset);
         }
+
+        sb.append("+").append(diskID.getSeconds());
 
         sb.append(this.requestPostfix);
 
@@ -396,88 +413,66 @@ public class CddbProviderFreeDb implements CddbProvider
 
         getLogger().debug("Query {}", url);
 
-        URLConnection connection = url.openConnection();
-        Set<String> genres = new TreeSet<>();
-        int responseCode = 0;
+        List<String> lines = new ArrayList<>();
 
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8)))
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(url.openConnection().getInputStream(), StandardCharsets.UTF_8)))
         {
-            String line = null;
+            reader.lines().forEach(lines::add);
+        }
 
-            while ((line = reader.readLine()) != null)
+        String firstLine = lines.remove(0);
+        int status = Integer.parseInt(firstLine.split("[ ]")[0]);
+
+        CddbResponse cddbResponse = new CddbResponse(status);
+
+        if ((status == CddbResponse.NO_MATCH) || (status == CddbResponse.SYNTAX_ERROR))
+        {
+            // Nichts gefunden -> Abbruch
+            cddbResponse.setErrorMessage(firstLine);
+        }
+        else
+        {
+            Set<String> genres = new TreeSet<>();
+
+            for (String line : lines)
             {
                 getLogger().debug(line);
 
-                if (line.startsWith(Integer.toString(CddbResponse.NO_MATCH)))
+                // Abschluss Kennung
+                if (line.startsWith("."))
                 {
-                    // Nichts gefunden -> Abbruch
-                    cddbResponse.setErrorMessage(line);
                     break;
                 }
 
-                if (line.startsWith("."))
-                {
-                    continue;
-                }
-
-                splits = line.split("[ ]");
+                String[] splits = line.split("[ ]");
 
                 if (splits.length < 2)
                 {
                     continue;
                 }
 
-                if (responseCode == 0)
+                String genre = switch (status)
                 {
-                    if (splits[0].equals(Integer.toString(CddbResponse.MATCH)))
-                    {
-                        // Nur ein Genre gefunden.
-                        responseCode = CddbResponse.MATCH;
-                    }
-                    else if (splits[0].equals(Integer.toString(CddbResponse.EXACT_MATCHES)))
-                    {
-                        // Mehrere Genres gefunden
-                        responseCode = CddbResponse.EXACT_MATCHES;
-                        continue;
-                    }
-                    else if (splits[0].equals(Integer.toString(CddbResponse.INEXACT_MATCHES)))
-                    {
-                        // Nicht exakte Treffer -> ungleiche DiskID.
-                        responseCode = CddbResponse.INEXACT_MATCHES;
-                        continue;
-                    }
-                }
-
-                String genre = null;
-
-                switch (responseCode)
-                {
-                    case CddbResponse.EXACT_MATCHES:
-                    case CddbResponse.INEXACT_MATCHES:
-                        genre = JRipperUtils.trim(splits[0]);
-                        break;
-                    case CddbResponse.MATCH:
-                        genre = JRipperUtils.trim(splits[1]);
-                        break;
-                    default:
-                        break;
-                }
+                    case CddbResponse.EXACT_MATCHES, CddbResponse.INEXACT_MATCHES -> JRipperUtils.trim(splits[0]);
+                    case CddbResponse.MATCH -> JRipperUtils.trim(splits[1]);
+                    default -> throw new IllegalStateException("unsupported status: " + status);
+                };
 
                 genres.add(genre);
 
-                if (responseCode == CddbResponse.INEXACT_MATCHES)
+                if (status == CddbResponse.INEXACT_MATCHES)
                 {
                     // Erstes Genre nehmen, DiskID aktualisieren und Abbruch.
-                    genre = JRipperUtils.trim(splits[1]);
-                    diskID.setID(genre);
+                    String id = JRipperUtils.trim(splits[1]);
+                    diskID.setID(id);
                     break;
                 }
             }
-        }
 
-        if (!genres.isEmpty())
-        {
-            cddbResponse.setGenres(new ArrayList<>(genres));
+            if (!genres.isEmpty())
+            {
+                cddbResponse.setGenres(new ArrayList<>(genres));
+            }
         }
 
         return cddbResponse;

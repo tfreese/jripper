@@ -1,6 +1,4 @@
-/**
- * Created: 26.02.2013
- */
+// Created: 26.02.2013
 package de.freese.jripper.core.model;
 
 import java.util.ArrayList;
@@ -27,27 +25,22 @@ public class AlbumImpl implements Album
      * Bei Compilations null.
      */
     private String artist;
-
     /**
      *
      */
     private String comment;
-
     /**
      *
      */
     private final DiskID diskID;
-
     /**
      *
      */
     private int diskNumber = 1;
-
     /**
      *
      */
     private String genre;
-
     /**
      *
      */
@@ -62,7 +55,6 @@ public class AlbumImpl implements Album
      *
      */
     private List<Track> tracks = new ArrayList<>();
-
     /**
      *
      */

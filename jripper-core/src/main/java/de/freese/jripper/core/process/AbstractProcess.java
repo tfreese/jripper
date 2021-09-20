@@ -1,6 +1,4 @@
-/**
- * Created: 02.03.2013
- */
+// Created: 02.03.2013
 package de.freese.jripper.core.process;
 
 import java.io.BufferedReader;
@@ -8,7 +6,9 @@ import java.io.File;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+
 import org.slf4j.Logger;
+
 import de.freese.jripper.core.JRipper;
 
 /**
@@ -25,6 +25,7 @@ public abstract class AbstractProcess
 
     /**
      * @param process {@link Process}
+     *
      * @return {@link Thread}
      */
     private Thread createShutDownHook(final Process process)
@@ -51,6 +52,7 @@ public abstract class AbstractProcess
      * @param directory File
      * @param command {@link List}
      * @param monitor {@link ProcessMonitor}
+     *
      * @throws Exception Falls was schief geht.
      */
     protected void execute(final List<String> command, final File directory, final ProcessMonitor monitor) throws Exception
@@ -66,6 +68,7 @@ public abstract class AbstractProcess
         processBuilder.redirectErrorStream(true);
         // Map<String, String> env = processBuilder.environment();
         // env.put("tommy", "true");
+
         Process process = processBuilder.start();
 
         Thread hook = createShutDownHook(process);

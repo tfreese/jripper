@@ -1,7 +1,4 @@
-/**
- * Created: 02.03.2013
- */
-
+// Created: 02.03.2013
 package de.freese.jripper.core;
 
 import java.io.File;
@@ -289,7 +286,7 @@ public final class JRipperUtils
      */
     public static boolean isDevelopment()
     {
-        return System.getProperty("dev.env") == null ? false : true;
+        return System.getProperty("dev.env") != null;
     }
 
     /**

@@ -1,7 +1,4 @@
-/**
- * Created: 20.10.2013
- */
-
+// Created: 20.10.2013
 package de.freese.jripper.core.genre;
 
 import java.io.File;
@@ -41,7 +38,10 @@ public class GenreProviderLinux extends AbstractProcess implements GenreProvider
 
         execute(command, new File(Settings.getInstance().getWorkDir()), this);
 
-        getLogger().debug(this.genres.toString());
+        if (getLogger().isDebugEnabled())
+        {
+            getLogger().debug(this.genres.toString());
+        }
 
         return this.genres;
     }

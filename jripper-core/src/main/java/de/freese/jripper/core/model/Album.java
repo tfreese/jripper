@@ -1,6 +1,4 @@
-/**
- * Created: 20.10.2013
- */
+// Created: 20.10.2013
 package de.freese.jripper.core.model;
 
 /**
@@ -15,99 +13,100 @@ public interface Album extends Iterable<Track>
      *
      * @return String
      */
-    public String getArtist();
+    String getArtist();
 
     /**
      * @return String
      */
-    public String getComment();
+    String getComment();
 
     /**
      * @return {@link DiskID}
      */
-    public DiskID getDiskID();
+    DiskID getDiskID();
 
     /**
      * @return int
      */
-    public int getDiskNumber();
+    int getDiskNumber();
 
     /**
      * @return String
      */
-    public String getGenre();
+    String getGenre();
 
     /**
      * @return String
      */
-    public String getTitle();
+    String getTitle();
 
     /**
      * @return int
      */
-    public int getTotalDisks();
+    int getTotalDisks();
 
     /**
      * Liefert den {@link Track} am Index.
      *
      * @param index int
+     *
      * @return {@link Track}
      */
-    public Track getTrack(int index);
+    Track getTrack(int index);
 
     /**
      * Liefert die Anzahl der Tracks.
      *
      * @return int
      */
-    public int getTrackCount();
+    int getTrackCount();
 
     /**
      * @return int
      */
-    public int getYear();
+    int getYear();
 
     /**
      * Liefert true, wenn das Album eine Compilation ist.
      *
      * @return boolean
      */
-    public boolean isCompilation();
+    boolean isCompilation();
 
     /**
      * Bei Compilations null.
      *
      * @param artist String
      */
-    public void setArtist(final String artist);
+    void setArtist(final String artist);
 
     /**
      * @param comment String
      */
-    public void setComment(final String comment);
+    void setComment(final String comment);
 
     /**
      * @param diskNumber int
      */
-    public void setDiskNumber(final int diskNumber);
+    void setDiskNumber(final int diskNumber);
 
     /**
      * @param genre String
      */
-    public void setGenre(final String genre);
+    void setGenre(final String genre);
 
     /**
      * @param title String
      */
-    public void setTitle(final String title);
+    void setTitle(final String title);
 
     /**
      * @param totalDisks int
      */
-    public void setTotalDisks(final int totalDisks);
+    void setTotalDisks(final int totalDisks);
 
     /**
      * @param year int
      */
-    public void setYear(final int year);
+    void setYear(final int year);
 }

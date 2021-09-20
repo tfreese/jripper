@@ -1,9 +1,8 @@
-/**
- * Created: 18.10.2013
- */
+// Created: 18.10.2013
 package de.freese.jripper.swing.table;
 
 import java.awt.Component;
+
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -32,12 +31,10 @@ public class AlbumTableRenderer extends DefaultTableCellRenderer
 
         switch (column)
         {
-            case 0:
-            case 3:
+            case 0, 3:
                 setHorizontalAlignment(SwingConstants.RIGHT);
                 break;
-            case 1:
-            case 2:
+            case 1, 2:
                 setHorizontalAlignment(SwingConstants.LEFT);
                 break;
             default:

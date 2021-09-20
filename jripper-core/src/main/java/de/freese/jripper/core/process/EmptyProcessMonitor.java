@@ -1,6 +1,4 @@
-/**
- * Created: 21.10.2013
- */
+// Created: 21.10.2013
 package de.freese.jripper.core.process;
 
 /**

@@ -1,6 +1,4 @@
-/**
- * Created: 25.02.2013
- */
+// Created: 25.02.2013
 package de.freese.jripper.core.diskid;
 
 import java.io.File;

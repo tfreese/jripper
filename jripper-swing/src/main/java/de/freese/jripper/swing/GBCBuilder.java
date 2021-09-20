@@ -1,6 +1,4 @@
-/**
- * Created: 17.10.2013
- */
+// Created: 17.10.2013
 package de.freese.jripper.swing;
 
 import java.awt.GridBagConstraints;
@@ -131,6 +129,7 @@ public class GBCBuilder extends GridBagConstraints
 
     /**
      * @param gridheight int
+     *
      * @return {@link GBCBuilder}
      */
     public GBCBuilder gridheight(final int gridheight)
@@ -142,6 +141,7 @@ public class GBCBuilder extends GridBagConstraints
 
     /**
      * @param gridwidth int
+     *
      * @return {@link GBCBuilder}
      */
     public GBCBuilder gridwidth(final int gridwidth)
@@ -156,6 +156,7 @@ public class GBCBuilder extends GridBagConstraints
      * @param left int
      * @param bottom int
      * @param right int
+     *
      * @return {@link GBCBuilder}
      */
     public GBCBuilder insets(final int top, final int left, final int bottom, final int right)
@@ -167,6 +168,7 @@ public class GBCBuilder extends GridBagConstraints
 
     /**
      * @param weightx double
+     *
      * @return {@link GBCBuilder}
      */
     public GBCBuilder weightx(final double weightx)
@@ -178,6 +180,7 @@ public class GBCBuilder extends GridBagConstraints
 
     /**
      * @param weighty double
+     *
      * @return {@link GBCBuilder}
      */
     public GBCBuilder weighty(final double weighty)

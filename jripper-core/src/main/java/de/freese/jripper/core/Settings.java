@@ -1,10 +1,8 @@
-/**
- * Created: 07.10.2013
- */
-
+// Created: 07.10.2013
 package de.freese.jripper.core;
 
 import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,32 +30,26 @@ public final class Settings
      * Laufwerk
      */
     private String device;
-
     /**
      * 0-8
      */
     private int flacCompression = 8;
-
     /**
      *
      */
     private boolean flacEnabled = true;
-
     /**
      *
      */
     private int framesPerSecond = 75;
-
     /**
      *
      */
     private final Logger logger = LoggerFactory.getLogger(Settings.class);
-
     /**
      *
      */
     private int mp3Bitrate = 320;
-
     /**
      *
      */
@@ -66,7 +58,6 @@ public final class Settings
      *
      */
     private boolean mp3Enabled = true;
-
     /**
      * Arbeitsverzeichnis
      */

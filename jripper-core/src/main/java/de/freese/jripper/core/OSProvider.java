@@ -1,7 +1,4 @@
-/**
- * Created: 25.02.2013
- */
-
+// Created: 25.02.2013
 package de.freese.jripper.core;
 
 /**
@@ -14,9 +11,10 @@ public interface OSProvider
 {
     /**
      * Liefert true, wenn das Betriebssystem unterstützt wird.
-     * 
+     *
      * @param os String
+     *
      * @return String
      */
-    public boolean supportsOS(String os);
+    boolean supportsOS(String os);
 }

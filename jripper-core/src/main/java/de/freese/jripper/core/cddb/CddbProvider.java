@@ -1,7 +1,4 @@
-/**
- * Created: 02.03.2013
- */
-
+// Created: 02.03.2013
 package de.freese.jripper.core.cddb;
 
 import de.freese.jripper.core.model.DiskID;
@@ -18,17 +15,21 @@ public interface CddbProvider
      *
      * @param diskID {@link DiskID}
      * @param genre String
+     *
      * @return {@link CddbResponse}
+     *
      * @throws Exception Falls was schief geht.
      */
-    public CddbResponse queryAlbum(DiskID diskID, String genre) throws Exception;
+    CddbResponse queryAlbum(DiskID diskID, String genre) throws Exception;
 
     /**
      * Liefert die Genres der CD.
      *
      * @param diskID {@link DiskID}
+     *
      * @return {@link CddbResponse}
+     *
      * @throws Exception Falls was schief geht.
      */
-    public CddbResponse queryGenres(DiskID diskID) throws Exception;
+    CddbResponse queryGenres(DiskID diskID) throws Exception;
 }

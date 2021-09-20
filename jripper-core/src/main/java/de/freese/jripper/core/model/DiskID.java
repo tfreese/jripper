@@ -1,17 +1,12 @@
-/**
- * Created: 09.03.2013
- */
-
+// Created: 09.03.2013
 package de.freese.jripper.core.model;
 
 import java.util.Objects;
+
 import de.freese.jripper.core.Settings;
 
 /**
  * DiskID Informationen einer CD.<br>
- * Beispiel:<br>
- * b111140e 14 150 24545 41797 60822 80152 117002 142550 169755 192057 211360 239297 256325 279075 306220 4374<br>
- * ae0ff80e 14 150 10972 37962 56825 81450 103550 127900 153025 179675 200425 225187 247687 270712 295700 4090
  *
  * @author Thomas Freese
  */
@@ -21,22 +16,18 @@ public class DiskID
      *
      */
     private String id;
-
     /**
      *
      */
     private int offset;
-
     /**
      *
      */
     private int seconds;
-
     /**
      *
      */
     private int trackCount;
-
     /**
      *
      */
@@ -51,7 +42,7 @@ public class DiskID
     {
         super();
 
-        setDiskID(diskID);
+        parseID(diskID);
     }
 
     /**
@@ -98,12 +89,13 @@ public class DiskID
      * Liefert die Trackdauer in Sekunden.
      *
      * @param track int
+     *
      * @return int
      */
     public int getTrackSeconds(final int track)
     {
         int framesPerSecond = Settings.getInstance().getFramesPerSecond();
-        int seconds = 0;
+        int seconds;
 
         if (track == 0)
         {
@@ -130,7 +122,7 @@ public class DiskID
     /**
      * @param diskID String
      */
-    public void setDiskID(final String diskID)
+    private void parseID(final String diskID)
     {
         Objects.requireNonNull(diskID, "diskID required");
 

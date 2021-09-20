@@ -1,12 +1,11 @@
-/**
- * Created: 10.10.2013
- */
-
+// Created: 10.10.2013
 package de.freese.jripper.swing.task;
 
 import java.util.Objects;
+
 import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
+
 import de.freese.binding.property.Property;
 import de.freese.jripper.core.JRipper;
 import de.freese.jripper.core.Settings;

@@ -1,9 +1,8 @@
-/**
- * Created: 07.10.2013
- */
+// Created: 07.10.2013
 package de.freese.jripper.core.process;
 
 import java.io.PrintWriter;
+
 import org.slf4j.Logger;
 
 /**
@@ -14,13 +13,13 @@ import org.slf4j.Logger;
 public class LoggerProcessMonitor implements ProcessMonitor
 {
     /**
-     * 
+     *
      */
     private final Logger logger;
 
     /**
      * Erstellt ein neues {@link LoggerProcessMonitor} Object.
-     * 
+     *
      * @param logger {@link Logger}
      */
     public LoggerProcessMonitor(final Logger logger)

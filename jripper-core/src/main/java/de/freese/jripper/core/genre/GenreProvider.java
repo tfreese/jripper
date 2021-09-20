@@ -1,9 +1,8 @@
-/**
- * Created: 20.10.2013
- */
+// Created: 20.10.2013
 package de.freese.jripper.core.genre;
 
 import java.util.Set;
+
 import de.freese.jripper.core.OSProvider;
 import de.freese.jripper.core.model.DiskID;
 
@@ -16,9 +15,10 @@ public interface GenreProvider extends OSProvider
 {
     /**
      * Liefert mögliche Genres.
-     * 
+     *
      * @return {@link DiskID}
+     *
      * @throws Exception Falls was schief geht.
      */
-    public Set<String> getGenres() throws Exception;
+    Set<String> getGenres() throws Exception;
 }

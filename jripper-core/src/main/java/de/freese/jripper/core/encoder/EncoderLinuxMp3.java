@@ -1,6 +1,4 @@
-/**
- * Created: 02.03.2013
- */
+// Created: 02.03.2013
 package de.freese.jripper.core.encoder;
 
 import java.io.File;
@@ -86,6 +84,7 @@ public class EncoderLinuxMp3 extends AbstractProcess implements Encoder
             command.add(mp3File);
             command.add("-f");
             command.add("-nb");
+
             execute(command, directory, monitor);
 
             // mp3info "$OUTPUT"
@@ -100,6 +99,7 @@ public class EncoderLinuxMp3 extends AbstractProcess implements Encoder
         // command.add("-a");
         command.addAll(mp3Files);
         // command.add("*.mp3");
+
         execute(command, directory, monitor);
     }
 

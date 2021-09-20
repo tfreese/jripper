@@ -1,11 +1,9 @@
-/**
- * Created: 07.10.2013
- */
-
+// Created: 07.10.2013
 package de.freese.jripper.core;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import de.freese.jripper.core.cddb.CddbProvider;
 import de.freese.jripper.core.cddb.CddbProviderFreeDb;
 import de.freese.jripper.core.diskid.DiskIDProvider;
@@ -47,7 +45,6 @@ public final class JRipper
      *
      */
     private CddbProvider cddbProvider;
-
     /**
      *
      */
@@ -56,17 +53,14 @@ public final class JRipper
      *
      */
     private Encoder encoderFlac;
-
     /**
      *
      */
     private Encoder encoderMp3;
-
     /**
      *
      */
     private GenreProvider genreProvider;
-
     /**
      *
      */

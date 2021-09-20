@@ -1,10 +1,8 @@
-/**
- * Created: 07.10.2013
- */
-
+// Created: 07.10.2013
 package de.freese.jripper.core.encoder;
 
 import java.io.PrintWriter;
+
 import de.freese.jripper.core.process.PrintWriterProcessMonitor;
 import de.freese.jripper.core.process.ProcessMonitor;
 
@@ -17,7 +15,7 @@ public class LameProcessMonitor extends PrintWriterProcessMonitor
 {
     /**
      * Erstellt ein neues {@link LameProcessMonitor} Object.
-     * 
+     *
      * @param printWriter {@link PrintWriter}
      */
     public LameProcessMonitor(final PrintWriter printWriter)
