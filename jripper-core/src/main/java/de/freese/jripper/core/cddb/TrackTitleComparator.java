@@ -1,6 +1,4 @@
-/**
- * Created: 11.07.2014
- */
+// * Created: 11.07.2014
 package de.freese.jripper.core.cddb;
 
 import java.util.Comparator;

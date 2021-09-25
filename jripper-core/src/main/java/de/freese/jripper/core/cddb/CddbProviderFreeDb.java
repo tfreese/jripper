@@ -1,7 +1,4 @@
-/**
- * Created: 02.03.2013
- */
-
+// Created: 02.03.2013
 package de.freese.jripper.core.cddb;
 
 import java.io.BufferedReader;
@@ -38,52 +35,42 @@ public class CddbProviderFreeDb implements CddbProvider
      *
      */
     private static final String HOST = "localhost";
-
     // /**
     // *
     // */
     // private static final Pattern RECORD_DGENRE = Pattern.compile("DGENRE=(.*)");
-    //
     // /**
     // *
     // */
     // private static final Pattern RECORD_DTITLE = Pattern.compile("DTITLE=(.*)");
-    //
     // /**
     // *
     // */
     // private static final Pattern RECORD_DYEAR = Pattern.compile("DYEAR=(.*)");
-    //
     // /**
     // *
     // */
     // private static final Pattern RECORD_EXTD = Pattern.compile("EXTD=(.*)");
-    //
     // /**
     // *
     // */
     // private static final Pattern RECORD_TTITLE = Pattern.compile("TTITLE(\\d+)=(.*)");
-
     /**
      *
      */
     private static final int PORT = 80;
-
     /**
      * freedb.freedb.org gibs nicht mehr.
      */
     private static final String SERVER = "gnudb.gnudb.org";
-
     /**
      *
      */
     private static final String USER = "anonymous";
-
     /**
      *
      */
     public final Logger logger = JRipper.getInstance().getLogger();// LoggerFactory.getLogger(getClass());
-
     /**
      *
      */

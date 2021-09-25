@@ -33,7 +33,6 @@ public class CddbResponse
      * 500 Command syntax error.
      */
     public static final int SYNTAX_ERROR = 500;
-
     /**
     *
     */

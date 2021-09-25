@@ -12,7 +12,6 @@ public enum EncoderFormat
      *
      */
     FLAC,
-
     /**
      *
      */

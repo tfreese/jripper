@@ -95,28 +95,28 @@ public class DiskID
     public int getTrackSeconds(final int track)
     {
         int framesPerSecond = Settings.getInstance().getFramesPerSecond();
-        int seconds;
+        int trackSeconds;
 
         if (track == 0)
         {
             // Erster Titel
             int frames = this.trackOffsets[0] - this.offset;
-            seconds = frames / framesPerSecond;
+            trackSeconds = frames / framesPerSecond;
         }
         else if (track < this.trackOffsets.length)
         {
             int frames = this.trackOffsets[track] - this.trackOffsets[track - 1] - this.offset;
-            seconds = frames / framesPerSecond;
+            trackSeconds = frames / framesPerSecond;
         }
         else
         {
             // Letzter Track erhält seine Länge durch Gesamtzeit - Laufzeit vorheriger Titel.
             int vorherigeFrames = this.trackOffsets[this.trackOffsets.length - 1] - -this.offset;
             int vorherigeSeconds = vorherigeFrames / framesPerSecond;
-            seconds = this.seconds - vorherigeSeconds;
+            trackSeconds = this.seconds - vorherigeSeconds;
         }
 
-        return seconds;
+        return trackSeconds;
     }
 
     /**

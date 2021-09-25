@@ -1,12 +1,11 @@
-/**
- * Created: 10.10.2013
- */
-
+// Created: 10.10.2013
 package de.freese.jripper.swing.task;
 
 import java.io.File;
 import java.util.Objects;
+
 import javax.swing.SwingWorker;
+
 import de.freese.jripper.core.JRipperUtils;
 import de.freese.jripper.core.model.Album;
 import de.freese.jripper.core.script.ScriptGenerator;

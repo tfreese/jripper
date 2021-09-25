@@ -27,7 +27,6 @@ public final class JRipper
      *
      */
     private static final JRipper INSTANCE = new JRipper();
-
     /**
      *
      */

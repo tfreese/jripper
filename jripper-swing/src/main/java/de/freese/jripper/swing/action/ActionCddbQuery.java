@@ -21,7 +21,6 @@ public class ActionCddbQuery extends AbstractAction
      *
      */
     private static final long serialVersionUID = -2636145895592666145L;
-
     /**
      *
      */

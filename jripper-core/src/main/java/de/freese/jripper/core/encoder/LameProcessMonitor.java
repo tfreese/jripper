@@ -57,7 +57,6 @@ public class LameProcessMonitor extends PrintWriterProcessMonitor
     /**
      * @see de.freese.jripper.core.process.PrintWriterProcessMonitor#monitorProcess(java.lang.String)
      */
-    @SuppressWarnings("resource")
     @Override
     public void monitorProcess(final String line)
     {

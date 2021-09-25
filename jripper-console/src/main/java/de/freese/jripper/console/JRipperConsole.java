@@ -1,6 +1,4 @@
-/**
- * Created: 26.02.2013
- */
+// Created: 26.02.2013
 package de.freese.jripper.console;
 
 import java.io.BufferedReader;
@@ -31,7 +29,7 @@ import de.freese.jripper.core.ripper.Ripper;
  *
  * @author Thomas Freese
  */
-public class JRipperConsole implements IAnsiCodes
+public class JRipperConsole
 {
     /**
      * @param args String[]
@@ -48,12 +46,10 @@ public class JRipperConsole implements IAnsiCodes
      *
      */
     private Album album;
-
     /**
      *
      */
     private final PrintWriter printWriter;
-
     /**
      *
      */
@@ -64,7 +60,6 @@ public class JRipperConsole implements IAnsiCodes
      *
      * @throws UnsupportedEncodingException Falls was schief geht.
      */
-    @SuppressWarnings("resource")
     public JRipperConsole() throws UnsupportedEncodingException
     {
         super();
@@ -140,7 +135,7 @@ public class JRipperConsole implements IAnsiCodes
      */
     private String getInput() throws Exception
     {
-        print("%s%s%s: ", ANSI_GREEN, "Eingabe", ANSI_RESET);
+        print("%s%s%s: ", AnsiCodes.ANSI_GREEN, "Eingabe", AnsiCodes.ANSI_RESET);
 
         String line = this.reader.readLine();
 
@@ -167,10 +162,10 @@ public class JRipperConsole implements IAnsiCodes
 
                 switch (params[i].toString())
                 {
-                    case ANSI_CYAN:
-                    case ANSI_GREEN:
-                    case ANSI_RED:
-                    case ANSI_RESET:
+                    case AnsiCodes.ANSI_CYAN:
+                    case AnsiCodes.ANSI_GREEN:
+                    case AnsiCodes.ANSI_RED:
+                    case AnsiCodes.ANSI_RESET:
                         params[i] = "";
                         break;
 
@@ -269,18 +264,18 @@ public class JRipperConsole implements IAnsiCodes
         print("%s\n", "Album Editmenü");
         print("%s\n", "*****************");
 
-        print("%s%s%s \t%s\n", ANSI_CYAN, "aa", ANSI_RESET, "Album Artist");
-        print("%s%s%s \t%s\n", ANSI_CYAN, "at", ANSI_RESET, "Album Titel");
-        print("%s%s%s \t%s\n", ANSI_CYAN, "ag", ANSI_RESET, "Album Genre");
-        print("%s%s%s \t%s\n", ANSI_CYAN, "ay", ANSI_RESET, "Album Year");
-        print("%s%s%s \t%s\n", ANSI_CYAN, "ac", ANSI_RESET, "Album Comment");
-        print("%s%s%s \t%s\n", ANSI_CYAN, "adn", ANSI_RESET, "Album Disk Number");
-        print("%s%s%s \t%s\n", ANSI_CYAN, "atd", ANSI_RESET, "Album Total Disks");
-        print("%s%s%s \t%s\n", ANSI_CYAN, "ta(number)", ANSI_RESET, "Track Artist");
-        print("%s%s%s \t%s\n", ANSI_CYAN, "tt(number)", ANSI_RESET, "Track Title");
+        print("%s%s%s \t%s\n", AnsiCodes.ANSI_CYAN, "aa", AnsiCodes.ANSI_RESET, "Album Artist");
+        print("%s%s%s \t%s\n", AnsiCodes.ANSI_CYAN, "at", AnsiCodes.ANSI_RESET, "Album Titel");
+        print("%s%s%s \t%s\n", AnsiCodes.ANSI_CYAN, "ag", AnsiCodes.ANSI_RESET, "Album Genre");
+        print("%s%s%s \t%s\n", AnsiCodes.ANSI_CYAN, "ay", AnsiCodes.ANSI_RESET, "Album Year");
+        print("%s%s%s \t%s\n", AnsiCodes.ANSI_CYAN, "ac", AnsiCodes.ANSI_RESET, "Album Comment");
+        print("%s%s%s \t%s\n", AnsiCodes.ANSI_CYAN, "adn", AnsiCodes.ANSI_RESET, "Album Disk Number");
+        print("%s%s%s \t%s\n", AnsiCodes.ANSI_CYAN, "atd", AnsiCodes.ANSI_RESET, "Album Total Disks");
+        print("%s%s%s \t%s\n", AnsiCodes.ANSI_CYAN, "ta(number)", AnsiCodes.ANSI_RESET, "Track Artist");
+        print("%s%s%s \t%s\n", AnsiCodes.ANSI_CYAN, "tt(number)", AnsiCodes.ANSI_RESET, "Track Title");
 
         print("\n");
-        print("%s%s%s \t%s\n", ANSI_CYAN, "h", ANSI_RESET, "Hauptmenü");
+        print("%s%s%s \t%s\n", AnsiCodes.ANSI_CYAN, "h", AnsiCodes.ANSI_RESET, "Hauptmenü");
 
         String input = null;
 
@@ -358,7 +353,7 @@ public class JRipperConsole implements IAnsiCodes
                     }
                     else
                     {
-                        print("%s%s \t%s%s\n", ANSI_RED, input, "Unbekannte Eingabe", ANSI_RESET);
+                        print("%s%s \t%s%s\n", AnsiCodes.ANSI_RED, input, "Unbekannte Eingabe", AnsiCodes.ANSI_RESET);
                     }
                     break;
             }
@@ -368,7 +363,7 @@ public class JRipperConsole implements IAnsiCodes
             // String message = ex.getMessage();
             // message = ex.toString();
             // message = StringUtils.isNotBlank(message) ? message : ex.toString();
-            print("%s%s%s", ANSI_RED, ex.toString(), ANSI_RESET);
+            print("%s%s%s", AnsiCodes.ANSI_RED, ex.toString(), AnsiCodes.ANSI_RESET);
         }
 
         if ("h".equals(input))
@@ -391,13 +386,13 @@ public class JRipperConsole implements IAnsiCodes
         print("%s\n", "JRipper Hauptmenü");
         print("%s\n", "*****************");
 
-        print("%s%s%s \t%s\n", ANSI_CYAN, "1", ANSI_RESET, "FreeDB abfragen");
+        print("%s%s%s \t%s\n", AnsiCodes.ANSI_CYAN, "1", AnsiCodes.ANSI_RESET, "FreeDB abfragen");
         String workDir = Settings.getInstance().getWorkDir();
 
         if (this.album != null)
         {
-            print("%s%s%s \t%s\n", ANSI_CYAN, "2", ANSI_RESET, "Album bearbeiten");
-            print("%s%s%s \t%s%s/%s/wav\n", ANSI_CYAN, "3", ANSI_RESET, "CD auslesen -> ", workDir, this.album.getTitle());
+            print("%s%s%s \t%s\n", AnsiCodes.ANSI_CYAN, "2", AnsiCodes.ANSI_RESET, "Album bearbeiten");
+            print("%s%s%s \t%s%s/%s/wav\n", AnsiCodes.ANSI_CYAN, "3", AnsiCodes.ANSI_RESET, "CD auslesen -> ", workDir, this.album.getTitle());
         }
 
         File wavDir = null;
@@ -413,12 +408,12 @@ public class JRipperConsole implements IAnsiCodes
 
         if ((wavDir != null) && wavDir.exists() && (this.album != null) && (this.album.getTrackCount() > 0))
         {
-            print("%s%s%s \t%s%s/%s/flac\n", ANSI_CYAN, "4", ANSI_RESET, "flac erzeugen -> ", workDir, this.album.getTitle());
-            print("%s%s%s \t%s%s/%s/map3\n", ANSI_CYAN, "5", ANSI_RESET, "mp3 erzeugen -> ", workDir, this.album.getTitle());
+            print("%s%s%s \t%s%s/%s/flac\n", AnsiCodes.ANSI_CYAN, "4", AnsiCodes.ANSI_RESET, "flac erzeugen -> ", workDir, this.album.getTitle());
+            print("%s%s%s \t%s%s/%s/map3\n", AnsiCodes.ANSI_CYAN, "5", AnsiCodes.ANSI_RESET, "mp3 erzeugen -> ", workDir, this.album.getTitle());
         }
 
         print("\n");
-        print("%s%s%s \t%s\n", ANSI_CYAN, "q", ANSI_RESET, "Beenden");
+        print("%s%s%s \t%s\n", AnsiCodes.ANSI_CYAN, "q", AnsiCodes.ANSI_RESET, "Beenden");
 
         String input = null;
 
@@ -457,7 +452,7 @@ public class JRipperConsole implements IAnsiCodes
                     return;
 
                 default:
-                    print("%s%s \t%s%s\n", ANSI_RED, input, "Unbekannte Eingabe", ANSI_RESET);
+                    print("%s%s \t%s%s\n", AnsiCodes.ANSI_RED, input, "Unbekannte Eingabe", AnsiCodes.ANSI_RESET);
                     break;
             }
         }
@@ -466,7 +461,7 @@ public class JRipperConsole implements IAnsiCodes
             // String message = ex.getMessage();
             // message = ex.toString();
             // message = StringUtils.isNotBlank(message) ? message : ex.toString();
-            print("%s%s%s", ANSI_RED, ex.toString(), ANSI_RESET);
+            print("%s%s%s", AnsiCodes.ANSI_RED, ex.toString(), AnsiCodes.ANSI_RESET);
         }
 
         if ("2".equals(input))

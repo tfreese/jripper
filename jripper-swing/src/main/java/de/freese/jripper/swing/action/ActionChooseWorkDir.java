@@ -22,7 +22,6 @@ public class ActionChooseWorkDir extends AbstractAction
      *
      */
     private static final long serialVersionUID = 3262325088354448846L;
-
     /**
      *
      */

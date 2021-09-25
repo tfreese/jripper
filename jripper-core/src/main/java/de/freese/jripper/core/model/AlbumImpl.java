@@ -20,7 +20,6 @@ public class AlbumImpl implements Album
     *
     */
     private static final Logger LOGGER = LoggerFactory.getLogger(AlbumImpl.class);
-
     /**
      * Bei Compilations null.
      */
@@ -50,7 +49,6 @@ public class AlbumImpl implements Album
      *
      */
     private int totalDisks = 1;
-
     /**
      *
      */

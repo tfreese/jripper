@@ -88,7 +88,6 @@ public class JRipperSwing
      *
      */
     public static JFrame frame;
-
     /**
      *
      */
@@ -109,7 +108,6 @@ public class JRipperSwing
      *
      */
     private final Property<Album> albumProperty = new SimpleObjectProperty<>(this, "album", new AlbumImpl());
-
     /**
      *
      */
