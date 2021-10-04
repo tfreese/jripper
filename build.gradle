@@ -10,7 +10,7 @@ subprojects {
         }
 
         dependencies {
-            dependency "commons-io:commons-io:$version_commonsIo"
+            //dependency "GROUP:ARTIFACT:$version_XXX"
         }
     }
 }
@@ -19,7 +19,6 @@ project("jripper-core") {
     apply plugin: "java-library"
     description = "Java Ripper Core Modul"
     dependencies {
-        api("commons-io:commons-io")
         api("org.apache.commons:commons-lang3")
         api("org.slf4j:slf4j-api")
 
