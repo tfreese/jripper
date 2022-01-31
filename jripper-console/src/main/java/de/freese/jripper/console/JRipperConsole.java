@@ -68,13 +68,13 @@ public class JRipperConsole
 
         if (console != null)
         {
-            if (!(console.reader() instanceof BufferedReader))
+            if (console.reader() instanceof BufferedReader bufferedReader)
             {
-                this.reader = new BufferedReader(console.reader());
+                this.reader = bufferedReader;
             }
             else
             {
-                this.reader = (BufferedReader) console.reader();
+                this.reader = new BufferedReader(console.reader());
             }
 
             this.printWriter = console.writer();
@@ -84,6 +84,104 @@ public class JRipperConsole
             // In Eclipse kann Console null sein.
             this.reader = new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8));
             this.printWriter = new PrintWriter(System.out, true, StandardCharsets.UTF_8);
+        }
+    }
+
+    /**
+     *
+     */
+    public void showMainMenu()
+    {
+        print("%s\n", "*****************");
+        print("%s\n", "JRipper Hauptmenü");
+        print("%s\n", "*****************");
+
+        print("%s%s%s \t%s\n", AnsiCodes.ANSI_CYAN, "1", AnsiCodes.ANSI_RESET, "FreeDB abfragen");
+        String workDir = Settings.getInstance().getWorkDir();
+
+        if (this.album != null)
+        {
+            print("%s%s%s \t%s\n", AnsiCodes.ANSI_CYAN, "2", AnsiCodes.ANSI_RESET, "Album bearbeiten");
+            print("%s%s%s \t%s%s/%s/wav\n", AnsiCodes.ANSI_CYAN, "3", AnsiCodes.ANSI_RESET, "CD auslesen -> ", workDir, this.album.getTitle());
+        }
+
+        File wavDir = null;
+
+        try
+        {
+            wavDir = JRipperUtils.getWavDir(this.album, false);
+        }
+        catch (Exception ex)
+        {
+            // Ignore
+        }
+
+        if ((wavDir != null) && wavDir.exists() && (this.album != null) && (this.album.getTrackCount() > 0))
+        {
+            print("%s%s%s \t%s%s/%s/flac\n", AnsiCodes.ANSI_CYAN, "4", AnsiCodes.ANSI_RESET, "flac erzeugen -> ", workDir, this.album.getTitle());
+            print("%s%s%s \t%s%s/%s/map3\n", AnsiCodes.ANSI_CYAN, "5", AnsiCodes.ANSI_RESET, "mp3 erzeugen -> ", workDir, this.album.getTitle());
+        }
+
+        print("\n");
+        print("%s%s%s \t%s\n", AnsiCodes.ANSI_CYAN, "q", AnsiCodes.ANSI_RESET, "Beenden");
+
+        String input = null;
+
+        try
+        {
+            input = getInput();
+
+            switch (input)
+            {
+                case "1":
+                    this.album = null;
+                    DiskID diskID = getDiskID();
+                    String genre = queryCDDB(diskID);
+                    this.album = readCDDB(diskID, genre);
+                    showAlbum(this.album);
+                    break;
+
+                case "2":
+                    break;
+
+                case "3":
+                    rip(this.album, this.printWriter);
+                    break;
+
+                case "4":
+                    File flacDir = JRipperUtils.getFlacDir(this.album, true);
+                    encode(this.album, this.printWriter, JRipper.getInstance().getEncoderFlac(), flacDir);
+                    break;
+
+                case "5":
+                    File mp3Dir = JRipperUtils.getMp3Dir(this.album, true);
+                    encode(this.album, this.printWriter, JRipper.getInstance().getEncoderMp3(), mp3Dir);
+                    break;
+
+                case "q":
+                    return;
+
+                default:
+                    print("%s%s \t%s%s\n", AnsiCodes.ANSI_RED, input, "Unbekannte Eingabe", AnsiCodes.ANSI_RESET);
+                    break;
+            }
+        }
+        catch (Exception ex)
+        {
+            // String message = ex.getMessage();
+            // message = ex.toString();
+            // message = StringUtils.isNotBlank(message) ? message : ex.toString();
+            print("%s%s%s", AnsiCodes.ANSI_RED, ex.toString(), AnsiCodes.ANSI_RESET);
+        }
+
+        if ("2".equals(input))
+        {
+            // Notwendig um aus den switch-case rauszukommen.
+            showEditMenu();
+        }
+        else
+        {
+            showMainMenu();
         }
     }
 
@@ -121,9 +219,8 @@ public class JRipperConsole
     private DiskID getDiskID() throws Exception
     {
         String device = Settings.getInstance().getDevice();
-        DiskID diskID = JRipper.getInstance().getDiskIDProvider().getDiskID(device);
 
-        return diskID;
+        return JRipper.getInstance().getDiskIDProvider().getDiskID(device);
     }
 
     /**
@@ -137,9 +234,7 @@ public class JRipperConsole
     {
         print("%s%s%s: ", AnsiCodes.ANSI_GREEN, "Eingabe", AnsiCodes.ANSI_RESET);
 
-        String line = this.reader.readLine();
-
-        return line;
+        return this.reader.readLine();
     }
 
     /**
@@ -374,104 +469,6 @@ public class JRipperConsole
         else
         {
             showEditMenu();
-        }
-    }
-
-    /**
-     *
-     */
-    public void showMainMenu()
-    {
-        print("%s\n", "*****************");
-        print("%s\n", "JRipper Hauptmenü");
-        print("%s\n", "*****************");
-
-        print("%s%s%s \t%s\n", AnsiCodes.ANSI_CYAN, "1", AnsiCodes.ANSI_RESET, "FreeDB abfragen");
-        String workDir = Settings.getInstance().getWorkDir();
-
-        if (this.album != null)
-        {
-            print("%s%s%s \t%s\n", AnsiCodes.ANSI_CYAN, "2", AnsiCodes.ANSI_RESET, "Album bearbeiten");
-            print("%s%s%s \t%s%s/%s/wav\n", AnsiCodes.ANSI_CYAN, "3", AnsiCodes.ANSI_RESET, "CD auslesen -> ", workDir, this.album.getTitle());
-        }
-
-        File wavDir = null;
-
-        try
-        {
-            wavDir = JRipperUtils.getWavDir(this.album, false);
-        }
-        catch (Exception ex)
-        {
-            // Ignore
-        }
-
-        if ((wavDir != null) && wavDir.exists() && (this.album != null) && (this.album.getTrackCount() > 0))
-        {
-            print("%s%s%s \t%s%s/%s/flac\n", AnsiCodes.ANSI_CYAN, "4", AnsiCodes.ANSI_RESET, "flac erzeugen -> ", workDir, this.album.getTitle());
-            print("%s%s%s \t%s%s/%s/map3\n", AnsiCodes.ANSI_CYAN, "5", AnsiCodes.ANSI_RESET, "mp3 erzeugen -> ", workDir, this.album.getTitle());
-        }
-
-        print("\n");
-        print("%s%s%s \t%s\n", AnsiCodes.ANSI_CYAN, "q", AnsiCodes.ANSI_RESET, "Beenden");
-
-        String input = null;
-
-        try
-        {
-            input = getInput();
-
-            switch (input)
-            {
-                case "1":
-                    this.album = null;
-                    DiskID diskID = getDiskID();
-                    String genre = queryCDDB(diskID);
-                    this.album = readCDDB(diskID, genre);
-                    showAlbum(this.album);
-                    break;
-
-                case "2":
-                    break;
-
-                case "3":
-                    rip(this.album, this.printWriter);
-                    break;
-
-                case "4":
-                    File flacDir = JRipperUtils.getFlacDir(this.album, true);
-                    encode(this.album, this.printWriter, JRipper.getInstance().getEncoderFlac(), flacDir);
-                    break;
-
-                case "5":
-                    File mp3Dir = JRipperUtils.getMp3Dir(this.album, true);
-                    encode(this.album, this.printWriter, JRipper.getInstance().getEncoderMp3(), mp3Dir);
-                    break;
-
-                case "q":
-                    return;
-
-                default:
-                    print("%s%s \t%s%s\n", AnsiCodes.ANSI_RED, input, "Unbekannte Eingabe", AnsiCodes.ANSI_RESET);
-                    break;
-            }
-        }
-        catch (Exception ex)
-        {
-            // String message = ex.getMessage();
-            // message = ex.toString();
-            // message = StringUtils.isNotBlank(message) ? message : ex.toString();
-            print("%s%s%s", AnsiCodes.ANSI_RED, ex.toString(), AnsiCodes.ANSI_RESET);
-        }
-
-        if ("2".equals(input))
-        {
-            // Notwendig um aus den switch-case rauszukommen.
-            showEditMenu();
-        }
-        else
-        {
-            showMainMenu();
         }
     }
 }
