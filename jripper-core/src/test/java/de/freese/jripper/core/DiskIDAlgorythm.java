@@ -15,55 +15,56 @@ import java.util.Arrays;
 
 public class DiskIDAlgorythm
 {
-	/**
-	 * b111140e 14 150 24545 41797 60822 80152 117002 142550 169755 192057 211360 239297 256325 279075 306220 4374
-	 * 
-	 * @param args String[]
-	 */
-	public static void main(final String[] args)
-	{
-		int FRAMES_PER_SECOND = Integer.valueOf(Settings.getInstance().getFramesPerSecond());
-		int[] frames =
-		{
-				150, 24545, 41797, 60822, 80152, 117002, 142550, 169755, 192057, 211360, 239297, 256325, 279075, 306220
-		};
+    /**
+     * b111140e 14 150 24545 41797 60822 80152 117002 142550 169755 192057 211360 239297 256325 279075 306220 4374
+     *
+     * @param args String[]
+     */
+    public static void main(final String[] args)
+    {
+        int FRAMES_PER_SECOND = Settings.getInstance().getFramesPerSecond();
+        int[] frames =
+                {
+                        150, 24545, 41797, 60822, 80152, 117002, 142550, 169755, 192057, 211360, 239297, 256325, 279075, 306220
+                };
 
-		int N = frames.length - 1;
-		int totalLength = (frames[N] - frames[0]) / FRAMES_PER_SECOND;
-		totalLength = (327900 - frames[0]) / FRAMES_PER_SECOND;
-		int checkSum = 0;
+        int N = frames.length - 1;
+        int totalLength = (frames[N] - frames[0]) / FRAMES_PER_SECOND;
+        totalLength = (327900 - frames[0]) / FRAMES_PER_SECOND;
+        int checkSum = 0;
 
-		for (int i = 0; i < N; i++)
-		{
-			checkSum += sumOfDigits(frames[i] / FRAMES_PER_SECOND);
-		}
+        for (int i = 0; i < N; i++)
+        {
+            checkSum += sumOfDigits(frames[i] / FRAMES_PER_SECOND);
+        }
 
-		int XX = checkSum % 255;
-		int YYYY = totalLength;
-		int ZZ = N;
+        int XX = checkSum % 255;
+        int YYYY = totalLength;
+        int ZZ = N;
 
-		// XXYYYYZZ
-		int discID = ((XX << 24) | (YYYY << 8) | ZZ);
-		System.out.print(Integer.toHexString(discID));
-		System.out.println(Arrays.toString(frames));
-	}
+        // XXYYYYZZ
+        int discID = ((XX << 24) | (YYYY << 8) | ZZ);
+        System.out.print(Integer.toHexString(discID));
+        System.out.println(Arrays.toString(frames));
+    }
 
-	/**
-	 * return sum of decimal digits in n
-	 * 
-	 * @param n int
-	 * @return int
-	 */
-	static int sumOfDigits(int n)
-	{
-		int sum = 0;
+    /**
+     * return sum of decimal digits in n
+     *
+     * @param n int
+     *
+     * @return int
+     */
+    static int sumOfDigits(int n)
+    {
+        int sum = 0;
 
-		while (n > 0)
-		{
-			sum += (n % 10);
-			n /= 10;
-		}
+        while (n > 0)
+        {
+            sum += (n % 10);
+            n /= 10;
+        }
 
-		return sum;
-	}
+        return sum;
+    }
 }

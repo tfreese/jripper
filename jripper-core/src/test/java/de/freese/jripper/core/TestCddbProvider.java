@@ -2,15 +2,9 @@
 package de.freese.jripper.core;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
-
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
-import org.junit.jupiter.api.condition.EnabledOnOs;
-import org.junit.jupiter.api.condition.OS;
 
 import de.freese.jripper.core.cddb.CddbProvider;
 import de.freese.jripper.core.cddb.CddbProviderFreeDb;
@@ -19,6 +13,11 @@ import de.freese.jripper.core.diskid.DiskIDProvider;
 import de.freese.jripper.core.diskid.DiskIDProviderFactory;
 import de.freese.jripper.core.diskid.DiskIDProviderLinux;
 import de.freese.jripper.core.model.DiskID;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.condition.EnabledOnOs;
+import org.junit.jupiter.api.condition.OS;
 
 /**
  * @author Thomas Freese
@@ -93,7 +92,7 @@ class TestCddbProvider
         CddbResponse response = cddbProvider.queryGenres(diskID);
         assertNotNull(response);
         assertNotNull(response.getGenres());
-        assertTrue(!response.getGenres().isEmpty());
+        assertFalse(response.getGenres().isEmpty());
 
         response = cddbProvider.queryAlbum(diskID, "misc");
         assertNotNull(response);
@@ -106,9 +105,9 @@ class TestCddbProvider
      */
     @Test
     @EnabledOnOs(
-    {
-            OS.LINUX, OS.WINDOWS
-    })
+            {
+                    OS.LINUX, OS.WINDOWS
+            })
     void testLinux()
     {
         String device = JRipperUtils.detectCdDevice();

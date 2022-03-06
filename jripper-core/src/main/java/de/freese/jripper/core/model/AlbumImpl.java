@@ -17,9 +17,17 @@ import org.slf4j.LoggerFactory;
 public class AlbumImpl implements Album
 {
     /**
-    *
-    */
+     *
+     */
     private static final Logger LOGGER = LoggerFactory.getLogger(AlbumImpl.class);
+    /**
+     *
+     */
+    private final DiskID diskID;
+    /**
+     *
+     */
+    private final List<Track> tracks = new ArrayList<>();
     /**
      * Bei Compilations null.
      */
@@ -28,10 +36,6 @@ public class AlbumImpl implements Album
      *
      */
     private String comment;
-    /**
-     *
-     */
-    private final DiskID diskID;
     /**
      *
      */
@@ -44,15 +48,10 @@ public class AlbumImpl implements Album
      *
      */
     private String title;
-
     /**
      *
      */
     private int totalDisks = 1;
-    /**
-     *
-     */
-    private List<Track> tracks = new ArrayList<>();
     /**
      *
      */

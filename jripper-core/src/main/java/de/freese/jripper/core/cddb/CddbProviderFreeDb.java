@@ -14,15 +14,12 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import org.slf4j.Logger;
 
 import de.freese.jripper.core.JRipper;
 import de.freese.jripper.core.JRipperUtils;
 import de.freese.jripper.core.model.AlbumImpl;
 import de.freese.jripper.core.model.DiskID;
+import org.slf4j.Logger;
 
 /**
  * CDDB Provider für FreeDB.
@@ -88,88 +85,6 @@ public class CddbProviderFreeDb implements CddbProvider
         sb.append("+").append(HOST);
         sb.append("+jRipper+1.0.0&proto=6");
         this.requestPostfix = sb.toString();
-    }
-
-    /**
-     * @return {@link Logger}
-     */
-    private Logger getLogger()
-    {
-        return this.logger;
-    }
-
-    /**
-     * Normalisiert die Texte.<br>
-     * <ul>
-     * <li>trimToEmpty
-     * <li>toLowerCase
-     * <li>capitalize
-     * <li>' cd ' durch ' CD ' ersetzen
-     * <li>'(cd ' durch '(CD ' ersetzen
-     * <li>dj durch DJ ersetzen
-     * <li>' feat ' durch ' Feat. ' ersetzen
-     * <li>':' durch ' - ' ersetzen
-     * <li>'<' durch '-' ersetzen
-     * <li>'>' durch '-' ersetzen
-     * <li>'[' durch '(' ersetzen
-     * <li>']' durch ')' ersetzen
-     * <li>'´' durch ''' ersetzen
-     * <li>'`' durch ''' ersetzen
-     * <li>Mehrfache Spaces durch einen ersetzen
-     * <li>nicht erlaubte Zeichen: < > ? " : | \ / *
-     * </ul>
-     *
-     * @param text String
-     *
-     * @return String, oder null wenn leer
-     */
-    private String normalize(final String text)
-    {
-        if ((text == null) || text.isBlank())
-        {
-            return null;
-        }
-
-        String value = text;
-        value = Optional.ofNullable(JRipperUtils.trim(value)).orElse("");
-        value = value.toLowerCase();
-        value = JRipperUtils.capitalize(value);
-        value = value.replace(" cd ", " CD ");
-        value = value.replace("(cd ", "(CD ");
-        value = value.replace("Dj ", "DJ ");
-        value = value.replace(" feat ", " Feat. ");
-        value = value.replace(":", " - ");
-        value = value.replace("<", "-");
-        value = value.replace(">", "-");
-        value = value.replace("[", "(");
-        value = value.replace("]", ")");
-        value = value.replace("´", "'");
-        value = value.replace("`", "'");
-        value = JRipperUtils.normalizeSpace(value);
-
-        // Nach '(', '-', '.' auch Grossbuchstaben.
-        if (value.contains("(") || value.contains("-") || value.contains("."))
-        {
-            StringBuilder sb = new StringBuilder();
-
-            for (int j = 0; j < value.length(); j++)
-            {
-                char sign = value.charAt(j);
-
-                if ((j > 0) && ((value.charAt(j - 1) == '(') || (value.charAt(j - 1) == '-') || (value.charAt(j - 1) == '.')))
-                {
-                    sign = Character.toUpperCase(sign);
-                }
-
-                sb.append(sign);
-            }
-
-            value = sb.toString();
-        }
-
-        value = Optional.ofNullable(JRipperUtils.trim(value)).orElse("");
-
-        return value;
     }
 
     /**
@@ -352,7 +267,7 @@ public class CddbProviderFreeDb implements CddbProvider
                         }
 
                         // splits[1].replaceAll("[\\d+]", "");
-                        trackTitle = Stream.of(splits).collect(Collectors.joining(" "));
+                        trackTitle = String.join(" ", splits);
                         trackTitle = JRipperUtils.trim(trackTitle);
                     }
 
@@ -439,11 +354,11 @@ public class CddbProviderFreeDb implements CddbProvider
                 }
 
                 String genre = switch (status)
-                {
-                    case CddbResponse.EXACT_MATCHES, CddbResponse.INEXACT_MATCHES -> JRipperUtils.trim(splits[0]);
-                    case CddbResponse.MATCH -> JRipperUtils.trim(splits[1]);
-                    default -> throw new IllegalStateException("unsupported status: " + status);
-                };
+                        {
+                            case CddbResponse.EXACT_MATCHES, CddbResponse.INEXACT_MATCHES -> JRipperUtils.trim(splits[0]);
+                            case CddbResponse.MATCH -> JRipperUtils.trim(splits[1]);
+                            default -> throw new IllegalStateException("unsupported status: " + status);
+                        };
 
                 genres.add(genre);
 
@@ -463,5 +378,87 @@ public class CddbProviderFreeDb implements CddbProvider
         }
 
         return cddbResponse;
+    }
+
+    /**
+     * @return {@link Logger}
+     */
+    private Logger getLogger()
+    {
+        return this.logger;
+    }
+
+    /**
+     * Normalisiert die Texte.<br>
+     * <ul>
+     * <li>trimToEmpty
+     * <li>toLowerCase
+     * <li>capitalize
+     * <li>' cd ' durch ' CD ' ersetzen
+     * <li>'(cd ' durch '(CD ' ersetzen
+     * <li>dj durch DJ ersetzen
+     * <li>' feat ' durch ' Feat. ' ersetzen
+     * <li>':' durch ' - ' ersetzen
+     * <li>'<' durch '-' ersetzen
+     * <li>'>' durch '-' ersetzen
+     * <li>'[' durch '(' ersetzen
+     * <li>']' durch ')' ersetzen
+     * <li>'´' durch ''' ersetzen
+     * <li>'`' durch ''' ersetzen
+     * <li>Mehrfache Spaces durch einen ersetzen
+     * <li>nicht erlaubte Zeichen: < > ? " : | \ / *
+     * </ul>
+     *
+     * @param text String
+     *
+     * @return String, oder null wenn leer
+     */
+    private String normalize(final String text)
+    {
+        if ((text == null) || text.isBlank())
+        {
+            return null;
+        }
+
+        String value = text;
+        value = Optional.ofNullable(JRipperUtils.trim(value)).orElse("");
+        value = value.toLowerCase();
+        value = JRipperUtils.capitalize(value);
+        value = value.replace(" cd ", " CD ");
+        value = value.replace("(cd ", "(CD ");
+        value = value.replace("Dj ", "DJ ");
+        value = value.replace(" feat ", " Feat. ");
+        value = value.replace(":", " - ");
+        value = value.replace("<", "-");
+        value = value.replace(">", "-");
+        value = value.replace("[", "(");
+        value = value.replace("]", ")");
+        value = value.replace("´", "'");
+        value = value.replace("`", "'");
+        value = JRipperUtils.normalizeSpace(value);
+
+        // Nach '(', '-', '.' auch Grossbuchstaben.
+        if (value.contains("(") || value.contains("-") || value.contains("."))
+        {
+            StringBuilder sb = new StringBuilder();
+
+            for (int j = 0; j < value.length(); j++)
+            {
+                char sign = value.charAt(j);
+
+                if ((j > 0) && ((value.charAt(j - 1) == '(') || (value.charAt(j - 1) == '-') || (value.charAt(j - 1) == '.')))
+                {
+                    sign = Character.toUpperCase(sign);
+                }
+
+                sb.append(sign);
+            }
+
+            value = sb.toString();
+        }
+
+        value = Optional.ofNullable(JRipperUtils.trim(value)).orElse("");
+
+        return value;
     }
 }
