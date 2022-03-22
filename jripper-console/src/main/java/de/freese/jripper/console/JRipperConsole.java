@@ -45,15 +45,15 @@ public class JRipperConsole
     /**
      *
      */
-    private Album album;
-    /**
-     *
-     */
     private final PrintWriter printWriter;
     /**
      *
      */
     private final BufferedReader reader;
+    /**
+     *
+     */
+    private Album album;
 
     /**
      * Erstellt ein neues {@link JRipperConsole} Object.
@@ -176,7 +176,7 @@ public class JRipperConsole
 
         if ("2".equals(input))
         {
-            // Notwendig um aus den switch-case rauszukommen.
+            // Notwendig um aus den switch-case raus zukommen.
             showEditMenu();
         }
         else
@@ -243,7 +243,7 @@ public class JRipperConsole
      *
      * @see String#format(String, Object...)
      */
-    private void print(final String format, final Object...params)
+    private void print(final String format, final Object... params)
     {
         if (JRipperUtils.isDevelopment())
         {
@@ -463,7 +463,7 @@ public class JRipperConsole
 
         if ("h".equals(input))
         {
-            // Notwendig um aus den switch-case rauszukommen.
+            // Notwendig um aus den switch-case raus zukommen.
             showMainMenu();
         }
         else

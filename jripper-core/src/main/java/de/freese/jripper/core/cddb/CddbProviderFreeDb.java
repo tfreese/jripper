@@ -411,7 +411,7 @@ public class CddbProviderFreeDb implements CddbProvider
      *
      * @param text String
      *
-     * @return String, oder null wenn leer
+     * @return String, oder null, wenn leer
      */
     private String normalize(final String text)
     {

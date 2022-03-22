@@ -15,5 +15,5 @@ public enum EncoderFormat
     /**
      *
      */
-    MP3;
+    MP3
 }

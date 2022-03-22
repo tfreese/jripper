@@ -9,7 +9,7 @@ import java.awt.Insets;
  *
  * @author Thomas Freese
  */
-public class GBCBuilder extends GridBagConstraints
+public class GbcBuilder extends GridBagConstraints
 {
     /**
      *
@@ -17,7 +17,7 @@ public class GBCBuilder extends GridBagConstraints
     private static final long serialVersionUID = 9216852015033867169L;
 
     /**
-     * Erstellt ein neues {@link GBCBuilder} Object.<br>
+     * Erstellt ein neues {@link GbcBuilder} Object.<br>
      * Defaults:
      * <ul>
      * <li>anchor = WEST</li>
@@ -27,7 +27,7 @@ public class GBCBuilder extends GridBagConstraints
      * @param gridx int
      * @param gridy int
      */
-    public GBCBuilder(final int gridx, final int gridy)
+    public GbcBuilder(final int gridx, final int gridy)
     {
         super();
 
@@ -39,9 +39,9 @@ public class GBCBuilder extends GridBagConstraints
     }
 
     /**
-     * @return {@link GBCBuilder}
+     * @return {@link GbcBuilder}
      */
-    public GBCBuilder anchorCenter()
+    public GbcBuilder anchorCenter()
     {
         this.anchor = CENTER;
 
@@ -49,9 +49,9 @@ public class GBCBuilder extends GridBagConstraints
     }
 
     /**
-     * @return {@link GBCBuilder}
+     * @return {@link GbcBuilder}
      */
-    public GBCBuilder anchorEast()
+    public GbcBuilder anchorEast()
     {
         this.anchor = EAST;
 
@@ -59,9 +59,9 @@ public class GBCBuilder extends GridBagConstraints
     }
 
     /**
-     * @return {@link GBCBuilder}
+     * @return {@link GbcBuilder}
      */
-    public GBCBuilder anchorNorth()
+    public GbcBuilder anchorNorth()
     {
         this.anchor = NORTH;
 
@@ -69,9 +69,9 @@ public class GBCBuilder extends GridBagConstraints
     }
 
     /**
-     * @return {@link GBCBuilder}
+     * @return {@link GbcBuilder}
      */
-    public GBCBuilder anchorSouth()
+    public GbcBuilder anchorSouth()
     {
         this.anchor = SOUTH;
 
@@ -79,9 +79,9 @@ public class GBCBuilder extends GridBagConstraints
     }
 
     /**
-     * @return {@link GBCBuilder}
+     * @return {@link GbcBuilder}
      */
-    public GBCBuilder anchorWest()
+    public GbcBuilder anchorWest()
     {
         this.anchor = WEST;
 
@@ -89,9 +89,9 @@ public class GBCBuilder extends GridBagConstraints
     }
 
     /**
-     * @return {@link GBCBuilder}
+     * @return {@link GbcBuilder}
      */
-    public GBCBuilder fillBoth()
+    public GbcBuilder fillBoth()
     {
         this.fill = BOTH;
 
@@ -102,9 +102,9 @@ public class GBCBuilder extends GridBagConstraints
     }
 
     /**
-     * @return {@link GBCBuilder}
+     * @return {@link GbcBuilder}
      */
-    public GBCBuilder fillHorizontal()
+    public GbcBuilder fillHorizontal()
     {
         this.fill = HORIZONTAL;
 
@@ -115,9 +115,9 @@ public class GBCBuilder extends GridBagConstraints
     }
 
     /**
-     * @return {@link GBCBuilder}
+     * @return {@link GbcBuilder}
      */
-    public GBCBuilder fillVertical()
+    public GbcBuilder fillVertical()
     {
         this.fill = VERTICAL;
 
@@ -130,9 +130,9 @@ public class GBCBuilder extends GridBagConstraints
     /**
      * @param gridheight int
      *
-     * @return {@link GBCBuilder}
+     * @return {@link GbcBuilder}
      */
-    public GBCBuilder gridheight(final int gridheight)
+    public GbcBuilder gridheight(final int gridheight)
     {
         this.gridheight = gridheight;
 
@@ -142,9 +142,9 @@ public class GBCBuilder extends GridBagConstraints
     /**
      * @param gridwidth int
      *
-     * @return {@link GBCBuilder}
+     * @return {@link GbcBuilder}
      */
-    public GBCBuilder gridwidth(final int gridwidth)
+    public GbcBuilder gridwidth(final int gridwidth)
     {
         this.gridwidth = gridwidth;
 
@@ -157,9 +157,9 @@ public class GBCBuilder extends GridBagConstraints
      * @param bottom int
      * @param right int
      *
-     * @return {@link GBCBuilder}
+     * @return {@link GbcBuilder}
      */
-    public GBCBuilder insets(final int top, final int left, final int bottom, final int right)
+    public GbcBuilder insets(final int top, final int left, final int bottom, final int right)
     {
         this.insets = new Insets(top, left, bottom, right);
 
@@ -169,9 +169,9 @@ public class GBCBuilder extends GridBagConstraints
     /**
      * @param weightx double
      *
-     * @return {@link GBCBuilder}
+     * @return {@link GbcBuilder}
      */
-    public GBCBuilder weightx(final double weightx)
+    public GbcBuilder weightx(final double weightx)
     {
         this.weightx = weightx;
 
@@ -181,9 +181,9 @@ public class GBCBuilder extends GridBagConstraints
     /**
      * @param weighty double
      *
-     * @return {@link GBCBuilder}
+     * @return {@link GbcBuilder}
      */
-    public GBCBuilder weighty(final double weighty)
+    public GbcBuilder weighty(final double weighty)
     {
         this.weighty = weighty;
 

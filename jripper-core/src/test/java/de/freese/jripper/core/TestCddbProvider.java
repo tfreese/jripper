@@ -114,7 +114,7 @@ class TestCddbProvider
 
         if ((device == null) || device.isBlank())
         {
-            // Buildserver haben nicht zwangsläufig ein DVD Laufwerk.
+            // Buildserver haben nicht zwangsläufig ein DVD-Laufwerk.
             return;
         }
 

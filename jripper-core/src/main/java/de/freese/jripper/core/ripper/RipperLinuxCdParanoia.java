@@ -25,7 +25,7 @@ public class RipperLinuxCdParanoia extends AbstractProcess implements Ripper
         List<String> command = new ArrayList<>();
         command.add("cdparanoia");
         command.add("-w");
-        command.add("-B"); // Batch, Jeder Track in eine Datei
+        command.add("-B"); // Batch, jeder Track in eine Datei
         // command.add("-v");
         // command.add("-S 2"); // Nur 2x Geschwindigkeit.
         command.add("-z "); // Keine Fehler akzeptieren.
