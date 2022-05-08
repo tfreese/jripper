@@ -5,7 +5,7 @@
     <!--Levels are ordered: TRACE < DEBUG < INFO < WARN < ERROR -->
     <!-- %date{yyyy-MM-dd HH:mm:ss.SSS} -->
     <property name="pattern" value="%date{HH:mm:ss.SSS} - %-5level[%thread] - %logger{0}[%method] - %message%n" />
-    <property name="log.dir" value="${user.home}/.java/jripper/log" />
+    <property name="log.dir" value="${user.home}/.java-apps/jripper" />
 
     <if condition='isNull("pattern")'>
         <then>
@@ -16,7 +16,7 @@
     </if>
     <if condition='isNull("log.dir")'>
         <then>
-            <property name="log.dir" value="${user.home}/.jripper" />
+            <property name="log.dir" value="${user.home}/.java-apps/jripper" />
         </then>
     </if>
 
