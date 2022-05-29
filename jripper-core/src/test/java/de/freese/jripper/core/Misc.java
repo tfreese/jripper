@@ -35,7 +35,7 @@ public class Misc
 
         if ((start > 0) && (end > 0))
         {
-            String prozent = s.substring(start + 2, end).trim();
+            String prozent = s.substring(start + 2, end).strip();
             System.out.println(prozent);
         }
 

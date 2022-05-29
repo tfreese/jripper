@@ -268,7 +268,7 @@ public final class JRipperUtils
             return null;
         }
 
-        return value.trim();
+        return value.strip();
     }
 
     /**

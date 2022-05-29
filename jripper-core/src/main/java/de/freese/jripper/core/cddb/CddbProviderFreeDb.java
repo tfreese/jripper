@@ -236,7 +236,7 @@ public class CddbProviderFreeDb implements CddbProvider
                         }
                     }
 
-                    album.setComment(comment.toString().trim());
+                    album.setComment(comment.toString().strip());
                 }
                 else if (key.startsWith("TTITLE"))
                 {
