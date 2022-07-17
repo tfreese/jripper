@@ -101,7 +101,7 @@ public class CddbProviderFreeDb implements CddbProvider
         sb.append("/~cddb/cddb.cgi?cmd=cddb+read");
         sb.append("+").append(genre);
 
-        String[] splits = diskID.toString().split("[ ]");
+        String[] splits = diskID.toString().split(" ");
         sb.append("+").append(splits[0]);
 
         sb.append(this.requestPostfix);
@@ -118,7 +118,7 @@ public class CddbProviderFreeDb implements CddbProvider
         }
 
         String firstLine = lines.remove(0);
-        int status = Integer.parseInt(firstLine.split("[ ]")[0]);
+        int status = Integer.parseInt(firstLine.split(" ")[0]);
 
         CddbResponse cddbResponse = new CddbResponse(status);
 
@@ -141,7 +141,7 @@ public class CddbProviderFreeDb implements CddbProvider
                     continue;
                 }
 
-                splits = line.split("[=]", 2);
+                splits = line.split("=", 2);
 
                 if (splits.length == 1)
                 {
@@ -246,7 +246,7 @@ public class CddbProviderFreeDb implements CddbProvider
                     if (value.contains("/"))
                     {
                         // Annahme Compilation.
-                        splits = value.split("[/]");
+                        splits = value.split("/");
 
                         trackArtist = normalize(splits[0]);
                         trackTitle = normalize(splits[1]);
@@ -254,7 +254,7 @@ public class CddbProviderFreeDb implements CddbProvider
                     else
                     {
                         // Annahme Album.
-                        splits = value.split("[ ]");
+                        splits = value.split(" ");
 
                         for (int i = 0; i < splits.length; i++)
                         {
@@ -323,7 +323,7 @@ public class CddbProviderFreeDb implements CddbProvider
         }
 
         String firstLine = lines.remove(0);
-        int status = Integer.parseInt(firstLine.split("[ ]")[0]);
+        int status = Integer.parseInt(firstLine.split(" ")[0]);
 
         CddbResponse cddbResponse = new CddbResponse(status);
 
@@ -346,7 +346,7 @@ public class CddbProviderFreeDb implements CddbProvider
                     break;
                 }
 
-                String[] splits = line.split("[ ]");
+                String[] splits = line.split(" ");
 
                 if (splits.length < 2)
                 {

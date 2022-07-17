@@ -111,7 +111,7 @@ public class DiskID
         else
         {
             // Letzter Track erhält seine Länge durch Gesamtzeit - Laufzeit vorheriger Titel.
-            int vorherigeFrames = this.trackOffsets[this.trackOffsets.length - 1] - -this.offset;
+            int vorherigeFrames = this.trackOffsets[this.trackOffsets.length - 1] - this.offset;
             int vorherigeSeconds = vorherigeFrames / framesPerSecond;
             trackSeconds = this.seconds - vorherigeSeconds;
         }

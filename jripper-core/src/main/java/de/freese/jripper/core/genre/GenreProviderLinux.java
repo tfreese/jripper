@@ -52,7 +52,7 @@ public class GenreProviderLinux extends AbstractProcess implements GenreProvider
     @Override
     public void monitorProcess(final String line)
     {
-        String[] splits = line.split("[ ]", 2);
+        String[] splits = line.split(" ", 2);
 
         this.genres.add(splits[1]);
     }
