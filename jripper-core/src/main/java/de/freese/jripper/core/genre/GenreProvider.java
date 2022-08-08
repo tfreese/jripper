@@ -18,7 +18,7 @@ public interface GenreProvider extends OSProvider
      *
      * @return {@link DiskID}
      *
-     * @throws Exception Falls was schief geht.
+     * @throws Exception Falls was schiefgeht.
      */
     Set<String> getGenres() throws Exception;
 }

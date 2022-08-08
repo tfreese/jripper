@@ -7,9 +7,8 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
-import org.slf4j.Logger;
-
 import de.freese.jripper.core.JRipper;
+import org.slf4j.Logger;
 
 /**
  * Basisklasse für alle Implementierungen die den {@link ProcessBuilder} verwenden.
@@ -53,7 +52,7 @@ public abstract class AbstractProcess
      * @param command {@link List}
      * @param monitor {@link ProcessMonitor}
      *
-     * @throws Exception Falls was schief geht.
+     * @throws Exception Falls was schiefgeht.
      */
     protected void execute(final List<String> command, final File directory, final ProcessMonitor monitor) throws Exception
     {

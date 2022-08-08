@@ -18,7 +18,7 @@ public interface DiskIDProvider extends OSProvider
      *
      * @return {@link DiskID}
      *
-     * @throws Exception Falls was schief geht.
+     * @throws Exception Falls was schiefgeht.
      */
     DiskID getDiskID(String device) throws Exception;
 }

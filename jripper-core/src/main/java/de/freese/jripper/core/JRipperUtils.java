@@ -38,7 +38,7 @@ public final class JRipperUtils
      *
      * @param path {@link Path}
      *
-     * @throws IOException Falls was schief geht.
+     * @throws IOException Falls was schiefgeht.
      */
     public static void deleteDirectoryRecursiv(final Path path) throws IOException
     {
@@ -85,7 +85,7 @@ public final class JRipperUtils
      *
      * @return {@link File}
      *
-     * @throws IOException Falls was schief geht.
+     * @throws IOException Falls was schiefgeht.
      */
     public static File getFlacDir(final Album album, final boolean createOrDelete) throws IOException
     {
@@ -108,7 +108,7 @@ public final class JRipperUtils
      *
      * @return {@link File}
      *
-     * @throws IOException Falls was schief geht.
+     * @throws IOException Falls was schiefgeht.
      */
     public static File getMp3Dir(final Album album, final boolean createOrDelete) throws IOException
     {
@@ -139,7 +139,7 @@ public final class JRipperUtils
      *
      * @return {@link File}
      *
-     * @throws IOException Falls was schief geht.
+     * @throws IOException Falls was schiefgeht.
      */
     public static File getWavDir(final Album album, final boolean createOrDelete) throws IOException
     {
@@ -388,7 +388,7 @@ public final class JRipperUtils
      * @param album {@link Album}
      * @param directory {@link File}
      *
-     * @throws IOException Falls was schief geht.
+     * @throws IOException Falls was schiefgeht.
      */
     private static void createOrCleanDir(final Album album, final File directory) throws IOException
     {

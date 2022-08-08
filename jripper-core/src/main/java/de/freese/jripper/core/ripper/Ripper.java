@@ -20,7 +20,7 @@ public interface Ripper extends OSProvider
      * @param directory {@link File}
      * @param monitor {@link ProcessMonitor}
      *
-     * @throws Exception Falls was schief geht.
+     * @throws Exception Falls was schiefgeht.
      */
     void rip(String device, File directory, ProcessMonitor monitor) throws Exception;
 }

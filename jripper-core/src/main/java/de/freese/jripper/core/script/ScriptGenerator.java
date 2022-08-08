@@ -17,7 +17,7 @@ public interface ScriptGenerator
      *
      * @param script {@link File}
      *
-     * @throws Exception Falls was schief geht.
+     * @throws Exception Falls was schiefgeht.
      */
     void execute(File script) throws Exception;
 
@@ -29,7 +29,7 @@ public interface ScriptGenerator
      *
      * @return {@link File}
      *
-     * @throws Exception Falls was schief geht.
+     * @throws Exception Falls was schiefgeht.
      */
     File generate(Album album, File folder) throws Exception;
 }

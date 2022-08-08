@@ -19,7 +19,7 @@ public interface Encoder extends OSProvider
      * @param directory {@link File}
      * @param monitor {@link ProcessMonitor}
      *
-     * @throws Exception Falls was schief geht.
+     * @throws Exception Falls was schiefgeht.
      */
     void encode(Album album, File directory, ProcessMonitor monitor) throws Exception;
 

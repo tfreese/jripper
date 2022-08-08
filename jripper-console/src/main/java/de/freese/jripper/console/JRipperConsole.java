@@ -34,7 +34,7 @@ public class JRipperConsole
     /**
      * @param args String[]
      *
-     * @throws UnsupportedEncodingException Falls was schief geht.
+     * @throws UnsupportedEncodingException Falls was schiefgeht.
      */
     public static void main(final String[] args) throws UnsupportedEncodingException
     {
@@ -58,7 +58,7 @@ public class JRipperConsole
     /**
      * Erstellt ein neues {@link JRipperConsole} Object.
      *
-     * @throws UnsupportedEncodingException Falls was schief geht.
+     * @throws UnsupportedEncodingException Falls was schiefgeht.
      */
     public JRipperConsole() throws UnsupportedEncodingException
     {
@@ -176,7 +176,7 @@ public class JRipperConsole
 
         if ("2".equals(input))
         {
-            // Notwendig um aus den switch-case raus zukommen.
+            // Notwendig um aus den switch-case rauszukommen.
             showEditMenu();
         }
         else
@@ -191,7 +191,7 @@ public class JRipperConsole
      * @param encoder {@link Encoder}
      * @param directory {@link File}
      *
-     * @throws Exception Falls was schief geht.
+     * @throws Exception Falls was schiefgeht.
      */
     private void encode(final Album album, final PrintWriter printWriter, final Encoder encoder, final File directory) throws Exception
     {
@@ -214,7 +214,7 @@ public class JRipperConsole
      *
      * @return {@link DiskID}
      *
-     * @throws Exception Falls was schief geht.
+     * @throws Exception Falls was schiefgeht.
      */
     private DiskID getDiskID() throws Exception
     {
@@ -228,7 +228,7 @@ public class JRipperConsole
      *
      * @return String
      *
-     * @throws Exception Falls was schief geht.
+     * @throws Exception Falls was schiefgeht.
      */
     private String getInput() throws Exception
     {
@@ -281,7 +281,7 @@ public class JRipperConsole
      *
      * @return String
      *
-     * @throws Exception Falls was schief geht.
+     * @throws Exception Falls was schiefgeht.
      */
     private String queryCDDB(final DiskID diskID) throws Exception
     {
@@ -298,7 +298,7 @@ public class JRipperConsole
      *
      * @return {@link Album}
      *
-     * @throws Exception Falls was schief geht.
+     * @throws Exception Falls was schiefgeht.
      */
     private Album readCDDB(final DiskID diskID, final String genre) throws Exception
     {
@@ -311,7 +311,7 @@ public class JRipperConsole
      * @param album {@link Album}
      * @param printWriter {@link PrintWriter}
      *
-     * @throws Exception Falls was schief geht.
+     * @throws Exception Falls was schiefgeht.
      */
     private void rip(final Album album, final PrintWriter printWriter) throws Exception
     {
@@ -463,7 +463,7 @@ public class JRipperConsole
 
         if ("h".equals(input))
         {
-            // Notwendig um aus den switch-case raus zukommen.
+            // Notwendig um aus den switch-case rauszukommen.
             showMainMenu();
         }
         else

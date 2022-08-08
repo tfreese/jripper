@@ -18,7 +18,7 @@ public interface CddbProvider
      *
      * @return {@link CddbResponse}
      *
-     * @throws Exception Falls was schief geht.
+     * @throws Exception Falls was schiefgeht.
      */
     CddbResponse queryAlbum(DiskID diskID, String genre) throws Exception;
 
@@ -29,7 +29,7 @@ public interface CddbProvider
      *
      * @return {@link CddbResponse}
      *
-     * @throws Exception Falls was schief geht.
+     * @throws Exception Falls was schiefgeht.
      */
     CddbResponse queryGenres(DiskID diskID) throws Exception;
 }

@@ -43,7 +43,7 @@ class TestCddbProvider
     }
 
     /**
-     * @throws Exception Falls was schief geht.
+     * @throws Exception Falls was schiefgeht.
      */
     @Test
     void testID1() throws Exception
@@ -73,7 +73,7 @@ class TestCddbProvider
     }
 
     /**
-     * @throws Exception Falls was schief geht.
+     * @throws Exception Falls was schiefgeht.
      */
     @Test
     void testID2() throws Exception
