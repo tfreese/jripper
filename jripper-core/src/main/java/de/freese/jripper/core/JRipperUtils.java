@@ -52,7 +52,7 @@ public final class JRipperUtils
             throw new IllegalArgumentException("path is not a dirctory: " + path);
         }
 
-        Files.walkFileTree(path, new SimpleFileVisitor<Path>()
+        Files.walkFileTree(path, new SimpleFileVisitor<>()
         {
             /**
              * @see java.nio.file.SimpleFileVisitor#postVisitDirectory(java.lang.Object, java.io.IOException)

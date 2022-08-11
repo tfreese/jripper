@@ -2,6 +2,7 @@
 package de.freese.jripper.swing.table;
 
 import java.awt.Component;
+import java.io.Serial;
 
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
@@ -18,6 +19,7 @@ public class AlbumTableRenderer extends DefaultTableCellRenderer
     /**
      *
      */
+    @Serial
     private static final long serialVersionUID = 8126334909300540593L;
 
     /**

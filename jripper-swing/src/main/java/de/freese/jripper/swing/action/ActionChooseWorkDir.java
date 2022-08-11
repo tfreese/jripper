@@ -4,6 +4,7 @@ package de.freese.jripper.swing.action;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.io.File;
+import java.io.Serial;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -21,6 +22,7 @@ public class ActionChooseWorkDir extends AbstractAction
     /**
      *
      */
+    @Serial
     private static final long serialVersionUID = 3262325088354448846L;
     /**
      *

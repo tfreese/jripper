@@ -1,6 +1,7 @@
 // Created: 24.10.2018
 package de.freese.jripper.swing.table;
 
+import java.io.Serial;
 import java.util.List;
 
 import de.freese.binding.collections.ObservableList;
@@ -15,6 +16,7 @@ public class AlbumTableModel extends AbstractObservableListTableModel<Track>
     /**
      *
      */
+    @Serial
     private static final long serialVersionUID = -9186435568274885834L;
 
     /**

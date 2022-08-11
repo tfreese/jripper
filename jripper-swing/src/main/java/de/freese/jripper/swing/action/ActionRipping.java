@@ -2,6 +2,7 @@
 package de.freese.jripper.swing.action;
 
 import java.awt.event.ActionEvent;
+import java.io.Serial;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -20,6 +21,7 @@ public class ActionRipping extends AbstractAction
     /**
      *
      */
+    @Serial
     private static final long serialVersionUID = -4794748623915093242L;
     /**
      *
