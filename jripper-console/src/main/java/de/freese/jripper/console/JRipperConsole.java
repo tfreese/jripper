@@ -176,7 +176,7 @@ public class JRipperConsole
 
         if ("2".equals(input))
         {
-            // Notwendig um aus den switch-case rauszukommen.
+            // Notwendig um aus den switch-case herauszukommen.
             showEditMenu();
         }
         else
@@ -459,7 +459,7 @@ public class JRipperConsole
 
         if ("h".equals(input))
         {
-            // Notwendig um aus den switch-case rauszukommen.
+            // Notwendig um aus den switch-case herauszukommen.
             showMainMenu();
         }
         else
