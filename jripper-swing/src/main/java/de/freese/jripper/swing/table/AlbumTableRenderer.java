@@ -33,14 +33,12 @@ public class AlbumTableRenderer extends DefaultTableCellRenderer
 
         switch (column)
         {
-            case 0, 3:
-                setHorizontalAlignment(SwingConstants.RIGHT);
-                break;
-            case 1, 2:
-                setHorizontalAlignment(SwingConstants.LEFT);
-                break;
-            default:
-                break;
+            case 0, 3 -> setHorizontalAlignment(SwingConstants.RIGHT);
+            case 1, 2 -> setHorizontalAlignment(SwingConstants.LEFT);
+            default ->
+            {
+                // Empty
+            }
         }
 
         return this;

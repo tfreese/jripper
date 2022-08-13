@@ -126,7 +126,7 @@ public class DiskID
     {
         Objects.requireNonNull(diskID, "diskID required");
 
-        String[] splits = diskID.split("[ ]");
+        String[] splits = diskID.split(" ");
         this.id = splits[0];
         this.trackCount = Integer.parseInt(splits[1]);
         this.offset = Integer.parseInt(splits[2]);

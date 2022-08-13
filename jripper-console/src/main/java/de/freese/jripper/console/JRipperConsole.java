@@ -257,15 +257,11 @@ public class JRipperConsole
 
                 switch (params[i].toString())
                 {
-                    case AnsiCodes.ANSI_CYAN:
-                    case AnsiCodes.ANSI_GREEN:
-                    case AnsiCodes.ANSI_RED:
-                    case AnsiCodes.ANSI_RESET:
-                        params[i] = "";
-                        break;
-
-                    default:
-                        break;
+                    case AnsiCodes.ANSI_CYAN, AnsiCodes.ANSI_GREEN, AnsiCodes.ANSI_RED, AnsiCodes.ANSI_RESET -> params[i] = "";
+                    default ->
+                    {
+                        // Empty
+                    }
                 }
             }
         }

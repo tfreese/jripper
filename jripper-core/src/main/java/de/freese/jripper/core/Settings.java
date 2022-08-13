@@ -53,7 +53,7 @@ public final class Settings
     /**
      *
      */
-    private List<Integer> mp3BitRates;
+    private final List<Integer> mp3BitRates;
     /**
      *
      */

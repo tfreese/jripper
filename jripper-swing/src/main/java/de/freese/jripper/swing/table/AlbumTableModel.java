@@ -40,24 +40,19 @@ public class AlbumTableModel extends AbstractObservableListTableModel<Track>
 
         switch (columnIndex)
         {
-            case 0:
-                value = track.getNumber();
-                break;
-            case 1:
-                value = track.getArtist();
-                break;
-            case 2:
-                value = track.getTitle();
-                break;
-            case 3:
+            case 0 -> value = track.getNumber();
+            case 1 -> value = track.getArtist();
+            case 2 -> value = track.getTitle();
+            case 3 ->
+            {
                 int minutes = track.getSeconds() / 60;
                 int seconds = track.getSeconds() % 60;
-
                 value = String.format("%d:%02d", minutes, seconds);
-                break;
-
-            default:
-                break;
+            }
+            default ->
+            {
+                // Empty
+            }
         }
 
         return value;
