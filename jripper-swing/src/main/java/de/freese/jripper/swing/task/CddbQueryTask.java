@@ -86,7 +86,7 @@ public class CddbQueryTask extends SwingWorker<CddbResponse, Void>
         }
         catch (Exception ex)
         {
-            JRipperSwing.LOGGER.error(null, ex);
+            JRipperSwing.LOGGER.error(ex.getMessage(), ex);
         }
     }
 }

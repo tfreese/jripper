@@ -62,7 +62,7 @@ public class LoadGenresTask extends SwingWorker<Set<String>, Void>
         }
         catch (Exception ex)
         {
-            JRipperSwing.LOGGER.error(null, ex);
+            JRipperSwing.LOGGER.error(ex.getMessage(), ex);
         }
     }
 }

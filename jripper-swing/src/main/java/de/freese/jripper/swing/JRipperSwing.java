@@ -87,6 +87,7 @@ public class JRipperSwing
             System.exit(0);
         }
     }
+
     /**
      *
      */
@@ -475,7 +476,7 @@ public class JRipperSwing
         }
         catch (Exception ex)
         {
-            LOGGER.error(null, ex);
+            LOGGER.error(ex.getMessage(), ex);
         }
 
         UIManager.put("FileChooser.useSystemIcons", Boolean.TRUE);
