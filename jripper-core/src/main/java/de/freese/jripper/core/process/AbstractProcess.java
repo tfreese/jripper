@@ -29,7 +29,7 @@ public abstract class AbstractProcess
      */
     private Thread createShutDownHook(final Process process)
     {
-        Thread t = new Thread()
+        return new Thread()
         {
             /**
              * @see java.lang.Thread#run()
@@ -43,8 +43,6 @@ public abstract class AbstractProcess
                 }
             }
         };
-
-        return t;
     }
 
     /**

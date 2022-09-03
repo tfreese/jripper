@@ -1,9 +1,6 @@
 // Created: 07.10.2013
 package de.freese.jripper.core;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import de.freese.jripper.core.cddb.CddbProvider;
 import de.freese.jripper.core.cddb.CddbProviderFreeDb;
 import de.freese.jripper.core.diskid.DiskIDProvider;
@@ -15,6 +12,8 @@ import de.freese.jripper.core.genre.GenreProvider;
 import de.freese.jripper.core.genre.GenreProviderLinux;
 import de.freese.jripper.core.ripper.Ripper;
 import de.freese.jripper.core.ripper.RipperFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Zentrale Klasse.
@@ -30,7 +29,7 @@ public final class JRipper
     /**
      *
      */
-    public static final Logger LOGGER = LoggerFactory.getLogger("JRipper");
+    private static final Logger LOGGER = LoggerFactory.getLogger("JRipper");
 
     /**
      * @return {@link JRipper}

@@ -382,8 +382,8 @@ public final class JRipperUtils
 
     /**
      * Erzeugt, wenn nicht vorhanden, das Verzeichnis für die Dateien.<br>
-     * Format: ArbeitsVerzeichnis/ALBUMTITEL/PFAD<br>
      * Vorhandene Daten werden gelöscht.
+     * Format: ArbeitsVerzeichnis/ALBUMTITEL/PFAD<br>
      *
      * @param album {@link Album}
      * @param directory {@link File}

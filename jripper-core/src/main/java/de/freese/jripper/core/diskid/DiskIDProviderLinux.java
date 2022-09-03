@@ -46,9 +46,7 @@ public class DiskIDProviderLinux extends AbstractProcess implements DiskIDProvid
             throw new IllegalStateException("no music cd found");
         }
 
-        DiskID diskID = new DiskID(id);
-
-        return diskID;
+        return new DiskID(id);
     }
 
     /**

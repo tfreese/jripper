@@ -18,7 +18,7 @@ public class CddbResponse
      */
     public static final int EXACT_MATCHES = 210;
     /**
-     * Nicht exakte Treffer -> ungleiche/nicht exakte DiskID.
+     * Nicht exakte Treffer, dann ungleiche/nicht exakte DiskID.
      */
     public static final int INEXACT_MATCHES = 211;
     /**
@@ -34,8 +34,8 @@ public class CddbResponse
      */
     public static final int SYNTAX_ERROR = 500;
     /**
-    *
-    */
+     *
+     */
     private Album album;
     /**
      *

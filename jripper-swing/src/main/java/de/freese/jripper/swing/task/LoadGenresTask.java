@@ -42,9 +42,8 @@ public class LoadGenresTask extends SwingWorker<Set<String>, Void>
     protected Set<String> doInBackground() throws Exception
     {
         GenreProvider genreProvider = JRipper.getInstance().getGenreProvider();
-        Set<String> genres = genreProvider.getGenres();
 
-        return genres;
+        return genreProvider.getGenres();
     }
 
     /**

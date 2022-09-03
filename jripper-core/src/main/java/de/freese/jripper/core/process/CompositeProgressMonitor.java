@@ -27,18 +27,13 @@ public class CompositeProgressMonitor implements ProcessMonitor
     }
 
     /**
-     * Hinzufügern neuer Monitore.
-     *
-     * @param monitor {@link ProcessMonitor}
-     * @param monitore {@link ProcessMonitor}[]
+     * Hinzufügen neuer Monitore.
      */
-    public void addMonitor(final ProcessMonitor monitor, final ProcessMonitor...monitore)
+    public void addMonitor(final ProcessMonitor monitor)
     {
-        this.monitore.add(monitor);
-
-        for (ProcessMonitor pm : monitore)
+        if (!this.monitore.contains(monitor))
         {
-            this.monitore.add(pm);
+            this.monitore.add(monitor);
         }
     }
 
@@ -48,10 +43,7 @@ public class CompositeProgressMonitor implements ProcessMonitor
     @Override
     public void monitorProcess(final String line)
     {
-        for (ProcessMonitor monitor : this.monitore)
-        {
-            monitor.monitorProcess(line);
-        }
+        this.monitore.forEach(m -> m.monitorProcess(line));
     }
 
     /**
@@ -60,9 +52,6 @@ public class CompositeProgressMonitor implements ProcessMonitor
     @Override
     public void monitorText(final String line)
     {
-        for (ProcessMonitor monitor : this.monitore)
-        {
-            monitor.monitorText(line);
-        }
+        this.monitore.forEach(m -> m.monitorText(line));
     }
 }
