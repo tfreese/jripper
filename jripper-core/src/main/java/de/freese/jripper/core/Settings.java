@@ -7,7 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Klasse mit der Konfiguation.
+ * Klasse mit der Konfiguration.
  *
  * @author Thomas Freese
  */
@@ -70,10 +70,7 @@ public final class Settings
     {
         super();
 
-        setWorkDir(System.getProperty("java.io.tmpdir") + "/jripper");
-        // setWorkDir(System.getProperty("user.home") + "/mediathek/neues/jripper");
-        // setWorkDir(System.getProperty("user.dir") + "/jripper");
-        // setWorkDir(System.getProperty("user.home") + "/jripper");
+        setWorkDir(System.getProperty("java.io.tmpdir") + "/jRipper");
 
         setDevice(JRipperUtils.detectCdDevice());
         setFramesPerSecond(75);

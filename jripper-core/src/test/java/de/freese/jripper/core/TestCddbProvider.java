@@ -63,8 +63,6 @@ class TestCddbProvider
 
         CddbResponse response = cddbProvider.queryGenres(diskID);
         assertNotNull(response);
-        // assertNotNull(response.getGenres());
-        // assertTrue(!response.getGenres().isEmpty());
 
         response = cddbProvider.queryAlbum(diskID, "rock");
         assertNotNull(response);
@@ -116,7 +114,7 @@ class TestCddbProvider
 
         if ((device == null) || device.isBlank())
         {
-            // Buildserver haben nicht zwangsläufig ein DVD-Laufwerk.
+            // BuildServer haben nicht zwangsläufig ein DVD-Laufwerk.
             return;
         }
 

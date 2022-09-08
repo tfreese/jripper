@@ -40,7 +40,7 @@ public final class JRipperUtils
      *
      * @throws IOException Falls was schiefgeht.
      */
-    public static void deleteDirectoryRecursiv(final Path path) throws IOException
+    public static void deleteDirectoryRecursive(final Path path) throws IOException
     {
         if (!Files.exists(path))
         {
@@ -49,7 +49,7 @@ public final class JRipperUtils
 
         if (!Files.isDirectory(path))
         {
-            throw new IllegalArgumentException("path is not a dirctory: " + path);
+            throw new IllegalArgumentException("path is not a directory: " + path);
         }
 
         Files.walkFileTree(path, new SimpleFileVisitor<>()
@@ -394,7 +394,7 @@ public final class JRipperUtils
     {
         if (directory.exists())
         {
-            deleteDirectoryRecursiv(directory.toPath());
+            deleteDirectoryRecursive(directory.toPath());
         }
         else
         {

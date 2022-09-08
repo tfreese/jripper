@@ -2,7 +2,7 @@
 package de.freese.jripper.core;
 
 /**
- * Interface für alle Betriebssystem gestützen Services.
+ * Interface für alle Betriebssystem gestützten Services.
  *
  * @author Thomas Freese
  */

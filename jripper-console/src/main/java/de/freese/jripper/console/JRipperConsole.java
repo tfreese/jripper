@@ -352,7 +352,7 @@ public class JRipperConsole
         showAlbum(this.album);
 
         print("%s\n", "*****************");
-        print("%s\n", "Album Editmenü");
+        print("%s\n", "Album Edit-Menü");
         print("%s\n", "*****************");
 
         print("%s%s%s \t%s\n", AnsiCodes.ANSI_CYAN, "aa", AnsiCodes.ANSI_RESET, "Album Artist");
