@@ -1,8 +1,23 @@
 // Tasks im SubModul ausführen: gradle MODUL:clean build
+buildscript {
+    // Für Plugins
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        gradlePluginPortal() // maven { url "https://plugins.gradle.org/m2"; name "plugins-gradle" }
+    }
+
+    dependencies {
+        classpath "de.freese.gradle:gradle-plugins:0.0.1-SNAPSHOT"
+        classpath "io.spring.gradle:dependency-management-plugin:$version_springDependencyManagement"
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:$version_springBoot"
+    }
+}
 
 subprojects {
     apply plugin: "java"
     apply plugin: "io.spring.dependency-management"
+    apply plugin: "de.freese.gradle.plugin.conventions"
 
     dependencyManagement {
         imports {
@@ -53,12 +68,12 @@ project("jripper-swing") {
 
         implementation("de.freese:binding:$project.version")
     }
-	
-	// Start: gradle bootRun --args="--spring.profiles.active=dev"
-	// The archive name. If the name has not been explicitly set, the pattern for the name is:
-	// [archiveBaseName]-[archiveAppendix]-[archiveVersion]-[archiveClassifier].[archiveExtension]
-	// archiveFileName = "my-boot.jar"	
-	bootJar {
-	    mainClass = "de.freese.jripper.swing.JRipperSwing"
-	}
+
+    // Start: gradle bootRun --args="--spring.profiles.active=dev"
+    // The archive name. If the name has not been explicitly set, the pattern for the name is:
+    // [archiveBaseName]-[archiveAppendix]-[archiveVersion]-[archiveClassifier].[archiveExtension]
+    // archiveFileName = "my-boot.jar"
+    bootJar {
+        mainClass = "de.freese.jripper.swing.JRipperSwing"
+    }
 }
