@@ -32,6 +32,19 @@
         <tag>HEAD</tag>
     </scm>
 
+    <developers>
+        <developer>
+            <id>tfreese</id>
+            <name>Thomas Freese</name>
+            <url>${project.organization.url}</url>
+            <roles>
+                <role>developer</role>
+                <role>architect</role>
+            </roles>
+            <timezone>+2</timezone>
+        </developer>
+    </developers>
+
     <modules>
         <module>jripper-core</module>
         <module>jripper-console</module>
