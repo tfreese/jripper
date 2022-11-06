@@ -15,12 +15,6 @@ public interface Ripper extends OSProvider
 {
     /**
      * Auslesen der CD in das Verzeichnis.
-     *
-     * @param device String
-     * @param directory {@link File}
-     * @param monitor {@link ProcessMonitor}
-     *
-     * @throws Exception Falls was schiefgeht.
      */
     void rip(String device, File directory, ProcessMonitor monitor) throws Exception;
 }

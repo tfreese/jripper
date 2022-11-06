@@ -18,11 +18,6 @@ import de.freese.jripper.core.model.Album;
  */
 public final class JRipperUtils
 {
-    /**
-     * @param value String
-     *
-     * @return String
-     */
     public static String capitalize(final String value)
     {
         if ((value == null) || value.isBlank())
@@ -35,10 +30,6 @@ public final class JRipperUtils
 
     /**
      * Löscht das Verzeichnis rekursiv inklusive Dateien und Unterverzeichnisse.
-     *
-     * @param path {@link Path}
-     *
-     * @throws IOException Falls was schiefgeht.
      */
     public static void deleteDirectoryRecursive(final Path path) throws IOException
     {
@@ -78,14 +69,7 @@ public final class JRipperUtils
 
     /**
      * Liefert das Verzeichnis für die flac-Dateien.<br>
-     * Format: ArbeitsVerzeichnis/ALBUMTITEL/flac
-     *
-     * @param album {@link Album}
-     * @param createOrDelete boolean; erzeugt das Verzeichnis oder löscht vorhandene Dateien.
-     *
-     * @return {@link File}
-     *
-     * @throws IOException Falls was schiefgeht.
+     * Format: Arbeitsverzeichnis/ALBUMTITEL/flac
      */
     public static File getFlacDir(final Album album, final boolean createOrDelete) throws IOException
     {
@@ -101,14 +85,7 @@ public final class JRipperUtils
 
     /**
      * Liefert das Verzeichnis für die mp3-Dateien.<br>
-     * Format: ArbeitsVerzeichnis/ALBUMTITEL/mp3
-     *
-     * @param album {@link Album}
-     * @param createOrDelete boolean; erzeugt das Verzeichnis oder löscht vorhandene Dateien.
-     *
-     * @return {@link File}
-     *
-     * @throws IOException Falls was schiefgeht.
+     * Format: Arbeitsverzeichnis/ALBUMTITEL/mp3
      */
     public static File getMp3Dir(final Album album, final boolean createOrDelete) throws IOException
     {
@@ -122,9 +99,6 @@ public final class JRipperUtils
         return dir;
     }
 
-    /**
-     * @return String
-     */
     public static String getOsName()
     {
         return System.getProperty("os.name");
@@ -132,14 +106,7 @@ public final class JRipperUtils
 
     /**
      * Liefert das Verzeichnis für die wav-Dateien.<br>
-     * Format: ArbeitsVerzeichnis/ALBUMTITEL/wav
-     *
-     * @param album {@link Album}
-     * @param createOrDelete boolean; erzeugt das Verzeichnis oder löscht vorhandene Dateien.
-     *
-     * @return {@link File}
-     *
-     * @throws IOException Falls was schiefgeht.
+     * Format: Arbeitsverzeichnis/ALBUMTITEL/wav
      */
     public static File getWavDir(final Album album, final boolean createOrDelete) throws IOException
     {
@@ -155,11 +122,7 @@ public final class JRipperUtils
 
     /**
      * Erzeugt, wenn nicht vorhanden, das Verzeichnis für die Dateien.<br>
-     * Format: ArbeitsVerzeichnis/ALBUMTITEL
-     *
-     * @param album {@link Album}
-     *
-     * @return {@link File}
+     * Format: Arbeitsverzeichnis/ALBUMTITEL
      */
     public static File getWorkDir(final Album album)
     {
@@ -181,17 +144,12 @@ public final class JRipperUtils
 
     /**
      * Liefert true, wenn JRipper in der IDE ausgeführt wird.
-     *
-     * @return boolean
      */
     public static boolean isDevelopment()
     {
         return System.getProperty("dev.env") != null;
     }
 
-    /**
-     * @return boolean
-     */
     public static boolean isLinux()
     {
         String os = getOsName().toLowerCase();
@@ -199,11 +157,6 @@ public final class JRipperUtils
         return os.contains("linux");
     }
 
-    /**
-     * @param cs {@link CharSequence}
-     *
-     * @return boolean
-     */
     public static boolean isNumeric(final CharSequence cs)
     {
         if ((cs == null) || cs.isEmpty())
@@ -224,9 +177,6 @@ public final class JRipperUtils
         return true;
     }
 
-    /**
-     * @return boolean
-     */
     public static boolean isWindows()
     {
         String os = getOsName().toLowerCase();
@@ -234,11 +184,6 @@ public final class JRipperUtils
         return os.startsWith("win");
     }
 
-    /**
-     * @param value String
-     *
-     * @return String
-     */
     public static String normalizeSpace(final String value)
     {
         if ((value == null) || value.isBlank())
@@ -256,11 +201,6 @@ public final class JRipperUtils
         return str;
     }
 
-    /**
-     * @param value String
-     *
-     * @return String
-     */
     public static String trim(final String value)
     {
         if ((value == null) || value.isBlank())
@@ -271,11 +211,6 @@ public final class JRipperUtils
         return value.strip();
     }
 
-    /**
-     * @param value String
-     *
-     * @return String
-     */
     public static String uncapitalize(final String value)
     {
         if ((value == null) || value.isBlank())
@@ -288,10 +223,6 @@ public final class JRipperUtils
 
     /**
      * Liefert einen gültigen Dateinamen ohne mehrfache Spaces, '/' und andere Sonderzeichen.
-     *
-     * @param fileName String
-     *
-     * @return String
      */
     public static String validateFileName(final String fileName)
     {
@@ -304,8 +235,6 @@ public final class JRipperUtils
 
     /**
      * Versucht in Abhängigkeit des Betriebssystems das CD/DVD-Laufwerk zu finden und liefert das erste CD/DVD-Laufwerk.
-     *
-     * @return String
      */
     static String detectCdDevice()
     {
@@ -383,12 +312,7 @@ public final class JRipperUtils
     /**
      * Erzeugt, wenn nicht vorhanden, das Verzeichnis für die Dateien.<br>
      * Vorhandene Daten werden gelöscht.
-     * Format: ArbeitsVerzeichnis/ALBUMTITEL/PFAD<br>
-     *
-     * @param album {@link Album}
-     * @param directory {@link File}
-     *
-     * @throws IOException Falls was schiefgeht.
+     * Format: Arbeitsverzeichnis/ALBUMTITEL/PFAD<br>
      */
     private static void createOrCleanDir(final Album album, final File directory) throws IOException
     {
@@ -402,9 +326,6 @@ public final class JRipperUtils
         }
     }
 
-    /**
-     * Erstellt ein neues {@link JRipperUtils} Object.
-     */
     private JRipperUtils()
     {
         super();

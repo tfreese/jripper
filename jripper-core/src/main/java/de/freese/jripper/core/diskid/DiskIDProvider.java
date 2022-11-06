@@ -13,12 +13,6 @@ public interface DiskIDProvider extends OSProvider
 {
     /**
      * Liefert die DiskID der CD.
-     *
-     * @param device String
-     *
-     * @return {@link DiskID}
-     *
-     * @throws Exception Falls was schiefgeht.
      */
     DiskID getDiskID(String device) throws Exception;
 }

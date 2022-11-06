@@ -13,15 +13,10 @@ import de.freese.jripper.core.JRipperUtils;
  */
 public final class RipperFactory
 {
-    /**
-     *
-     */
     private static final ServiceLoader<Ripper> SERVICE_LOADER = ServiceLoader.load(Ripper.class);
 
     /**
      * Je nach Betriebssystem wird die entsprechende Implementierung geliefert.
-     *
-     * @return {@link Ripper}
      */
     public static Ripper getInstance()
     {
@@ -44,9 +39,6 @@ public final class RipperFactory
         return impl;
     }
 
-    /**
-     * Erstellt ein neues {@link RipperFactory} Object.
-     */
     private RipperFactory()
     {
         super();

@@ -17,16 +17,8 @@ import org.slf4j.Logger;
  */
 public abstract class AbstractProcess
 {
-    /**
-     *
-     */
     public final Logger logger = JRipper.getInstance().getLogger();// LoggerFactory.getLogger(getClass());
 
-    /**
-     * @param process {@link Process}
-     *
-     * @return {@link Thread}
-     */
     private Thread createShutDownHook(final Process process)
     {
         return new Thread()
@@ -45,13 +37,6 @@ public abstract class AbstractProcess
         };
     }
 
-    /**
-     * @param directory File
-     * @param command {@link List}
-     * @param monitor {@link ProcessMonitor}
-     *
-     * @throws Exception Falls was schiefgeht.
-     */
     protected void execute(final List<String> command, final File directory, final ProcessMonitor monitor) throws Exception
     {
         if (!directory.exists())
@@ -92,9 +77,6 @@ public abstract class AbstractProcess
         }
     }
 
-    /**
-     * @return {@link Logger}
-     */
     protected Logger getLogger()
     {
         return this.logger;

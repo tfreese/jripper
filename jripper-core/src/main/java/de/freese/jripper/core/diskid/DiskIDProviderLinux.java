@@ -18,9 +18,6 @@ import de.freese.jripper.core.process.ProcessMonitor;
  */
 public class DiskIDProviderLinux extends AbstractProcess implements DiskIDProvider, ProcessMonitor
 {
-    /**
-     *
-     */
     private StringBuilder sb;
 
     /**

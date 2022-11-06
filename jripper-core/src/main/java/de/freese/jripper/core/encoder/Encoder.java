@@ -14,17 +14,7 @@ import de.freese.jripper.core.process.ProcessMonitor;
  */
 public interface Encoder extends OSProvider
 {
-    /**
-     * @param album {@link Album}
-     * @param directory {@link File}
-     * @param monitor {@link ProcessMonitor}
-     *
-     * @throws Exception Falls was schiefgeht.
-     */
     void encode(Album album, File directory, ProcessMonitor monitor) throws Exception;
 
-    /**
-     * @return {@link EncoderFormat}
-     */
     EncoderFormat getFormat();
 }

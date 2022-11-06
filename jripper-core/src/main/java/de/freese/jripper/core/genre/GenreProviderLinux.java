@@ -19,9 +19,6 @@ import de.freese.jripper.core.process.ProcessMonitor;
  */
 public class GenreProviderLinux extends AbstractProcess implements GenreProvider, ProcessMonitor
 {
-    /**
-     *
-     */
     private final Set<String> genres = new TreeSet<>();
 
     /**

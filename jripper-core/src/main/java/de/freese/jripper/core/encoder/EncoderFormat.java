@@ -8,12 +8,6 @@ package de.freese.jripper.core.encoder;
  */
 public enum EncoderFormat
 {
-    /**
-     *
-     */
     FLAC,
-    /**
-     *
-     */
     MP3
 }

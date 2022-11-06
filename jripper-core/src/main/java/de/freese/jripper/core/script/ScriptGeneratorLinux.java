@@ -131,11 +131,7 @@ public class ScriptGeneratorLinux extends AbstractProcess implements ScriptGener
     }
 
     /**
-     * Formattiert den Pfad des Albums.
-     *
-     * @param album {@link Album}
-     *
-     * @return String
+     * Formatiert den Pfad des Albums.
      */
     private String getPath(final Album album)
     {
@@ -146,10 +142,6 @@ public class ScriptGeneratorLinux extends AbstractProcess implements ScriptGener
         return album.getTitle();
     }
 
-    /**
-     * @param pw {@link PrintWriter}
-     * @param album {@link Album}
-     */
     private void writeFLAC(final PrintWriter pw, final Album album)
     {
         String diskID = album.getDiskID().getID();
@@ -203,10 +195,6 @@ public class ScriptGeneratorLinux extends AbstractProcess implements ScriptGener
         pw.println("echo \"...done\"");
     }
 
-    /**
-     * @param pw {@link PrintWriter}
-     * @param album {@link Album}
-     */
     private void writeMP3(final PrintWriter pw, final Album album)
     {
         String diskID = album.getDiskID().getID();
@@ -261,10 +249,6 @@ public class ScriptGeneratorLinux extends AbstractProcess implements ScriptGener
         pw.println("echo \"...done\"");
     }
 
-    /**
-     * @param pw {@link PrintWriter}
-     * @param programm String
-     */
     private void writeProgramChecks(final PrintWriter pw, final String programm)
     {
         pw.printf("%s=\"$(which %s)\"%n", programm.toUpperCase(), programm);
@@ -278,9 +262,6 @@ public class ScriptGeneratorLinux extends AbstractProcess implements ScriptGener
         pw.printf("readonly %s%n", programm.toUpperCase());
     }
 
-    /**
-     * @param pw {@link PrintWriter}
-     */
     private void writeRip(final PrintWriter pw)
     {
         pw.println();

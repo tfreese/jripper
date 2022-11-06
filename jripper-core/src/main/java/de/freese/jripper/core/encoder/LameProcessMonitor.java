@@ -13,11 +13,6 @@ import de.freese.jripper.core.process.ProcessMonitor;
  */
 public class LameProcessMonitor extends PrintWriterProcessMonitor
 {
-    /**
-     * Erstellt ein neues {@link LameProcessMonitor} Object.
-     *
-     * @param printWriter {@link PrintWriter}
-     */
     public LameProcessMonitor(final PrintWriter printWriter)
     {
         super(printWriter);
@@ -54,6 +49,7 @@ public class LameProcessMonitor extends PrintWriterProcessMonitor
     // kbps LR MS % long switch short %
     // 320.0 74.3 25.7 78.7 11.7 9.7 [A[A[A
     // 400/12453 ( 3%)| 0:00/ 0:29| 0:00/ 0:30| 10.884x| 0:29
+
     /**
      * @see de.freese.jripper.core.process.PrintWriterProcessMonitor#monitorProcess(java.lang.String)
      */

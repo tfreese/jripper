@@ -13,15 +13,10 @@ import de.freese.jripper.core.JRipperUtils;
  */
 public final class DiskIDProviderFactory
 {
-    /**
-     *
-     */
     private static final ServiceLoader<DiskIDProvider> SERVICE_LOADER = ServiceLoader.load(DiskIDProvider.class);
 
     /**
      * Je nach Betriebssystem wird die entsprechende Implementierung geliefert.
-     *
-     * @return {@link DiskIDProvider}
      */
     public static DiskIDProvider getInstance()
     {
@@ -44,9 +39,6 @@ public final class DiskIDProviderFactory
         return impl;
     }
 
-    /**
-     * Erstellt ein neues {@link DiskIDProviderFactory} Object.
-     */
     private DiskIDProviderFactory()
     {
         super();

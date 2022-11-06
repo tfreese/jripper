@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import de.freese.jripper.core.cddb.CddbProvider;
-import de.freese.jripper.core.cddb.CddbProviderFreeDb;
+import de.freese.jripper.core.cddb.CddbProviderGnuDb;
 import de.freese.jripper.core.cddb.CddbResponse;
 import de.freese.jripper.core.diskid.DiskIDProvider;
 import de.freese.jripper.core.diskid.DiskIDProviderFactory;
@@ -42,9 +42,6 @@ class TestCddbProvider
         }
     }
 
-    /**
-     * @throws Exception Falls was schiefgeht.
-     */
     @Test
     void testID1() throws Exception
     {
@@ -59,7 +56,7 @@ class TestCddbProvider
         assertEquals(4374, diskID.getSeconds());
         assertEquals(id, diskID.toString());
 
-        CddbProvider cddbProvider = new CddbProviderFreeDb();
+        CddbProvider cddbProvider = new CddbProviderGnuDb();
 
         CddbResponse response = cddbProvider.queryGenres(diskID);
         assertNotNull(response);
@@ -70,9 +67,6 @@ class TestCddbProvider
         assertEquals(14, response.getAlbum().getTrackCount());
     }
 
-    /**
-     * @throws Exception Falls was schiefgeht.
-     */
     @Test
     void testID2() throws Exception
     {
@@ -87,7 +81,7 @@ class TestCddbProvider
         assertEquals(4090, diskID.getSeconds());
         assertEquals(id, diskID.toString());
 
-        CddbProvider cddbProvider = new CddbProviderFreeDb();
+        CddbProvider cddbProvider = new CddbProviderGnuDb();
 
         CddbResponse response = cddbProvider.queryGenres(diskID);
         assertNotNull(response);
@@ -100,9 +94,6 @@ class TestCddbProvider
         assertEquals(14, response.getAlbum().getTrackCount());
     }
 
-    /**
-     * Linux.
-     */
     @Test
     @EnabledOnOs(
             {

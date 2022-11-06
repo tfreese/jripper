@@ -14,22 +14,11 @@ public interface ScriptGenerator
 {
     /**
      * Führt das Skript aus.
-     *
-     * @param script {@link File}
-     *
-     * @throws Exception Falls was schiefgeht.
      */
     void execute(File script) throws Exception;
 
     /**
      * Erstellt das Skript mit Ausführungsrechten.
-     *
-     * @param album {@link Album}
-     * @param folder {@link File}
-     *
-     * @return {@link File}
-     *
-     * @throws Exception Falls was schiefgeht.
      */
     File generate(Album album, File folder) throws Exception;
 }

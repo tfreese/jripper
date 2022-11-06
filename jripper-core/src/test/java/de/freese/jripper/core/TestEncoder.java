@@ -4,15 +4,14 @@ package de.freese.jripper.core;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.fail;
 
+import de.freese.jripper.core.encoder.Encoder;
+import de.freese.jripper.core.encoder.EncoderFactory;
+import de.freese.jripper.core.encoder.EncoderFormat;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.condition.EnabledOnOs;
 import org.junit.jupiter.api.condition.OS;
-
-import de.freese.jripper.core.encoder.Encoder;
-import de.freese.jripper.core.encoder.EncoderFactory;
-import de.freese.jripper.core.encoder.EncoderFormat;
 
 /**
  * Testklasse für die {@link Encoder}.
@@ -22,9 +21,6 @@ import de.freese.jripper.core.encoder.EncoderFormat;
 @TestMethodOrder(MethodOrderer.MethodName.class)
 class TestEncoder
 {
-    /**
-     *
-     */
     @Test
     @EnabledOnOs(OS.LINUX)
     void testLinuxFlac()
@@ -40,9 +36,6 @@ class TestEncoder
         }
     }
 
-    /**
-     *
-     */
     @Test
     @EnabledOnOs(OS.LINUX)
     void testLinuxMp3()

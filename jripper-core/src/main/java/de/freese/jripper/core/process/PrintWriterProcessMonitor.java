@@ -10,16 +10,8 @@ import java.io.PrintWriter;
  */
 public class PrintWriterProcessMonitor implements ProcessMonitor
 {
-    /**
-     *
-     */
     private final PrintWriter printWriter;
 
-    /**
-     * Erstellt ein neues {@link PrintWriterProcessMonitor} Object.
-     *
-     * @param printWriter {@link PrintWriter}
-     */
     public PrintWriterProcessMonitor(final PrintWriter printWriter)
     {
         super();
@@ -27,9 +19,6 @@ public class PrintWriterProcessMonitor implements ProcessMonitor
         this.printWriter = printWriter;
     }
 
-    /**
-     * @return {@link PrintWriter}
-     */
     protected PrintWriter getPrintWriter()
     {
         return this.printWriter;

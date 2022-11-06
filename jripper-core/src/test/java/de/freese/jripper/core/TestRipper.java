@@ -4,6 +4,11 @@ package de.freese.jripper.core;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.fail;
 
+import de.freese.jripper.core.diskid.DiskIDProvider;
+import de.freese.jripper.core.diskid.DiskIDProviderLinux;
+import de.freese.jripper.core.model.DiskID;
+import de.freese.jripper.core.ripper.Ripper;
+import de.freese.jripper.core.ripper.RipperFactory;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
@@ -11,12 +16,6 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
 import org.junit.jupiter.api.condition.EnabledOnOs;
 import org.junit.jupiter.api.condition.OS;
-
-import de.freese.jripper.core.diskid.DiskIDProvider;
-import de.freese.jripper.core.diskid.DiskIDProviderLinux;
-import de.freese.jripper.core.model.DiskID;
-import de.freese.jripper.core.ripper.Ripper;
-import de.freese.jripper.core.ripper.RipperFactory;
 
 /**
  * Testklasse für die {@link Ripper}.
@@ -43,9 +42,6 @@ class TestRipper
         }
     }
 
-    /**
-     * Linux.
-     */
     @Test
     @EnabledOnOs(OS.LINUX)
     @EnabledIfEnvironmentVariable(named = "SESSION_MANAGER", matches = ".*mainah.*") // Nur auf Desktop-PC mit CD-Laufwerk

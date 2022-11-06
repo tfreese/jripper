@@ -9,9 +9,6 @@ package de.freese.jripper.core.model;
  */
 public final class DiskIdBeispielCultureBeat extends DiskID
 {
-    /**
-     * Erstellt ein neues {@link DiskIdBeispielCultureBeat} Object.
-     */
     public DiskIdBeispielCultureBeat()
     {
         super("ae0ff80e 14 150 10972 37962 56825 81450 103550 127900 153025 179675 200425 225187 247687 270712 295700 4090");

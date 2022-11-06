@@ -16,50 +16,28 @@ import org.slf4j.LoggerFactory;
  */
 public class AlbumImpl implements Album
 {
-    /**
-     *
-     */
     private static final Logger LOGGER = LoggerFactory.getLogger(AlbumImpl.class);
-    /**
-     *
-     */
+
     private final DiskID diskID;
-    /**
-     *
-     */
+
     private final List<Track> tracks = new ArrayList<>();
     /**
      * Bei Compilations null.
      */
     private String artist;
-    /**
-     *
-     */
+
     private String comment;
-    /**
-     *
-     */
+
     private int diskNumber = 1;
-    /**
-     *
-     */
+
     private String genre;
-    /**
-     *
-     */
+
     private String title;
-    /**
-     *
-     */
+
     private int totalDisks = 1;
-    /**
-     *
-     */
+
     private int year;
 
-    /**
-     * Erstellt ein neues {@link AlbumImpl} Object.
-     */
     public AlbumImpl()
     {
         super();
@@ -67,11 +45,6 @@ public class AlbumImpl implements Album
         this.diskID = null;
     }
 
-    /**
-     * Erstellt ein neues {@link AlbumImpl} Object.
-     *
-     * @param diskID {@link DiskID}
-     */
     public AlbumImpl(final DiskID diskID)
     {
         super();
@@ -81,7 +54,6 @@ public class AlbumImpl implements Album
 
     /**
      * @param artist String; Nur bei Compilations != null.
-     * @param title String
      */
     public void addTrack(final String artist, final String title)
     {
@@ -273,7 +245,6 @@ public class AlbumImpl implements Album
 
     /**
      * @param index int, beginnend mit 0
-     * @param artist String
      */
     public void setTrackArtist(final int index, final String artist)
     {
@@ -285,7 +256,6 @@ public class AlbumImpl implements Album
 
     /**
      * @param index int, beginnend mit 0
-     * @param title String
      */
     public void setTrackTitle(final int index, final String title)
     {

@@ -9,12 +9,5 @@ package de.freese.jripper.core;
 @FunctionalInterface
 public interface OSProvider
 {
-    /**
-     * Liefert true, wenn das Betriebssystem unterstützt wird.
-     *
-     * @param os String
-     *
-     * @return String
-     */
     boolean supportsOS(String os);
 }

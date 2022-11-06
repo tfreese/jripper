@@ -12,32 +12,16 @@ import de.freese.jripper.core.Settings;
  */
 public class DiskID
 {
-    /**
-     *
-     */
     private String id;
-    /**
-     *
-     */
+
     private int offset;
-    /**
-     *
-     */
+
     private int seconds;
-    /**
-     *
-     */
+
     private int trackCount;
-    /**
-     *
-     */
+
     private int[] trackOffsets;
 
-    /**
-     * Erstellt ein neues {@link DiskID} Object.
-     *
-     * @param diskID String
-     */
     public DiskID(final String diskID)
     {
         super();
@@ -45,41 +29,26 @@ public class DiskID
         parseID(diskID);
     }
 
-    /**
-     * @return String
-     */
     public String getID()
     {
         return this.id;
     }
 
-    /**
-     * @return int
-     */
     public int getOffset()
     {
         return this.offset;
     }
 
-    /**
-     * @return int
-     */
     public int getSeconds()
     {
         return this.seconds;
     }
 
-    /**
-     * @return int
-     */
     public int getTrackCount()
     {
         return this.trackCount;
     }
 
-    /**
-     * @return int[]
-     */
     public int[] getTrackOffsets()
     {
         return this.trackOffsets;
@@ -87,10 +56,6 @@ public class DiskID
 
     /**
      * Liefert die Trackdauer in Sekunden.
-     *
-     * @param track int
-     *
-     * @return int
      */
     public int getTrackSeconds(final int track)
     {
@@ -119,9 +84,6 @@ public class DiskID
         return trackSeconds;
     }
 
-    /**
-     * @param diskID String
-     */
     private void parseID(final String diskID)
     {
         Objects.requireNonNull(diskID, "diskID required");
@@ -141,9 +103,6 @@ public class DiskID
         this.seconds = Integer.parseInt(splits[splits.length - 1]);
     }
 
-    /**
-     * @param id String
-     */
     public void setID(final String id)
     {
         this.id = id;

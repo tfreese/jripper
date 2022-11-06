@@ -11,14 +11,8 @@ import java.util.List;
  */
 public class CompositeProgressMonitor implements ProcessMonitor
 {
-    /**
-     *
-     */
     private final List<ProcessMonitor> monitore;
 
-    /**
-     * Erstellt ein neues {@link CompositeProgressMonitor} Object.
-     */
     public CompositeProgressMonitor()
     {
         super();
@@ -26,9 +20,6 @@ public class CompositeProgressMonitor implements ProcessMonitor
         this.monitore = new ArrayList<>();
     }
 
-    /**
-     * Hinzufügen neuer Monitore.
-     */
     public void addMonitor(final ProcessMonitor monitor)
     {
         if (!this.monitore.contains(monitor))

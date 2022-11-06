@@ -12,16 +12,8 @@ import org.slf4j.Logger;
  */
 public class LoggerProcessMonitor implements ProcessMonitor
 {
-    /**
-     *
-     */
     private final Logger logger;
 
-    /**
-     * Erstellt ein neues {@link LoggerProcessMonitor} Object.
-     *
-     * @param logger {@link Logger}
-     */
     public LoggerProcessMonitor(final Logger logger)
     {
         super();
@@ -29,9 +21,6 @@ public class LoggerProcessMonitor implements ProcessMonitor
         this.logger = logger;
     }
 
-    /**
-     * @return {@link Logger}
-     */
     protected Logger getLogger()
     {
         return this.logger;

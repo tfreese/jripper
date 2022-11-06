@@ -10,15 +10,11 @@ public interface ProcessMonitor
 {
     /**
      * Zeile des Process.
-     *
-     * @param line String
      */
     void monitorProcess(String line);
 
     /**
      * Beliebiger Text.
-     *
-     * @param line String
      */
     void monitorText(String line);
 }

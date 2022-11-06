@@ -17,8 +17,6 @@ public class DiskIDAlgorithm
 {
     /**
      * b111140e 14 150 24545 41797 60822 80152 117002 142550 169755 192057 211360 239297 256325 279075 306220 4374
-     *
-     * @param args String[]
      */
     public static void main(final String[] args)
     {
@@ -50,10 +48,6 @@ public class DiskIDAlgorithm
 
     /**
      * return sum of decimal digits in n
-     *
-     * @param n int
-     *
-     * @return int
      */
     static int sumOfDigits(int n)
     {

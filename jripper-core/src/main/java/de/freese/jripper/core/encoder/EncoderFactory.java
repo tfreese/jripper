@@ -13,17 +13,10 @@ import de.freese.jripper.core.JRipperUtils;
  */
 public final class EncoderFactory
 {
-    /**
-     *
-     */
     private static final ServiceLoader<Encoder> SERVICE_LOADER = ServiceLoader.load(Encoder.class);
 
     /**
      * Je nach Betriebssystem wird die entsprechende Implementierung geliefert.
-     *
-     * @param format {@link EncoderFormat}
-     *
-     * @return {@link Encoder}
      */
     public static Encoder getInstance(final EncoderFormat format)
     {
@@ -46,9 +39,6 @@ public final class EncoderFactory
         return impl;
     }
 
-    /**
-     * Erstellt ein neues {@link EncoderFactory} Object.
-     */
     private EncoderFactory()
     {
         super();

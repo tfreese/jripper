@@ -31,35 +31,18 @@ import de.freese.jripper.core.ripper.Ripper;
  */
 public class JRipperConsole
 {
-    /**
-     * @param args String[]
-     *
-     * @throws UnsupportedEncodingException Falls was schiefgeht.
-     */
     public static void main(final String[] args) throws UnsupportedEncodingException
     {
         JRipperConsole console = new JRipperConsole();
         console.showMainMenu();
     }
 
-    /**
-     *
-     */
     private final PrintWriter printWriter;
-    /**
-     *
-     */
+
     private final BufferedReader reader;
-    /**
-     *
-     */
+
     private Album album;
 
-    /**
-     * Erstellt ein neues {@link JRipperConsole} Object.
-     *
-     * @throws UnsupportedEncodingException Falls was schiefgeht.
-     */
     public JRipperConsole() throws UnsupportedEncodingException
     {
         super();
@@ -87,9 +70,6 @@ public class JRipperConsole
         }
     }
 
-    /**
-     *
-     */
     public void showMainMenu()
     {
         print("%s\n", "*****************");
@@ -185,14 +165,6 @@ public class JRipperConsole
         }
     }
 
-    /**
-     * @param album {@link Album}
-     * @param printWriter {@link PrintWriter}
-     * @param encoder {@link Encoder}
-     * @param directory {@link File}
-     *
-     * @throws Exception Falls was schiefgeht.
-     */
     private void encode(final Album album, final PrintWriter printWriter, final Encoder encoder, final File directory) throws Exception
     {
         ProcessMonitor monitor = null;
@@ -209,13 +181,6 @@ public class JRipperConsole
         encoder.encode(album, directory, monitor);
     }
 
-    /**
-     * Auslesen der Disc-ID.<br>
-     *
-     * @return {@link DiskID}
-     *
-     * @throws Exception Falls was schiefgeht.
-     */
     private DiskID getDiskID() throws Exception
     {
         String device = Settings.getInstance().getDevice();
@@ -223,13 +188,6 @@ public class JRipperConsole
         return JRipper.getInstance().getDiskIDProvider().getDiskID(device);
     }
 
-    /**
-     * Liefert den eingegebenen Wert von der Konsole.
-     *
-     * @return String
-     *
-     * @throws Exception Falls was schiefgeht.
-     */
     private String getInput() throws Exception
     {
         print("%s%s%s: ", AnsiCodes.ANSI_GREEN, "Eingabe", AnsiCodes.ANSI_RESET);
@@ -237,12 +195,6 @@ public class JRipperConsole
         return this.reader.readLine();
     }
 
-    /**
-     * @param format String
-     * @param params Object[]
-     *
-     * @see String#format(String, Object...)
-     */
     private void print(final String format, final Object... params)
     {
         if (JRipperUtils.isDevelopment())
@@ -270,15 +222,6 @@ public class JRipperConsole
         this.printWriter.flush();
     }
 
-    /**
-     * Abfragen der CDDB nach den Genres.<br>
-     *
-     * @param diskID {@link DiskID}
-     *
-     * @return String
-     *
-     * @throws Exception Falls was schiefgeht.
-     */
     private String queryCDDB(final DiskID diskID) throws Exception
     {
         CddbResponse cddbResponse = JRipper.getInstance().getCddbProvider().queryGenres(diskID);
@@ -286,16 +229,6 @@ public class JRipperConsole
         return cddbResponse.getGenres().get(0);
     }
 
-    /**
-     * Abfragen der CDDB nach dem Album.<br>
-     *
-     * @param diskID {@link DiskID}
-     * @param genre String
-     *
-     * @return {@link Album}
-     *
-     * @throws Exception Falls was schiefgeht.
-     */
     private Album readCDDB(final DiskID diskID, final String genre) throws Exception
     {
         CddbResponse cddbResponse = JRipper.getInstance().getCddbProvider().queryAlbum(diskID, genre);
@@ -303,12 +236,6 @@ public class JRipperConsole
         return cddbResponse.getAlbum();
     }
 
-    /**
-     * @param album {@link Album}
-     * @param printWriter {@link PrintWriter}
-     *
-     * @throws Exception Falls was schiefgeht.
-     */
     private void rip(final Album album, final PrintWriter printWriter) throws Exception
     {
         String device = Settings.getInstance().getDevice();
@@ -318,11 +245,6 @@ public class JRipperConsole
         ripper.rip(device, directory, new PrintWriterProcessMonitor(printWriter));
     }
 
-    /**
-     * Zeigt den Inhalt des Albums.
-     *
-     * @param album {@link Album}
-     */
     private void showAlbum(final Album album)
     {
         print("%s\n", "*****************");
@@ -344,9 +266,6 @@ public class JRipperConsole
         }
     }
 
-    /**
-     *
-     */
     private void showEditMenu()
     {
         showAlbum(this.album);

@@ -11,9 +11,6 @@ import java.util.regex.Pattern;
  */
 public class Misc
 {
-    /**
-     * @param args String[]
-     */
     public static void main(final String[] args)
     {
         String s = "100/12453 ( 1%)| 0:00/ 0:21| 0:00/ 0:22| 15.366x| 0:22";
