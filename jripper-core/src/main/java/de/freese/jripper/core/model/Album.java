@@ -15,7 +15,7 @@ public interface Album extends Iterable<Track>
 
     String getComment();
 
-    DiskID getDiskID();
+    DiskId getDiskID();
 
     int getDiskNumber();
 

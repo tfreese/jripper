@@ -7,7 +7,7 @@ package de.freese.jripper.core.model;
  *
  * @author Thomas Freese
  */
-public final class DiskIdBeispielCultureBeat extends DiskID
+public final class DiskIdBeispielCultureBeat extends DiskId
 {
     public DiskIdBeispielCultureBeat()
     {

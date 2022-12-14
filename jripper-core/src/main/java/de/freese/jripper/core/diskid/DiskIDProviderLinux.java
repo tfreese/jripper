@@ -7,7 +7,7 @@ import java.util.List;
 
 import de.freese.jripper.core.JRipperUtils;
 import de.freese.jripper.core.Settings;
-import de.freese.jripper.core.model.DiskID;
+import de.freese.jripper.core.model.DiskId;
 import de.freese.jripper.core.process.AbstractProcess;
 import de.freese.jripper.core.process.ProcessMonitor;
 
@@ -24,7 +24,7 @@ public class DiskIDProviderLinux extends AbstractProcess implements DiskIDProvid
      * @see de.freese.jripper.core.diskid.DiskIDProvider#getDiskID(java.lang.String)
      */
     @Override
-    public DiskID getDiskID(final String device) throws Exception
+    public DiskId getDiskID(final String device) throws Exception
     {
         List<String> command = new ArrayList<>();
         command.add("cd-discid");
@@ -43,7 +43,7 @@ public class DiskIDProviderLinux extends AbstractProcess implements DiskIDProvid
             throw new IllegalStateException("no music cd found");
         }
 
-        return new DiskID(id);
+        return new DiskId(id);
     }
 
     /**

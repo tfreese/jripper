@@ -2,11 +2,10 @@
 package de.freese.jripper.core;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.fail;
 
 import de.freese.jripper.core.diskid.DiskIDProvider;
 import de.freese.jripper.core.diskid.DiskIDProviderLinux;
-import de.freese.jripper.core.model.DiskID;
+import de.freese.jripper.core.model.DiskId;
 import de.freese.jripper.core.ripper.Ripper;
 import de.freese.jripper.core.ripper.RipperFactory;
 import org.junit.jupiter.api.Disabled;
@@ -29,39 +28,28 @@ class TestRipper
      * Liefert je nach Betriebssystem die passende Implementierung.
      */
     @Test
-    void testGetService()
+    void testGetService() throws Exception
     {
-        try
-        {
-            Ripper ripper = RipperFactory.getInstance();
-            assertNotNull(ripper);
-        }
-        catch (Exception ex)
-        {
-            fail();
-        }
+        Ripper ripper = RipperFactory.getInstance();
+        assertNotNull(ripper);
     }
 
     @Test
     @EnabledOnOs(OS.LINUX)
     @EnabledIfEnvironmentVariable(named = "SESSION_MANAGER", matches = ".*mainah.*") // Nur auf Desktop-PC mit CD-Laufwerk
     @Disabled("Momentan kein CD/CDV/BluRay Laufwerk verbaut")
-    void testLinux()
+    void testLinux() throws Exception
     {
         DiskIDProvider service = new DiskIDProviderLinux();
 
         try
         {
-            DiskID diskID = service.getDiskID(JRipperUtils.detectCdDevice());
+            DiskId diskID = service.getDiskID(JRipperUtils.detectCdDevice());
             assertNotNull(diskID);
         }
         catch (IllegalStateException ex)
         {
             // Keine CD im Laufwerk.
-        }
-        catch (Exception ex)
-        {
-            fail();
         }
     }
 }

@@ -7,7 +7,7 @@ package de.freese.jripper.core.model;
  *
  * @author Thomas Freese
  */
-public final class DiskIdBeispielKarat extends DiskID
+public final class DiskIdBeispielKarat extends DiskId
 {
     public DiskIdBeispielKarat()
     {

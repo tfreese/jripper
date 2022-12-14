@@ -6,7 +6,7 @@ import java.util.ServiceLoader;
 import de.freese.jripper.core.JRipperUtils;
 
 /**
- * Zentrale Klasse für die Bereitstellung der DiskID.<br>
+ * Zentrale Klasse für die Bereitstellung der DiskId.<br>
  * Je nach Betriebssystem wird die entsprechende Implementierung verwendet.
  *
  * @author Thomas Freese

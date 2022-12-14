@@ -18,7 +18,7 @@ import de.freese.jripper.core.encoder.EncoderLinuxMp3;
 import de.freese.jripper.core.encoder.LameProcessMonitor;
 import de.freese.jripper.core.model.Album;
 import de.freese.jripper.core.model.AlbumImpl;
-import de.freese.jripper.core.model.DiskID;
+import de.freese.jripper.core.model.DiskId;
 import de.freese.jripper.core.model.Track;
 import de.freese.jripper.core.process.PrintWriterProcessMonitor;
 import de.freese.jripper.core.process.ProcessMonitor;
@@ -115,7 +115,7 @@ public class JRipperConsole
             {
                 case "1":
                     this.album = null;
-                    DiskID diskID = getDiskID();
+                    DiskId diskID = getDiskID();
                     String genre = queryCDDB(diskID);
                     this.album = readCDDB(diskID, genre);
                     showAlbum(this.album);
@@ -181,7 +181,7 @@ public class JRipperConsole
         encoder.encode(album, directory, monitor);
     }
 
-    private DiskID getDiskID() throws Exception
+    private DiskId getDiskID() throws Exception
     {
         String device = Settings.getInstance().getDevice();
 
@@ -222,14 +222,14 @@ public class JRipperConsole
         this.printWriter.flush();
     }
 
-    private String queryCDDB(final DiskID diskID) throws Exception
+    private String queryCDDB(final DiskId diskID) throws Exception
     {
         CddbResponse cddbResponse = JRipper.getInstance().getCddbProvider().queryGenres(diskID);
 
         return cddbResponse.getGenres().get(0);
     }
 
-    private Album readCDDB(final DiskID diskID, final String genre) throws Exception
+    private Album readCDDB(final DiskId diskID, final String genre) throws Exception
     {
         CddbResponse cddbResponse = JRipper.getInstance().getCddbProvider().queryAlbum(diskID, genre);
 

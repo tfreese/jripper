@@ -19,7 +19,7 @@ public abstract class AbstractProcess
 {
     public final Logger logger = JRipper.getInstance().getLogger();// LoggerFactory.getLogger(getClass());
 
-    private Thread createShutDownHook(final Process process)
+    private static Thread createShutDownHook(final Process process)
     {
         return new Thread()
         {
@@ -35,6 +35,11 @@ public abstract class AbstractProcess
                 }
             }
         };
+    }
+
+    protected AbstractProcess()
+    {
+        super();
     }
 
     protected void execute(final List<String> command, final File directory, final ProcessMonitor monitor) throws Exception

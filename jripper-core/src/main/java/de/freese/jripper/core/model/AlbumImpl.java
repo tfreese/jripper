@@ -18,7 +18,7 @@ public class AlbumImpl implements Album
 {
     private static final Logger LOGGER = LoggerFactory.getLogger(AlbumImpl.class);
 
-    private final DiskID diskID;
+    private final DiskId diskID;
 
     private final List<Track> tracks = new ArrayList<>();
     /**
@@ -45,7 +45,7 @@ public class AlbumImpl implements Album
         this.diskID = null;
     }
 
-    public AlbumImpl(final DiskID diskID)
+    public AlbumImpl(final DiskId diskID)
     {
         super();
 
@@ -91,7 +91,7 @@ public class AlbumImpl implements Album
      * @see de.freese.jripper.core.model.Album#getDiskID()
      */
     @Override
-    public DiskID getDiskID()
+    public DiskId getDiskID()
     {
         return this.diskID;
     }

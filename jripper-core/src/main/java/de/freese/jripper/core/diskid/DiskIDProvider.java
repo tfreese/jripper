@@ -2,17 +2,17 @@
 package de.freese.jripper.core.diskid;
 
 import de.freese.jripper.core.OSProvider;
-import de.freese.jripper.core.model.DiskID;
+import de.freese.jripper.core.model.DiskId;
 
 /**
- * Liefert die DiskID der CD für die CDDB Abfrage.
+ * Liefert die DiskId der CD für die CDDB Abfrage.
  *
  * @author Thomas Freese
  */
 public interface DiskIDProvider extends OSProvider
 {
     /**
-     * Liefert die DiskID der CD.
+     * Liefert die DiskId der CD.
      */
-    DiskID getDiskID(String device) throws Exception;
+    DiskId getDiskID(String device) throws Exception;
 }

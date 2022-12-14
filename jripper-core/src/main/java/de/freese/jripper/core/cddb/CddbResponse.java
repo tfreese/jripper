@@ -18,7 +18,7 @@ public class CddbResponse
      */
     public static final int EXACT_MATCHES = 210;
     /**
-     * Nicht exakte Treffer, dann ungleiche/nicht exakte DiskID.
+     * Nicht exakte Treffer, dann ungleiche/nicht exakte DiskId.
      */
     public static final int INEXACT_MATCHES = 211;
     /**

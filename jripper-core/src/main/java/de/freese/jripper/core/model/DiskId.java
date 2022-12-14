@@ -6,11 +6,11 @@ import java.util.Objects;
 import de.freese.jripper.core.Settings;
 
 /**
- * DiskID Informationen einer CD.<br>
+ * DiskId Informationen einer CD.<br>
  *
  * @author Thomas Freese
  */
-public class DiskID
+public class DiskId
 {
     private String id;
 
@@ -22,7 +22,7 @@ public class DiskID
 
     private int[] trackOffsets;
 
-    public DiskID(final String diskID)
+    public DiskId(final String diskID)
     {
         super();
 

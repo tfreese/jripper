@@ -12,7 +12,7 @@ import de.freese.jripper.core.Settings;
 import de.freese.jripper.core.cddb.CddbProvider;
 import de.freese.jripper.core.cddb.CddbResponse;
 import de.freese.jripper.core.model.Album;
-import de.freese.jripper.core.model.DiskID;
+import de.freese.jripper.core.model.DiskId;
 import de.freese.jripper.swing.JRipperSwing;
 
 /**
@@ -46,7 +46,7 @@ public class CddbQueryTask extends SwingWorker<CddbResponse, Void>
     protected CddbResponse doInBackground() throws Exception
     {
         String device = Settings.getInstance().getDevice();
-        DiskID diskID = JRipper.getInstance().getDiskIDProvider().getDiskID(device);
+        DiskId diskID = JRipper.getInstance().getDiskIDProvider().getDiskID(device);
 
         CddbProvider cddbService = JRipper.getInstance().getCddbProvider();
         CddbResponse cddbResponse = cddbService.queryGenres(diskID);

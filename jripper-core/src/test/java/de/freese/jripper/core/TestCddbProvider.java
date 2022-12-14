@@ -4,7 +4,6 @@ package de.freese.jripper.core;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.fail;
 
 import de.freese.jripper.core.cddb.CddbProvider;
 import de.freese.jripper.core.cddb.CddbProviderGnuDb;
@@ -12,7 +11,7 @@ import de.freese.jripper.core.cddb.CddbResponse;
 import de.freese.jripper.core.diskid.DiskIDProvider;
 import de.freese.jripper.core.diskid.DiskIDProviderFactory;
 import de.freese.jripper.core.diskid.DiskIDProviderLinux;
-import de.freese.jripper.core.model.DiskID;
+import de.freese.jripper.core.model.DiskId;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
@@ -29,17 +28,10 @@ class TestCddbProvider
      * Liefert je nach Betriebssystem die passende Implementierung.
      */
     @Test
-    void testGetService()
+    void testGetService() throws Exception
     {
-        try
-        {
-            DiskIDProvider diskID = DiskIDProviderFactory.getInstance();
-            assertNotNull(diskID);
-        }
-        catch (Exception ex)
-        {
-            fail();
-        }
+        DiskIDProvider diskID = DiskIDProviderFactory.getInstance();
+        assertNotNull(diskID);
     }
 
     @Test
@@ -48,8 +40,8 @@ class TestCddbProvider
         // Karat / Vierzehn Karat - Ihre größten Hits
         // data, newage, rock
         String id = "b111140e 14 150 24545 41797 60822 80152 117002 142550 169755 192057 211360 239297 256325 279075 306220 4374";
-        DiskID diskID = new DiskID(id);
-        //        DiskID diskID = new DiskIdBeispielKarat();
+        DiskId diskID = new DiskId(id);
+        //        DiskId diskID = new DiskIdBeispielKarat();
         assertEquals("b111140e", diskID.getID());
         assertEquals(14, diskID.getTrackCount());
         assertEquals(150, diskID.getOffset());
@@ -73,8 +65,8 @@ class TestCddbProvider
         // Culture Beat / Inside Out
         // misc, soundtrack
         String id = "ae0ff80e 14 150 10972 37962 56825 81450 103550 127900 153025 179675 200425 225187 247687 270712 295700 4090";
-        DiskID diskID = new DiskID(id);
-        //        DiskID diskID = new DiskIdBeispielCultureBeat();
+        DiskId diskID = new DiskId(id);
+        //        DiskId diskID = new DiskIdBeispielCultureBeat();
         assertEquals("ae0ff80e", diskID.getID());
         assertEquals(14, diskID.getTrackCount());
         assertEquals(150, diskID.getOffset());
@@ -99,7 +91,7 @@ class TestCddbProvider
             {
                     OS.LINUX, OS.WINDOWS
             })
-    void testLinux()
+    void testLinux() throws Exception
     {
         String device = JRipperUtils.detectCdDevice();
 
@@ -113,16 +105,12 @@ class TestCddbProvider
 
         try
         {
-            DiskID diskID = diskIDProvider.getDiskID(device);
+            DiskId diskID = diskIDProvider.getDiskID(device);
             assertNotNull(diskID);
         }
         catch (IllegalStateException ex)
         {
             // Keine CD im Laufwerk.
-        }
-        catch (Exception ex)
-        {
-            fail();
         }
     }
 }
