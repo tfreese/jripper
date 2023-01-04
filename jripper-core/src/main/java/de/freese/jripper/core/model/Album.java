@@ -36,17 +36,17 @@ public interface Album extends Iterable<Track>
     /**
      * Bei Compilations null.
      */
-    void setArtist(final String artist);
+    void setArtist(String artist);
 
-    void setComment(final String comment);
+    void setComment(String comment);
 
-    void setDiskNumber(final int diskNumber);
+    void setDiskNumber(int diskNumber);
 
-    void setGenre(final String genre);
+    void setGenre(String genre);
 
-    void setTitle(final String title);
+    void setTitle(String title);
 
-    void setTotalDisks(final int totalDisks);
+    void setTotalDisks(int totalDisks);
 
-    void setYear(final int year);
+    void setYear(int year);
 }

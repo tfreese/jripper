@@ -69,9 +69,9 @@ public class LameProcessMonitor extends PrintWriterProcessMonitor
             // int prozent = Integer.parseInt(prozentS);
 
             // if ((prozent % 5) == 0)
-            {
-                getPrintWriter().println(line);
-            }
+            //            {
+            getPrintWriter().println(line);
+            //            }
         }
 
         getPrintWriter().flush();

@@ -18,21 +18,11 @@ import de.freese.jripper.swing.task.CddbQueryTask;
  */
 public class ActionCddbQuery extends AbstractAction
 {
-    /**
-     *
-     */
     @Serial
     private static final long serialVersionUID = -2636145895592666145L;
-    /**
-     *
-     */
+
     private final Property<Album> albumProperty;
 
-    /**
-     * Erstellt ein neues {@link ActionCddbQuery} Object.
-     *
-     * @param albumProperty {@link Property}
-     */
     public ActionCddbQuery(final Property<Album> albumProperty)
     {
         super();

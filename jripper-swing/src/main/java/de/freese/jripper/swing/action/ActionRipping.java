@@ -18,21 +18,11 @@ import de.freese.jripper.swing.task.RippingTask;
  */
 public class ActionRipping extends AbstractAction
 {
-    /**
-     *
-     */
     @Serial
     private static final long serialVersionUID = -4794748623915093242L;
-    /**
-     *
-     */
+
     private final Property<Album> albumProperty;
 
-    /**
-     * Erstellt ein neues {@link ActionRipping} Object.
-     *
-     * @param albumProperty {@link Property}
-     */
     public ActionRipping(final Property<Album> albumProperty)
     {
         super();

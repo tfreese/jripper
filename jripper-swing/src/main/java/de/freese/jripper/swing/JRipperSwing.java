@@ -466,16 +466,16 @@ public class JRipperSwing
      */
     private void initUIDefaults()
     {
-        try
-        {
-            // UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-            // UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
-            // UIManager.setLookAndFeel("com.sun.java.swing.plaf.motif.MotifLookAndFeel");
-        }
-        catch (Exception ex)
-        {
-            LOGGER.error(ex.getMessage(), ex);
-        }
+        //        try
+        //        {
+        //            // UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        //            // UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
+        //            // UIManager.setLookAndFeel("com.sun.java.swing.plaf.motif.MotifLookAndFeel");
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            LOGGER.error(ex.getMessage(), ex);
+        //        }
 
         UIManager.put("FileChooser.useSystemIcons", Boolean.TRUE);
 

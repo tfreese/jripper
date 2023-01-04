@@ -19,26 +19,13 @@ import de.freese.binding.property.Property;
  */
 public class ActionChooseWorkDir extends AbstractAction
 {
-    /**
-     *
-     */
     @Serial
     private static final long serialVersionUID = 3262325088354448846L;
-    /**
-     *
-     */
+
     private final Component parent;
-    /**
-     *
-     */
+
     private final Property<String> workDirProperty;
 
-    /**
-     * Erstellt ein neues {@link ActionChooseWorkDir} Object.
-     *
-     * @param parent {@link Component}
-     * @param workDirProperty {@link Property}
-     */
     public ActionChooseWorkDir(final Component parent, final Property<String> workDirProperty)
     {
         super("\u2026");

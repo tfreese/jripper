@@ -269,42 +269,42 @@ public final class JRipperUtils
                 }
             }
         }
-        else if (isWindows())
-        {
-            // FileSystemView fsv = FileSystemView.getFileSystemView();
-            //
-            // for (File root : File.listRoots())
-            // {
-            // if ("CD Drive".equals(fsv.getSystemTypeDescription(root)))
-            // {
-            // File cd = root;
-            //
-            // String description = " is empty";
-            //
-            // if (cd.exists())
-            // {
-            // description = " contains CD '" + fsv.getSystemDisplayName(cd) + "'";
-            // }
-            //
-            // System.out.println("Drive " + cd + description);
-            // }
-            // }
-            //
-            // FileSystem fs = FileSystems.getDefault();
-            //
-            // for (Path rootPath : fs.getRootDirectories())
-            // {
-            // try
-            // {
-            // FileStore store = Files.getFileStore(rootPath);
-            // System.out.println(rootPath + ": " + store.type());
-            // }
-            // catch (IOException ex)
-            // {
-            // System.out.println(rootPath + ": " + "<error getting store details>");
-            // }
-            // }
-        }
+        //        else if (isWindows())
+        //        {
+        //            // FileSystemView fsv = FileSystemView.getFileSystemView();
+        //            //
+        //            // for (File root : File.listRoots())
+        //            // {
+        //            // if ("CD Drive".equals(fsv.getSystemTypeDescription(root)))
+        //            // {
+        //            // File cd = root;
+        //            //
+        //            // String description = " is empty";
+        //            //
+        //            // if (cd.exists())
+        //            // {
+        //            // description = " contains CD '" + fsv.getSystemDisplayName(cd) + "'";
+        //            // }
+        //            //
+        //            // System.out.println("Drive " + cd + description);
+        //            // }
+        //            // }
+        //            //
+        //            // FileSystem fs = FileSystems.getDefault();
+        //            //
+        //            // for (Path rootPath : fs.getRootDirectories())
+        //            // {
+        //            // try
+        //            // {
+        //            // FileStore store = Files.getFileStore(rootPath);
+        //            // System.out.println(rootPath + ": " + store.type());
+        //            // }
+        //            // catch (IOException ex)
+        //            // {
+        //            // System.out.println(rootPath + ": " + "<error getting store details>");
+        //            // }
+        //            // }
+        //        }
 
         return drive;
     }
