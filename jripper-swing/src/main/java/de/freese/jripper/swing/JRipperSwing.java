@@ -66,14 +66,9 @@ import org.slf4j.LoggerFactory;
  */
 public class JRipperSwing
 {
-    /**
-     *
-     */
     public static final Logger LOGGER = LoggerFactory.getLogger("JRipperSwing");
 
     /**
-     * WindowListener zum Beenden.
-     *
      * @author Thomas Freese
      */
     private static class MainFrameListener extends WindowAdapter
@@ -88,14 +83,8 @@ public class JRipperSwing
         }
     }
 
-    /**
-     *
-     */
     public static JFrame frame;
 
-    /**
-     * @param args String[]
-     */
     public static void main(final String[] args)
     {
         SwingUtilities.invokeLater(() ->
@@ -105,26 +94,15 @@ public class JRipperSwing
         });
     }
 
-    /**
-     *
-     */
     private final Property<Album> albumProperty = new SimpleObjectProperty<>(this, "album", new AlbumImpl());
-    /**
-     *
-     */
+
     private final ObservableList<Track> albumTracks = new DefaultObservableList<>();
 
-    /**
-     * @return {@link Album}
-     */
     private Album getAlbum()
     {
         return this.albumProperty.getValue();
     }
 
-    /**
-     * Initialisierung der GUI.
-     */
     private void init()
     {
         initUIDefaults();
@@ -153,10 +131,6 @@ public class JRipperSwing
         splitPane.setDividerLocation(0.75D);
     }
 
-    /**
-     * @param splitPane {@link JSplitPane}
-     * @param albumProperty {@link Property}
-     */
     private void initAlbum(final JSplitPane splitPane, final Property<Album> albumProperty)
     {
         Property<String> artistTextFieldProperty = new SimpleStringProperty();
@@ -318,10 +292,6 @@ public class JRipperSwing
         SwingUtilities.invokeLater(() -> splitPane2.setDividerLocation(0.5D));
     }
 
-    /**
-     * @param container {@link Container}
-     * @param albumProperty {@link Property}
-     */
     private void initMenue(final Container container, final Property<Album> albumProperty)
     {
         JPanel panel = new JPanel();
@@ -345,9 +315,6 @@ public class JRipperSwing
         container.add(panel, BorderLayout.NORTH);
     }
 
-    /**
-     * @param splitPane {@link JSplitPane}
-     */
     private void initSettings(final JSplitPane splitPane)
     {
         JPanel panel = new JPanel();
@@ -461,9 +428,6 @@ public class JRipperSwing
         splitPane.setRightComponent(panel);
     }
 
-    /**
-     *
-     */
     private void initUIDefaults()
     {
         //        try

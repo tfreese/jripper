@@ -365,6 +365,7 @@ public class JRipperConsole
                     {
                         print("%s%s \t%s%s\n", AnsiCodes.ANSI_RED, input, "Unbekannte Eingabe", AnsiCodes.ANSI_RESET);
                     }
+                    
                     break;
             }
         }

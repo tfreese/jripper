@@ -46,8 +46,6 @@
     </developers>
 
     <properties>
-        <checkstyle.skip>true</checkstyle.skip>
-        <checkstyle.xml>../parents/ci/config/checkstyle.xml</checkstyle.xml>
     </properties>
 
     <modules>

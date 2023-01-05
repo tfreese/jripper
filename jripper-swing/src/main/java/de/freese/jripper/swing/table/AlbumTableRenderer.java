@@ -16,9 +16,6 @@ import javax.swing.table.TableModel;
  */
 public class AlbumTableRenderer extends DefaultTableCellRenderer
 {
-    /**
-     *
-     */
     @Serial
     private static final long serialVersionUID = 8126334909300540593L;
 

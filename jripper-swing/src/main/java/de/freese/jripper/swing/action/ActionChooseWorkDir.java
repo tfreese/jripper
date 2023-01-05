@@ -26,6 +26,7 @@ public class ActionChooseWorkDir extends AbstractAction
 
     private final Property<String> workDirProperty;
 
+    @SuppressWarnings("checkstyle:AvoidEscapedUnicodeCharacters")
     public ActionChooseWorkDir(final Component parent, final Property<String> workDirProperty)
     {
         super("\u2026");

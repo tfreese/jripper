@@ -22,16 +22,8 @@ import de.freese.jripper.swing.JRipperSwing;
  */
 public class CddbQueryTask extends SwingWorker<CddbResponse, Void>
 {
-    /**
-     *
-     */
     private final Property<Album> albumProperty;
 
-    /**
-     * Erstellt ein neues {@link CddbQueryTask} Object.
-     *
-     * @param albumProperty {@link Property}
-     */
     public CddbQueryTask(final Property<Album> albumProperty)
     {
         super();

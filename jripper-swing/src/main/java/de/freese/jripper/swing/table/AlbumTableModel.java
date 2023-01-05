@@ -13,17 +13,9 @@ import de.freese.jripper.core.model.Track;
  */
 public class AlbumTableModel extends AbstractObservableListTableModel<Track>
 {
-    /**
-     *
-     */
     @Serial
     private static final long serialVersionUID = -9186435568274885834L;
 
-    /**
-     * Erstellt ein neues {@link AlbumTableModel} Object.
-     *
-     * @param list {@link ObservableList}
-     */
     public AlbumTableModel(final ObservableList<Track> list)
     {
         super(List.of("No.", "Artist", "Title", "Time"), list);

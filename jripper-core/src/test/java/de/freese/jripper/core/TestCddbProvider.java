@@ -35,7 +35,7 @@ class TestCddbProvider
     }
 
     @Test
-    void testID1() throws Exception
+    void testId1() throws Exception
     {
         // Karat / Vierzehn Karat - Ihre größten Hits
         // data, newage, rock
@@ -60,7 +60,7 @@ class TestCddbProvider
     }
 
     @Test
-    void testID2() throws Exception
+    void testId2() throws Exception
     {
         // Culture Beat / Inside Out
         // misc, soundtrack

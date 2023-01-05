@@ -18,16 +18,8 @@ import de.freese.jripper.swing.JRipperSwing;
  */
 public class LoadGenresTask extends SwingWorker<Set<String>, Void>
 {
-    /**
-     *
-     */
     private final ObservableList<String> genresObservableList;
 
-    /**
-     * Erstellt ein neues {@link LoadGenresTask} Object.
-     *
-     * @param genresObservableList {@link ObservableList}
-     */
     public LoadGenresTask(final ObservableList<String> genresObservableList)
     {
         super();

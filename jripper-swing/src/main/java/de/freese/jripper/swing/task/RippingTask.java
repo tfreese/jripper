@@ -18,16 +18,8 @@ import de.freese.jripper.core.script.ScriptGeneratorLinux;
  */
 public class RippingTask extends SwingWorker<Void, Void>
 {
-    /**
-     *
-     */
     private final Album album;
 
-    /**
-     * Erstellt ein neues {@link RippingTask} Object.
-     *
-     * @param album {@link Album}
-     */
     public RippingTask(final Album album)
     {
         super();

@@ -2,10 +2,11 @@
 package de.freese.jripper.console;
 
 /**
- * Inferface für die Farbgebung auf der Console.
+ * Interface für die Farbgebung auf der Console.
  *
  * @author Thomas Freese
  */
+@SuppressWarnings("checkstyle:AvoidEscapedUnicodeCharacters")
 public final class AnsiCodes
 {
     static final String ANSI_BLACK = "\u001B[30m";
