@@ -6,7 +6,7 @@ import java.awt.Insets;
 import java.io.Serial;
 
 /**
- * Erweitert die {@link GridBagConstraints} um das Builder-Pattern.
+ * Extends the {@link GridBagConstraints} by the Builder-Pattern.
  *
  * @author Thomas Freese
  */
@@ -22,15 +22,21 @@ public class GbcBuilder extends GridBagConstraints
      * <li>insets = new Insets(2, 2, 2, 2)</li>
      * </ul>
      */
-    public GbcBuilder(final int gridX, final int gridY)
+    public static GbcBuilder of(final int gridX, final int gridY)
+    {
+        GbcBuilder gbcBuilder = new GbcBuilder(gridX, gridY);
+        gbcBuilder.anchorWest();
+        gbcBuilder.insets(2, 2, 2, 2);
+
+        return gbcBuilder;
+    }
+
+    private GbcBuilder(final int gridX, final int gridY)
     {
         super();
 
         this.gridx = gridX;
         this.gridy = gridY;
-
-        anchorWest();
-        insets(2, 2, 2, 2);
     }
 
     public GbcBuilder anchorCenter()

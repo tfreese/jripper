@@ -60,7 +60,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Swing-View für den JRipper.
+ * Swing-View for the JRipper.
  *
  * @author Thomas Freese
  */
@@ -170,24 +170,24 @@ public class JRipperSwing
         int row = 0;
 
         // Artist
-        panelAlbum.add(new JLabel("Artist"), new GbcBuilder(0, row));
+        panelAlbum.add(new JLabel("Artist"), GbcBuilder.of(0, row));
         JTextField artistTextField = new JTextField();
 
         SwingBindings.bindBidirectional(artistTextField, artistTextFieldProperty);
         artistTextFieldProperty.addListener((observable, oldValue, newValue) -> getAlbum().setArtist(newValue));
 
-        panelAlbum.add(artistTextField, new GbcBuilder(GridBagConstraints.RELATIVE, row).gridWidth(9).fillHorizontal());
+        panelAlbum.add(artistTextField, GbcBuilder.of(GridBagConstraints.RELATIVE, row).gridWidth(9).fillHorizontal());
 
         row++;
 
         // Title
-        panelAlbum.add(new JLabel("Title"), new GbcBuilder(0, row));
+        panelAlbum.add(new JLabel("Title"), GbcBuilder.of(0, row));
         JTextField titleTextField = new JTextField();
 
         SwingBindings.bindBidirectional(titleTextField, titleTextFieldProperty);
         titleTextFieldProperty.addListener((observable, oldValue, newValue) -> getAlbum().setTitle(newValue));
 
-        panelAlbum.add(titleTextField, new GbcBuilder(GridBagConstraints.RELATIVE, row).gridWidth(9).fillHorizontal());
+        panelAlbum.add(titleTextField, GbcBuilder.of(GridBagConstraints.RELATIVE, row).gridWidth(9).fillHorizontal());
 
         row++;
 
@@ -195,14 +195,14 @@ public class JRipperSwing
         Property<String> genreComboBoxProperty = new SimpleStringProperty();
         ObservableList<String> genresObservableList = new DefaultObservableList<>();
 
-        panelAlbum.add(new JLabel("Genre"), new GbcBuilder(0, row));
+        panelAlbum.add(new JLabel("Genre"), GbcBuilder.of(0, row));
         JTextField genreTextField = new JTextField();
 
         SwingBindings.bindBidirectional(genreTextField, genreTextFieldProperty);
         genreTextFieldProperty.addListener((observable, oldValue, newValue) -> getAlbum().setGenre(newValue));
 
-        panelAlbum.add(genreTextField, new GbcBuilder(GridBagConstraints.RELATIVE, row).gridWidth(3).fillHorizontal());
-        panelAlbum.add(new JLabel("Defaults"), new GbcBuilder(GridBagConstraints.RELATIVE, row).insets(2, 20, 2, 2).anchorEast());
+        panelAlbum.add(genreTextField, GbcBuilder.of(GridBagConstraints.RELATIVE, row).gridWidth(3).fillHorizontal());
+        panelAlbum.add(new JLabel("Defaults"), GbcBuilder.of(GridBagConstraints.RELATIVE, row).insets(2, 20, 2, 2).anchorEast());
 
         JComboBox<String> comboBoxGenres = new JComboBox<>();
         comboBoxGenres.setModel(new DefaultObservableListComboBoxModel<>(genresObservableList));
@@ -215,7 +215,7 @@ public class JRipperSwing
             getAlbum().setGenre(newValue);
         });
 
-        panelAlbum.add(comboBoxGenres, new GbcBuilder(GridBagConstraints.RELATIVE, row));
+        panelAlbum.add(comboBoxGenres, GbcBuilder.of(GridBagConstraints.RELATIVE, row));
 
         LoadGenresTask loadGenresTask = new LoadGenresTask(genresObservableList);
         loadGenresTask.execute();
@@ -223,26 +223,26 @@ public class JRipperSwing
         row++;
 
         // Disk
-        panelAlbum.add(new JLabel("Disk"), new GbcBuilder(0, row));
+        panelAlbum.add(new JLabel("Disk"), GbcBuilder.of(0, row));
         JSpinner diskNumberSpinner = new JSpinner(new SpinnerNumberModel(1, 1, 50, 1));
 
         SwingBindings.bindBidirectional(diskNumberSpinner, diskNumberSpinnerProperty);
         diskNumberSpinnerProperty.addListener((observable, oldValue, newValue) -> getAlbum().setDiskNumber(newValue));
 
-        panelAlbum.add(diskNumberSpinner, new GbcBuilder(GridBagConstraints.RELATIVE, row));
-        panelAlbum.add(new JLabel("/"), new GbcBuilder(GridBagConstraints.RELATIVE, row));
+        panelAlbum.add(diskNumberSpinner, GbcBuilder.of(GridBagConstraints.RELATIVE, row));
+        panelAlbum.add(new JLabel("/"), GbcBuilder.of(GridBagConstraints.RELATIVE, row));
 
         JSpinner totalDiskspinner = new JSpinner(new SpinnerNumberModel(1, 1, 50, 1));
 
         SwingBindings.bindBidirectional(totalDiskspinner, totalDisksSpinnerProperty);
         totalDisksSpinnerProperty.addListener((observable, oldValue, newValue) -> getAlbum().setTotalDisks(newValue));
 
-        panelAlbum.add(totalDiskspinner, new GbcBuilder(GridBagConstraints.RELATIVE, row));
+        panelAlbum.add(totalDiskspinner, GbcBuilder.of(GridBagConstraints.RELATIVE, row));
 
         row++;
 
         // Year
-        panelAlbum.add(new JLabel("Year"), new GbcBuilder(0, row));
+        panelAlbum.add(new JLabel("Year"), GbcBuilder.of(0, row));
         int currentYear = LocalDate.now().getYear();
         JSpinner yearSpinner = new JSpinner(new SpinnerNumberModel(currentYear, 1900, 3000, 1));
         yearSpinner.setEditor(new JSpinner.NumberEditor(yearSpinner, "0000"));
@@ -250,7 +250,7 @@ public class JRipperSwing
         SwingBindings.bindBidirectional(yearSpinner, yearSpinnerProperty);
         yearSpinnerProperty.addListener((observable, oldValue, newValue) -> getAlbum().setYear(newValue));
 
-        panelAlbum.add(yearSpinner, new GbcBuilder(GridBagConstraints.RELATIVE, row).gridWidth(3));
+        panelAlbum.add(yearSpinner, GbcBuilder.of(GridBagConstraints.RELATIVE, row).gridWidth(3));
 
         // NumberFormat numberFormat = NumberFormat.getIntegerInstance();
         // numberFormat.setGroupingUsed(false);
@@ -259,14 +259,14 @@ public class JRipperSwing
         row++;
 
         // Comment
-        panelAlbum.add(new JLabel("Comment"), new GbcBuilder(0, row));
+        panelAlbum.add(new JLabel("Comment"), GbcBuilder.of(0, row));
         JTextArea commentTextArea = new JTextArea();
         commentTextArea.setRows(10);
 
         SwingBindings.bindBidirectional(commentTextArea, commentTextAreaProperty);
         commentTextAreaProperty.addListener((observable, oldValue, newValue) -> getAlbum().setComment(newValue));
 
-        panelAlbum.add(new JScrollPane(commentTextArea), new GbcBuilder(GridBagConstraints.RELATIVE, row).gridWidth(9).fillBoth());
+        panelAlbum.add(new JScrollPane(commentTextArea), GbcBuilder.of(GridBagConstraints.RELATIVE, row).gridWidth(9).fillBoth());
 
         splitPane2.setLeftComponent(panelAlbum);
 
@@ -298,19 +298,19 @@ public class JRipperSwing
         panel.setLayout(new GridBagLayout());
 
         // Dummy
-        panel.add(Box.createGlue(), new GbcBuilder(0, 0).weightX(1));
+        panel.add(Box.createGlue(), GbcBuilder.of(0, 0).weightX(1));
 
         JButton button = new JButton(new ActionCddbQuery(albumProperty));
-        panel.add(button, new GbcBuilder(1, 0).anchorCenter().gridWidth(2).fillHorizontal());
+        panel.add(button, GbcBuilder.of(1, 0).anchorCenter().gridWidth(2).fillHorizontal());
 
         // Dummy
-        panel.add(Box.createGlue(), new GbcBuilder(3, 0).weightX(1));
+        panel.add(Box.createGlue(), GbcBuilder.of(3, 0).weightX(1));
 
         button = new JButton(new ActionRipping(albumProperty));
-        panel.add(button, new GbcBuilder(4, 0).anchorCenter().gridWidth(2).fillHorizontal());
+        panel.add(button, GbcBuilder.of(4, 0).anchorCenter().gridWidth(2).fillHorizontal());
 
         // Dummy
-        panel.add(Box.createGlue(), new GbcBuilder(6, 0).weightX(1));
+        panel.add(Box.createGlue(), GbcBuilder.of(6, 0).weightX(1));
 
         container.add(panel, BorderLayout.NORTH);
     }
@@ -324,7 +324,7 @@ public class JRipperSwing
         Settings settings = Settings.getInstance();
 
         // Device
-        panel.add(new JLabel("Device"), new GbcBuilder(0, 0));
+        panel.add(new JLabel("Device"), GbcBuilder.of(0, 0));
 
         Property<String> deviceProperty = new SimpleStringProperty();
 
@@ -333,10 +333,10 @@ public class JRipperSwing
         SwingBindings.bindBidirectional(textFieldDevice, deviceProperty);
         deviceProperty.addListener((observable, oldValue, newValue) -> settings.setDevice(newValue));
 
-        panel.add(textFieldDevice, new GbcBuilder(1, 0).fillHorizontal());
+        panel.add(textFieldDevice, GbcBuilder.of(1, 0).fillHorizontal());
 
         // Work. Dir.
-        panel.add(new JLabel("Work.-Dir."), new GbcBuilder(0, 1));
+        panel.add(new JLabel("Work.-Dir."), GbcBuilder.of(0, 1));
 
         Property<String> workDirProperty = new SimpleStringProperty();
 
@@ -345,13 +345,13 @@ public class JRipperSwing
         SwingBindings.bindBidirectional(textFieldWorkDir, workDirProperty);
         workDirProperty.addListener((observable, oldValue, newValue) -> settings.setWorkDir(newValue));
 
-        panel.add(textFieldWorkDir, new GbcBuilder(1, 1).fillHorizontal());
+        panel.add(textFieldWorkDir, GbcBuilder.of(1, 1).fillHorizontal());
 
         JButton button = new JButton(new ActionChooseWorkDir(splitPane.getParent(), workDirProperty));
         button.setBorder(BorderFactory.createEmptyBorder());
         button.setFocusPainted(false);
         button.setMargin(new Insets(0, 0, 0, 0));
-        panel.add(button, new GbcBuilder(2, 1));
+        panel.add(button, GbcBuilder.of(2, 1));
 
         // FLAC
         JPanel panelFlac = new JPanel();
@@ -366,17 +366,18 @@ public class JRipperSwing
         SwingBindings.bindToProperty(checkBoxFlac, flacEnabledProperty);
         flacEnabledProperty.addListener((observable, oldValue, newValue) -> settings.setFlacEnabled(newValue));
 
-        panelFlac.add(checkBoxFlac, new GbcBuilder(0, 0));
+        panelFlac.add(checkBoxFlac, GbcBuilder.of(0, 0));
 
         // Compression
         Property<Integer> flacCompressionProperty = new SimpleIntegerProperty();
 
-        panelFlac.add(new JLabel("Compression"), new GbcBuilder(0, 1));
+        panelFlac.add(new JLabel("Compression"), GbcBuilder.of(0, 1));
 
         JSlider slider = new JSlider(0, 8, settings.getFlacCompression());
         slider.setMajorTickSpacing(2);
         // slider.setSnapToTicks(true);
         slider.setPaintLabels(true);
+
         @SuppressWarnings("unchecked")
         Dictionary<Integer, JLabel> labelTable = slider.getLabelTable();
         labelTable.put(0, new JLabel("fast"));
@@ -386,9 +387,9 @@ public class JRipperSwing
         SwingBindings.bindToProperty(slider, flacCompressionProperty);
         flacCompressionProperty.addListener((observable, oldValue, newValue) -> settings.setFlacCompression(newValue));
 
-        panelFlac.add(slider, new GbcBuilder(1, 1).fillHorizontal());
+        panelFlac.add(slider, GbcBuilder.of(1, 1).fillHorizontal());
 
-        panel.add(panelFlac, new GbcBuilder(0, 2).gridWidth(3).fillHorizontal());
+        panel.add(panelFlac, GbcBuilder.of(0, 2).gridWidth(3).fillHorizontal());
 
         // MP3
         JPanel panelMP3 = new JPanel();
@@ -403,13 +404,13 @@ public class JRipperSwing
         SwingBindings.bindToProperty(checkBoxMp3, mp3EnabledProperty);
         mp3EnabledProperty.addListener((observable, oldValue, newValue) -> settings.setMp3Enabled(newValue));
 
-        panelMP3.add(checkBoxMp3, new GbcBuilder(0, 0));
+        panelMP3.add(checkBoxMp3, GbcBuilder.of(0, 0));
 
         // Bitrate
         ObservableList<Integer> mp3BitRatesObservableList = new DefaultObservableList<>(settings.getMp3BitRates());
         Property<Integer> mp3BitRateProperty = new SimpleIntegerProperty();
 
-        panelMP3.add(new JLabel("Bitrate"), new GbcBuilder(0, 1));
+        panelMP3.add(new JLabel("Bitrate"), GbcBuilder.of(0, 1));
 
         JComboBox<Integer> comboBox = new JComboBox<>();
         comboBox.setModel(new DefaultObservableListComboBoxModel<>(mp3BitRatesObservableList));
@@ -418,12 +419,12 @@ public class JRipperSwing
         SwingBindings.bindToProperty(comboBox, mp3BitRateProperty);
         mp3BitRateProperty.addListener((observable, oldValue, newValue) -> settings.setMp3Bitrate(newValue));
 
-        panelMP3.add(comboBox, new GbcBuilder(1, 1).fillHorizontal());
+        panelMP3.add(comboBox, GbcBuilder.of(1, 1).fillHorizontal());
 
-        panel.add(panelMP3, new GbcBuilder(0, 3).gridWidth(3).fillHorizontal());
+        panel.add(panelMP3, GbcBuilder.of(0, 3).gridWidth(3).fillHorizontal());
 
-        // Alles nach oben drücken
-        panel.add(Box.createGlue(), new GbcBuilder(0, GridBagConstraints.RELATIVE).fillVertical());
+        // Push all up
+        panel.add(Box.createGlue(), GbcBuilder.of(0, GridBagConstraints.RELATIVE).fillVertical());
 
         splitPane.setRightComponent(panel);
     }
