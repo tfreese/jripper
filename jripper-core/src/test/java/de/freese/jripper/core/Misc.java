@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 /**
  * @author Thomas Freese
  */
-public class Misc
+public final class Misc
 {
     public static void main(final String[] args)
     {
@@ -79,5 +79,10 @@ public class Misc
         // {
         // ex.printStackTrace();
         // }
+    }
+
+    private Misc()
+    {
+        super();
     }
 }

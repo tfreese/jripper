@@ -83,7 +83,12 @@ public class JRipperSwing
         }
     }
 
-    public static JFrame frame;
+    private static JFrame frame;
+
+    public static JFrame getFrame()
+    {
+        return frame;
+    }
 
     public static void main(final String[] args)
     {

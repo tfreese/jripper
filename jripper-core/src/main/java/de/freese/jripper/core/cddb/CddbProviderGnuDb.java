@@ -48,7 +48,7 @@ public class CddbProviderGnuDb implements CddbProvider
 
     private static final String USER = "anonymous";
 
-    public final Logger logger = JRipper.getInstance().getLogger();// LoggerFactory.getLogger(getClass());
+    private final Logger logger = JRipper.getInstance().getLogger();// LoggerFactory.getLogger(getClass());
 
     private final String requestPostfix;
 

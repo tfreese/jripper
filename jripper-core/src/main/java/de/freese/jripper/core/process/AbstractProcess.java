@@ -17,7 +17,7 @@ import org.slf4j.Logger;
  */
 public abstract class AbstractProcess
 {
-    public final Logger logger = JRipper.getInstance().getLogger();// LoggerFactory.getLogger(getClass());
+    private final Logger logger = JRipper.getInstance().getLogger();// LoggerFactory.getLogger(getClass());
 
     private static Thread createShutDownHook(final Process process)
     {

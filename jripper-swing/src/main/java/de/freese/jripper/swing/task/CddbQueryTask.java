@@ -67,7 +67,7 @@ public class CddbQueryTask extends SwingWorker<CddbResponse, Void>
             if (cddbResponse.getErrorMessage() != null)
             {
                 String message = cddbResponse.getErrorMessage();
-                JOptionPane.showMessageDialog(JRipperSwing.frame, message, "Warning", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(JRipperSwing.getFrame(), message, "Warning", JOptionPane.WARNING_MESSAGE);
 
                 return;
             }
