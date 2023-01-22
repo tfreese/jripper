@@ -21,7 +21,7 @@ public class ActionRipping extends AbstractAction
     @Serial
     private static final long serialVersionUID = -4794748623915093242L;
 
-    private final Property<Album> albumProperty;
+    private transient final Property<Album> albumProperty;
 
     public ActionRipping(final Property<Album> albumProperty)
     {
