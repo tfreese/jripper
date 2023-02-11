@@ -11,8 +11,7 @@ import de.freese.jripper.core.process.ProcessMonitor;
  *
  * @author Thomas Freese
  */
-public interface Ripper extends OSProvider
-{
+public interface Ripper extends OSProvider {
     /**
      * Auslesen der CD in das Verzeichnis.
      */

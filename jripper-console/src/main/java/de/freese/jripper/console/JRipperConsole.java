@@ -29,10 +29,8 @@ import de.freese.jripper.core.ripper.Ripper;
  *
  * @author Thomas Freese
  */
-public class JRipperConsole
-{
-    public static void main(final String[] args) throws UnsupportedEncodingException
-    {
+public class JRipperConsole {
+    public static void main(final String[] args) throws UnsupportedEncodingException {
         JRipperConsole console = new JRipperConsole();
         console.showMainMenu();
     }
@@ -43,35 +41,29 @@ public class JRipperConsole
 
     private Album album;
 
-    public JRipperConsole() throws UnsupportedEncodingException
-    {
+    public JRipperConsole() throws UnsupportedEncodingException {
         super();
 
         Console console = System.console();
 
-        if (console != null)
-        {
-            if (console.reader() instanceof BufferedReader bufferedReader)
-            {
+        if (console != null) {
+            if (console.reader() instanceof BufferedReader bufferedReader) {
                 this.reader = bufferedReader;
             }
-            else
-            {
+            else {
                 this.reader = new BufferedReader(console.reader());
             }
 
             this.printWriter = console.writer();
         }
-        else
-        {
+        else {
             // In Eclipse kann Console null sein.
             this.reader = new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8));
             this.printWriter = new PrintWriter(System.out, true, StandardCharsets.UTF_8);
         }
     }
 
-    public void showMainMenu()
-    {
+    public void showMainMenu() {
         print("%s\n", "*****************");
         print("%s\n", "JRipper Hauptmenü");
         print("%s\n", "*****************");
@@ -79,25 +71,21 @@ public class JRipperConsole
         print("%s%s%s \t%s\n", AnsiCodes.ANSI_CYAN, "1", AnsiCodes.ANSI_RESET, "FreeDB abfragen");
         String workDir = Settings.getInstance().getWorkDir();
 
-        if (this.album != null)
-        {
+        if (this.album != null) {
             print("%s%s%s \t%s\n", AnsiCodes.ANSI_CYAN, "2", AnsiCodes.ANSI_RESET, "Album bearbeiten");
             print("%s%s%s \t%s%s/%s/wav\n", AnsiCodes.ANSI_CYAN, "3", AnsiCodes.ANSI_RESET, "CD auslesen -> ", workDir, this.album.getTitle());
         }
 
         File wavDir = null;
 
-        try
-        {
+        try {
             wavDir = JRipperUtils.getWavDir(this.album, false);
         }
-        catch (Exception ex)
-        {
+        catch (Exception ex) {
             // Ignore
         }
 
-        if ((wavDir != null) && wavDir.exists() && (this.album != null) && (this.album.getTrackCount() > 0))
-        {
+        if ((wavDir != null) && wavDir.exists() && (this.album != null) && (this.album.getTrackCount() > 0)) {
             print("%s%s%s \t%s%s/%s/flac\n", AnsiCodes.ANSI_CYAN, "4", AnsiCodes.ANSI_RESET, "flac erzeugen -> ", workDir, this.album.getTitle());
             print("%s%s%s \t%s%s/%s/map3\n", AnsiCodes.ANSI_CYAN, "5", AnsiCodes.ANSI_RESET, "mp3 erzeugen -> ", workDir, this.album.getTitle());
         }
@@ -107,12 +95,10 @@ public class JRipperConsole
 
         String input = null;
 
-        try
-        {
+        try {
             input = getInput();
 
-            switch (input)
-            {
+            switch (input) {
                 case "1":
                     this.album = null;
                     DiskId diskID = getDiskID();
@@ -146,72 +132,58 @@ public class JRipperConsole
                     break;
             }
         }
-        catch (Exception ex)
-        {
+        catch (Exception ex) {
             // String message = ex.getMessage();
             // message = ex.toString();
             // message = StringUtils.isNotBlank(message) ? message : ex.toString();
             print("%s%s%s", AnsiCodes.ANSI_RED, ex.toString(), AnsiCodes.ANSI_RESET);
         }
 
-        if ("2".equals(input))
-        {
+        if ("2".equals(input)) {
             // Notwendig um aus den switch-case herauszukommen.
             showEditMenu();
         }
-        else
-        {
+        else {
             showMainMenu();
         }
     }
 
-    private void encode(final Album album, final PrintWriter printWriter, final Encoder encoder, final File directory) throws Exception
-    {
+    private void encode(final Album album, final PrintWriter printWriter, final Encoder encoder, final File directory) throws Exception {
         ProcessMonitor monitor = null;
 
-        if (encoder instanceof EncoderLinuxMp3)
-        {
+        if (encoder instanceof EncoderLinuxMp3) {
             monitor = new LameProcessMonitor(printWriter);
         }
-        else
-        {
+        else {
             monitor = new PrintWriterProcessMonitor(printWriter);
         }
 
         encoder.encode(album, directory, monitor);
     }
 
-    private DiskId getDiskID() throws Exception
-    {
+    private DiskId getDiskID() throws Exception {
         String device = Settings.getInstance().getDevice();
 
         return JRipper.getInstance().getDiskIDProvider().getDiskID(device);
     }
 
-    private String getInput() throws Exception
-    {
+    private String getInput() throws Exception {
         print("%s%s%s: ", AnsiCodes.ANSI_GREEN, "Eingabe", AnsiCodes.ANSI_RESET);
 
         return this.reader.readLine();
     }
 
-    private void print(final String format, final Object... params)
-    {
-        if (JRipperUtils.isDevelopment())
-        {
+    private void print(final String format, final Object... params) {
+        if (JRipperUtils.isDevelopment()) {
             // In der Entwicklungsumgebung die ANSI-Codes entfernen.
-            for (int i = 0; i < params.length; i++)
-            {
-                if (params[i] == null)
-                {
+            for (int i = 0; i < params.length; i++) {
+                if (params[i] == null) {
                     continue;
                 }
 
-                switch (params[i].toString())
-                {
+                switch (params[i].toString()) {
                     case AnsiCodes.ANSI_CYAN, AnsiCodes.ANSI_GREEN, AnsiCodes.ANSI_RED, AnsiCodes.ANSI_RESET -> params[i] = "";
-                    default ->
-                    {
+                    default -> {
                         // Empty
                     }
                 }
@@ -222,22 +194,19 @@ public class JRipperConsole
         this.printWriter.flush();
     }
 
-    private String queryCDDB(final DiskId diskID) throws Exception
-    {
+    private String queryCDDB(final DiskId diskID) throws Exception {
         CddbResponse cddbResponse = JRipper.getInstance().getCddbProvider().queryGenres(diskID);
 
         return cddbResponse.getGenres().get(0);
     }
 
-    private Album readCDDB(final DiskId diskID, final String genre) throws Exception
-    {
+    private Album readCDDB(final DiskId diskID, final String genre) throws Exception {
         CddbResponse cddbResponse = JRipper.getInstance().getCddbProvider().queryAlbum(diskID, genre);
 
         return cddbResponse.getAlbum();
     }
 
-    private void rip(final Album album, final PrintWriter printWriter) throws Exception
-    {
+    private void rip(final Album album, final PrintWriter printWriter) throws Exception {
         String device = Settings.getInstance().getDevice();
         Ripper ripper = JRipper.getInstance().getRipper();
         File directory = JRipperUtils.getWavDir(album, true);
@@ -245,8 +214,7 @@ public class JRipperConsole
         ripper.rip(device, directory, new PrintWriterProcessMonitor(printWriter));
     }
 
-    private void showAlbum(final Album album)
-    {
+    private void showAlbum(final Album album) {
         print("%s\n", "*****************");
         print("%s\n", "Album Inhalt");
         print("%s\n", "*****************");
@@ -260,14 +228,12 @@ public class JRipperConsole
         print("%-15s%s\n", "Comment", album.getComment());
         print("\n");
 
-        for (Track track : album)
-        {
+        for (Track track : album) {
             print("%2d. %s %s%n", track.getNumber(), String.format("%-35s", track.getArtist()).replace(' ', '.'), track.getTitle());
         }
     }
 
-    private void showEditMenu()
-    {
+    private void showEditMenu() {
         showAlbum(this.album);
 
         print("%s\n", "*****************");
@@ -289,12 +255,10 @@ public class JRipperConsole
 
         String input = null;
 
-        try
-        {
+        try {
             input = getInput();
 
-            switch (input)
-            {
+            switch (input) {
                 case "aa":
                     print("%s - ", "Neuer Wert");
                     input = getInput();
@@ -341,8 +305,7 @@ public class JRipperConsole
                     break;
 
                 default:
-                    if (input.startsWith("ta"))
-                    {
+                    if (input.startsWith("ta")) {
                         input = input.replace("ta", "").replace(".", "");
                         input = JRipperUtils.trim(input);
                         int index = Integer.parseInt(input) - 1;
@@ -351,8 +314,7 @@ public class JRipperConsole
                         input = getInput();
                         ((AlbumImpl) this.album).setTrackArtist(index, input);
                     }
-                    else if (input.startsWith("tt"))
-                    {
+                    else if (input.startsWith("tt")) {
                         input = input.replace("tt", "").replace(".", "");
                         input = JRipperUtils.trim(input);
                         int index = Integer.parseInt(input) - 1;
@@ -361,29 +323,25 @@ public class JRipperConsole
                         input = getInput();
                         ((AlbumImpl) this.album).setTrackTitle(index, input);
                     }
-                    else
-                    {
+                    else {
                         print("%s%s \t%s%s\n", AnsiCodes.ANSI_RED, input, "Unbekannte Eingabe", AnsiCodes.ANSI_RESET);
                     }
-                    
+
                     break;
             }
         }
-        catch (Exception ex)
-        {
+        catch (Exception ex) {
             // String message = ex.getMessage();
             // message = ex.toString();
             // message = StringUtils.isNotBlank(message) ? message : ex.toString();
             print("%s%s%s", AnsiCodes.ANSI_RED, ex.toString(), AnsiCodes.ANSI_RESET);
         }
 
-        if ("h".equals(input))
-        {
+        if ("h".equals(input)) {
             // Notwendig um aus den switch-case herauszukommen.
             showMainMenu();
         }
-        else
-        {
+        else {
             showEditMenu();
         }
     }

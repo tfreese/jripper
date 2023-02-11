@@ -16,12 +16,10 @@ import de.freese.jripper.swing.JRipperSwing;
  *
  * @author Thomas Freese
  */
-public class LoadGenresTask extends SwingWorker<Set<String>, Void>
-{
+public class LoadGenresTask extends SwingWorker<Set<String>, Void> {
     private final ObservableList<String> genresObservableList;
 
-    public LoadGenresTask(final ObservableList<String> genresObservableList)
-    {
+    public LoadGenresTask(final ObservableList<String> genresObservableList) {
         super();
 
         this.genresObservableList = Objects.requireNonNull(genresObservableList, "genresObservableList required");
@@ -31,8 +29,7 @@ public class LoadGenresTask extends SwingWorker<Set<String>, Void>
      * @see javax.swing.SwingWorker#doInBackground()
      */
     @Override
-    protected Set<String> doInBackground() throws Exception
-    {
+    protected Set<String> doInBackground() throws Exception {
         GenreProvider genreProvider = JRipper.getInstance().getGenreProvider();
 
         return genreProvider.getGenres();
@@ -42,17 +39,14 @@ public class LoadGenresTask extends SwingWorker<Set<String>, Void>
      * @see javax.swing.SwingWorker#done()
      */
     @Override
-    protected void done()
-    {
-        try
-        {
+    protected void done() {
+        try {
             Set<String> genres = get();
 
             this.genresObservableList.clear();
             this.genresObservableList.addAll(genres);
         }
-        catch (Exception ex)
-        {
+        catch (Exception ex) {
             JRipperSwing.LOGGER.error(ex.getMessage(), ex);
         }
     }

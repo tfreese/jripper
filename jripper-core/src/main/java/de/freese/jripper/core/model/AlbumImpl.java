@@ -14,8 +14,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Thomas Freese
  */
-public class AlbumImpl implements Album
-{
+public class AlbumImpl implements Album {
     private static final Logger LOGGER = LoggerFactory.getLogger(AlbumImpl.class);
 
     private final DiskId diskID;
@@ -38,15 +37,13 @@ public class AlbumImpl implements Album
 
     private int year;
 
-    public AlbumImpl()
-    {
+    public AlbumImpl() {
         super();
 
         this.diskID = null;
     }
 
-    public AlbumImpl(final DiskId diskID)
-    {
+    public AlbumImpl(final DiskId diskID) {
         super();
 
         this.diskID = Objects.requireNonNull(diskID, "diskID required");
@@ -55,8 +52,7 @@ public class AlbumImpl implements Album
     /**
      * @param artist String; Nur bei Compilations != null.
      */
-    public void addTrack(final String artist, final String title)
-    {
+    public void addTrack(final String artist, final String title) {
         int trackIndex = this.tracks.size();
 
         Track track = new Track();
@@ -73,8 +69,7 @@ public class AlbumImpl implements Album
      * @see de.freese.jripper.core.model.Album#getArtist()
      */
     @Override
-    public String getArtist()
-    {
+    public String getArtist() {
         return this.artist;
     }
 
@@ -82,8 +77,7 @@ public class AlbumImpl implements Album
      * @see de.freese.jripper.core.model.Album#getComment()
      */
     @Override
-    public String getComment()
-    {
+    public String getComment() {
         return Objects.toString(this.comment, "");
     }
 
@@ -91,8 +85,7 @@ public class AlbumImpl implements Album
      * @see de.freese.jripper.core.model.Album#getDiskID()
      */
     @Override
-    public DiskId getDiskID()
-    {
+    public DiskId getDiskID() {
         return this.diskID;
     }
 
@@ -100,8 +93,7 @@ public class AlbumImpl implements Album
      * @see de.freese.jripper.core.model.Album#getDiskNumber()
      */
     @Override
-    public int getDiskNumber()
-    {
+    public int getDiskNumber() {
         return this.diskNumber;
     }
 
@@ -109,8 +101,7 @@ public class AlbumImpl implements Album
      * @see de.freese.jripper.core.model.Album#getGenre()
      */
     @Override
-    public String getGenre()
-    {
+    public String getGenre() {
         return this.genre;
     }
 
@@ -118,8 +109,7 @@ public class AlbumImpl implements Album
      * @see de.freese.jripper.core.model.Album#getTitle()
      */
     @Override
-    public String getTitle()
-    {
+    public String getTitle() {
         return this.title;
     }
 
@@ -127,8 +117,7 @@ public class AlbumImpl implements Album
      * @see de.freese.jripper.core.model.Album#getTotalDisks()
      */
     @Override
-    public int getTotalDisks()
-    {
+    public int getTotalDisks() {
         return this.totalDisks;
     }
 
@@ -136,8 +125,7 @@ public class AlbumImpl implements Album
      * @see de.freese.jripper.core.model.Album#getTrack(int)
      */
     @Override
-    public Track getTrack(final int index)
-    {
+    public Track getTrack(final int index) {
         return this.tracks.get(index);
     }
 
@@ -145,8 +133,7 @@ public class AlbumImpl implements Album
      * @see de.freese.jripper.core.model.Album#getTrackCount()
      */
     @Override
-    public int getTrackCount()
-    {
+    public int getTrackCount() {
         return this.tracks.size();
     }
 
@@ -154,8 +141,7 @@ public class AlbumImpl implements Album
      * @see de.freese.jripper.core.model.Album#getYear()
      */
     @Override
-    public int getYear()
-    {
+    public int getYear() {
         return this.year;
     }
 
@@ -163,8 +149,7 @@ public class AlbumImpl implements Album
      * @see de.freese.jripper.core.model.Album#isCompilation()
      */
     @Override
-    public boolean isCompilation()
-    {
+    public boolean isCompilation() {
         return (this.artist == null) || this.artist.isBlank();
     }
 
@@ -172,8 +157,7 @@ public class AlbumImpl implements Album
      * @see de.freese.jripper.core.model.Album#iterator()
      */
     @Override
-    public Iterator<Track> iterator()
-    {
+    public Iterator<Track> iterator() {
         return this.tracks.iterator();
     }
 
@@ -181,8 +165,7 @@ public class AlbumImpl implements Album
      * @see de.freese.jripper.core.model.Album#setArtist(java.lang.String)
      */
     @Override
-    public void setArtist(final String artist)
-    {
+    public void setArtist(final String artist) {
         this.artist = artist;
 
         LOGGER.debug("artist = {}", artist);
@@ -192,8 +175,7 @@ public class AlbumImpl implements Album
      * @see de.freese.jripper.core.model.Album#setComment(java.lang.String)
      */
     @Override
-    public void setComment(final String comment)
-    {
+    public void setComment(final String comment) {
         this.comment = comment;
 
         LOGGER.debug("comment = {}", comment);
@@ -203,8 +185,7 @@ public class AlbumImpl implements Album
      * @see de.freese.jripper.core.model.Album#setDiskNumber(int)
      */
     @Override
-    public void setDiskNumber(final int diskNumber)
-    {
+    public void setDiskNumber(final int diskNumber) {
         this.diskNumber = diskNumber;
 
         LOGGER.debug("diskNumber = {}", diskNumber);
@@ -214,8 +195,7 @@ public class AlbumImpl implements Album
      * @see de.freese.jripper.core.model.Album#setGenre(java.lang.String)
      */
     @Override
-    public void setGenre(final String genre)
-    {
+    public void setGenre(final String genre) {
         this.genre = genre;
 
         LOGGER.debug("genre = {}", genre);
@@ -225,8 +205,7 @@ public class AlbumImpl implements Album
      * @see de.freese.jripper.core.model.Album#setTitle(java.lang.String)
      */
     @Override
-    public void setTitle(final String title)
-    {
+    public void setTitle(final String title) {
         this.title = title;
 
         LOGGER.debug("title = {}", title);
@@ -236,8 +215,7 @@ public class AlbumImpl implements Album
      * @see de.freese.jripper.core.model.Album#setTotalDisks(int)
      */
     @Override
-    public void setTotalDisks(final int totalDisks)
-    {
+    public void setTotalDisks(final int totalDisks) {
         this.totalDisks = totalDisks;
 
         LOGGER.debug("totalDisks = {}", totalDisks);
@@ -246,8 +224,7 @@ public class AlbumImpl implements Album
     /**
      * @param index int, beginnend mit 0
      */
-    public void setTrackArtist(final int index, final String artist)
-    {
+    public void setTrackArtist(final int index, final String artist) {
         Track track = this.tracks.get(index);
         track.setArtist(artist);
 
@@ -257,8 +234,7 @@ public class AlbumImpl implements Album
     /**
      * @param index int, beginnend mit 0
      */
-    public void setTrackTitle(final int index, final String title)
-    {
+    public void setTrackTitle(final int index, final String title) {
         Track track = this.tracks.get(index);
         track.setTitle(title);
 
@@ -269,8 +245,7 @@ public class AlbumImpl implements Album
      * @see de.freese.jripper.core.model.Album#setYear(int)
      */
     @Override
-    public void setYear(final int year)
-    {
+    public void setYear(final int year) {
         this.year = year;
 
         LOGGER.debug("year = {}", year);

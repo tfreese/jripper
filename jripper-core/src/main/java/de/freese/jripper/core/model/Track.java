@@ -8,8 +8,7 @@ import java.util.Objects;
  *
  * @author Thomas Freese
  */
-public class Track
-{
+public class Track {
     private Album album;
     /**
      * Nur bei Compilations gefüllt.
@@ -22,69 +21,57 @@ public class Track
 
     private String title;
 
-    Track()
-    {
+    Track() {
         super();
     }
 
-    public Album getAlbum()
-    {
+    public Album getAlbum() {
         return this.album;
     }
 
     /**
      * Nur bei Compilations gefüllt.
      */
-    public String getArtist()
-    {
-        if ((this.artist == null) || this.artist.isBlank())
-        {
+    public String getArtist() {
+        if ((this.artist == null) || this.artist.isBlank()) {
             return getAlbum().getArtist();
         }
 
         return this.artist;
     }
 
-    public int getNumber()
-    {
+    public int getNumber() {
         return this.number;
     }
 
-    public int getSeconds()
-    {
+    public int getSeconds() {
         return this.seconds;
     }
 
-    public String getTitle()
-    {
+    public String getTitle() {
         return this.title;
-    }
-
-    void setAlbum(final Album album)
-    {
-        this.album = Objects.requireNonNull(album, "album required");
     }
 
     /**
      * Nur bei Compilations gefüllt.
      */
-    public void setArtist(final String artist)
-    {
+    public void setArtist(final String artist) {
         this.artist = Objects.requireNonNull(artist, "artist required");
     }
 
-    void setNumber(final int number)
-    {
+    public void setTitle(final String title) {
+        this.title = title;
+    }
+
+    void setAlbum(final Album album) {
+        this.album = Objects.requireNonNull(album, "album required");
+    }
+
+    void setNumber(final int number) {
         this.number = number;
     }
 
-    void setSeconds(final int seconds)
-    {
+    void setSeconds(final int seconds) {
         this.seconds = seconds;
-    }
-
-    public void setTitle(final String title)
-    {
-        this.title = title;
     }
 }

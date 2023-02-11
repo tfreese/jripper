@@ -6,14 +6,12 @@ package de.freese.jripper.core.process;
  *
  * @author Thomas Freese
  */
-public class EmptyProcessMonitor implements ProcessMonitor
-{
+public class EmptyProcessMonitor implements ProcessMonitor {
     /**
      * @see de.freese.jripper.core.process.ProcessMonitor#monitorProcess(java.lang.String)
      */
     @Override
-    public void monitorProcess(final String line)
-    {
+    public void monitorProcess(final String line) {
         // Empty
     }
 
@@ -21,8 +19,7 @@ public class EmptyProcessMonitor implements ProcessMonitor
      * @see de.freese.jripper.core.process.ProcessMonitor#monitorText(java.lang.String)
      */
     @Override
-    public void monitorText(final String line)
-    {
+    public void monitorText(final String line) {
         // Empty
     }
 }

@@ -11,10 +11,8 @@ import de.freese.jripper.core.process.ProcessMonitor;
  *
  * @author Thomas Freese
  */
-public class LameProcessMonitor extends PrintWriterProcessMonitor
-{
-    public LameProcessMonitor(final PrintWriter printWriter)
-    {
+public class LameProcessMonitor extends PrintWriterProcessMonitor {
+    public LameProcessMonitor(final PrintWriter printWriter) {
         super(printWriter);
     }
 
@@ -54,14 +52,11 @@ public class LameProcessMonitor extends PrintWriterProcessMonitor
      * @see de.freese.jripper.core.process.PrintWriterProcessMonitor#monitorProcess(java.lang.String)
      */
     @Override
-    public void monitorProcess(final String line)
-    {
-        if (line.startsWith("Encoding") || line.contains("to") || line.contains("Frame"))
-        {
+    public void monitorProcess(final String line) {
+        if (line.startsWith("Encoding") || line.contains("to") || line.contains("Frame")) {
             getPrintWriter().println(line);
         }
-        else if (line.contains("%)"))
-        {
+        else if (line.contains("%)")) {
             // int start = line.indexOf(" (");
             // int end = line.indexOf("%)");
             //

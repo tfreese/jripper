@@ -8,28 +8,20 @@ import java.io.PrintWriter;
  *
  * @author Thomas Freese
  */
-public class PrintWriterProcessMonitor implements ProcessMonitor
-{
+public class PrintWriterProcessMonitor implements ProcessMonitor {
     private final PrintWriter printWriter;
 
-    public PrintWriterProcessMonitor(final PrintWriter printWriter)
-    {
+    public PrintWriterProcessMonitor(final PrintWriter printWriter) {
         super();
 
         this.printWriter = printWriter;
-    }
-
-    protected PrintWriter getPrintWriter()
-    {
-        return this.printWriter;
     }
 
     /**
      * @see de.freese.jripper.core.process.ProcessMonitor#monitorProcess(java.lang.String)
      */
     @Override
-    public void monitorProcess(final String line)
-    {
+    public void monitorProcess(final String line) {
         getPrintWriter().println(line);
         getPrintWriter().flush();
     }
@@ -38,9 +30,12 @@ public class PrintWriterProcessMonitor implements ProcessMonitor
      * @see de.freese.jripper.core.process.ProcessMonitor#monitorText(java.lang.String)
      */
     @Override
-    public void monitorText(final String line)
-    {
+    public void monitorText(final String line) {
         getPrintWriter().println(line);
         getPrintWriter().flush();
+    }
+
+    protected PrintWriter getPrintWriter() {
+        return this.printWriter;
     }
 }

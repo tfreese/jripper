@@ -9,8 +9,7 @@ import de.freese.jripper.core.model.DiskId;
  *
  * @author Thomas Freese
  */
-public interface DiskIDProvider extends OSProvider
-{
+public interface DiskIDProvider extends OSProvider {
     /**
      * Liefert die DiskId der CD.
      */

@@ -6,9 +6,8 @@ package de.freese.jripper.core.encoder;
  *
  * @author Thomas Freese
  */
-public enum EncoderFormat
-{
+public enum EncoderFormat {
     FLAC,
-    
+
     MP3
 }

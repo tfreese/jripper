@@ -11,15 +11,14 @@ import org.slf4j.LoggerFactory;
  *
  * @author Thomas Freese
  */
-public final class Settings
-{
+public final class Settings {
     private static final Settings INSTANCE = new Settings();
 
-    public static Settings getInstance()
-    {
+    public static Settings getInstance() {
         return INSTANCE;
     }
-
+    private final Logger logger = LoggerFactory.getLogger(Settings.class);
+    private final List<Integer> mp3BitRates;
     /**
      * Laufwerk
      */
@@ -28,25 +27,16 @@ public final class Settings
      * 0-8
      */
     private int flacCompression = 8;
-
     private boolean flacEnabled = true;
-
     private int framesPerSecond = 75;
-
-    private final Logger logger = LoggerFactory.getLogger(Settings.class);
-
     private int mp3Bitrate = 320;
-
-    private final List<Integer> mp3BitRates;
-
     private boolean mp3Enabled = true;
     /**
      * Arbeitsverzeichnis
      */
     private String workDir;
 
-    private Settings()
-    {
+    private Settings() {
         super();
 
         setWorkDir(System.getProperty("java.io.tmpdir") + "/jRipper");
@@ -61,56 +51,42 @@ public final class Settings
         this.mp3BitRates = List.of(320, 256, 224, 192, 160, 128, 112, 96, 80, 64, 56, 48, 40, 32);
     }
 
-    public String getDevice()
-    {
+    public String getDevice() {
         return this.device;
     }
 
     /**
      * 0-8
      */
-    public int getFlacCompression()
-    {
+    public int getFlacCompression() {
         return this.flacCompression;
     }
 
-    public int getFramesPerSecond()
-    {
+    public int getFramesPerSecond() {
         return this.framesPerSecond;
     }
 
-    private Logger getLogger()
-    {
-        return this.logger;
-    }
-
-    public int getMp3Bitrate()
-    {
-        return this.mp3Bitrate;
-    }
-
-    public List<Integer> getMp3BitRates()
-    {
+    public List<Integer> getMp3BitRates() {
         return this.mp3BitRates;
     }
 
-    public String getWorkDir()
-    {
+    public int getMp3Bitrate() {
+        return this.mp3Bitrate;
+    }
+
+    public String getWorkDir() {
         return this.workDir;
     }
 
-    public boolean isFlacEnabled()
-    {
+    public boolean isFlacEnabled() {
         return this.flacEnabled;
     }
 
-    public boolean isMp3Enabled()
-    {
+    public boolean isMp3Enabled() {
         return this.mp3Enabled;
     }
 
-    public void setDevice(final String device)
-    {
+    public void setDevice(final String device) {
         this.device = device;
 
         getLogger().debug("device = {}", device);
@@ -119,45 +95,43 @@ public final class Settings
     /**
      * 0-8
      */
-    public void setFlacCompression(final int flacCompression)
-    {
+    public void setFlacCompression(final int flacCompression) {
         this.flacCompression = flacCompression;
 
         getLogger().debug("flacCompression = {}", flacCompression);
     }
 
-    public void setFlacEnabled(final boolean flacEnabled)
-    {
+    public void setFlacEnabled(final boolean flacEnabled) {
         this.flacEnabled = flacEnabled;
 
         getLogger().debug("flacEnabled = {}", flacEnabled);
     }
 
-    public void setFramesPerSecond(final int framesPerSecond)
-    {
+    public void setFramesPerSecond(final int framesPerSecond) {
         this.framesPerSecond = framesPerSecond;
 
         getLogger().debug("framesPerSecond = {}", framesPerSecond);
     }
 
-    public void setMp3Bitrate(final int mp3Bitrate)
-    {
+    public void setMp3Bitrate(final int mp3Bitrate) {
         this.mp3Bitrate = mp3Bitrate;
 
         getLogger().debug("mp3Bitrate = {}", mp3Bitrate);
     }
 
-    public void setMp3Enabled(final boolean mp3Enabled)
-    {
+    public void setMp3Enabled(final boolean mp3Enabled) {
         this.mp3Enabled = mp3Enabled;
 
         getLogger().debug("mp3Enabled = {}", mp3Enabled);
     }
 
-    public void setWorkDir(final String workDir)
-    {
+    public void setWorkDir(final String workDir) {
         this.workDir = workDir;
 
         getLogger().debug("workDir = {}", workDir);
+    }
+
+    private Logger getLogger() {
+        return this.logger;
     }
 }

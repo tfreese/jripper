@@ -6,8 +6,7 @@ package de.freese.jripper.core.process;
  *
  * @author Thomas Freese
  */
-public interface ProcessMonitor
-{
+public interface ProcessMonitor {
     /**
      * Zeile des Process.
      */

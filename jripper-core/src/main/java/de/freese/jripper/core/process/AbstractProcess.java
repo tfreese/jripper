@@ -7,45 +7,37 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
-import de.freese.jripper.core.JRipper;
 import org.slf4j.Logger;
+
+import de.freese.jripper.core.JRipper;
 
 /**
  * Basisklasse für alle Implementierungen die den {@link ProcessBuilder} verwenden.
  *
  * @author Thomas Freese
  */
-public abstract class AbstractProcess
-{
-    private final Logger logger = JRipper.getInstance().getLogger();// LoggerFactory.getLogger(getClass());
-
-    private static Thread createShutDownHook(final Process process)
-    {
-        return new Thread()
-        {
+public abstract class AbstractProcess {
+    private static Thread createShutDownHook(final Process process) {
+        return new Thread() {
             /**
              * @see java.lang.Thread#run()
              */
             @Override
-            public void run()
-            {
-                if (process != null)
-                {
+            public void run() {
+                if (process != null) {
                     process.destroy();
                 }
             }
         };
     }
+    private final Logger logger = JRipper.getInstance().getLogger();// LoggerFactory.getLogger(getClass());
 
-    protected AbstractProcess()
-    {
+    protected AbstractProcess() {
         super();
     }
 
-    protected void execute(final List<String> command, final File directory, final ProcessMonitor monitor) throws Exception
-    {
-        if (!directory.exists())
-        {
+    protected void execute(final List<String> command, final File directory, final ProcessMonitor monitor) throws Exception {
+        if (!directory.exists()) {
             directory.mkdirs();
         }
 
@@ -61,12 +53,10 @@ public abstract class AbstractProcess
         Thread hook = createShutDownHook(process);
         Runtime.getRuntime().addShutdownHook(hook);
 
-        try (BufferedReader inputReader = new BufferedReader(new InputStreamReader(process.getInputStream(), StandardCharsets.UTF_8)))
-        {
+        try (BufferedReader inputReader = new BufferedReader(new InputStreamReader(process.getInputStream(), StandardCharsets.UTF_8))) {
             String line = null;
 
-            while ((line = inputReader.readLine()) != null)
-            {
+            while ((line = inputReader.readLine()) != null) {
                 monitor.monitorProcess(line);
             }
         }
@@ -76,14 +66,12 @@ public abstract class AbstractProcess
         process.destroy();
         Runtime.getRuntime().removeShutdownHook(hook);
 
-        if (exitVal != 0)
-        {
+        if (exitVal != 0) {
             throw new IllegalStateException("return code: " + exitVal);
         }
     }
 
-    protected Logger getLogger()
-    {
+    protected Logger getLogger() {
         return this.logger;
     }
 }

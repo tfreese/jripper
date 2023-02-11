@@ -17,8 +17,7 @@ import de.freese.binding.property.Property;
  *
  * @author Thomas Freese
  */
-public class ActionChooseWorkDir extends AbstractAction
-{
+public class ActionChooseWorkDir extends AbstractAction {
     @Serial
     private static final long serialVersionUID = 3262325088354448846L;
 
@@ -27,8 +26,7 @@ public class ActionChooseWorkDir extends AbstractAction
     private transient final Property<String> workDirProperty;
 
     @SuppressWarnings("checkstyle:AvoidEscapedUnicodeCharacters")
-    public ActionChooseWorkDir(final Component parent, final Property<String> workDirProperty)
-    {
+    public ActionChooseWorkDir(final Component parent, final Property<String> workDirProperty) {
         super("\u2026");
 
         this.parent = parent;
@@ -39,8 +37,7 @@ public class ActionChooseWorkDir extends AbstractAction
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */
     @Override
-    public void actionPerformed(final ActionEvent event)
-    {
+    public void actionPerformed(final ActionEvent event) {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setCurrentDirectory(new File(this.workDirProperty.getValue()));
         fileChooser.setAcceptAllFileFilterUsed(false);
@@ -48,8 +45,7 @@ public class ActionChooseWorkDir extends AbstractAction
 
         int returnVal = fileChooser.showDialog(this.parent, "Work.-Dir.");
 
-        if (returnVal == JFileChooser.APPROVE_OPTION)
-        {
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
             this.workDirProperty.setValue(fileChooser.getSelectedFile().getAbsolutePath());
         }
     }

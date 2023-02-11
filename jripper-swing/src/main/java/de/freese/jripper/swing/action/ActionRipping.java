@@ -16,15 +16,13 @@ import de.freese.jripper.swing.task.RippingTask;
  *
  * @author Thomas Freese
  */
-public class ActionRipping extends AbstractAction
-{
+public class ActionRipping extends AbstractAction {
     @Serial
     private static final long serialVersionUID = -4794748623915093242L;
 
     private transient final Property<Album> albumProperty;
 
-    public ActionRipping(final Property<Album> albumProperty)
-    {
+    public ActionRipping(final Property<Album> albumProperty) {
         super();
 
         this.albumProperty = albumProperty;
@@ -36,8 +34,7 @@ public class ActionRipping extends AbstractAction
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */
     @Override
-    public void actionPerformed(final ActionEvent event)
-    {
+    public void actionPerformed(final ActionEvent event) {
         Album album = this.albumProperty.getValue();
 
         RippingTask task = new RippingTask(album);

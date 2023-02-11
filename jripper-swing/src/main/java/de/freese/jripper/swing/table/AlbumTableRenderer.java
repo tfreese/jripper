@@ -14,8 +14,7 @@ import javax.swing.table.TableModel;
  *
  * @author Thomas Freese
  */
-public class AlbumTableRenderer extends DefaultTableCellRenderer
-{
+public class AlbumTableRenderer extends DefaultTableCellRenderer {
     @Serial
     private static final long serialVersionUID = 8126334909300540593L;
 
@@ -23,17 +22,13 @@ public class AlbumTableRenderer extends DefaultTableCellRenderer
      * @see javax.swing.table.DefaultTableCellRenderer#getTableCellRendererComponent(javax.swing.JTable, java.lang.Object, boolean, boolean, int, int)
      */
     @Override
-    public Component getTableCellRendererComponent(final JTable table, final Object value, final boolean isSelected, final boolean hasFocus, final int row,
-                                                   final int column)
-    {
+    public Component getTableCellRendererComponent(final JTable table, final Object value, final boolean isSelected, final boolean hasFocus, final int row, final int column) {
         super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 
-        switch (column)
-        {
+        switch (column) {
             case 0, 3 -> setHorizontalAlignment(SwingConstants.RIGHT);
             case 1, 2 -> setHorizontalAlignment(SwingConstants.LEFT);
-            default ->
-            {
+            default -> {
                 // Empty
             }
         }

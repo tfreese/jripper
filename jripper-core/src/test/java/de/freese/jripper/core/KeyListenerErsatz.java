@@ -11,38 +11,31 @@ import java.io.Reader;
  *
  * @author Thomas Freese
  */
-public class KeyListenerErsatz implements Runnable
-{
+public class KeyListenerErsatz implements Runnable {
     /**
      * @see java.lang.Runnable#run()
      */
     @Override
-    public void run()
-    {
+    public void run() {
         Console console = System.console();
         Reader reader = null;
 
-        if (console != null)
-        {
+        if (console != null) {
             reader = console.reader();
         }
-        else
-        {
+        else {
             reader = new InputStreamReader(System.in);
         }
 
-        if (!(reader instanceof BufferedReader))
-        {
+        if (!(reader instanceof BufferedReader)) {
             reader = new BufferedReader(reader);
         }
 
-        try
-        {
+        try {
             // Auf Eingabe warten.
             ((BufferedReader) reader).readLine();
         }
-        catch (Exception ex)
-        {
+        catch (Exception ex) {
             // Ignore
         }
 

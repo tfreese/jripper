@@ -11,8 +11,7 @@ import de.freese.jripper.core.model.Album;
  *
  * @author Thomas Freese
  */
-public class CddbResponse
-{
+public class CddbResponse {
     /**
      * Mehrere Genres gefunden.
      */
@@ -33,54 +32,42 @@ public class CddbResponse
      * 500 Command syntax error.
      */
     public static final int SYNTAX_ERROR = 500;
-
+    private final int status;
     private Album album;
-
     private String errorMessage;
-
     private List<String> genres;
 
-    private final int status;
-
-    public CddbResponse(final int status)
-    {
+    public CddbResponse(final int status) {
         super();
 
         this.status = status;
     }
 
-    public Album getAlbum()
-    {
+    public Album getAlbum() {
         return this.album;
     }
 
-    public String getErrorMessage()
-    {
+    public String getErrorMessage() {
         return this.errorMessage;
     }
 
-    public List<String> getGenres()
-    {
+    public List<String> getGenres() {
         return this.genres;
     }
 
-    public int getStatus()
-    {
+    public int getStatus() {
         return this.status;
     }
 
-    public void setAlbum(final Album album)
-    {
+    public void setAlbum(final Album album) {
         this.album = Objects.requireNonNull(album, "album required");
     }
 
-    public void setErrorMessage(final String errorMessage)
-    {
+    public void setErrorMessage(final String errorMessage) {
         this.errorMessage = Objects.requireNonNull(errorMessage, "errorMessage required");
     }
 
-    public void setGenres(final List<String> genres)
-    {
+    public void setGenres(final List<String> genres) {
         this.genres = Objects.requireNonNull(genres, "genres required");
     }
 }

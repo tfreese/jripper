@@ -14,14 +14,12 @@ import de.freese.jripper.core.process.ProcessMonitor;
  *
  * @author Thomas Freese
  */
-public class RipperLinuxCdParanoia extends AbstractProcess implements Ripper
-{
+public class RipperLinuxCdParanoia extends AbstractProcess implements Ripper {
     /**
      * @see de.freese.jripper.core.ripper.Ripper#rip(java.lang.String, java.io.File, de.freese.jripper.core.process.ProcessMonitor)
      */
     @Override
-    public void rip(final String device, final File directory, final ProcessMonitor monitor) throws Exception
-    {
+    public void rip(final String device, final File directory, final ProcessMonitor monitor) throws Exception {
         List<String> command = new ArrayList<>();
         command.add("cdparanoia");
         command.add("-w");
@@ -42,8 +40,7 @@ public class RipperLinuxCdParanoia extends AbstractProcess implements Ripper
      * @see de.freese.jripper.core.OSProvider#supportsOS(java.lang.String)
      */
     @Override
-    public boolean supportsOS(final String os)
-    {
+    public boolean supportsOS(final String os) {
         return JRipperUtils.isLinux();
     }
 }

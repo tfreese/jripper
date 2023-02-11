@@ -37,6 +37,9 @@ import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 import javax.swing.plaf.FontUIResource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import de.freese.binding.SwingBindings;
 import de.freese.binding.collections.DefaultObservableList;
 import de.freese.binding.collections.ObservableList;
@@ -56,44 +59,36 @@ import de.freese.jripper.swing.action.ActionRipping;
 import de.freese.jripper.swing.table.AlbumTableModel;
 import de.freese.jripper.swing.table.AlbumTableRenderer;
 import de.freese.jripper.swing.task.LoadGenresTask;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Swing-View for the JRipper.
  *
  * @author Thomas Freese
  */
-public class JRipperSwing
-{
+public class JRipperSwing {
     public static final Logger LOGGER = LoggerFactory.getLogger("JRipperSwing");
 
     /**
      * @author Thomas Freese
      */
-    private static class MainFrameListener extends WindowAdapter
-    {
+    private static class MainFrameListener extends WindowAdapter {
         /**
          * @see java.awt.event.WindowAdapter#windowClosing(java.awt.event.WindowEvent)
          */
         @Override
-        public void windowClosing(final WindowEvent event)
-        {
+        public void windowClosing(final WindowEvent event) {
             System.exit(0);
         }
     }
 
     private static JFrame frame;
 
-    public static JFrame getFrame()
-    {
+    public static JFrame getFrame() {
         return frame;
     }
 
-    public static void main(final String[] args)
-    {
-        SwingUtilities.invokeLater(() ->
-        {
+    public static void main(final String[] args) {
+        SwingUtilities.invokeLater(() -> {
             JRipperSwing view = new JRipperSwing();
             view.init();
         });
@@ -103,13 +98,11 @@ public class JRipperSwing
 
     private final ObservableList<Track> albumTracks = new DefaultObservableList<>();
 
-    private Album getAlbum()
-    {
+    private Album getAlbum() {
         return this.albumProperty.getValue();
     }
 
-    private void init()
-    {
+    private void init() {
         initUIDefaults();
 
         frame = new JFrame();
@@ -136,8 +129,7 @@ public class JRipperSwing
         splitPane.setDividerLocation(0.75D);
     }
 
-    private void initAlbum(final JSplitPane splitPane, final Property<Album> albumProperty)
-    {
+    private void initAlbum(final JSplitPane splitPane, final Property<Album> albumProperty) {
         Property<String> artistTextFieldProperty = new SimpleStringProperty();
         Property<String> titleTextFieldProperty = new SimpleStringProperty();
         Property<String> genreTextFieldProperty = new SimpleStringProperty();
@@ -146,8 +138,7 @@ public class JRipperSwing
         Property<Integer> yearSpinnerProperty = new SimpleIntegerProperty();
         Property<String> commentTextAreaProperty = new SimpleStringProperty();
 
-        this.albumProperty.addListener((observable, oldValue, newAlbum) ->
-        {
+        this.albumProperty.addListener((observable, oldValue, newAlbum) -> {
             artistTextFieldProperty.setValue(newAlbum.getArtist());
             titleTextFieldProperty.setValue(newAlbum.getTitle());
             genreTextFieldProperty.setValue(newAlbum.getGenre());
@@ -158,8 +149,7 @@ public class JRipperSwing
 
             this.albumTracks.clear();
 
-            for (Track track : newAlbum)
-            {
+            for (Track track : newAlbum) {
                 this.albumTracks.add(track);
             }
         });
@@ -214,8 +204,7 @@ public class JRipperSwing
         // comboBox.setSelectedItem(genresObservableList.get(0));
 
         SwingBindings.bindToProperty(comboBoxGenres, genreComboBoxProperty);
-        genreComboBoxProperty.addListener((observable, oldValue, newValue) ->
-        {
+        genreComboBoxProperty.addListener((observable, oldValue, newValue) -> {
             genreTextField.setText(newValue);
             getAlbum().setGenre(newValue);
         });
@@ -297,8 +286,7 @@ public class JRipperSwing
         SwingUtilities.invokeLater(() -> splitPane2.setDividerLocation(0.5D));
     }
 
-    private void initMenue(final Container container, final Property<Album> albumProperty)
-    {
+    private void initMenue(final Container container, final Property<Album> albumProperty) {
         JPanel panel = new JPanel();
         panel.setLayout(new GridBagLayout());
 
@@ -320,8 +308,7 @@ public class JRipperSwing
         container.add(panel, BorderLayout.NORTH);
     }
 
-    private void initSettings(final JSplitPane splitPane)
-    {
+    private void initSettings(final JSplitPane splitPane) {
         JPanel panel = new JPanel();
         panel.setLayout(new GridBagLayout());
         panel.setBorder(BorderFactory.createTitledBorder("Settings"));
@@ -383,8 +370,7 @@ public class JRipperSwing
         // slider.setSnapToTicks(true);
         slider.setPaintLabels(true);
 
-        @SuppressWarnings("unchecked")
-        Dictionary<Integer, JLabel> labelTable = slider.getLabelTable();
+        @SuppressWarnings("unchecked") Dictionary<Integer, JLabel> labelTable = slider.getLabelTable();
         labelTable.put(0, new JLabel("fast"));
         labelTable.put(8, new JLabel("best"));
         slider.setLabelTable(labelTable);
@@ -434,8 +420,7 @@ public class JRipperSwing
         splitPane.setRightComponent(panel);
     }
 
-    private void initUIDefaults()
-    {
+    private void initUIDefaults() {
         //        try
         //        {
         //            // UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -462,13 +447,11 @@ public class JRipperSwing
         // UIDefaults defaults = UIManager.getLookAndFeelDefaults();
         UIDefaults defaults = UIManager.getDefaults();
 
-        for (Entry<Object, Object> entry : defaults.entrySet())
-        {
+        for (Entry<Object, Object> entry : defaults.entrySet()) {
             Object key = entry.getKey();
             Object value = entry.getValue();
 
-            if (value instanceof FontUIResource)
-            {
+            if (value instanceof FontUIResource) {
                 UIManager.put(key, new FontUIResource(font));
             }
 

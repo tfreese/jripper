@@ -9,21 +9,17 @@ import java.util.List;
  *
  * @author Thomas Freese
  */
-public class CompositeProgressMonitor implements ProcessMonitor
-{
+public class CompositeProgressMonitor implements ProcessMonitor {
     private final List<ProcessMonitor> monitore;
 
-    public CompositeProgressMonitor()
-    {
+    public CompositeProgressMonitor() {
         super();
 
         this.monitore = new ArrayList<>();
     }
 
-    public void addMonitor(final ProcessMonitor monitor)
-    {
-        if (!this.monitore.contains(monitor))
-        {
+    public void addMonitor(final ProcessMonitor monitor) {
+        if (!this.monitore.contains(monitor)) {
             this.monitore.add(monitor);
         }
     }
@@ -32,8 +28,7 @@ public class CompositeProgressMonitor implements ProcessMonitor
      * @see de.freese.jripper.core.process.ProcessMonitor#monitorProcess(java.lang.String)
      */
     @Override
-    public void monitorProcess(final String line)
-    {
+    public void monitorProcess(final String line) {
         this.monitore.forEach(m -> m.monitorProcess(line));
     }
 
@@ -41,8 +36,7 @@ public class CompositeProgressMonitor implements ProcessMonitor
      * @see de.freese.jripper.core.process.ProcessMonitor#monitorText(java.lang.String)
      */
     @Override
-    public void monitorText(final String line)
-    {
+    public void monitorText(final String line) {
         this.monitore.forEach(m -> m.monitorText(line));
     }
 }

@@ -17,16 +17,14 @@ import de.freese.jripper.core.process.ProcessMonitor;
  *
  * @author Thomas Freese
  */
-public class GenreProviderLinux extends AbstractProcess implements GenreProvider, ProcessMonitor
-{
+public class GenreProviderLinux extends AbstractProcess implements GenreProvider, ProcessMonitor {
     private final Set<String> genres = new TreeSet<>();
 
     /**
      * @see de.freese.jripper.core.genre.GenreProvider#getGenres()
      */
     @Override
-    public Set<String> getGenres() throws Exception
-    {
+    public Set<String> getGenres() throws Exception {
         this.genres.clear();
 
         List<String> command = new ArrayList<>();
@@ -35,8 +33,7 @@ public class GenreProviderLinux extends AbstractProcess implements GenreProvider
 
         execute(command, new File(Settings.getInstance().getWorkDir()), this);
 
-        if (getLogger().isDebugEnabled())
-        {
+        if (getLogger().isDebugEnabled()) {
             getLogger().debug(this.genres.toString());
         }
 
@@ -47,8 +44,7 @@ public class GenreProviderLinux extends AbstractProcess implements GenreProvider
      * @see de.freese.jripper.core.process.ProcessMonitor#monitorProcess(java.lang.String)
      */
     @Override
-    public void monitorProcess(final String line)
-    {
+    public void monitorProcess(final String line) {
         String[] splits = line.split(" ", 2);
 
         this.genres.add(splits[1]);
@@ -58,8 +54,7 @@ public class GenreProviderLinux extends AbstractProcess implements GenreProvider
      * @see de.freese.jripper.core.process.ProcessMonitor#monitorText(java.lang.String)
      */
     @Override
-    public void monitorText(final String line)
-    {
+    public void monitorText(final String line) {
         // Empty
     }
 
@@ -67,8 +62,7 @@ public class GenreProviderLinux extends AbstractProcess implements GenreProvider
      * @see de.freese.jripper.core.OSProvider#supportsOS(java.lang.String)
      */
     @Override
-    public boolean supportsOS(final String os)
-    {
+    public boolean supportsOS(final String os) {
         return JRipperUtils.isLinux();
     }
 }

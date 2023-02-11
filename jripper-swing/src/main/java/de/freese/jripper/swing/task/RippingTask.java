@@ -16,12 +16,10 @@ import de.freese.jripper.core.script.ScriptGeneratorLinux;
  *
  * @author Thomas Freese
  */
-public class RippingTask extends SwingWorker<Void, Void>
-{
+public class RippingTask extends SwingWorker<Void, Void> {
     private final Album album;
 
-    public RippingTask(final Album album)
-    {
+    public RippingTask(final Album album) {
         super();
 
         this.album = Objects.requireNonNull(album, "album required");
@@ -31,8 +29,7 @@ public class RippingTask extends SwingWorker<Void, Void>
      * @see javax.swing.SwingWorker#doInBackground()
      */
     @Override
-    protected Void doInBackground() throws Exception
-    {
+    protected Void doInBackground() throws Exception {
         ScriptGenerator scriptGenerator = new ScriptGeneratorLinux();
         File script = scriptGenerator.generate(this.album, JRipperUtils.getWorkDir(this.album));
         scriptGenerator.execute(script);
@@ -44,8 +41,7 @@ public class RippingTask extends SwingWorker<Void, Void>
      * @see javax.swing.SwingWorker#done()
      */
     @Override
-    protected void done()
-    {
+    protected void done() {
         // Empty
     }
 }

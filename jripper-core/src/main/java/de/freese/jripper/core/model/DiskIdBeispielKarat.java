@@ -7,10 +7,8 @@ package de.freese.jripper.core.model;
  *
  * @author Thomas Freese
  */
-public final class DiskIdBeispielKarat extends DiskId
-{
-    public DiskIdBeispielKarat()
-    {
+public final class DiskIdBeispielKarat extends DiskId {
+    public DiskIdBeispielKarat() {
         super("b111140e 14 150 24545 41797 60822 80152 117002 142550 169755 192057 211360 239297 256325 279075 306220 4374");
     }
 }

@@ -11,13 +11,11 @@ import de.freese.jripper.core.model.Track;
 /**
  * @author Thomas Freese
  */
-public class AlbumTableModel extends AbstractObservableListTableModel<Track>
-{
+public class AlbumTableModel extends AbstractObservableListTableModel<Track> {
     @Serial
     private static final long serialVersionUID = -9186435568274885834L;
 
-    public AlbumTableModel(final ObservableList<Track> list)
-    {
+    public AlbumTableModel(final ObservableList<Track> list) {
         super(List.of("No.", "Artist", "Title", "Time"), list);
     }
 
@@ -25,24 +23,20 @@ public class AlbumTableModel extends AbstractObservableListTableModel<Track>
      * @see javax.swing.table.TableModel#getValueAt(int, int)
      */
     @Override
-    public Object getValueAt(final int rowIndex, final int columnIndex)
-    {
+    public Object getValueAt(final int rowIndex, final int columnIndex) {
         Track track = getObjectAt(rowIndex);
         Object value = null;
 
-        switch (columnIndex)
-        {
+        switch (columnIndex) {
             case 0 -> value = track.getNumber();
             case 1 -> value = track.getArtist();
             case 2 -> value = track.getTitle();
-            case 3 ->
-            {
+            case 3 -> {
                 int minutes = track.getSeconds() / 60;
                 int seconds = track.getSeconds() % 60;
                 value = String.format("%d:%02d", minutes, seconds);
             }
-            default ->
-            {
+            default -> {
                 // Empty
             }
         }

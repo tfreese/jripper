@@ -11,36 +11,30 @@ import de.freese.jripper.core.JRipperUtils;
  *
  * @author Thomas Freese
  */
-public final class DiskIDProviderFactory
-{
+public final class DiskIDProviderFactory {
     private static final ServiceLoader<DiskIDProvider> SERVICE_LOADER = ServiceLoader.load(DiskIDProvider.class);
 
     /**
      * Je nach Betriebssystem wird die entsprechende Implementierung geliefert.
      */
-    public static DiskIDProvider getInstance()
-    {
+    public static DiskIDProvider getInstance() {
         DiskIDProvider impl = null;
 
-        for (DiskIDProvider diskID : SERVICE_LOADER)
-        {
-            if (diskID.supportsOS(JRipperUtils.getOsName()))
-            {
+        for (DiskIDProvider diskID : SERVICE_LOADER) {
+            if (diskID.supportsOS(JRipperUtils.getOsName())) {
                 impl = diskID;
                 break;
             }
         }
 
-        if (impl == null)
-        {
+        if (impl == null) {
             throw new NullPointerException("no diskID found for " + JRipperUtils.getOsName());
         }
 
         return impl;
     }
 
-    private DiskIDProviderFactory()
-    {
+    private DiskIDProviderFactory() {
         super();
     }
 }

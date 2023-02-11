@@ -8,16 +8,13 @@ import java.util.Comparator;
  *
  * @author Thomas Freese
  */
-public class TrackTitleComparator implements Comparator<String>
-{
+public class TrackTitleComparator implements Comparator<String> {
     /**
      * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
      */
     @Override
-    public int compare(final String arg0, final String arg1)
-    {
-        if (arg0.startsWith("TTITLE") && arg1.startsWith("TTITLE"))
-        {
+    public int compare(final String arg0, final String arg1) {
+        if (arg0.startsWith("TTITLE") && arg1.startsWith("TTITLE")) {
             int track1 = Integer.parseInt(arg0.substring(6));
             int track2 = Integer.parseInt(arg1.substring(6));
 

@@ -8,8 +8,7 @@ import de.freese.jripper.core.model.DiskId;
  *
  * @author Thomas Freese
  */
-public interface CddbProvider
-{
+public interface CddbProvider {
     /**
      * Liefert die Titel der CD.
      */

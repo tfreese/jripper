@@ -9,13 +9,11 @@ import java.util.function.Predicate;
  * @author Thomas Freese
  */
 @FunctionalInterface
-public interface OSProvider extends Predicate<String>
-{
+public interface OSProvider extends Predicate<String> {
+    boolean supportsOS(String os);
+
     @Override
-    default boolean test(String s)
-    {
+    default boolean test(String s) {
         return supportsOS(s);
     }
-
-    boolean supportsOS(String os);
 }

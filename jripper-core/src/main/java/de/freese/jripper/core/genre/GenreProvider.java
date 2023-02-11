@@ -10,8 +10,7 @@ import de.freese.jripper.core.OSProvider;
  *
  * @author Thomas Freese
  */
-public interface GenreProvider extends OSProvider
-{
+public interface GenreProvider extends OSProvider {
     /**
      * Liefert mögliche Genres.
      */

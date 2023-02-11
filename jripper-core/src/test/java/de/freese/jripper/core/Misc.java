@@ -9,10 +9,8 @@ import java.util.regex.Pattern;
 /**
  * @author Thomas Freese
  */
-public final class Misc
-{
-    public static void main(final String[] args)
-    {
+public final class Misc {
+    public static void main(final String[] args) {
         String s = "100/12453 ( 1%)| 0:00/ 0:21| 0:00/ 0:22| 15.366x| 0:22";
         // Pattern pattern = Pattern.compile("[(\\s[\\d]{1,2}%)]?");
         // Pattern pattern = Pattern.compile("[\\(][.*][\\)]"); // \[(.*?)\], /[^(<td>)].+[^(</td>)]/;
@@ -22,16 +20,14 @@ public final class Misc
 
         System.out.println(matcher.matches());
 
-        if (matcher.matches())
-        {
+        if (matcher.matches()) {
             System.out.println(matcher.group());
         }
 
         int start = s.indexOf(" (");
         int end = s.indexOf("%)");
 
-        if ((start > 0) && (end > 0))
-        {
+        if ((start > 0) && (end > 0)) {
             String prozent = s.substring(start + 2, end).strip();
             System.out.println(prozent);
         }
@@ -81,8 +77,7 @@ public final class Misc
         // }
     }
 
-    private Misc()
-    {
+    private Misc() {
         super();
     }
 }

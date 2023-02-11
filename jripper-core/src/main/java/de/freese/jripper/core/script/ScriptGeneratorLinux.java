@@ -20,14 +20,12 @@ import de.freese.jripper.core.process.LoggerProcessMonitor;
  *
  * @author Thomas Freese
  */
-public class ScriptGeneratorLinux extends AbstractProcess implements ScriptGenerator
-{
+public class ScriptGeneratorLinux extends AbstractProcess implements ScriptGenerator {
     /**
      * @see de.freese.jripper.core.script.ScriptGenerator#execute(java.io.File)
      */
     @Override
-    public void execute(final File script) throws Exception
-    {
+    public void execute(final File script) throws Exception {
         List<String> command = new ArrayList<>();
         // command.add("konsole");
         // // command.add("--nofork");
@@ -56,35 +54,30 @@ public class ScriptGeneratorLinux extends AbstractProcess implements ScriptGener
      * @see de.freese.jripper.core.script.ScriptGenerator#generate(de.freese.jripper.core.model.Album, java.io.File)
      */
     @Override
-    public File generate(final Album album, final File folder) throws Exception
-    {
+    public File generate(final Album album, final File folder) throws Exception {
         Settings settings = Settings.getInstance();
 
         File script = new File(folder, getPath(album) + ".sh");
 
-        if (script.exists())
-        {
+        if (script.exists()) {
             script.delete();
         }
 
-        try (PrintWriter pw = new PrintWriter(script, StandardCharsets.UTF_8))
-        {
+        try (PrintWriter pw = new PrintWriter(script, StandardCharsets.UTF_8)) {
             // Shebang
             pw.println("#!/bin/sh");
             pw.println();
 
             writeProgramChecks(pw, "cdparanoia");
 
-            if (settings.isFlacEnabled())
-            {
+            if (settings.isFlacEnabled()) {
                 pw.println();
                 writeProgramChecks(pw, "flac");
                 pw.println();
                 writeProgramChecks(pw, "metaflac");
             }
 
-            if (settings.isMp3Enabled())
-            {
+            if (settings.isMp3Enabled()) {
                 pw.println();
                 writeProgramChecks(pw, "lame");
                 pw.println();
@@ -102,15 +95,13 @@ public class ScriptGeneratorLinux extends AbstractProcess implements ScriptGener
             writeRip(pw);
 
             // flac
-            if (settings.isFlacEnabled())
-            {
+            if (settings.isFlacEnabled()) {
                 pw.println();
                 writeFLAC(pw, album);
             }
 
             // mp3
-            if (settings.isMp3Enabled())
-            {
+            if (settings.isMp3Enabled()) {
                 pw.println();
                 writeMP3(pw, album);
             }
@@ -133,8 +124,7 @@ public class ScriptGeneratorLinux extends AbstractProcess implements ScriptGener
     /**
      * Formatiert den Pfad des Albums.
      */
-    private String getPath(final Album album)
-    {
+    private String getPath(final Album album) {
         // String path = StringUtils.replace(album.getTitle(), " ", "-");
         // path = StringUtils.replace(path, "/", "-");
         //
@@ -142,8 +132,7 @@ public class ScriptGeneratorLinux extends AbstractProcess implements ScriptGener
         return album.getTitle();
     }
 
-    private void writeFLAC(final PrintWriter pw, final Album album)
-    {
+    private void writeFLAC(final PrintWriter pw, final Album album) {
         String diskID = album.getDiskID().getID();
         // List<String> files = new ArrayList<>();
 
@@ -151,8 +140,7 @@ public class ScriptGeneratorLinux extends AbstractProcess implements ScriptGener
         pw.println("cd \"$BASE_DIR\"/flac");
         pw.println("rm -f ./*.flac");
 
-        for (Track track : album)
-        {
+        for (Track track : album) {
             pw.println();
             pw.print("$FLAC");
             pw.print(String.format(" -%d", Settings.getInstance().getFlacCompression()));
@@ -195,8 +183,7 @@ public class ScriptGeneratorLinux extends AbstractProcess implements ScriptGener
         pw.println("echo \"...done\"");
     }
 
-    private void writeMP3(final PrintWriter pw, final Album album)
-    {
+    private void writeMP3(final PrintWriter pw, final Album album) {
         String diskID = album.getDiskID().getID();
         // List<String> files = new ArrayList<>();
 
@@ -204,8 +191,7 @@ public class ScriptGeneratorLinux extends AbstractProcess implements ScriptGener
         pw.println("cd \"$BASE_DIR\"/mp3");
         pw.println("rm -f ./*.mp3");
 
-        for (Track track : album)
-        {
+        for (Track track : album) {
             pw.println();
             pw.print("$LAME");
             pw.print(" -m j"); // Mode = Joint-Stereo
@@ -249,8 +235,7 @@ public class ScriptGeneratorLinux extends AbstractProcess implements ScriptGener
         pw.println("echo \"...done\"");
     }
 
-    private void writeProgramChecks(final PrintWriter pw, final String programm)
-    {
+    private void writeProgramChecks(final PrintWriter pw, final String programm) {
         pw.printf("%s=\"$(which %s)\"%n", programm.toUpperCase(), programm);
         pw.println("if [ $? != 0 ]; then");
         pw.printf("\techo \"%s not installed\"%n", programm);
@@ -262,8 +247,7 @@ public class ScriptGeneratorLinux extends AbstractProcess implements ScriptGener
         pw.printf("readonly %s%n", programm.toUpperCase());
     }
 
-    private void writeRip(final PrintWriter pw)
-    {
+    private void writeRip(final PrintWriter pw) {
         pw.println();
         pw.println("read -p \"(r)ippen oder (e)ncoden: \" re");
         pw.println("if [ \"$re\" = \"r\" ]; then");

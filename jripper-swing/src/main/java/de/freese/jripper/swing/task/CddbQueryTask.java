@@ -20,12 +20,10 @@ import de.freese.jripper.swing.JRipperSwing;
  *
  * @author Thomas Freese
  */
-public class CddbQueryTask extends SwingWorker<CddbResponse, Void>
-{
+public class CddbQueryTask extends SwingWorker<CddbResponse, Void> {
     private final Property<Album> albumProperty;
 
-    public CddbQueryTask(final Property<Album> albumProperty)
-    {
+    public CddbQueryTask(final Property<Album> albumProperty) {
         super();
 
         this.albumProperty = Objects.requireNonNull(albumProperty, "albumProperty required");
@@ -35,16 +33,14 @@ public class CddbQueryTask extends SwingWorker<CddbResponse, Void>
      * @see javax.swing.SwingWorker#doInBackground()
      */
     @Override
-    protected CddbResponse doInBackground() throws Exception
-    {
+    protected CddbResponse doInBackground() throws Exception {
         String device = Settings.getInstance().getDevice();
         DiskId diskID = JRipper.getInstance().getDiskIDProvider().getDiskID(device);
 
         CddbProvider cddbService = JRipper.getInstance().getCddbProvider();
         CddbResponse cddbResponse = cddbService.queryGenres(diskID);
 
-        if (cddbResponse.getErrorMessage() != null)
-        {
+        if (cddbResponse.getErrorMessage() != null) {
             // Fehler -> Abbruch
             return cddbResponse;
         }
@@ -58,14 +54,11 @@ public class CddbQueryTask extends SwingWorker<CddbResponse, Void>
      * @see javax.swing.SwingWorker#done()
      */
     @Override
-    protected void done()
-    {
-        try
-        {
+    protected void done() {
+        try {
             CddbResponse cddbResponse = get();
 
-            if (cddbResponse.getErrorMessage() != null)
-            {
+            if (cddbResponse.getErrorMessage() != null) {
                 String message = cddbResponse.getErrorMessage();
                 JOptionPane.showMessageDialog(JRipperSwing.getFrame(), message, "Warning", JOptionPane.WARNING_MESSAGE);
 
@@ -76,8 +69,7 @@ public class CddbQueryTask extends SwingWorker<CddbResponse, Void>
 
             this.albumProperty.setValue(album);
         }
-        catch (Exception ex)
-        {
+        catch (Exception ex) {
             JRipperSwing.LOGGER.error(ex.getMessage(), ex);
         }
     }

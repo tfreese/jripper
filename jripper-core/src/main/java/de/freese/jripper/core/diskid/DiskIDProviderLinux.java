@@ -16,16 +16,14 @@ import de.freese.jripper.core.process.ProcessMonitor;
  *
  * @author Thomas Freese
  */
-public class DiskIDProviderLinux extends AbstractProcess implements DiskIDProvider, ProcessMonitor
-{
+public class DiskIDProviderLinux extends AbstractProcess implements DiskIDProvider, ProcessMonitor {
     private StringBuilder sb;
 
     /**
      * @see de.freese.jripper.core.diskid.DiskIDProvider#getDiskID(java.lang.String)
      */
     @Override
-    public DiskId getDiskID(final String device) throws Exception
-    {
+    public DiskId getDiskID(final String device) throws Exception {
         List<String> command = new ArrayList<>();
         command.add("cd-discid");
         command.add(device);
@@ -38,8 +36,7 @@ public class DiskIDProviderLinux extends AbstractProcess implements DiskIDProvid
 
         getLogger().debug(id);
 
-        if (id.contains("No medium"))
-        {
+        if (id.contains("No medium")) {
             throw new IllegalStateException("no music cd found");
         }
 
@@ -50,8 +47,7 @@ public class DiskIDProviderLinux extends AbstractProcess implements DiskIDProvid
      * @see de.freese.jripper.core.process.ProcessMonitor#monitorProcess(java.lang.String)
      */
     @Override
-    public void monitorProcess(final String line)
-    {
+    public void monitorProcess(final String line) {
         this.sb.append(line);
     }
 
@@ -59,8 +55,7 @@ public class DiskIDProviderLinux extends AbstractProcess implements DiskIDProvid
      * @see de.freese.jripper.core.process.ProcessMonitor#monitorText(java.lang.String)
      */
     @Override
-    public void monitorText(final String line)
-    {
+    public void monitorText(final String line) {
         // Empty
     }
 
@@ -68,8 +63,7 @@ public class DiskIDProviderLinux extends AbstractProcess implements DiskIDProvid
      * @see de.freese.jripper.core.OSProvider#supportsOS(java.lang.String)
      */
     @Override
-    public boolean supportsOS(final String os)
-    {
+    public boolean supportsOS(final String os) {
         return JRipperUtils.isLinux();
     }
 }

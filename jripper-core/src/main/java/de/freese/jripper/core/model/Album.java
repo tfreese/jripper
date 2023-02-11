@@ -6,8 +6,7 @@ package de.freese.jripper.core.model;
  *
  * @author Thomas Freese
  */
-public interface Album extends Iterable<Track>
-{
+public interface Album extends Iterable<Track> {
     /**
      * Bei Compilations null.
      */

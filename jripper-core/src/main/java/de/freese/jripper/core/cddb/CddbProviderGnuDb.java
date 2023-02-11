@@ -15,19 +15,19 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+import org.slf4j.Logger;
+
 import de.freese.jripper.core.JRipper;
 import de.freese.jripper.core.JRipperUtils;
 import de.freese.jripper.core.model.AlbumImpl;
 import de.freese.jripper.core.model.DiskId;
-import org.slf4j.Logger;
 
 /**
  * CDDB Provider für FreeDB.
  *
  * @author Thomas Freese
  */
-public class CddbProviderGnuDb implements CddbProvider
-{
+public class CddbProviderGnuDb implements CddbProvider {
     private static final String HOST = "localhost";
 
     // private static final Pattern RECORD_DGENRE = Pattern.compile("DGENRE=(.*)");
@@ -52,8 +52,7 @@ public class CddbProviderGnuDb implements CddbProvider
 
     private final String requestPostfix;
 
-    public CddbProviderGnuDb()
-    {
+    public CddbProviderGnuDb() {
         super();
 
         StringBuilder sb = new StringBuilder();
@@ -70,8 +69,7 @@ public class CddbProviderGnuDb implements CddbProvider
      * @see de.freese.jripper.core.cddb.CddbProvider#queryAlbum(DiskId, java.lang.String)
      */
     @Override
-    public CddbResponse queryAlbum(final DiskId diskID, final String genre) throws Exception
-    {
+    public CddbResponse queryAlbum(final DiskId diskID, final String genre) throws Exception {
         StringBuilder sb = new StringBuilder();
         sb.append("/~cddb/cddb.cgi?cmd=cddb+read");
         sb.append("+").append(genre);
@@ -87,8 +85,7 @@ public class CddbProviderGnuDb implements CddbProvider
 
         List<String> lines = new ArrayList<>();
 
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(url.openConnection().getInputStream(), StandardCharsets.UTF_8)))
-        {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(url.openConnection().getInputStream(), StandardCharsets.UTF_8))) {
             reader.lines().forEach(lines::add);
         }
 
@@ -97,29 +94,24 @@ public class CddbProviderGnuDb implements CddbProvider
 
         CddbResponse cddbResponse = new CddbResponse(status);
 
-        if ((status == CddbResponse.NO_MATCH) || (status == CddbResponse.SYNTAX_ERROR))
-        {
+        if ((status == CddbResponse.NO_MATCH) || (status == CddbResponse.SYNTAX_ERROR)) {
             // Nichts gefunden -> Abbruch
             cddbResponse.setErrorMessage(firstLine);
         }
-        else
-        {
+        else {
             Map<String, String> responseMap = new TreeMap<>(new TrackTitleComparator());
 
-            for (String line : lines)
-            {
+            for (String line : lines) {
                 getLogger().debug(line);
 
-                if (line.startsWith("#") || !line.contains("="))
-                {
+                if (line.startsWith("#") || !line.contains("=")) {
                     // Kein KeyValue
                     continue;
                 }
 
                 splits = line.split("=", 2);
 
-                if (splits.length == 1)
-                {
+                if (splits.length == 1) {
                     // Kein Value
                     continue;
                 }
@@ -135,13 +127,11 @@ public class CddbProviderGnuDb implements CddbProvider
 
             AlbumImpl album = new AlbumImpl(diskID);
 
-            for (Entry<String, String> entry : responseMap.entrySet())
-            {
+            for (Entry<String, String> entry : responseMap.entrySet()) {
                 String key = entry.getKey();
                 String value = entry.getValue();
 
-                if ("DTITLE".equals(key))
-                {
+                if ("DTITLE".equals(key)) {
                     // Format: ARTIST / ALBUM
                     String artistTitle = value.substring(0, value.indexOf(" / "));
                     String albumTitle = value.substring(value.indexOf(" / ") + 2);
@@ -149,8 +139,7 @@ public class CddbProviderGnuDb implements CddbProvider
                     artistTitle = normalize(artistTitle);
                     albumTitle = normalize(albumTitle);
 
-                    if ("Various".equals(artistTitle))
-                    {
+                    if ("Various".equals(artistTitle)) {
                         artistTitle = null;
                     }
 
@@ -163,37 +152,30 @@ public class CddbProviderGnuDb implements CddbProvider
                     // continue;
                     // }
 
-                    if ((artistTitle != null) && (artistTitle.length() <= 3))
-                    {
+                    if ((artistTitle != null) && (artistTitle.length() <= 3)) {
                         artistTitle = artistTitle.toUpperCase();
                     }
 
                     album.setArtist(artistTitle);
                     album.setTitle(albumTitle);
                 }
-                else if ("DYEAR".equals(key))
-                {
+                else if ("DYEAR".equals(key)) {
                     String year = normalize(value);
 
-                    if ((year != null) && !year.isBlank())
-                    {
+                    if ((year != null) && !year.isBlank()) {
                         album.setYear(Integer.parseInt(year));
                     }
                 }
-                else if ("DGENRE".equals(key))
-                {
+                else if ("DGENRE".equals(key)) {
                     // "Richtiges" Genre auslesen.
                     String genre2 = normalize(value);
 
-                    if ((genre2 != null) && !genre2.isBlank())
-                    {
+                    if ((genre2 != null) && !genre2.isBlank()) {
                         album.setGenre(genre2);
                     }
                 }
-                else if ("EXTD".equals(key))
-                {
-                    if ((value == null) || value.isBlank())
-                    {
+                else if ("EXTD".equals(key)) {
+                    if ((value == null) || value.isBlank()) {
                         // Kein Kommentar.
                         continue;
                     }
@@ -201,43 +183,36 @@ public class CddbProviderGnuDb implements CddbProvider
                     splits = value.lines().toArray(String[]::new);
                     StringBuilder comment = new StringBuilder();
 
-                    for (int i = 0; i < splits.length; i++)
-                    {
+                    for (int i = 0; i < splits.length; i++) {
                         comment.append(splits[i]);
 
-                        if (i < (splits.length - 1))
-                        {
+                        if (i < (splits.length - 1)) {
                             comment.append("\n");
                         }
                     }
 
                     album.setComment(comment.toString().strip());
                 }
-                else if (key.startsWith("TTITLE"))
-                {
+                else if (key.startsWith("TTITLE")) {
                     String trackArtist = null;
                     String trackTitle = null;
 
-                    if (value.contains("/"))
-                    {
+                    if (value.contains("/")) {
                         // Annahme Compilation.
                         splits = value.split("/");
 
                         trackArtist = normalize(splits[0]);
                         trackTitle = normalize(splits[1]);
                     }
-                    else
-                    {
+                    else {
                         // Annahme Album.
                         splits = value.split(" ");
 
-                        for (int i = 0; i < splits.length; i++)
-                        {
+                        for (int i = 0; i < splits.length; i++) {
                             splits[i] = normalize(splits[i]);
                         }
 
-                        if (JRipperUtils.isNumeric(splits[0]))
-                        {
+                        if (JRipperUtils.isNumeric(splits[0])) {
                             splits[0] = "";
                         }
 
@@ -267,8 +242,7 @@ public class CddbProviderGnuDb implements CddbProvider
      * @see de.freese.jripper.core.cddb.CddbProvider#queryGenres(DiskId)
      */
     @Override
-    public CddbResponse queryGenres(final DiskId diskID) throws Exception
-    {
+    public CddbResponse queryGenres(final DiskId diskID) throws Exception {
         StringBuilder sb = new StringBuilder();
         sb.append("/~cddb/cddb.cgi?cmd=cddb+query");
 
@@ -276,8 +250,7 @@ public class CddbProviderGnuDb implements CddbProvider
         sb.append("+").append(diskID.getTrackCount());
         sb.append("+").append(diskID.getOffset());
 
-        for (int offset : diskID.getTrackOffsets())
-        {
+        for (int offset : diskID.getTrackOffsets()) {
             sb.append("+").append(offset);
         }
 
@@ -291,8 +264,7 @@ public class CddbProviderGnuDb implements CddbProvider
 
         List<String> lines = new ArrayList<>();
 
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(url.openConnection().getInputStream(), StandardCharsets.UTF_8)))
-        {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(url.openConnection().getInputStream(), StandardCharsets.UTF_8))) {
             reader.lines().forEach(lines::add);
         }
 
@@ -301,43 +273,36 @@ public class CddbProviderGnuDb implements CddbProvider
 
         CddbResponse cddbResponse = new CddbResponse(status);
 
-        if ((status == CddbResponse.NO_MATCH) || (status == CddbResponse.SYNTAX_ERROR))
-        {
+        if ((status == CddbResponse.NO_MATCH) || (status == CddbResponse.SYNTAX_ERROR)) {
             // Nichts gefunden -> Abbruch
             cddbResponse.setErrorMessage(firstLine);
         }
-        else
-        {
+        else {
             Set<String> genres = new TreeSet<>();
 
-            for (String line : lines)
-            {
+            for (String line : lines) {
                 getLogger().debug(line);
 
                 // Abschluss Kennung
-                if (line.startsWith("."))
-                {
+                if (line.startsWith(".")) {
                     break;
                 }
 
                 String[] splits = line.split(" ");
 
-                if (splits.length < 2)
-                {
+                if (splits.length < 2) {
                     continue;
                 }
 
-                String genre = switch (status)
-                        {
-                            case CddbResponse.EXACT_MATCHES, CddbResponse.INEXACT_MATCHES -> JRipperUtils.trim(splits[0]);
-                            case CddbResponse.MATCH -> JRipperUtils.trim(splits[1]);
-                            default -> throw new IllegalStateException("unsupported status: " + status);
-                        };
+                String genre = switch (status) {
+                    case CddbResponse.EXACT_MATCHES, CddbResponse.INEXACT_MATCHES -> JRipperUtils.trim(splits[0]);
+                    case CddbResponse.MATCH -> JRipperUtils.trim(splits[1]);
+                    default -> throw new IllegalStateException("unsupported status: " + status);
+                };
 
                 genres.add(genre);
 
-                if (status == CddbResponse.INEXACT_MATCHES)
-                {
+                if (status == CddbResponse.INEXACT_MATCHES) {
                     // Erstes Genre nehmen, DiskId aktualisieren und Abbruch.
                     String id = JRipperUtils.trim(splits[1]);
                     diskID.setID(id);
@@ -345,8 +310,7 @@ public class CddbProviderGnuDb implements CddbProvider
                 }
             }
 
-            if (!genres.isEmpty())
-            {
+            if (!genres.isEmpty()) {
                 cddbResponse.setGenres(new ArrayList<>(genres));
             }
         }
@@ -354,8 +318,7 @@ public class CddbProviderGnuDb implements CddbProvider
         return cddbResponse;
     }
 
-    private Logger getLogger()
-    {
+    private Logger getLogger() {
         return this.logger;
     }
 
@@ -380,10 +343,8 @@ public class CddbProviderGnuDb implements CddbProvider
      * <li>nicht erlaubte Zeichen: < > ? " : | \ / *
      * </ul>
      */
-    private String normalize(final String text)
-    {
-        if ((text == null) || text.isBlank())
-        {
+    private String normalize(final String text) {
+        if ((text == null) || text.isBlank()) {
             return null;
         }
 
@@ -405,16 +366,13 @@ public class CddbProviderGnuDb implements CddbProvider
         value = JRipperUtils.normalizeSpace(value);
 
         // Nach '(', '-', '.' auch Grossbuchstaben.
-        if (value.contains("(") || value.contains("-") || value.contains("."))
-        {
+        if (value.contains("(") || value.contains("-") || value.contains(".")) {
             StringBuilder sb = new StringBuilder();
 
-            for (int j = 0; j < value.length(); j++)
-            {
+            for (int j = 0; j < value.length(); j++) {
                 char sign = value.charAt(j);
 
-                if ((j > 0) && ((value.charAt(j - 1) == '(') || (value.charAt(j - 1) == '-') || (value.charAt(j - 1) == '.')))
-                {
+                if ((j > 0) && ((value.charAt(j - 1) == '(') || (value.charAt(j - 1) == '-') || (value.charAt(j - 1) == '.'))) {
                     sign = Character.toUpperCase(sign);
                 }
 

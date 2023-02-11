@@ -7,8 +7,7 @@ package de.freese.jripper.console;
  * @author Thomas Freese
  */
 @SuppressWarnings("checkstyle:AvoidEscapedUnicodeCharacters")
-public final class AnsiCodes
-{
+public final class AnsiCodes {
     static final String ANSI_BLACK = "\u001B[30m";
 
     static final String ANSI_BLUE = "\u001B[34m";
@@ -27,8 +26,7 @@ public final class AnsiCodes
 
     static final String ANSI_YELLOW = "\u001B[33m";
 
-    private AnsiCodes()
-    {
+    private AnsiCodes() {
         super();
     }
 }

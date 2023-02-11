@@ -10,8 +10,7 @@ import de.freese.jripper.core.model.Album;
  *
  * @author Thomas Freese
  */
-public interface ScriptGenerator
-{
+public interface ScriptGenerator {
     /**
      * Führt das Skript aus.
      */
