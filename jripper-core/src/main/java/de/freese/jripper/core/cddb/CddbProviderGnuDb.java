@@ -3,6 +3,7 @@ package de.freese.jripper.core.cddb;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.net.URI;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -79,7 +80,7 @@ public class CddbProviderGnuDb implements CddbProvider {
 
         sb.append(this.requestPostfix);
 
-        URL url = new URL("http", SERVER, PORT, sb.toString());
+        URL url = URI.create("https://" + SERVER + ":" + PORT + sb).toURL();
 
         getLogger().debug("Query {}", url);
 
@@ -258,7 +259,7 @@ public class CddbProviderGnuDb implements CddbProvider {
 
         sb.append(this.requestPostfix);
 
-        URL url = new URL("http", SERVER, PORT, sb.toString());
+        URL url = URI.create("https://" + SERVER + ":" + PORT + sb).toURL();
 
         getLogger().debug("Query {}", url);
 
