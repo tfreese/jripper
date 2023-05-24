@@ -41,9 +41,7 @@ project("jripper-core") {
         runtimeOnly("ch.qos.logback:logback-classic")
         runtimeOnly("org.codehaus.janino:janino")
 
-        testImplementation("org.junit.jupiter:junit-jupiter-engine")
-        testImplementation("org.junit.platform:junit-platform-runner")
-        testImplementation("org.junit.platform:junit-platform-suite-api")
+        testImplementation("org.junit.jupiter:junit-jupiter")
     }
 
     //test.enabled = false

@@ -80,7 +80,8 @@ public class CddbProviderGnuDb implements CddbProvider {
 
         sb.append(this.requestPostfix);
 
-        URL url = URI.create("https://" + SERVER + ":" + PORT + sb).toURL();
+        // gnudb.gnudb.org verwendet kein HTTPS !
+        URL url = URI.create("http://" + SERVER + ":" + PORT + sb).toURL();
 
         getLogger().debug("Query {}", url);
 
@@ -259,7 +260,8 @@ public class CddbProviderGnuDb implements CddbProvider {
 
         sb.append(this.requestPostfix);
 
-        URL url = URI.create("https://" + SERVER + ":" + PORT + sb).toURL();
+        // gnudb.gnudb.org verwendet kein HTTPS !
+        URL url = URI.create("http://" + SERVER + ":" + PORT + sb).toURL();
 
         getLogger().debug("Query {}", url);
 
