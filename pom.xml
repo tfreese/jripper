@@ -45,9 +45,6 @@
         </developer>
     </developers>
 
-    <properties>
-    </properties>
-
     <modules>
         <module>jripper-core</module>
         <module>jripper-console</module>
