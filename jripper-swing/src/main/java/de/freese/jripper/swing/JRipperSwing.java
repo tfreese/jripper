@@ -71,10 +71,7 @@ public class JRipperSwing {
     /**
      * @author Thomas Freese
      */
-    private static class MainFrameListener extends WindowAdapter {
-        /**
-         * @see java.awt.event.WindowAdapter#windowClosing(java.awt.event.WindowEvent)
-         */
+    private static final class MainFrameListener extends WindowAdapter {
         @Override
         public void windowClosing(final WindowEvent event) {
             System.exit(0);
