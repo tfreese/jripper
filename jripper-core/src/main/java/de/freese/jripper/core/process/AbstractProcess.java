@@ -19,9 +19,6 @@ import de.freese.jripper.core.JRipper;
 public abstract class AbstractProcess {
     private static Thread createShutDownHook(final Process process) {
         return new Thread() {
-            /**
-             * @see java.lang.Thread#run()
-             */
             @Override
             public void run() {
                 if (process != null) {

@@ -9,9 +9,6 @@ import java.util.Comparator;
  * @author Thomas Freese
  */
 public class TrackTitleComparator implements Comparator<String> {
-    /**
-     * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
-     */
     @Override
     public int compare(final String arg0, final String arg1) {
         if (arg0.startsWith("TTITLE") && arg1.startsWith("TTITLE")) {

@@ -18,9 +18,6 @@ import de.freese.jripper.core.process.ProcessMonitor;
  * @author Thomas Freese
  */
 public class EncoderLinuxFlac extends AbstractProcess implements Encoder {
-    /**
-     * @see de.freese.jripper.core.encoder.Encoder#encode(de.freese.jripper.core.model.Album, java.io.File, de.freese.jripper.core.process.ProcessMonitor)
-     */
     @Override
     public void encode(final Album album, final File directory, final ProcessMonitor monitor) throws Exception {
         String diskID = album.getDiskID().getID();
@@ -82,17 +79,11 @@ public class EncoderLinuxFlac extends AbstractProcess implements Encoder {
         execute(command, directory, monitor);
     }
 
-    /**
-     * @see de.freese.jripper.core.encoder.Encoder#getFormat()
-     */
     @Override
     public EncoderFormat getFormat() {
         return EncoderFormat.FLAC;
     }
 
-    /**
-     * @see de.freese.jripper.core.OSProvider#supportsOS(java.lang.String)
-     */
     @Override
     public boolean supportsOS(final String os) {
         return JRipperUtils.isLinux();

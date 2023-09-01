@@ -19,9 +19,6 @@ public class AlbumTableModel extends AbstractObservableListTableModel<Track> {
         super(List.of("No.", "Artist", "Title", "Time"), list);
     }
 
-    /**
-     * @see javax.swing.table.TableModel#getValueAt(int, int)
-     */
     @Override
     public Object getValueAt(final int rowIndex, final int columnIndex) {
         Track track = getObjectAt(rowIndex);

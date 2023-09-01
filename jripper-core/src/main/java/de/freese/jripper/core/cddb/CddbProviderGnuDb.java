@@ -66,8 +66,6 @@ public class CddbProviderGnuDb implements CddbProvider {
     /**
      * https://gnudb.gnudb.org/~cddb/cddb.cgi?cmd=cddb+read+rock+b111140e&hello=anonymous+localhost+jRipper+1.0.0&proto=6<br>
      * https://gnudb.gnudb.org/~cddb/cddb.cgi?cmd=cddb+read+misc+ae0ff80e&hello=anonymous+localhost+jRipper+1.0.0&proto=6<br>
-     *
-     * @see de.freese.jripper.core.cddb.CddbProvider#queryAlbum(DiskId, java.lang.String)
      */
     @Override
     public CddbResponse queryAlbum(final DiskId diskID, final String genre) throws Exception {
@@ -240,8 +238,6 @@ public class CddbProviderGnuDb implements CddbProvider {
     /**
      * https://gnudb.gnudb.org/~cddb/cddb.cgi?cmd=cddb+query+b111140e+14+150+24545+41797+60822+80152+117002+142550+169755+192057+211360+239297+256325+279075+306220+4374&hello=anonymous+localhost+jRipper+1.0.0&proto=6<br>
      * https://gnudb.gnudb.org/~cddb/cddb.cgi?cmd=cddb+query+ae0ff80e+14+150+10972+37962+56825+81450+103550+127900+153025+179675+200425+225187+247687+270712+295700+4090&hello=anonymous+localhost+jRipper+1.0.0&proto=6<br>
-     *
-     * @see de.freese.jripper.core.cddb.CddbProvider#queryGenres(DiskId)
      */
     @Override
     public CddbResponse queryGenres(final DiskId diskID) throws Exception {

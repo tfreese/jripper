@@ -20,9 +20,6 @@ import de.freese.jripper.core.process.ProcessMonitor;
 public class GenreProviderLinux extends AbstractProcess implements GenreProvider, ProcessMonitor {
     private final Set<String> genres = new TreeSet<>();
 
-    /**
-     * @see de.freese.jripper.core.genre.GenreProvider#getGenres()
-     */
     @Override
     public Set<String> getGenres() throws Exception {
         this.genres.clear();
@@ -40,9 +37,6 @@ public class GenreProviderLinux extends AbstractProcess implements GenreProvider
         return this.genres;
     }
 
-    /**
-     * @see de.freese.jripper.core.process.ProcessMonitor#monitorProcess(java.lang.String)
-     */
     @Override
     public void monitorProcess(final String line) {
         String[] splits = line.split(" ", 2);
@@ -50,17 +44,11 @@ public class GenreProviderLinux extends AbstractProcess implements GenreProvider
         this.genres.add(splits[1]);
     }
 
-    /**
-     * @see de.freese.jripper.core.process.ProcessMonitor#monitorText(java.lang.String)
-     */
     @Override
     public void monitorText(final String line) {
         // Empty
     }
 
-    /**
-     * @see de.freese.jripper.core.OSProvider#supportsOS(java.lang.String)
-     */
     @Override
     public boolean supportsOS(final String os) {
         return JRipperUtils.isLinux();

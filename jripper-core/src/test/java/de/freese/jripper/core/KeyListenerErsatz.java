@@ -12,9 +12,6 @@ import java.io.Reader;
  * @author Thomas Freese
  */
 public class KeyListenerErsatz implements Runnable {
-    /**
-     * @see java.lang.Runnable#run()
-     */
     @Override
     public void run() {
         Console console = System.console();

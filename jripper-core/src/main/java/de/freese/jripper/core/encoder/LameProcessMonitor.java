@@ -48,9 +48,6 @@ public class LameProcessMonitor extends PrintWriterProcessMonitor {
     // 320.0 74.3 25.7 78.7 11.7 9.7 [A[A[A
     // 400/12453 ( 3%)| 0:00/ 0:29| 0:00/ 0:30| 10.884x| 0:29
 
-    /**
-     * @see de.freese.jripper.core.process.PrintWriterProcessMonitor#monitorProcess(java.lang.String)
-     */
     @Override
     public void monitorProcess(final String line) {
         if (line.startsWith("Encoding") || line.contains("to") || line.contains("Frame")) {

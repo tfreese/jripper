@@ -29,9 +29,6 @@ public class CddbQueryTask extends SwingWorker<CddbResponse, Void> {
         this.albumProperty = Objects.requireNonNull(albumProperty, "albumProperty required");
     }
 
-    /**
-     * @see javax.swing.SwingWorker#doInBackground()
-     */
     @Override
     protected CddbResponse doInBackground() throws Exception {
         String device = Settings.getInstance().getDevice();
@@ -50,9 +47,6 @@ public class CddbQueryTask extends SwingWorker<CddbResponse, Void> {
         return cddbResponse;
     }
 
-    /**
-     * @see javax.swing.SwingWorker#done()
-     */
     @Override
     protected void done() {
         try {

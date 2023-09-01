@@ -25,9 +25,6 @@ public class RippingTask extends SwingWorker<Void, Void> {
         this.album = Objects.requireNonNull(album, "album required");
     }
 
-    /**
-     * @see javax.swing.SwingWorker#doInBackground()
-     */
     @Override
     protected Void doInBackground() throws Exception {
         ScriptGenerator scriptGenerator = new ScriptGeneratorLinux();
@@ -37,9 +34,6 @@ public class RippingTask extends SwingWorker<Void, Void> {
         return null;
     }
 
-    /**
-     * @see javax.swing.SwingWorker#done()
-     */
     @Override
     protected void done() {
         // Empty

@@ -24,17 +24,11 @@ public class CompositeProgressMonitor implements ProcessMonitor {
         }
     }
 
-    /**
-     * @see de.freese.jripper.core.process.ProcessMonitor#monitorProcess(java.lang.String)
-     */
     @Override
     public void monitorProcess(final String line) {
         this.monitore.forEach(m -> m.monitorProcess(line));
     }
 
-    /**
-     * @see de.freese.jripper.core.process.ProcessMonitor#monitorText(java.lang.String)
-     */
     @Override
     public void monitorText(final String line) {
         this.monitore.forEach(m -> m.monitorText(line));

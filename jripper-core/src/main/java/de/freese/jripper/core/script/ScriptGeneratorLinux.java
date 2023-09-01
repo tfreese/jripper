@@ -21,9 +21,6 @@ import de.freese.jripper.core.process.LoggerProcessMonitor;
  * @author Thomas Freese
  */
 public class ScriptGeneratorLinux extends AbstractProcess implements ScriptGenerator {
-    /**
-     * @see de.freese.jripper.core.script.ScriptGenerator#execute(java.io.File)
-     */
     @Override
     public void execute(final File script) throws Exception {
         List<String> command = new ArrayList<>();
@@ -50,9 +47,6 @@ public class ScriptGeneratorLinux extends AbstractProcess implements ScriptGener
         execute(command, script.getParentFile(), new EmptyProcessMonitor());
     }
 
-    /**
-     * @see de.freese.jripper.core.script.ScriptGenerator#generate(de.freese.jripper.core.model.Album, java.io.File)
-     */
     @Override
     public File generate(final Album album, final File folder) throws Exception {
         Settings settings = Settings.getInstance();

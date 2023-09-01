@@ -30,9 +30,6 @@ public class ActionRipping extends AbstractAction {
         putValue(NAME, "Rip / Encode");
     }
 
-    /**
-     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-     */
     @Override
     public void actionPerformed(final ActionEvent event) {
         Album album = this.albumProperty.getValue();

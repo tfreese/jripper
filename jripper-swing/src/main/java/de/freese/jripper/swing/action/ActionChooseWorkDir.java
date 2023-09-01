@@ -33,9 +33,6 @@ public class ActionChooseWorkDir extends AbstractAction {
         this.workDirProperty = workDirProperty;
     }
 
-    /**
-     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-     */
     @Override
     public void actionPerformed(final ActionEvent event) {
         JFileChooser fileChooser = new JFileChooser();

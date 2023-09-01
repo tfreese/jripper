@@ -19,9 +19,6 @@ import de.freese.jripper.core.process.ProcessMonitor;
 public class DiskIDProviderLinux extends AbstractProcess implements DiskIDProvider, ProcessMonitor {
     private StringBuilder sb;
 
-    /**
-     * @see de.freese.jripper.core.diskid.DiskIDProvider#getDiskID(java.lang.String)
-     */
     @Override
     public DiskId getDiskID(final String device) throws Exception {
         List<String> command = new ArrayList<>();
@@ -43,25 +40,16 @@ public class DiskIDProviderLinux extends AbstractProcess implements DiskIDProvid
         return new DiskId(id);
     }
 
-    /**
-     * @see de.freese.jripper.core.process.ProcessMonitor#monitorProcess(java.lang.String)
-     */
     @Override
     public void monitorProcess(final String line) {
         this.sb.append(line);
     }
 
-    /**
-     * @see de.freese.jripper.core.process.ProcessMonitor#monitorText(java.lang.String)
-     */
     @Override
     public void monitorText(final String line) {
         // Empty
     }
 
-    /**
-     * @see de.freese.jripper.core.OSProvider#supportsOS(java.lang.String)
-     */
     @Override
     public boolean supportsOS(final String os) {
         return JRipperUtils.isLinux();

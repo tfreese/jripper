@@ -65,105 +65,66 @@ public class AlbumImpl implements Album {
         this.tracks.add(track);
     }
 
-    /**
-     * @see de.freese.jripper.core.model.Album#getArtist()
-     */
     @Override
     public String getArtist() {
         return this.artist;
     }
 
-    /**
-     * @see de.freese.jripper.core.model.Album#getComment()
-     */
     @Override
     public String getComment() {
         return Objects.toString(this.comment, "");
     }
 
-    /**
-     * @see de.freese.jripper.core.model.Album#getDiskID()
-     */
     @Override
     public DiskId getDiskID() {
         return this.diskID;
     }
 
-    /**
-     * @see de.freese.jripper.core.model.Album#getDiskNumber()
-     */
     @Override
     public int getDiskNumber() {
         return this.diskNumber;
     }
 
-    /**
-     * @see de.freese.jripper.core.model.Album#getGenre()
-     */
     @Override
     public String getGenre() {
         return this.genre;
     }
 
-    /**
-     * @see de.freese.jripper.core.model.Album#getTitle()
-     */
     @Override
     public String getTitle() {
         return this.title;
     }
 
-    /**
-     * @see de.freese.jripper.core.model.Album#getTotalDisks()
-     */
     @Override
     public int getTotalDisks() {
         return this.totalDisks;
     }
 
-    /**
-     * @see de.freese.jripper.core.model.Album#getTrack(int)
-     */
     @Override
     public Track getTrack(final int index) {
         return this.tracks.get(index);
     }
 
-    /**
-     * @see de.freese.jripper.core.model.Album#getTrackCount()
-     */
     @Override
     public int getTrackCount() {
         return this.tracks.size();
     }
 
-    /**
-     * @see de.freese.jripper.core.model.Album#getYear()
-     */
     @Override
     public int getYear() {
         return this.year;
     }
 
-    /**
-     * @see de.freese.jripper.core.model.Album#isCompilation()
-     */
     @Override
     public boolean isCompilation() {
         return (this.artist == null) || this.artist.isBlank();
     }
 
-    /**
-     * @see de.freese.jripper.core.model.Album#iterator()
-     */
     @Override
     public Iterator<Track> iterator() {
         return this.tracks.iterator();
     }
 
-    /**
-     * @see de.freese.jripper.core.model.Album#setArtist(java.lang.String)
-     */
     @Override
     public void setArtist(final String artist) {
         this.artist = artist;
@@ -171,9 +132,6 @@ public class AlbumImpl implements Album {
         LOGGER.debug("artist = {}", artist);
     }
 
-    /**
-     * @see de.freese.jripper.core.model.Album#setComment(java.lang.String)
-     */
     @Override
     public void setComment(final String comment) {
         this.comment = comment;
@@ -181,9 +139,6 @@ public class AlbumImpl implements Album {
         LOGGER.debug("comment = {}", comment);
     }
 
-    /**
-     * @see de.freese.jripper.core.model.Album#setDiskNumber(int)
-     */
     @Override
     public void setDiskNumber(final int diskNumber) {
         this.diskNumber = diskNumber;
@@ -191,9 +146,6 @@ public class AlbumImpl implements Album {
         LOGGER.debug("diskNumber = {}", diskNumber);
     }
 
-    /**
-     * @see de.freese.jripper.core.model.Album#setGenre(java.lang.String)
-     */
     @Override
     public void setGenre(final String genre) {
         this.genre = genre;
@@ -201,9 +153,6 @@ public class AlbumImpl implements Album {
         LOGGER.debug("genre = {}", genre);
     }
 
-    /**
-     * @see de.freese.jripper.core.model.Album#setTitle(java.lang.String)
-     */
     @Override
     public void setTitle(final String title) {
         this.title = title;
@@ -211,9 +160,6 @@ public class AlbumImpl implements Album {
         LOGGER.debug("title = {}", title);
     }
 
-    /**
-     * @see de.freese.jripper.core.model.Album#setTotalDisks(int)
-     */
     @Override
     public void setTotalDisks(final int totalDisks) {
         this.totalDisks = totalDisks;
@@ -241,9 +187,6 @@ public class AlbumImpl implements Album {
         LOGGER.debug("index/title = {}/{}", index, title);
     }
 
-    /**
-     * @see de.freese.jripper.core.model.Album#setYear(int)
-     */
     @Override
     public void setYear(final int year) {
         this.year = year;

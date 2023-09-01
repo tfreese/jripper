@@ -30,9 +30,6 @@ public class ActionCddbQuery extends AbstractAction {
         putValue(NAME, "CDDB Query");
     }
 
-    /**
-     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-     */
     @Override
     public void actionPerformed(final ActionEvent event) {
         CddbQueryTask task = new CddbQueryTask(this.albumProperty);

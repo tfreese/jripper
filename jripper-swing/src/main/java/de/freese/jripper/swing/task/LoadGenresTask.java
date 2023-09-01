@@ -25,9 +25,6 @@ public class LoadGenresTask extends SwingWorker<Set<String>, Void> {
         this.genresObservableList = Objects.requireNonNull(genresObservableList, "genresObservableList required");
     }
 
-    /**
-     * @see javax.swing.SwingWorker#doInBackground()
-     */
     @Override
     protected Set<String> doInBackground() throws Exception {
         GenreProvider genreProvider = JRipper.getInstance().getGenreProvider();
@@ -35,9 +32,6 @@ public class LoadGenresTask extends SwingWorker<Set<String>, Void> {
         return genreProvider.getGenres();
     }
 
-    /**
-     * @see javax.swing.SwingWorker#done()
-     */
     @Override
     protected void done() {
         try {

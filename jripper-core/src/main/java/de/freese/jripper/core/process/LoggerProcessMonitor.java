@@ -19,17 +19,11 @@ public class LoggerProcessMonitor implements ProcessMonitor {
         this.logger = logger;
     }
 
-    /**
-     * @see de.freese.jripper.core.process.ProcessMonitor#monitorProcess(java.lang.String)
-     */
     @Override
     public void monitorProcess(final String line) {
         getLogger().info(line);
     }
 
-    /**
-     * @see de.freese.jripper.core.process.ProcessMonitor#monitorText(java.lang.String)
-     */
     @Override
     public void monitorText(final String line) {
         getLogger().info(line);
