@@ -42,6 +42,7 @@ project("jripper-core") {
         runtimeOnly("org.codehaus.janino:janino")
 
         testImplementation("org.junit.jupiter:junit-jupiter")
+        testRuntimeOnly("org.junit.platform:junit-platform-launcher")
     }
 
     //test.enabled = false
