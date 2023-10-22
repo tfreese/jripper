@@ -14,8 +14,6 @@ import de.freese.jripper.core.encoder.EncoderFactory;
 import de.freese.jripper.core.encoder.EncoderFormat;
 
 /**
- * Testklasse für die {@link Encoder}.
- *
  * @author Thomas Freese
  */
 @TestMethodOrder(MethodOrderer.MethodName.class)

@@ -24,9 +24,6 @@ import de.freese.jripper.core.model.DiskId;
  */
 @TestMethodOrder(MethodOrderer.MethodName.class)
 class TestCddbProvider {
-    /**
-     * Liefert je nach Betriebssystem die passende Implementierung.
-     */
     @Test
     void testGetService() throws Exception {
         DiskIDProvider diskID = DiskIDProviderFactory.getInstance();
@@ -89,7 +86,7 @@ class TestCddbProvider {
         String device = JRipperUtils.detectCdDevice();
 
         if ((device == null) || device.isBlank()) {
-            // BuildServer haben nicht zwangsläufig ein DVD-Laufwerk.
+            // No CD/DVD/BluRay Drive.
             return;
         }
 
@@ -100,7 +97,7 @@ class TestCddbProvider {
             assertNotNull(diskID);
         }
         catch (IllegalStateException ex) {
-            // Keine CD im Laufwerk.
+            // No CD/DVD/BluRay Drive.
         }
     }
 }

@@ -18,15 +18,10 @@ import de.freese.jripper.core.ripper.Ripper;
 import de.freese.jripper.core.ripper.RipperFactory;
 
 /**
- * Testklasse für die {@link Ripper}.
- *
  * @author Thomas Freese
  */
 @TestMethodOrder(MethodOrderer.MethodName.class)
 class TestRipper {
-    /**
-     * Liefert je nach Betriebssystem die passende Implementierung.
-     */
     @Test
     void testGetService() throws Exception {
         Ripper ripper = RipperFactory.getInstance();
@@ -35,8 +30,8 @@ class TestRipper {
 
     @Test
     @EnabledOnOs(OS.LINUX)
-    @EnabledIfEnvironmentVariable(named = "SESSION_MANAGER", matches = ".*mainah.*") // Nur auf Desktop-PC mit CD-Laufwerk
-    @Disabled("Momentan kein CD/CDV/BluRay Laufwerk verbaut")
+    @EnabledIfEnvironmentVariable(named = "SESSION_MANAGER", matches = ".*mainah.*") // Only on Desktop-PC with CD-Drive.
+    @Disabled("No CD/DVD/BluRay Drive")
     void testLinux() throws Exception {
         DiskIDProvider service = new DiskIDProviderLinux();
 
@@ -45,7 +40,7 @@ class TestRipper {
             assertNotNull(diskID);
         }
         catch (IllegalStateException ex) {
-            // Keine CD im Laufwerk.
+            // No CD/DVD/BluRay Drive.
         }
     }
 }
