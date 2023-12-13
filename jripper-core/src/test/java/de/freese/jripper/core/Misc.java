@@ -11,12 +11,12 @@ import java.util.regex.Pattern;
  */
 public final class Misc {
     public static void main(final String[] args) {
-        String s = "100/12453 ( 1%)| 0:00/ 0:21| 0:00/ 0:22| 15.366x| 0:22";
+        final String s = "100/12453 ( 1%)| 0:00/ 0:21| 0:00/ 0:22| 15.366x| 0:22";
         // Pattern pattern = Pattern.compile("[(\\s[\\d]{1,2}%)]?");
         // Pattern pattern = Pattern.compile("[\\(][.*][\\)]"); // \[(.*?)\], /[^(<td>)].+[^(</td>)]/;
         // Pattern pattern = Pattern.compile("^[0-9]{1,}+/[0-9]{1,}+.*"); ///\(.*\)/ versucht? Alternativ würde mir grad noch das hier einfallen: /\(.*\)/U
-        Pattern pattern = Pattern.compile("[(.*)]");
-        Matcher matcher = pattern.matcher(s);
+        final Pattern pattern = Pattern.compile("[(.*)]");
+        final Matcher matcher = pattern.matcher(s);
 
         System.out.println(matcher.matches());
 
@@ -24,16 +24,16 @@ public final class Misc {
             System.out.println(matcher.group());
         }
 
-        int start = s.indexOf(" (");
-        int end = s.indexOf("%)");
+        final int start = s.indexOf(" (");
+        final int end = s.indexOf("%)");
 
         if ((start > 0) && (end > 0)) {
-            String prozent = s.substring(start + 2, end).strip();
+            final String prozent = s.substring(start + 2, end).strip();
             System.out.println(prozent);
         }
 
         // Shell öffnen und Skript ausführen.
-        List<String> command = new ArrayList<>();
+        final List<String> command = new ArrayList<>();
 
         command.add("konsole");
         // command.add("--nofork");

@@ -24,7 +24,7 @@ import de.freese.jripper.core.ripper.RipperFactory;
 class TestRipper {
     @Test
     void testGetService() throws Exception {
-        Ripper ripper = RipperFactory.getInstance();
+        final Ripper ripper = RipperFactory.getInstance();
         assertNotNull(ripper);
     }
 
@@ -33,10 +33,10 @@ class TestRipper {
     @EnabledIfEnvironmentVariable(named = "SESSION_MANAGER", matches = ".*mainah.*") // Only on Desktop-PC with CD-Drive.
     @Disabled("No CD/DVD/BluRay Drive")
     void testLinux() throws Exception {
-        DiskIDProvider service = new DiskIDProviderLinux();
+        final DiskIDProvider service = new DiskIDProviderLinux();
 
         try {
-            DiskId diskID = service.getDiskID(JRipperUtils.detectCdDevice());
+            final DiskId diskID = service.getDiskID(JRipperUtils.detectCdDevice());
             assertNotNull(diskID);
         }
         catch (IllegalStateException ex) {

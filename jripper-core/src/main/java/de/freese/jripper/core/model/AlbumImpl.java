@@ -18,23 +18,16 @@ public class AlbumImpl implements Album {
     private static final Logger LOGGER = LoggerFactory.getLogger(AlbumImpl.class);
 
     private final DiskId diskID;
-
     private final List<Track> tracks = new ArrayList<>();
     /**
      * Bei Compilations null.
      */
     private String artist;
-
     private String comment;
-
     private int diskNumber = 1;
-
     private String genre;
-
     private String title;
-
     private int totalDisks = 1;
-
     private int year;
 
     public AlbumImpl() {
@@ -53,9 +46,9 @@ public class AlbumImpl implements Album {
      * @param artist String; Nur bei Compilations != null.
      */
     public void addTrack(final String artist, final String title) {
-        int trackIndex = this.tracks.size();
+        final int trackIndex = this.tracks.size();
 
-        Track track = new Track();
+        final Track track = new Track();
         track.setAlbum(this);
         track.setArtist(artist == null ? getArtist() : artist);
         track.setTitle(title);
@@ -171,7 +164,7 @@ public class AlbumImpl implements Album {
      * @param index int, beginnend mit 0
      */
     public void setTrackArtist(final int index, final String artist) {
-        Track track = this.tracks.get(index);
+        final Track track = this.tracks.get(index);
         track.setArtist(artist);
 
         LOGGER.debug("index/artist = {}/{}", index, artist);
@@ -181,7 +174,7 @@ public class AlbumImpl implements Album {
      * @param index int, beginnend mit 0
      */
     public void setTrackTitle(final int index, final String title) {
-        Track track = this.tracks.get(index);
+        final Track track = this.tracks.get(index);
         track.setTitle(title);
 
         LOGGER.debug("index/title = {}/{}", index, title);

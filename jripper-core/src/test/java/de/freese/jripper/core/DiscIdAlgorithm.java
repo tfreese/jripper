@@ -18,10 +18,10 @@ public final class DiscIdAlgorithm {
      * b111140e 14 150 24545 41797 60822 80152 117002 142550 169755 192057 211360 239297 256325 279075 306220 4374
      */
     public static void main(final String[] args) {
-        int framesPerSecond = Settings.getInstance().getFramesPerSecond();
-        int[] frames = {150, 24545, 41797, 60822, 80152, 117002, 142550, 169755, 192057, 211360, 239297, 256325, 279075, 306220};
+        final int framesPerSecond = Settings.getInstance().getFramesPerSecond();
+        final int[] frames = {150, 24545, 41797, 60822, 80152, 117002, 142550, 169755, 192057, 211360, 239297, 256325, 279075, 306220};
 
-        int n = frames.length - 1;
+        final int n = frames.length - 1;
         int totalLength = (frames[n] - frames[0]) / framesPerSecond;
         totalLength = (327900 - frames[0]) / framesPerSecond;
         int checkSum = 0;
@@ -30,12 +30,12 @@ public final class DiscIdAlgorithm {
             checkSum += sumOfDigits(frames[i] / framesPerSecond);
         }
 
-        int xx = checkSum % 255;
-        int yyyy = totalLength;
-        int zz = n;
+        final int xx = checkSum % 255;
+        final int yyyy = totalLength;
+        final int zz = n;
 
         // XXYYYYZZ
-        int discID = ((xx << 24) | (yyyy << 8) | zz);
+        final int discID = ((xx << 24) | (yyyy << 8) | zz);
         System.out.print(Integer.toHexString(discID));
         System.out.println(Arrays.toString(frames));
     }

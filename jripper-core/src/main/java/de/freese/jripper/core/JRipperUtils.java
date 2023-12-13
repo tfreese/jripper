@@ -57,7 +57,7 @@ public final class JRipperUtils {
      * Format: Arbeitsverzeichnis/ALBUMTITEL/flac
      */
     public static File getFlacDir(final Album album, final boolean createOrDelete) throws IOException {
-        File dir = new File(getWorkDir(album), "flac");
+        final File dir = new File(getWorkDir(album), "flac");
 
         if (createOrDelete) {
             createOrCleanDir(album, dir);
@@ -71,7 +71,7 @@ public final class JRipperUtils {
      * Format: Arbeitsverzeichnis/ALBUMTITEL/mp3
      */
     public static File getMp3Dir(final Album album, final boolean createOrDelete) throws IOException {
-        File dir = new File(getWorkDir(album), "mp3");
+        final File dir = new File(getWorkDir(album), "mp3");
 
         if (createOrDelete) {
             createOrCleanDir(album, dir);
@@ -89,7 +89,7 @@ public final class JRipperUtils {
      * Format: Arbeitsverzeichnis/ALBUMTITEL/wav
      */
     public static File getWavDir(final Album album, final boolean createOrDelete) throws IOException {
-        File dir = new File(getWorkDir(album), "wav");
+        final File dir = new File(getWorkDir(album), "wav");
 
         if (createOrDelete) {
             createOrCleanDir(album, dir);
@@ -103,13 +103,13 @@ public final class JRipperUtils {
      * Format: Arbeitsverzeichnis/ALBUMTITEL
      */
     public static File getWorkDir(final Album album) {
-        StringBuilder sb = new StringBuilder();
+        final StringBuilder sb = new StringBuilder();
         sb.append(Settings.getInstance().getWorkDir());
         // sb.append(File.separator).append(StringUtils.replace(album.getTitle(), " ", "-"));
         sb.append(File.separator).append(album.getTitle());
         sb.append("-CD").append(album.getDiskNumber());
 
-        File dir = new File(sb.toString());
+        final File dir = new File(sb.toString());
 
         if (!dir.exists()) {
             dir.mkdirs();
@@ -126,7 +126,7 @@ public final class JRipperUtils {
     }
 
     public static boolean isLinux() {
-        String os = getOsName().toLowerCase();
+        final String os = getOsName().toLowerCase();
 
         return os.contains("linux");
     }
@@ -148,7 +148,7 @@ public final class JRipperUtils {
     }
 
     public static boolean isWindows() {
-        String os = getOsName().toLowerCase();
+        final String os = getOsName().toLowerCase();
 
         return os.startsWith("win");
     }

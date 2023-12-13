@@ -31,12 +31,11 @@ import de.freese.jripper.core.ripper.Ripper;
  */
 public class JRipperConsole {
     public static void main(final String[] args) throws UnsupportedEncodingException {
-        JRipperConsole console = new JRipperConsole();
+        final JRipperConsole console = new JRipperConsole();
         console.showMainMenu();
     }
 
     private final PrintWriter printWriter;
-
     private final BufferedReader reader;
 
     private Album album;
@@ -44,7 +43,7 @@ public class JRipperConsole {
     public JRipperConsole() throws UnsupportedEncodingException {
         super();
 
-        Console console = System.console();
+        final Console console = System.console();
 
         if (console != null) {
             if (console.reader() instanceof BufferedReader bufferedReader) {
@@ -69,7 +68,7 @@ public class JRipperConsole {
         print("%s\n", "*****************");
 
         print("%s%s%s \t%s\n", AnsiCodes.ANSI_CYAN, "1", AnsiCodes.ANSI_RESET, "FreeDB abfragen");
-        String workDir = Settings.getInstance().getWorkDir();
+        final String workDir = Settings.getInstance().getWorkDir();
 
         if (this.album != null) {
             print("%s%s%s \t%s\n", AnsiCodes.ANSI_CYAN, "2", AnsiCodes.ANSI_RESET, "Album bearbeiten");
@@ -101,8 +100,8 @@ public class JRipperConsole {
             switch (input) {
                 case "1":
                     this.album = null;
-                    DiskId diskID = getDiskID();
-                    String genre = queryCDDB(diskID);
+                    final DiskId diskID = getDiskID();
+                    final String genre = queryCDDB(diskID);
                     this.album = readCDDB(diskID, genre);
                     showAlbum(this.album);
                     break;
@@ -115,12 +114,12 @@ public class JRipperConsole {
                     break;
 
                 case "4":
-                    File flacDir = JRipperUtils.getFlacDir(this.album, true);
+                    final File flacDir = JRipperUtils.getFlacDir(this.album, true);
                     encode(this.album, this.printWriter, JRipper.getInstance().getEncoderFlac(), flacDir);
                     break;
 
                 case "5":
-                    File mp3Dir = JRipperUtils.getMp3Dir(this.album, true);
+                    final File mp3Dir = JRipperUtils.getMp3Dir(this.album, true);
                     encode(this.album, this.printWriter, JRipper.getInstance().getEncoderMp3(), mp3Dir);
                     break;
 
@@ -162,7 +161,7 @@ public class JRipperConsole {
     }
 
     private DiskId getDiskID() throws Exception {
-        String device = Settings.getInstance().getDevice();
+        final String device = Settings.getInstance().getDevice();
 
         return JRipper.getInstance().getDiskIDProvider().getDiskID(device);
     }
@@ -195,21 +194,21 @@ public class JRipperConsole {
     }
 
     private String queryCDDB(final DiskId diskID) throws Exception {
-        CddbResponse cddbResponse = JRipper.getInstance().getCddbProvider().queryGenres(diskID);
+        final CddbResponse cddbResponse = JRipper.getInstance().getCddbProvider().queryGenres(diskID);
 
         return cddbResponse.getGenres().get(0);
     }
 
     private Album readCDDB(final DiskId diskID, final String genre) throws Exception {
-        CddbResponse cddbResponse = JRipper.getInstance().getCddbProvider().queryAlbum(diskID, genre);
+        final CddbResponse cddbResponse = JRipper.getInstance().getCddbProvider().queryAlbum(diskID, genre);
 
         return cddbResponse.getAlbum();
     }
 
     private void rip(final Album album, final PrintWriter printWriter) throws Exception {
-        String device = Settings.getInstance().getDevice();
-        Ripper ripper = JRipper.getInstance().getRipper();
-        File directory = JRipperUtils.getWavDir(album, true);
+        final String device = Settings.getInstance().getDevice();
+        final Ripper ripper = JRipper.getInstance().getRipper();
+        final File directory = JRipperUtils.getWavDir(album, true);
 
         ripper.rip(device, directory, new PrintWriterProcessMonitor(printWriter));
     }
@@ -308,7 +307,7 @@ public class JRipperConsole {
                     if (input.startsWith("ta")) {
                         input = input.replace("ta", "").replace(".", "");
                         input = JRipperUtils.trim(input);
-                        int index = Integer.parseInt(input) - 1;
+                        final int index = Integer.parseInt(input) - 1;
 
                         print("%s - ", "Neuer Wert");
                         input = getInput();
@@ -317,7 +316,7 @@ public class JRipperConsole {
                     else if (input.startsWith("tt")) {
                         input = input.replace("tt", "").replace(".", "");
                         input = JRipperUtils.trim(input);
-                        int index = Integer.parseInt(input) - 1;
+                        final int index = Integer.parseInt(input) - 1;
 
                         print("%s - ", "Neuer Wert");
                         input = getInput();

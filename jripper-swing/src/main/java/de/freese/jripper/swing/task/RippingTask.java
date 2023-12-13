@@ -27,8 +27,8 @@ public class RippingTask extends SwingWorker<Void, Void> {
 
     @Override
     protected Void doInBackground() throws Exception {
-        ScriptGenerator scriptGenerator = new ScriptGeneratorLinux();
-        File script = scriptGenerator.generate(this.album, JRipperUtils.getWorkDir(this.album));
+        final ScriptGenerator scriptGenerator = new ScriptGeneratorLinux();
+        final File script = scriptGenerator.generate(this.album, JRipperUtils.getWorkDir(this.album));
         scriptGenerator.execute(script);
 
         return null;

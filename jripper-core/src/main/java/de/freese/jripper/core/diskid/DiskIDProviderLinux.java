@@ -21,7 +21,7 @@ public class DiskIDProviderLinux extends AbstractProcess implements DiskIDProvid
 
     @Override
     public DiskId getDiskID(final String device) throws Exception {
-        List<String> command = new ArrayList<>();
+        final List<String> command = new ArrayList<>();
         command.add("cd-discid");
         command.add(device);
 
@@ -29,7 +29,7 @@ public class DiskIDProviderLinux extends AbstractProcess implements DiskIDProvid
 
         execute(command, new File(Settings.getInstance().getWorkDir()), this);
 
-        String id = this.sb.toString();
+        final String id = this.sb.toString();
 
         getLogger().debug(id);
 

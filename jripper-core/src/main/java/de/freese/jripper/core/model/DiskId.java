@@ -12,13 +12,9 @@ import de.freese.jripper.core.Settings;
  */
 public class DiskId {
     private String id;
-
     private int offset;
-
     private int seconds;
-
     private int trackCount;
-
     private int[] trackOffsets;
 
     public DiskId(final String diskID) {
@@ -51,22 +47,22 @@ public class DiskId {
      * Liefert die Trackdauer in Sekunden.
      */
     public int getTrackSeconds(final int track) {
-        int framesPerSecond = Settings.getInstance().getFramesPerSecond();
-        int trackSeconds;
+        final int framesPerSecond = Settings.getInstance().getFramesPerSecond();
+        final int trackSeconds;
 
         if (track == 0) {
             // Erster Titel
-            int frames = this.trackOffsets[0] - this.offset;
+            final int frames = this.trackOffsets[0] - this.offset;
             trackSeconds = frames / framesPerSecond;
         }
         else if (track < this.trackOffsets.length) {
-            int frames = this.trackOffsets[track] - this.trackOffsets[track - 1] - this.offset;
+            final int frames = this.trackOffsets[track] - this.trackOffsets[track - 1] - this.offset;
             trackSeconds = frames / framesPerSecond;
         }
         else {
             // Letzter Track erhält seine Länge durch Gesamtzeit - Laufzeit vorheriger Titel.
-            int vorherigeFrames = this.trackOffsets[this.trackOffsets.length - 1] - this.offset;
-            int vorherigeSeconds = vorherigeFrames / framesPerSecond;
+            final int vorherigeFrames = this.trackOffsets[this.trackOffsets.length - 1] - this.offset;
+            final int vorherigeSeconds = vorherigeFrames / framesPerSecond;
             trackSeconds = this.seconds - vorherigeSeconds;
         }
 
@@ -79,7 +75,7 @@ public class DiskId {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
+        final StringBuilder sb = new StringBuilder();
         sb.append(getID());
         sb.append(" ").append(getTrackCount());
         sb.append(" ").append(getOffset());
@@ -96,7 +92,7 @@ public class DiskId {
     private void parseID(final String diskID) {
         Objects.requireNonNull(diskID, "diskID required");
 
-        String[] splits = diskID.split(" ");
+        final String[] splits = diskID.split(" ");
         this.id = splits[0];
         this.trackCount = Integer.parseInt(splits[1]);
         this.offset = Integer.parseInt(splits[2]);

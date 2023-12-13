@@ -32,9 +32,9 @@ public class ActionRipping extends AbstractAction {
 
     @Override
     public void actionPerformed(final ActionEvent event) {
-        Album album = this.albumProperty.getValue();
+        final Album album = this.albumProperty.getValue();
 
-        RippingTask task = new RippingTask(album);
+        final RippingTask task = new RippingTask(album);
         task.execute();
     }
 }

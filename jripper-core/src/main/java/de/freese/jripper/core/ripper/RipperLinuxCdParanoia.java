@@ -17,7 +17,7 @@ import de.freese.jripper.core.process.ProcessMonitor;
 public class RipperLinuxCdParanoia extends AbstractProcess implements Ripper {
     @Override
     public void rip(final String device, final File directory, final ProcessMonitor monitor) throws Exception {
-        List<String> command = new ArrayList<>();
+        final List<String> command = new ArrayList<>();
         command.add("cdparanoia");
         command.add("-w");
         command.add("-B"); // Batch, jeder Track in eine Datei

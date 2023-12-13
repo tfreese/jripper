@@ -32,7 +32,7 @@ public class ActionCddbQuery extends AbstractAction {
 
     @Override
     public void actionPerformed(final ActionEvent event) {
-        CddbQueryTask task = new CddbQueryTask(this.albumProperty);
+        final CddbQueryTask task = new CddbQueryTask(this.albumProperty);
         task.execute();
     }
 }

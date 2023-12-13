@@ -22,7 +22,7 @@ public final class GbcBuilder extends GridBagConstraints {
      * </ul>
      */
     public static GbcBuilder of(final int gridX, final int gridY) {
-        GbcBuilder gbcBuilder = new GbcBuilder(gridX, gridY);
+        final GbcBuilder gbcBuilder = new GbcBuilder(gridX, gridY);
         gbcBuilder.anchorWest();
         gbcBuilder.insets(2, 2, 2, 2);
 

@@ -86,7 +86,7 @@ public class JRipperSwing {
 
     public static void main(final String[] args) {
         SwingUtilities.invokeLater(() -> {
-            JRipperSwing view = new JRipperSwing();
+            final JRipperSwing view = new JRipperSwing();
             view.init();
         });
     }
@@ -115,7 +115,7 @@ public class JRipperSwing {
 
         initMenue(frame, this.albumProperty);
 
-        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
+        final JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
         splitPane.setOneTouchExpandable(true);
         frame.add(splitPane, BorderLayout.CENTER);
 
@@ -127,13 +127,13 @@ public class JRipperSwing {
     }
 
     private void initAlbum(final JSplitPane splitPane, final Property<Album> albumProperty) {
-        Property<String> artistTextFieldProperty = new SimpleStringProperty();
-        Property<String> titleTextFieldProperty = new SimpleStringProperty();
-        Property<String> genreTextFieldProperty = new SimpleStringProperty();
-        Property<Integer> diskNumberSpinnerProperty = new SimpleIntegerProperty();
-        Property<Integer> totalDisksSpinnerProperty = new SimpleIntegerProperty();
-        Property<Integer> yearSpinnerProperty = new SimpleIntegerProperty();
-        Property<String> commentTextAreaProperty = new SimpleStringProperty();
+        final Property<String> artistTextFieldProperty = new SimpleStringProperty();
+        final Property<String> titleTextFieldProperty = new SimpleStringProperty();
+        final Property<String> genreTextFieldProperty = new SimpleStringProperty();
+        final Property<Integer> diskNumberSpinnerProperty = new SimpleIntegerProperty();
+        final Property<Integer> totalDisksSpinnerProperty = new SimpleIntegerProperty();
+        final Property<Integer> yearSpinnerProperty = new SimpleIntegerProperty();
+        final Property<String> commentTextAreaProperty = new SimpleStringProperty();
 
         this.albumProperty.addListener((observable, oldValue, newAlbum) -> {
             artistTextFieldProperty.setValue(newAlbum.getArtist());
@@ -155,7 +155,7 @@ public class JRipperSwing {
         splitPane2.setOneTouchExpandable(true);
 
         // Album
-        JPanel panelAlbum = new JPanel();
+        final JPanel panelAlbum = new JPanel();
         panelAlbum.setLayout(new GridBagLayout());
         panelAlbum.setBorder(BorderFactory.createTitledBorder("Album"));
 
@@ -163,7 +163,7 @@ public class JRipperSwing {
 
         // Artist
         panelAlbum.add(new JLabel("Artist"), GbcBuilder.of(0, row));
-        JTextField artistTextField = new JTextField();
+        final JTextField artistTextField = new JTextField();
 
         SwingBindings.bindBidirectional(artistTextField, artistTextFieldProperty);
         artistTextFieldProperty.addListener((observable, oldValue, newValue) -> getAlbum().setArtist(newValue));
@@ -174,7 +174,7 @@ public class JRipperSwing {
 
         // Title
         panelAlbum.add(new JLabel("Title"), GbcBuilder.of(0, row));
-        JTextField titleTextField = new JTextField();
+        final JTextField titleTextField = new JTextField();
 
         SwingBindings.bindBidirectional(titleTextField, titleTextFieldProperty);
         titleTextFieldProperty.addListener((observable, oldValue, newValue) -> getAlbum().setTitle(newValue));
@@ -184,11 +184,11 @@ public class JRipperSwing {
         row++;
 
         // Genre
-        Property<String> genreComboBoxProperty = new SimpleStringProperty();
-        ObservableList<String> genresObservableList = new DefaultObservableList<>();
+        final Property<String> genreComboBoxProperty = new SimpleStringProperty();
+        final ObservableList<String> genresObservableList = new DefaultObservableList<>();
 
         panelAlbum.add(new JLabel("Genre"), GbcBuilder.of(0, row));
-        JTextField genreTextField = new JTextField();
+        final JTextField genreTextField = new JTextField();
 
         SwingBindings.bindBidirectional(genreTextField, genreTextFieldProperty);
         genreTextFieldProperty.addListener((observable, oldValue, newValue) -> getAlbum().setGenre(newValue));
@@ -196,7 +196,7 @@ public class JRipperSwing {
         panelAlbum.add(genreTextField, GbcBuilder.of(GridBagConstraints.RELATIVE, row).gridWidth(3).fillHorizontal());
         panelAlbum.add(new JLabel("Defaults"), GbcBuilder.of(GridBagConstraints.RELATIVE, row).insets(2, 20, 2, 2).anchorEast());
 
-        JComboBox<String> comboBoxGenres = new JComboBox<>();
+        final JComboBox<String> comboBoxGenres = new JComboBox<>();
         comboBoxGenres.setModel(new DefaultObservableListComboBoxModel<>(genresObservableList));
         // comboBox.setSelectedItem(genresObservableList.get(0));
 
@@ -208,14 +208,14 @@ public class JRipperSwing {
 
         panelAlbum.add(comboBoxGenres, GbcBuilder.of(GridBagConstraints.RELATIVE, row));
 
-        LoadGenresTask loadGenresTask = new LoadGenresTask(genresObservableList);
+        final LoadGenresTask loadGenresTask = new LoadGenresTask(genresObservableList);
         loadGenresTask.execute();
 
         row++;
 
         // Disk
         panelAlbum.add(new JLabel("Disk"), GbcBuilder.of(0, row));
-        JSpinner diskNumberSpinner = new JSpinner(new SpinnerNumberModel(1, 1, 50, 1));
+        final JSpinner diskNumberSpinner = new JSpinner(new SpinnerNumberModel(1, 1, 50, 1));
 
         SwingBindings.bindBidirectional(diskNumberSpinner, diskNumberSpinnerProperty);
         diskNumberSpinnerProperty.addListener((observable, oldValue, newValue) -> getAlbum().setDiskNumber(newValue));
@@ -223,7 +223,7 @@ public class JRipperSwing {
         panelAlbum.add(diskNumberSpinner, GbcBuilder.of(GridBagConstraints.RELATIVE, row));
         panelAlbum.add(new JLabel("/"), GbcBuilder.of(GridBagConstraints.RELATIVE, row));
 
-        JSpinner totalDiskspinner = new JSpinner(new SpinnerNumberModel(1, 1, 50, 1));
+        final JSpinner totalDiskspinner = new JSpinner(new SpinnerNumberModel(1, 1, 50, 1));
 
         SwingBindings.bindBidirectional(totalDiskspinner, totalDisksSpinnerProperty);
         totalDisksSpinnerProperty.addListener((observable, oldValue, newValue) -> getAlbum().setTotalDisks(newValue));
@@ -234,8 +234,8 @@ public class JRipperSwing {
 
         // Year
         panelAlbum.add(new JLabel("Year"), GbcBuilder.of(0, row));
-        int currentYear = LocalDate.now().getYear();
-        JSpinner yearSpinner = new JSpinner(new SpinnerNumberModel(currentYear, 1900, 3000, 1));
+        final int currentYear = LocalDate.now().getYear();
+        final JSpinner yearSpinner = new JSpinner(new SpinnerNumberModel(currentYear, 1900, 3000, 1));
         yearSpinner.setEditor(new JSpinner.NumberEditor(yearSpinner, "0000"));
 
         SwingBindings.bindBidirectional(yearSpinner, yearSpinnerProperty);
@@ -251,7 +251,7 @@ public class JRipperSwing {
 
         // Comment
         panelAlbum.add(new JLabel("Comment"), GbcBuilder.of(0, row));
-        JTextArea commentTextArea = new JTextArea();
+        final JTextArea commentTextArea = new JTextArea();
         commentTextArea.setRows(10);
 
         SwingBindings.bindBidirectional(commentTextArea, commentTextAreaProperty);
@@ -262,9 +262,9 @@ public class JRipperSwing {
         splitPane2.setLeftComponent(panelAlbum);
 
         // Tabelle
-        AlbumTableModel tableModel = new AlbumTableModel(this.albumTracks);
+        final AlbumTableModel tableModel = new AlbumTableModel(this.albumTracks);
 
-        JTable table = new JTable();
+        final JTable table = new JTable();
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         table.setModel(tableModel);
         table.setDefaultRenderer(Object.class, new AlbumTableRenderer());
@@ -284,7 +284,7 @@ public class JRipperSwing {
     }
 
     private void initMenue(final Container container, final Property<Album> albumProperty) {
-        JPanel panel = new JPanel();
+        final JPanel panel = new JPanel();
         panel.setLayout(new GridBagLayout());
 
         // Dummy
@@ -306,18 +306,18 @@ public class JRipperSwing {
     }
 
     private void initSettings(final JSplitPane splitPane) {
-        JPanel panel = new JPanel();
+        final JPanel panel = new JPanel();
         panel.setLayout(new GridBagLayout());
         panel.setBorder(BorderFactory.createTitledBorder("Settings"));
 
-        Settings settings = Settings.getInstance();
+        final Settings settings = Settings.getInstance();
 
         // Device
         panel.add(new JLabel("Device"), GbcBuilder.of(0, 0));
 
-        Property<String> deviceProperty = new SimpleStringProperty();
+        final Property<String> deviceProperty = new SimpleStringProperty();
 
-        JTextField textFieldDevice = new JTextField(settings.getDevice());
+        final JTextField textFieldDevice = new JTextField(settings.getDevice());
 
         SwingBindings.bindBidirectional(textFieldDevice, deviceProperty);
         deviceProperty.addListener((observable, oldValue, newValue) -> settings.setDevice(newValue));
@@ -327,29 +327,29 @@ public class JRipperSwing {
         // Work. Dir.
         panel.add(new JLabel("Work.-Dir."), GbcBuilder.of(0, 1));
 
-        Property<String> workDirProperty = new SimpleStringProperty();
+        final Property<String> workDirProperty = new SimpleStringProperty();
 
-        JTextField textFieldWorkDir = new JTextField(settings.getWorkDir());
+        final JTextField textFieldWorkDir = new JTextField(settings.getWorkDir());
 
         SwingBindings.bindBidirectional(textFieldWorkDir, workDirProperty);
         workDirProperty.addListener((observable, oldValue, newValue) -> settings.setWorkDir(newValue));
 
         panel.add(textFieldWorkDir, GbcBuilder.of(1, 1).fillHorizontal());
 
-        JButton button = new JButton(new ActionChooseWorkDir(splitPane.getParent(), workDirProperty));
+        final JButton button = new JButton(new ActionChooseWorkDir(splitPane.getParent(), workDirProperty));
         button.setBorder(BorderFactory.createEmptyBorder());
         button.setFocusPainted(false);
         button.setMargin(new Insets(0, 0, 0, 0));
         panel.add(button, GbcBuilder.of(2, 1));
 
         // FLAC
-        JPanel panelFlac = new JPanel();
+        final JPanel panelFlac = new JPanel();
         panelFlac.setLayout(new GridBagLayout());
         panelFlac.setBorder(BorderFactory.createTitledBorder("Flac"));
 
         // Enabled
-        Property<Boolean> flacEnabledProperty = new SimpleBooleanProperty();
-        JCheckBox checkBoxFlac = new JCheckBox("Enabled");
+        final Property<Boolean> flacEnabledProperty = new SimpleBooleanProperty();
+        final JCheckBox checkBoxFlac = new JCheckBox("Enabled");
         checkBoxFlac.setSelected(settings.isFlacEnabled());
 
         SwingBindings.bindToProperty(checkBoxFlac, flacEnabledProperty);
@@ -358,16 +358,16 @@ public class JRipperSwing {
         panelFlac.add(checkBoxFlac, GbcBuilder.of(0, 0));
 
         // Compression
-        Property<Integer> flacCompressionProperty = new SimpleIntegerProperty();
+        final Property<Integer> flacCompressionProperty = new SimpleIntegerProperty();
 
         panelFlac.add(new JLabel("Compression"), GbcBuilder.of(0, 1));
 
-        JSlider slider = new JSlider(0, 8, settings.getFlacCompression());
+        final JSlider slider = new JSlider(0, 8, settings.getFlacCompression());
         slider.setMajorTickSpacing(2);
         // slider.setSnapToTicks(true);
         slider.setPaintLabels(true);
 
-        @SuppressWarnings("unchecked") Dictionary<Integer, JLabel> labelTable = slider.getLabelTable();
+        @SuppressWarnings("unchecked") final Dictionary<Integer, JLabel> labelTable = slider.getLabelTable();
         labelTable.put(0, new JLabel("fast"));
         labelTable.put(8, new JLabel("best"));
         slider.setLabelTable(labelTable);
@@ -380,13 +380,13 @@ public class JRipperSwing {
         panel.add(panelFlac, GbcBuilder.of(0, 2).gridWidth(3).fillHorizontal());
 
         // MP3
-        JPanel panelMP3 = new JPanel();
+        final JPanel panelMP3 = new JPanel();
         panelMP3.setLayout(new GridBagLayout());
         panelMP3.setBorder(BorderFactory.createTitledBorder("MP3"));
 
         // Enabled
-        Property<Boolean> mp3EnabledProperty = new SimpleBooleanProperty();
-        JCheckBox checkBoxMp3 = new JCheckBox("Enabled");
+        final Property<Boolean> mp3EnabledProperty = new SimpleBooleanProperty();
+        final JCheckBox checkBoxMp3 = new JCheckBox("Enabled");
         checkBoxMp3.setSelected(settings.isMp3Enabled());
 
         SwingBindings.bindToProperty(checkBoxMp3, mp3EnabledProperty);
@@ -395,12 +395,12 @@ public class JRipperSwing {
         panelMP3.add(checkBoxMp3, GbcBuilder.of(0, 0));
 
         // Bitrate
-        ObservableList<Integer> mp3BitRatesObservableList = new DefaultObservableList<>(settings.getMp3BitRates());
-        Property<Integer> mp3BitRateProperty = new SimpleIntegerProperty();
+        final ObservableList<Integer> mp3BitRatesObservableList = new DefaultObservableList<>(settings.getMp3BitRates());
+        final Property<Integer> mp3BitRateProperty = new SimpleIntegerProperty();
 
         panelMP3.add(new JLabel("Bitrate"), GbcBuilder.of(0, 1));
 
-        JComboBox<Integer> comboBox = new JComboBox<>();
+        final JComboBox<Integer> comboBox = new JComboBox<>();
         comboBox.setModel(new DefaultObservableListComboBoxModel<>(mp3BitRatesObservableList));
         comboBox.setSelectedItem(mp3BitRatesObservableList.get(0));
 
@@ -432,21 +432,21 @@ public class JRipperSwing {
         UIManager.put("FileChooser.useSystemIcons", Boolean.TRUE);
 
         // Farben
-        Color color = new Color(215, 215, 215);
+        final Color color = new Color(215, 215, 215);
         UIManager.put("Table.alternatingBackground", color);
         UIManager.put("Table.alternateRowColor", color);
         UIManager.put("List.alternatingBackground", color);
         // defaults.put("Tree.alternatingBackground", color);
 
         // Fonts: Dialog, Monospaced, Arial
-        Font font = new Font("Dialog", Font.PLAIN, 16);
+        final Font font = new Font("Dialog", Font.PLAIN, 16);
 
         // UIDefaults defaults = UIManager.getLookAndFeelDefaults();
-        UIDefaults defaults = UIManager.getDefaults();
+        final UIDefaults defaults = UIManager.getDefaults();
 
         for (Entry<Object, Object> entry : defaults.entrySet()) {
-            Object key = entry.getKey();
-            Object value = entry.getValue();
+            final Object key = entry.getKey();
+            final Object value = entry.getValue();
 
             if (value instanceof FontUIResource) {
                 UIManager.put(key, new FontUIResource(font));
@@ -461,7 +461,7 @@ public class JRipperSwing {
         }
 
         // Ausnahmen
-        Font fontBold = font.deriveFont(Font.BOLD);
+        final Font fontBold = font.deriveFont(Font.BOLD);
         UIManager.put("TitledBorder.font", fontBold);
     }
 }

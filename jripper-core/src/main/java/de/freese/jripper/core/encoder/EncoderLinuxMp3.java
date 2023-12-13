@@ -20,9 +20,9 @@ import de.freese.jripper.core.process.ProcessMonitor;
 public class EncoderLinuxMp3 extends AbstractProcess implements Encoder {
     @Override
     public void encode(final Album album, final File directory, final ProcessMonitor monitor) throws Exception {
-        String diskID = album.getDiskID().getID();
-        List<String> mp3Files = new ArrayList<>();
-        List<String> command = new ArrayList<>();
+        final String diskID = album.getDiskID().getID();
+        final List<String> mp3Files = new ArrayList<>();
+        final List<String> command = new ArrayList<>();
 
         for (Track track : album) {
             command.clear();

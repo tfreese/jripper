@@ -27,7 +27,7 @@ public class LoadGenresTask extends SwingWorker<Set<String>, Void> {
 
     @Override
     protected Set<String> doInBackground() throws Exception {
-        GenreProvider genreProvider = JRipper.getInstance().getGenreProvider();
+        final GenreProvider genreProvider = JRipper.getInstance().getGenreProvider();
 
         return genreProvider.getGenres();
     }
@@ -35,7 +35,7 @@ public class LoadGenresTask extends SwingWorker<Set<String>, Void> {
     @Override
     protected void done() {
         try {
-            Set<String> genres = get();
+            final Set<String> genres = get();
 
             this.genresObservableList.clear();
             this.genresObservableList.addAll(genres);

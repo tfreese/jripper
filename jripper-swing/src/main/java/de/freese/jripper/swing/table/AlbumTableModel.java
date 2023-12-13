@@ -21,7 +21,7 @@ public class AlbumTableModel extends AbstractObservableListTableModel<Track> {
 
     @Override
     public Object getValueAt(final int rowIndex, final int columnIndex) {
-        Track track = getObjectAt(rowIndex);
+        final Track track = getObjectAt(rowIndex);
         Object value = null;
 
         switch (columnIndex) {
@@ -29,8 +29,8 @@ public class AlbumTableModel extends AbstractObservableListTableModel<Track> {
             case 1 -> value = track.getArtist();
             case 2 -> value = track.getTitle();
             case 3 -> {
-                int minutes = track.getSeconds() / 60;
-                int seconds = track.getSeconds() % 60;
+                final int minutes = track.getSeconds() / 60;
+                final int seconds = track.getSeconds() % 60;
                 value = String.format("%d:%02d", minutes, seconds);
             }
             default -> {

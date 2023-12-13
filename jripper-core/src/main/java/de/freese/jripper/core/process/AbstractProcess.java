@@ -27,6 +27,7 @@ public abstract class AbstractProcess {
             }
         };
     }
+
     private final Logger logger = JRipper.getInstance().getLogger();// LoggerFactory.getLogger(getClass());
 
     protected AbstractProcess() {
@@ -38,16 +39,16 @@ public abstract class AbstractProcess {
             directory.mkdirs();
         }
 
-        ProcessBuilder processBuilder = new ProcessBuilder();
+        final ProcessBuilder processBuilder = new ProcessBuilder();
         processBuilder.directory(directory);
         processBuilder.command(command);
         processBuilder.redirectErrorStream(true);
         // Map<String, String> env = processBuilder.environment();
         // env.put("tommy", "true");
 
-        Process process = processBuilder.start();
+        final Process process = processBuilder.start();
 
-        Thread hook = createShutDownHook(process);
+        final Thread hook = createShutDownHook(process);
         Runtime.getRuntime().addShutdownHook(hook);
 
         try (BufferedReader inputReader = new BufferedReader(new InputStreamReader(process.getInputStream(), StandardCharsets.UTF_8))) {
@@ -58,7 +59,7 @@ public abstract class AbstractProcess {
             }
         }
 
-        int exitVal = process.waitFor();
+        final int exitVal = process.waitFor();
 
         process.destroy();
         Runtime.getRuntime().removeShutdownHook(hook);

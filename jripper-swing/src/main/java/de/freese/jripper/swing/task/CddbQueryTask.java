@@ -31,10 +31,10 @@ public class CddbQueryTask extends SwingWorker<CddbResponse, Void> {
 
     @Override
     protected CddbResponse doInBackground() throws Exception {
-        String device = Settings.getInstance().getDevice();
-        DiskId diskID = JRipper.getInstance().getDiskIDProvider().getDiskID(device);
+        final String device = Settings.getInstance().getDevice();
+        final DiskId diskID = JRipper.getInstance().getDiskIDProvider().getDiskID(device);
 
-        CddbProvider cddbService = JRipper.getInstance().getCddbProvider();
+        final CddbProvider cddbService = JRipper.getInstance().getCddbProvider();
         CddbResponse cddbResponse = cddbService.queryGenres(diskID);
 
         if (cddbResponse.getErrorMessage() != null) {
@@ -50,16 +50,16 @@ public class CddbQueryTask extends SwingWorker<CddbResponse, Void> {
     @Override
     protected void done() {
         try {
-            CddbResponse cddbResponse = get();
+            final CddbResponse cddbResponse = get();
 
             if (cddbResponse.getErrorMessage() != null) {
-                String message = cddbResponse.getErrorMessage();
+                final String message = cddbResponse.getErrorMessage();
                 JOptionPane.showMessageDialog(JRipperSwing.getFrame(), message, "Warning", JOptionPane.WARNING_MESSAGE);
 
                 return;
             }
 
-            Album album = cddbResponse.getAlbum();
+            final Album album = cddbResponse.getAlbum();
 
             this.albumProperty.setValue(album);
         }

@@ -23,7 +23,7 @@ import de.freese.jripper.core.process.LoggerProcessMonitor;
 public class ScriptGeneratorLinux extends AbstractProcess implements ScriptGenerator {
     @Override
     public void execute(final File script) throws Exception {
-        List<String> command = new ArrayList<>();
+        final List<String> command = new ArrayList<>();
         // command.add("konsole");
         // // command.add("--nofork");
         // command.add("--new-tab");
@@ -49,9 +49,9 @@ public class ScriptGeneratorLinux extends AbstractProcess implements ScriptGener
 
     @Override
     public File generate(final Album album, final File folder) throws Exception {
-        Settings settings = Settings.getInstance();
+        final Settings settings = Settings.getInstance();
 
-        File script = new File(folder, getPath(album) + ".sh");
+        final File script = new File(folder, getPath(album) + ".sh");
 
         if (script.exists()) {
             script.delete();
@@ -106,7 +106,7 @@ public class ScriptGeneratorLinux extends AbstractProcess implements ScriptGener
             pw.println("exit");
         }
 
-        List<String> command = new ArrayList<>();
+        final List<String> command = new ArrayList<>();
         command.add("chmod");
         command.add("+x");
         command.add(script.getAbsolutePath());
@@ -127,7 +127,7 @@ public class ScriptGeneratorLinux extends AbstractProcess implements ScriptGener
     }
 
     private void writeFLAC(final PrintWriter pw, final Album album) {
-        String diskID = album.getDiskID().getID();
+        final String diskID = album.getDiskID().getID();
         // List<String> files = new ArrayList<>();
 
         pw.println("mkdir -p \"$BASE_DIR\"/flac");
@@ -178,7 +178,7 @@ public class ScriptGeneratorLinux extends AbstractProcess implements ScriptGener
     }
 
     private void writeMP3(final PrintWriter pw, final Album album) {
-        String diskID = album.getDiskID().getID();
+        final String diskID = album.getDiskID().getID();
         // List<String> files = new ArrayList<>();
 
         pw.println("mkdir -p \"$BASE_DIR\"/mp3");

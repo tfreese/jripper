@@ -26,7 +26,7 @@ import de.freese.jripper.core.model.DiskId;
 class TestCddbProvider {
     @Test
     void testGetService() throws Exception {
-        DiskIDProvider diskID = DiskIDProviderFactory.getInstance();
+        final DiskIDProvider diskID = DiskIDProviderFactory.getInstance();
         assertNotNull(diskID);
     }
 
@@ -34,8 +34,8 @@ class TestCddbProvider {
     void testId1() throws Exception {
         // Karat / Vierzehn Karat - Ihre größten Hits
         // data, newage, rock
-        String id = "b111140e 14 150 24545 41797 60822 80152 117002 142550 169755 192057 211360 239297 256325 279075 306220 4374";
-        DiskId diskID = new DiskId(id);
+        final String id = "b111140e 14 150 24545 41797 60822 80152 117002 142550 169755 192057 211360 239297 256325 279075 306220 4374";
+        final DiskId diskID = new DiskId(id);
         //        DiskId diskID = new DiskIdBeispielKarat();
         assertEquals("b111140e", diskID.getID());
         assertEquals(14, diskID.getTrackCount());
@@ -43,7 +43,7 @@ class TestCddbProvider {
         assertEquals(4374, diskID.getSeconds());
         assertEquals(id, diskID.toString());
 
-        CddbProvider cddbProvider = new CddbProviderGnuDb();
+        final CddbProvider cddbProvider = new CddbProviderGnuDb();
 
         CddbResponse response = cddbProvider.queryGenres(diskID);
         assertNotNull(response);
@@ -58,8 +58,8 @@ class TestCddbProvider {
     void testId2() throws Exception {
         // Culture Beat / Inside Out
         // misc, soundtrack
-        String id = "ae0ff80e 14 150 10972 37962 56825 81450 103550 127900 153025 179675 200425 225187 247687 270712 295700 4090";
-        DiskId diskID = new DiskId(id);
+        final String id = "ae0ff80e 14 150 10972 37962 56825 81450 103550 127900 153025 179675 200425 225187 247687 270712 295700 4090";
+        final DiskId diskID = new DiskId(id);
         //        DiskId diskID = new DiskIdBeispielCultureBeat();
         assertEquals("ae0ff80e", diskID.getID());
         assertEquals(14, diskID.getTrackCount());
@@ -67,7 +67,7 @@ class TestCddbProvider {
         assertEquals(4090, diskID.getSeconds());
         assertEquals(id, diskID.toString());
 
-        CddbProvider cddbProvider = new CddbProviderGnuDb();
+        final CddbProvider cddbProvider = new CddbProviderGnuDb();
 
         CddbResponse response = cddbProvider.queryGenres(diskID);
         assertNotNull(response);
@@ -83,17 +83,17 @@ class TestCddbProvider {
     @Test
     @EnabledOnOs({OS.LINUX, OS.WINDOWS})
     void testLinux() throws Exception {
-        String device = JRipperUtils.detectCdDevice();
+        final String device = JRipperUtils.detectCdDevice();
 
         if ((device == null) || device.isBlank()) {
             // No CD/DVD/BluRay Drive.
             return;
         }
 
-        DiskIDProvider diskIDProvider = new DiskIDProviderLinux();
+        final DiskIDProvider diskIDProvider = new DiskIDProviderLinux();
 
         try {
-            DiskId diskID = diskIDProvider.getDiskID(device);
+            final DiskId diskID = diskIDProvider.getDiskID(device);
             assertNotNull(diskID);
         }
         catch (IllegalStateException ex) {

@@ -14,7 +14,7 @@ import java.io.Reader;
 public class KeyListenerErsatz implements Runnable {
     @Override
     public void run() {
-        Console console = System.console();
+        final Console console = System.console();
         Reader reader = null;
 
         if (console != null) {

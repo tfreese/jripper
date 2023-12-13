@@ -24,7 +24,7 @@ public class GenreProviderLinux extends AbstractProcess implements GenreProvider
     public Set<String> getGenres() throws Exception {
         this.genres.clear();
 
-        List<String> command = new ArrayList<>();
+        final List<String> command = new ArrayList<>();
         command.add("lame");
         command.add("--genre-list");
 
@@ -39,7 +39,7 @@ public class GenreProviderLinux extends AbstractProcess implements GenreProvider
 
     @Override
     public void monitorProcess(final String line) {
-        String[] splits = line.split(" ", 2);
+        final String[] splits = line.split(" ", 2);
 
         this.genres.add(splits[1]);
     }
