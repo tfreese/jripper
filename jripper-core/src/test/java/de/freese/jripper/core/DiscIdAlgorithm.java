@@ -13,7 +13,7 @@ import java.util.Arrays;
  * - ZZ is the number of tracks N expressed in hex.
  *************************************************************************/
 
-public final class DiskIdAlgorithm {
+public final class DiscIdAlgorithm {
     /**
      * b111140e 14 150 24545 41797 60822 80152 117002 142550 169755 192057 211360 239297 256325 279075 306220 4374
      */
@@ -43,7 +43,7 @@ public final class DiskIdAlgorithm {
     /**
      * return sum of decimal digits in n
      */
-    static int sumOfDigits(int n) {
+    static int sumOfDigits(final int n) {
         int digit = n;
         int sum = 0;
 
@@ -55,7 +55,7 @@ public final class DiskIdAlgorithm {
         return sum;
     }
 
-    private DiskIdAlgorithm() {
+    private DiscIdAlgorithm() {
         super();
     }
 }
