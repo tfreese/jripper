@@ -324,22 +324,22 @@ public class CddbProviderGnuDb implements CddbProvider {
     /**
      * Normalisiert die Texte.<br>
      * <ul>
-     * <li>trimToEmpty
-     * <li>toLowerCase
-     * <li>capitalize
-     * <li>' cd ' durch ' CD ' ersetzen
-     * <li>'(cd ' durch '(CD ' ersetzen
-     * <li>dj durch DJ ersetzen
-     * <li>' feat ' durch ' Feat. ' ersetzen
-     * <li>':' durch ' - ' ersetzen
-     * <li>'<' durch '-' ersetzen
-     * <li>'>' durch '-' ersetzen
-     * <li>'[' durch '(' ersetzen
-     * <li>']' durch ')' ersetzen
-     * <li>'´' durch ''' ersetzen
-     * <li>'`' durch ''' ersetzen
-     * <li>Mehrfache Spaces durch einen ersetzen
-     * <li>nicht erlaubte Zeichen: < > ? " : | \ / *
+     * <li>trimToEmpty</li>
+     * <li>toLowerCase</li>
+     * <li>capitalize</li>
+     * <li>' cd ' durch ' CD ' ersetzen</li>
+     * <li>'(cd ' durch '(CD ' ersetzen</li>
+     * <li>dj durch DJ ersetzen</li>
+     * <li>' feat ' durch ' Feat. ' ersetzen</li>
+     * <li>':' durch ' - ' ersetzen</li>
+     * <li>'<' durch '-' ersetzen</li>
+     * <li>'>' durch '-' ersetzen</li>
+     * <li>'[' durch '(' ersetzen</li>
+     * <li>']' durch ')' ersetzen</li>
+     * <li>'´' durch ''' ersetzen</li>
+     * <li>'`' durch ''' ersetzen</li>
+     * <li>Mehrfache Spaces durch einen ersetzen</li>
+     * <li>nicht erlaubte Zeichen: < > ? " : | \ / *</li>
      * </ul>
      */
     private String normalize(final String text) {

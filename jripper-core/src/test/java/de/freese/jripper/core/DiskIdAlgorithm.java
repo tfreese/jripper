@@ -44,11 +44,12 @@ public final class DiskIdAlgorithm {
      * return sum of decimal digits in n
      */
     static int sumOfDigits(int n) {
+        int digit = n;
         int sum = 0;
 
-        while (n > 0) {
-            sum += (n % 10);
-            n /= 10;
+        while (digit > 0) {
+            sum += (digit % 10);
+            digit /= 10;
         }
 
         return sum;
