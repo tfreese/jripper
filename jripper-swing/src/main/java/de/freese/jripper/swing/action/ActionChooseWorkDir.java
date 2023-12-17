@@ -22,7 +22,7 @@ public class ActionChooseWorkDir extends AbstractAction {
     private static final long serialVersionUID = 3262325088354448846L;
 
     private final Component parent;
-    private transient final Property<String> workDirProperty;
+    private final transient Property<String> workDirProperty;
 
     @SuppressWarnings("checkstyle:AvoidEscapedUnicodeCharacters")
     public ActionChooseWorkDir(final Component parent, final Property<String> workDirProperty) {

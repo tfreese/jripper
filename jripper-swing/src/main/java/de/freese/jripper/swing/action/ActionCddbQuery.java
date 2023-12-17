@@ -20,7 +20,7 @@ public class ActionCddbQuery extends AbstractAction {
     @Serial
     private static final long serialVersionUID = -2636145895592666145L;
 
-    private transient final Property<Album> albumProperty;
+    private final transient Property<Album> albumProperty;
 
     public ActionCddbQuery(final Property<Album> albumProperty) {
         super();
