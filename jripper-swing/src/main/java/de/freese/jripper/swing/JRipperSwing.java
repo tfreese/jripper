@@ -68,6 +68,8 @@ import de.freese.jripper.swing.task.LoadGenresTask;
 public class JRipperSwing {
     public static final Logger LOGGER = LoggerFactory.getLogger("JRipperSwing");
 
+    private static JFrame frame;
+
     /**
      * @author Thomas Freese
      */
@@ -77,8 +79,6 @@ public class JRipperSwing {
             System.exit(0);
         }
     }
-
-    private static JFrame frame;
 
     public static JFrame getFrame() {
         return frame;

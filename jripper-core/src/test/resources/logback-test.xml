@@ -10,7 +10,7 @@
         <immediateFlush>false</immediateFlush>
         <encoder>
             <pattern>${pattern}</pattern>
-            <outputPatternAsHeader>false</outputPatternAsHeader>            
+            <outputPatternAsHeader>false</outputPatternAsHeader>
         </encoder>
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
             <level>ERROR</level>
@@ -24,7 +24,7 @@
         <immediateFlush>false</immediateFlush>
         <encoder>
             <pattern>${pattern}</pattern>
-            <outputPatternAsHeader>false</outputPatternAsHeader>            
+            <outputPatternAsHeader>false</outputPatternAsHeader>
         </encoder>
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
             <level>ERROR</level>

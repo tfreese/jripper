@@ -17,6 +17,7 @@ public final class Settings {
     public static Settings getInstance() {
         return INSTANCE;
     }
+
     private final Logger logger = LoggerFactory.getLogger(Settings.class);
     private final List<Integer> mp3BitRates;
     /**
