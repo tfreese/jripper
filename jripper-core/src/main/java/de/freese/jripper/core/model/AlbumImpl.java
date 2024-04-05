@@ -110,7 +110,7 @@ public class AlbumImpl implements Album {
 
     @Override
     public boolean isCompilation() {
-        return (this.artist == null) || this.artist.isBlank();
+        return this.artist == null || this.artist.isBlank();
     }
 
     @Override

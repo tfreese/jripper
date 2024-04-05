@@ -27,7 +27,7 @@ public final class Misc {
         final int start = s.indexOf(" (");
         final int end = s.indexOf("%)");
 
-        if ((start > 0) && (end > 0)) {
+        if (start > 0 && end > 0) {
             final String prozent = s.substring(start + 2, end).strip();
             System.out.println(prozent);
         }

@@ -14,11 +14,8 @@ public class Track {
      * Nur bei Compilations gefüllt.
      */
     private String artist;
-
     private int number;
-
     private int seconds;
-
     private String title;
 
     Track() {
@@ -33,7 +30,7 @@ public class Track {
      * Nur bei Compilations gefüllt.
      */
     public String getArtist() {
-        if ((this.artist == null) || this.artist.isBlank()) {
+        if (this.artist == null || this.artist.isBlank()) {
             return getAlbum().getArtist();
         }
 

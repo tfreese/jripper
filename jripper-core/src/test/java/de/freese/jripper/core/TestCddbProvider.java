@@ -85,7 +85,7 @@ class TestCddbProvider {
     void testLinux() throws Exception {
         final String device = JRipperUtils.detectCdDevice();
 
-        if ((device == null) || device.isBlank()) {
+        if (device == null || device.isBlank()) {
             // No CD/DVD/BluRay Drive.
             return;
         }

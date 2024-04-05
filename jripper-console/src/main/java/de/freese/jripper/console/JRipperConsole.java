@@ -84,7 +84,7 @@ public class JRipperConsole {
             // Ignore
         }
 
-        if ((wavDir != null) && wavDir.exists() && (this.album != null) && (this.album.getTrackCount() > 0)) {
+        if (wavDir != null && wavDir.exists() && this.album != null && this.album.getTrackCount() > 0) {
             print("%s%s%s \t%s%s/%s/flac\n", AnsiCodes.ANSI_CYAN, "4", AnsiCodes.ANSI_RESET, "flac erzeugen -> ", workDir, this.album.getTitle());
             print("%s%s%s \t%s%s/%s/map3\n", AnsiCodes.ANSI_CYAN, "5", AnsiCodes.ANSI_RESET, "mp3 erzeugen -> ", workDir, this.album.getTitle());
         }
@@ -180,11 +180,13 @@ public class JRipperConsole {
                     continue;
                 }
 
-                switch (params[i].toString()) {
-                    case AnsiCodes.ANSI_CYAN, AnsiCodes.ANSI_GREEN, AnsiCodes.ANSI_RED, AnsiCodes.ANSI_RESET -> params[i] = "";
-                    default -> {
-                        // Empty
-                    }
+                final String ansi = params[i].toString();
+
+                if (AnsiCodes.ANSI_CYAN.equals(ansi)
+                        || AnsiCodes.ANSI_GREEN.equals(ansi)
+                        || AnsiCodes.ANSI_RED.equals(ansi)
+                        || AnsiCodes.ANSI_RESET.equals(ansi)) {
+                    params[i] = "";
                 }
             }
         }

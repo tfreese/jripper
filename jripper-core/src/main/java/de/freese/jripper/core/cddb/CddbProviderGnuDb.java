@@ -48,7 +48,7 @@ public class CddbProviderGnuDb implements CddbProvider {
     private static final String SERVER = "gnudb.gnudb.org";
     private static final String USER = "anonymous";
 
-    private final Logger logger = JRipper.getInstance().getLogger();// LoggerFactory.getLogger(getClass());
+    private final Logger logger = JRipper.getInstance().getLogger(); // LoggerFactory.getLogger(getClass());
     private final String requestPostfix;
 
     public CddbProviderGnuDb() {
@@ -92,7 +92,7 @@ public class CddbProviderGnuDb implements CddbProvider {
 
         final CddbResponse cddbResponse = new CddbResponse(status);
 
-        if ((status == CddbResponse.NO_MATCH) || (status == CddbResponse.SYNTAX_ERROR)) {
+        if (status == CddbResponse.NO_MATCH || status == CddbResponse.SYNTAX_ERROR) {
             // Nichts gefunden -> Abbruch
             cddbResponse.setErrorMessage(firstLine);
         }
@@ -150,7 +150,7 @@ public class CddbProviderGnuDb implements CddbProvider {
                     // continue;
                     // }
 
-                    if ((artistTitle != null) && (artistTitle.length() <= 3)) {
+                    if (artistTitle != null && artistTitle.length() <= 3) {
                         artistTitle = artistTitle.toUpperCase();
                     }
 
@@ -160,7 +160,7 @@ public class CddbProviderGnuDb implements CddbProvider {
                 else if ("DYEAR".equals(key)) {
                     final String year = normalize(value);
 
-                    if ((year != null) && !year.isBlank()) {
+                    if (year != null && !year.isBlank()) {
                         album.setYear(Integer.parseInt(year));
                     }
                 }
@@ -168,12 +168,12 @@ public class CddbProviderGnuDb implements CddbProvider {
                     // "Richtiges" Genre auslesen.
                     final String genre2 = normalize(value);
 
-                    if ((genre2 != null) && !genre2.isBlank()) {
+                    if (genre2 != null && !genre2.isBlank()) {
                         album.setGenre(genre2);
                     }
                 }
                 else if ("EXTD".equals(key)) {
-                    if ((value == null) || value.isBlank()) {
+                    if (value == null || value.isBlank()) {
                         // Kein Kommentar.
                         continue;
                     }
@@ -272,7 +272,7 @@ public class CddbProviderGnuDb implements CddbProvider {
 
         final CddbResponse cddbResponse = new CddbResponse(status);
 
-        if ((status == CddbResponse.NO_MATCH) || (status == CddbResponse.SYNTAX_ERROR)) {
+        if (status == CddbResponse.NO_MATCH || status == CddbResponse.SYNTAX_ERROR) {
             // Nichts gefunden -> Abbruch
             cddbResponse.setErrorMessage(firstLine);
         }
@@ -343,7 +343,7 @@ public class CddbProviderGnuDb implements CddbProvider {
      * </ul>
      */
     private String normalize(final String text) {
-        if ((text == null) || text.isBlank()) {
+        if (text == null || text.isBlank()) {
             return null;
         }
 
@@ -371,7 +371,7 @@ public class CddbProviderGnuDb implements CddbProvider {
             for (int j = 0; j < value.length(); j++) {
                 char sign = value.charAt(j);
 
-                if ((j > 0) && ((value.charAt(j - 1) == '(') || (value.charAt(j - 1) == '-') || (value.charAt(j - 1) == '.'))) {
+                if (j > 0 && (value.charAt(j - 1) == '(' || value.charAt(j - 1) == '-' || value.charAt(j - 1) == '.')) {
                     sign = Character.toUpperCase(sign);
                 }
 

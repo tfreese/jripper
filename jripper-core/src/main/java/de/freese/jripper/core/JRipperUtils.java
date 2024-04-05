@@ -18,7 +18,7 @@ import de.freese.jripper.core.model.Album;
  */
 public final class JRipperUtils {
     public static String capitalize(final String value) {
-        if ((value == null) || value.isBlank()) {
+        if (value == null || value.isBlank()) {
             return value;
         }
 
@@ -132,7 +132,7 @@ public final class JRipperUtils {
     }
 
     public static boolean isNumeric(final CharSequence cs) {
-        if ((cs == null) || cs.isEmpty()) {
+        if (cs == null || cs.isEmpty()) {
             return false;
         }
 
@@ -154,7 +154,7 @@ public final class JRipperUtils {
     }
 
     public static String normalizeSpace(final String value) {
-        if ((value == null) || value.isBlank()) {
+        if (value == null || value.isBlank()) {
             return null;
         }
 
@@ -168,7 +168,7 @@ public final class JRipperUtils {
     }
 
     public static String trim(final String value) {
-        if ((value == null) || value.isBlank()) {
+        if (value == null || value.isBlank()) {
             return null;
         }
 
@@ -176,7 +176,7 @@ public final class JRipperUtils {
     }
 
     public static String uncapitalize(final String value) {
-        if ((value == null) || value.isBlank()) {
+        if (value == null || value.isBlank()) {
             return value;
         }
 

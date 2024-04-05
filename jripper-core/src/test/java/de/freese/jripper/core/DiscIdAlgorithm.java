@@ -35,7 +35,7 @@ public final class DiscIdAlgorithm {
         final int zz = n;
 
         // XXYYYYZZ
-        final int discID = ((xx << 24) | (yyyy << 8) | zz);
+        final int discID = (xx << 24) | (yyyy << 8) | zz;
         System.out.print(Integer.toHexString(discID));
         System.out.println(Arrays.toString(frames));
     }
@@ -48,7 +48,7 @@ public final class DiscIdAlgorithm {
         int sum = 0;
 
         while (digit > 0) {
-            sum += (digit % 10);
+            sum += digit % 10;
             digit /= 10;
         }
 

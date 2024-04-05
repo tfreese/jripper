@@ -28,7 +28,7 @@ public abstract class AbstractProcess {
         };
     }
 
-    private final Logger logger = JRipper.getInstance().getLogger();// LoggerFactory.getLogger(getClass());
+    private final Logger logger = JRipper.getInstance().getLogger(); // LoggerFactory.getLogger(getClass());
 
     protected AbstractProcess() {
         super();
