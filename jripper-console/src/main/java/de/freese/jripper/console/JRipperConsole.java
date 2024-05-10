@@ -198,7 +198,7 @@ public class JRipperConsole {
     private String queryCDDB(final DiskId diskID) throws Exception {
         final CddbResponse cddbResponse = JRipper.getInstance().getCddbProvider().queryGenres(diskID);
 
-        return cddbResponse.getGenres().get(0);
+        return cddbResponse.getGenres().getFirst();
     }
 
     private Album readCDDB(final DiskId diskID, final String genre) throws Exception {

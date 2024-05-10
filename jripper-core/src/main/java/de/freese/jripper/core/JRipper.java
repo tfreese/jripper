@@ -17,8 +17,6 @@ import de.freese.jripper.core.ripper.Ripper;
 import de.freese.jripper.core.ripper.RipperFactory;
 
 /**
- * Zentrale Klasse.
- *
  * @author Thomas Freese
  */
 public final class JRipper {

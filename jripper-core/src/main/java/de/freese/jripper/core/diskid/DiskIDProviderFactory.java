@@ -6,17 +6,11 @@ import java.util.ServiceLoader;
 import de.freese.jripper.core.JRipperUtils;
 
 /**
- * Zentrale Klasse für die Bereitstellung der DiskId.<br>
- * Je nach Betriebssystem wird die entsprechende Implementierung verwendet.
- *
  * @author Thomas Freese
  */
 public final class DiskIDProviderFactory {
     private static final ServiceLoader<DiskIDProvider> SERVICE_LOADER = ServiceLoader.load(DiskIDProvider.class);
 
-    /**
-     * Je nach Betriebssystem wird die entsprechende Implementierung geliefert.
-     */
     public static DiskIDProvider getInstance() {
         DiskIDProvider impl = null;
 

@@ -2,8 +2,6 @@
 package de.freese.jripper.core.process;
 
 /**
- * Interface für alle JobMonitore.
- *
  * @author Thomas Freese
  */
 public interface ProcessMonitor {

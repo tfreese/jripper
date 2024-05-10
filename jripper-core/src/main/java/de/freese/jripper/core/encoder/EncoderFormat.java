@@ -2,8 +2,6 @@
 package de.freese.jripper.core.encoder;
 
 /**
- * Enum für mögliche Encoder-Typen.
- *
  * @author Thomas Freese
  */
 public enum EncoderFormat {

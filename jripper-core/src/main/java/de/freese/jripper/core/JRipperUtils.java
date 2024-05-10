@@ -12,8 +12,6 @@ import java.nio.file.attribute.BasicFileAttributes;
 import de.freese.jripper.core.model.Album;
 
 /**
- * Util-Klasse.
- *
  * @author Thomas Freese
  */
 public final class JRipperUtils {
@@ -223,20 +221,16 @@ public final class JRipperUtils {
                 }
             }
         }
-        //        else if (isWindows())
-        //        {
+        //        else if (isWindows()) {
         //            // FileSystemView fsv = FileSystemView.getFileSystemView();
         //            //
-        //            // for (File root : File.listRoots())
-        //            // {
-        //            // if ("CD Drive".equals(fsv.getSystemTypeDescription(root)))
-        //            // {
+        //            // for (File root : File.listRoots()) {
+        //            // if ("CD Drive".equals(fsv.getSystemTypeDescription(root))) {
         //            // File cd = root;
         //            //
         //            // String description = " is empty";
         //            //
-        //            // if (cd.exists())
-        //            // {
+        //            // if (cd.exists()) {
         //            // description = " contains CD '" + fsv.getSystemDisplayName(cd) + "'";
         //            // }
         //            //
@@ -246,15 +240,12 @@ public final class JRipperUtils {
         //            //
         //            // FileSystem fs = FileSystems.getDefault();
         //            //
-        //            // for (Path rootPath : fs.getRootDirectories())
-        //            // {
-        //            // try
-        //            // {
+        //            // for (Path rootPath : fs.getRootDirectories()) {
+        //            // try {
         //            // FileStore store = Files.getFileStore(rootPath);
         //            // System.out.println(rootPath + ": " + store.type());
         //            // }
-        //            // catch (IOException ex)
-        //            // {
+        //            // catch (IOException ex) {
         //            // System.out.println(rootPath + ": " + "<error getting store details>");
         //            // }
         //            // }

@@ -6,8 +6,6 @@ import java.io.File;
 import de.freese.jripper.core.model.Album;
 
 /**
- * Interface für einen Script-Generator.
- *
  * @author Thomas Freese
  */
 public interface ScriptGenerator {

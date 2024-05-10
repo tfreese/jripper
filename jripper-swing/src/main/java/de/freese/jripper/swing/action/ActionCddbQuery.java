@@ -12,7 +12,7 @@ import de.freese.jripper.core.model.Album;
 import de.freese.jripper.swing.task.CddbQueryTask;
 
 /**
- * {@link Action} für die CDDB Query.
+ * {@link Action} for the CDDB Query.
  *
  * @author Thomas Freese
  */
@@ -23,11 +23,9 @@ public class ActionCddbQuery extends AbstractAction {
     private final transient Property<Album> albumProperty;
 
     public ActionCddbQuery(final Property<Album> albumProperty) {
-        super();
+        super("CDDB Query");
 
         this.albumProperty = albumProperty;
-
-        putValue(NAME, "CDDB Query");
     }
 
     @Override

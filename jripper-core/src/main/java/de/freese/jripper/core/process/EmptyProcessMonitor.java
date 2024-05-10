@@ -2,8 +2,6 @@
 package de.freese.jripper.core.process;
 
 /**
- * Leerer {@link ProcessMonitor}.
- *
  * @author Thomas Freese
  */
 public class EmptyProcessMonitor implements ProcessMonitor {

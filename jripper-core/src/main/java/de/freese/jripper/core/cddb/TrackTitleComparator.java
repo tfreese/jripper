@@ -4,8 +4,6 @@ package de.freese.jripper.core.cddb;
 import java.util.Comparator;
 
 /**
- * {@link Comparator} für die richtige Reihenfolge der Tracks.
- *
  * @author Thomas Freese
  */
 public class TrackTitleComparator implements Comparator<String> {

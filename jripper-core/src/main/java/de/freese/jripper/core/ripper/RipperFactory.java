@@ -6,9 +6,6 @@ import java.util.ServiceLoader;
 import de.freese.jripper.core.JRipperUtils;
 
 /**
- * Zentrale Klasse für die Bereitstellung des Rippers.<br>
- * Je nach Betriebssystem wird die entsprechende Implementierung verwendet.
- *
  * @author Thomas Freese
  */
 public final class RipperFactory {

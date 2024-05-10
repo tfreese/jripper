@@ -16,7 +16,7 @@ import de.freese.jripper.core.model.DiskId;
 import de.freese.jripper.swing.JRipperSwing;
 
 /**
- * {@link SwingWorker} für die CDDB Query.
+ * {@link SwingWorker} for the CDDB Query.
  *
  * @author Thomas Freese
  */
@@ -38,11 +38,10 @@ public class CddbQueryTask extends SwingWorker<CddbResponse, Void> {
         CddbResponse cddbResponse = cddbService.queryGenres(diskID);
 
         if (cddbResponse.getErrorMessage() != null) {
-            // Fehler -> Abbruch
             return cddbResponse;
         }
 
-        cddbResponse = cddbService.queryAlbum(diskID, cddbResponse.getGenres().get(0));
+        cddbResponse = cddbService.queryAlbum(diskID, cddbResponse.getGenres().getFirst());
 
         return cddbResponse;
     }

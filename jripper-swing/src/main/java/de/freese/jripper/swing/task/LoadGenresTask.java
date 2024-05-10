@@ -12,7 +12,7 @@ import de.freese.jripper.core.genre.GenreProvider;
 import de.freese.jripper.swing.JRipperSwing;
 
 /**
- * {@link SwingWorker} um die Genre-Auswahl zu laden.
+ * {@link SwingWorker} to load the Genres.
  *
  * @author Thomas Freese
  */

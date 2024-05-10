@@ -10,8 +10,6 @@ import de.freese.jripper.core.process.AbstractProcess;
 import de.freese.jripper.core.process.ProcessMonitor;
 
 /**
- * Linux Implementierung mit dem Programm "cdparanoia".
- *
  * @author Thomas Freese
  */
 public class RipperLinuxCdParanoia extends AbstractProcess implements Ripper {

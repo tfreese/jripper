@@ -12,7 +12,7 @@ import de.freese.jripper.core.model.Album;
 import de.freese.jripper.swing.task.RippingTask;
 
 /**
- * {@link Action} für das Rippen und Codieren.
+ * {@link Action} for Ripping and Coding.
  *
  * @author Thomas Freese
  */
@@ -23,11 +23,9 @@ public class ActionRipping extends AbstractAction {
     private final transient Property<Album> albumProperty;
 
     public ActionRipping(final Property<Album> albumProperty) {
-        super();
+        super("Rip / Encode");
 
         this.albumProperty = albumProperty;
-
-        putValue(NAME, "Rip / Encode");
     }
 
     @Override

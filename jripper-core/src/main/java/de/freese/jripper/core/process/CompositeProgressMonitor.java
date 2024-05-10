@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * {@link ProcessMonitor} der mehrere Monitore zusammenfasst.
- *
  * @author Thomas Freese
  */
 public class CompositeProgressMonitor implements ProcessMonitor {

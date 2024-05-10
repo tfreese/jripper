@@ -12,8 +12,6 @@ import org.slf4j.Logger;
 import de.freese.jripper.core.JRipper;
 
 /**
- * Basisklasse für alle Implementierungen die den {@link ProcessBuilder} verwenden.
- *
  * @author Thomas Freese
  */
 public abstract class AbstractProcess {

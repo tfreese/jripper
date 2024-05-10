@@ -4,11 +4,8 @@ package de.freese.jripper.core.encoder;
 import java.io.PrintWriter;
 
 import de.freese.jripper.core.process.PrintWriterProcessMonitor;
-import de.freese.jripper.core.process.ProcessMonitor;
 
 /**
- * {@link ProcessMonitor} für LAME.
- *
  * @author Thomas Freese
  */
 public class LameProcessMonitor extends PrintWriterProcessMonitor {

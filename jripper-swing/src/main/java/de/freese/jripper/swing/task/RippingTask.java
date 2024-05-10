@@ -12,7 +12,7 @@ import de.freese.jripper.core.script.ScriptGenerator;
 import de.freese.jripper.core.script.ScriptGeneratorLinux;
 
 /**
- * {@link SwingWorker} für das Rippen und Codieren.
+ * {@link SwingWorker} for Ripping and Coding.
  *
  * @author Thomas Freese
  */

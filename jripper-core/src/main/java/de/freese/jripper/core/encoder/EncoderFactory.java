@@ -6,17 +6,11 @@ import java.util.ServiceLoader;
 import de.freese.jripper.core.JRipperUtils;
 
 /**
- * Zentrale Klasse für die Bereitstellung der Encoder.<br>
- * Je nach Betriebssystem wird die entsprechende Implementierung verwendet.
- *
  * @author Thomas Freese
  */
 public final class EncoderFactory {
     private static final ServiceLoader<Encoder> SERVICE_LOADER = ServiceLoader.load(Encoder.class);
 
-    /**
-     * Je nach Betriebssystem wird die entsprechende Implementierung geliefert.
-     */
     public static Encoder getInstance(final EncoderFormat format) {
         Encoder impl = null;
 

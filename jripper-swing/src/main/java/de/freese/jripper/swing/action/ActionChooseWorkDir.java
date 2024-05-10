@@ -13,7 +13,7 @@ import javax.swing.JFileChooser;
 import de.freese.binding.property.Property;
 
 /**
- * {@link Action} für die Auswahl des Arbeitsverzeichnisses.
+ * {@link Action} fot the Working-Directory.
  *
  * @author Thomas Freese
  */

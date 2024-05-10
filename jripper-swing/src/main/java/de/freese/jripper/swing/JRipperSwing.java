@@ -198,7 +198,7 @@ public class JRipperSwing {
 
         final JComboBox<String> comboBoxGenres = new JComboBox<>();
         comboBoxGenres.setModel(new DefaultObservableListComboBoxModel<>(genresObservableList));
-        // comboBox.setSelectedItem(genresObservableList.get(0));
+        // comboBox.setSelectedItem(genresObservableList.getFirst());
 
         SwingBindings.bindToProperty(comboBoxGenres, genreComboBoxProperty);
         genreComboBoxProperty.addListener((observable, oldValue, newValue) -> {
@@ -402,7 +402,7 @@ public class JRipperSwing {
 
         final JComboBox<Integer> comboBox = new JComboBox<>();
         comboBox.setModel(new DefaultObservableListComboBoxModel<>(mp3BitRatesObservableList));
-        comboBox.setSelectedItem(mp3BitRatesObservableList.get(0));
+        comboBox.setSelectedItem(mp3BitRatesObservableList.getFirst());
 
         SwingBindings.bindToProperty(comboBox, mp3BitRateProperty);
         mp3BitRateProperty.addListener((observable, oldValue, newValue) -> settings.setMp3Bitrate(newValue));
@@ -418,16 +418,14 @@ public class JRipperSwing {
     }
 
     private void initUIDefaults() {
-        //        try
-        //        {
-        //            // UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        //            // UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
-        //            // UIManager.setLookAndFeel("com.sun.java.swing.plaf.motif.MotifLookAndFeel");
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            LOGGER.error(ex.getMessage(), ex);
-        //        }
+        // try {
+        //     // UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        //     // UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
+        //     // UIManager.setLookAndFeel("com.sun.java.swing.plaf.motif.MotifLookAndFeel");
+        // }
+        // catch (Exception ex) {
+        //     LOGGER.error(ex.getMessage(), ex);
+        // }
 
         UIManager.put("FileChooser.useSystemIcons", Boolean.TRUE);
 
@@ -454,8 +452,7 @@ public class JRipperSwing {
 
             // String keyString = key.toString();
             //
-            // if (keyString.endsWith(".font") || keyString.endsWith(".acceleratorFont"))
-            // {
+            // if (keyString.endsWith(".font") || keyString.endsWith(".acceleratorFont")) {
             // UIManager.put(key, font);
             // }
         }

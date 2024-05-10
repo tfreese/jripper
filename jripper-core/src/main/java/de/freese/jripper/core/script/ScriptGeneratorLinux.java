@@ -16,8 +16,6 @@ import de.freese.jripper.core.process.EmptyProcessMonitor;
 import de.freese.jripper.core.process.LoggerProcessMonitor;
 
 /**
- * {@link ScriptGenerator} für Linux.
- *
  * @author Thomas Freese
  */
 public class ScriptGeneratorLinux extends AbstractProcess implements ScriptGenerator {

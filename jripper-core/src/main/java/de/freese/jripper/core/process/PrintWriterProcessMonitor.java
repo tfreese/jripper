@@ -4,8 +4,6 @@ package de.freese.jripper.core.process;
 import java.io.PrintWriter;
 
 /**
- * {@link ProcessMonitor} für einen {@link PrintWriter}.
- *
  * @author Thomas Freese
  */
 public class PrintWriterProcessMonitor implements ProcessMonitor {

@@ -6,8 +6,6 @@ import java.util.Set;
 import de.freese.jripper.core.OSProvider;
 
 /**
- * Liefert mögliche Genres.
- *
  * @author Thomas Freese
  */
 public interface GenreProvider extends OSProvider {
