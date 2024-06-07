@@ -22,8 +22,8 @@ public final class DiscIdAlgorithm {
         final int[] frames = {150, 24545, 41797, 60822, 80152, 117002, 142550, 169755, 192057, 211360, 239297, 256325, 279075, 306220};
 
         final int n = frames.length - 1;
-        int totalLength = (frames[n] - frames[0]) / framesPerSecond;
-        totalLength = (327900 - frames[0]) / framesPerSecond;
+        // int totalLength = (frames[n] - frames[0]) / framesPerSecond;
+        final int totalLength = (327900 - frames[0]) / framesPerSecond;
         int checkSum = 0;
 
         for (int i = 0; i < n; i++) {

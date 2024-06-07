@@ -40,6 +40,12 @@ public class LoadGenresTask extends SwingWorker<Set<String>, Void> {
             this.genresObservableList.clear();
             this.genresObservableList.addAll(genres);
         }
+        catch (InterruptedException ex) {
+            JRipperSwing.LOGGER.error(ex.getMessage(), ex);
+
+            // Restore interrupted state.
+            Thread.currentThread().interrupt();
+        }
         catch (Exception ex) {
             JRipperSwing.LOGGER.error(ex.getMessage(), ex);
         }
