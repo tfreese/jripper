@@ -1,0 +1,20 @@
+plugins {
+    id "java"
+    id "org.springframework.boot"
+}
+
+description = "Java Ripper Swing Modul"
+
+dependencies {
+    implementation(project(":jripper-core"))
+
+    implementation("de.freese:binding:$project.version")
+}
+
+// Start: gradle bootRun --args="--spring.profiles.active=dev"
+// The archive name. If the name has not been explicitly set, the pattern for the name is:
+// [archiveBaseName]-[archiveAppendix]-[archiveVersion]-[archiveClassifier].[archiveExtension]
+// archiveFileName = "my-boot.jar"
+springBoot {
+    mainClass = "de.freese.jripper.swing.JRipperSwing"
+}

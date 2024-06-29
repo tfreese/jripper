@@ -1,0 +1,9 @@
+plugins {
+    id "java"
+}
+
+description = "Java Ripper Console Modul"
+
+dependencies {
+    implementation(project(":jripper-core"))
+}
