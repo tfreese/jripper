@@ -33,3 +33,11 @@ subprojects {
 //        }
 //    }
 }
+
+// For Composite Build.
+tasks.register("cleanAll", GradleBuild) {
+    tasks = ["clean"]
+}
+tasks.register("buildAll", GradleBuild) {
+    tasks = ["build"]
+}
