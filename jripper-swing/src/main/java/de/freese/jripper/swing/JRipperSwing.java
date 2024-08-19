@@ -65,7 +65,7 @@ import de.freese.jripper.swing.task.LoadGenresTask;
  *
  * @author Thomas Freese
  */
-public class JRipperSwing {
+public final class JRipperSwing {
     public static final Logger LOGGER = LoggerFactory.getLogger("JRipperSwing");
 
     private static JFrame frame;
