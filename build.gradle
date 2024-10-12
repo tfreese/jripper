@@ -24,14 +24,12 @@ subprojects {
         }
     }
 
-//    afterEvaluate { project ->
-//        if (project.plugins.hasPlugin("java") || project.plugins.hasPlugin("java-library") || project.plugins.hasPlugin("application")) {
-//            dependencies {
-//                testImplementation("org.junit.jupiter:junit-jupiter")
-//                testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-//            }
-//        }
-//    }
+    // pluginManager.withPlugin("java") {
+    //     dependencies {
+    //         testImplementation("org.junit.jupiter:junit-jupiter")
+    //         testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+    //     }
+    // }
 }
 
 // For Composite Build.
