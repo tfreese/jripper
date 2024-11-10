@@ -6,10 +6,15 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * @author Thomas Freese
  */
 public final class Misc {
+    private static final Logger LOGGER = LoggerFactory.getLogger(Misc.class);
+
     public static void main(final String[] args) {
         final String s = "100/12453 ( 1%)| 0:00/ 0:21| 0:00/ 0:22| 15.366x| 0:22";
         // Pattern pattern = Pattern.compile("[(\\s[\\d]{1,2}%)]?");
@@ -18,10 +23,10 @@ public final class Misc {
         final Pattern pattern = Pattern.compile("[(.*)]");
         final Matcher matcher = pattern.matcher(s);
 
-        System.out.println(matcher.matches());
+        LOGGER.info("{}", matcher.matches());
 
         if (matcher.matches()) {
-            System.out.println(matcher.group());
+            LOGGER.info(matcher.group());
         }
 
         final int start = s.indexOf(" (");
@@ -29,7 +34,7 @@ public final class Misc {
 
         if (start > 0 && end > 0) {
             final String prozent = s.substring(start + 2, end).strip();
-            System.out.println(prozent);
+            LOGGER.info(prozent);
         }
 
         // Shell öffnen und Skript ausführen.
@@ -59,8 +64,7 @@ public final class Misc {
         // // command.add(";");
         // // command.add("le_exec");
 
-        // try
-        // {
+        // try {
         // System.out.println(System.getenv().get("TERM"));
         // ProcessBuilder processBuilder = new ProcessBuilder();
         // processBuilder.directory(new File("/tmp"));
@@ -71,8 +75,7 @@ public final class Misc {
         // Process process = processBuilder.start();
         // // process.waitFor();
         // }
-        // catch (Exception ex)
-        // {
+        // catch (Exception ex) {
         // ex.printStackTrace();
         // }
     }

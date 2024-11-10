@@ -20,14 +20,14 @@ import de.freese.jripper.core.encoder.EncoderFormat;
 class TestEncoder {
     @Test
     @EnabledOnOs(OS.LINUX)
-    void testLinuxFlac() throws Exception {
+    void testLinuxFlac() {
         final Encoder encoder = EncoderFactory.getInstance(EncoderFormat.FLAC);
         assertNotNull(encoder);
     }
 
     @Test
     @EnabledOnOs(OS.LINUX)
-    void testLinuxMp3() throws Exception {
+    void testLinuxMp3() {
         final Encoder encoder = EncoderFactory.getInstance(EncoderFormat.MP3);
         assertNotNull(encoder);
     }

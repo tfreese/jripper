@@ -16,14 +16,11 @@ import de.freese.jripper.core.JRipper;
  */
 public abstract class AbstractProcess {
     private static Thread createShutDownHook(final Process process) {
-        return new Thread() {
-            @Override
-            public void run() {
-                if (process != null) {
-                    process.destroy();
-                }
+        return new Thread(() -> {
+            if (process != null) {
+                process.destroy();
             }
-        };
+        }, "ShutDownHook-Process-" + process.pid());
     }
 
     private final Logger logger = JRipper.getInstance().getLogger(); // LoggerFactory.getLogger(getClass());

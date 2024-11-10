@@ -87,7 +87,7 @@ public class CddbProviderGnuDb implements CddbProvider {
             reader.lines().forEach(lines::add);
         }
 
-        final String firstLine = lines.remove(0);
+        final String firstLine = lines.removeFirst();
         final int status = Integer.parseInt(firstLine.split(" ")[0]);
 
         final CddbResponse cddbResponse = new CddbResponse(status);
@@ -185,7 +185,7 @@ public class CddbProviderGnuDb implements CddbProvider {
                         comment.append(splits[i]);
 
                         if (i < (splits.length - 1)) {
-                            comment.append("\n");
+                            comment.append(System.lineSeparator());
                         }
                     }
 
@@ -267,7 +267,7 @@ public class CddbProviderGnuDb implements CddbProvider {
             reader.lines().forEach(lines::add);
         }
 
-        final String firstLine = lines.remove(0);
+        final String firstLine = lines.removeFirst();
         final int status = Integer.parseInt(firstLine.split(" ")[0]);
 
         final CddbResponse cddbResponse = new CddbResponse(status);

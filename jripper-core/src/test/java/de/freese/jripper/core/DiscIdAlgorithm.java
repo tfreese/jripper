@@ -2,6 +2,9 @@ package de.freese.jripper.core;
 
 import java.util.Arrays;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /*************************************************************************
  * Note: Pearl Jam's album Vs. has N = 12 tracks.<br>
  * The first track starts at frames[0] = 150, the second at frames[1] = 14672, the twelfth at frames[11] = 185792, and the disc ends at frames[N] = 208500.<br>
@@ -14,6 +17,8 @@ import java.util.Arrays;
  *************************************************************************/
 
 public final class DiscIdAlgorithm {
+    private static final Logger LOGGER = LoggerFactory.getLogger(DiscIdAlgorithm.class);
+
     /**
      * b111140e 14 150 24545 41797 60822 80152 117002 142550 169755 192057 211360 239297 256325 279075 306220 4374
      */
@@ -36,8 +41,8 @@ public final class DiscIdAlgorithm {
 
         // XXYYYYZZ
         final int discID = (xx << 24) | (yyyy << 8) | zz;
-        System.out.print(Integer.toHexString(discID));
-        System.out.println(Arrays.toString(frames));
+        LOGGER.info(Integer.toHexString(discID));
+        LOGGER.info(Arrays.toString(frames));
     }
 
     /**

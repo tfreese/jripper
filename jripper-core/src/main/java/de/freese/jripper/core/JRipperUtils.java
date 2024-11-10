@@ -66,7 +66,7 @@ public final class JRipperUtils {
 
     /**
      * Liefert das Verzeichnis für die mp3-Dateien.<br>
-     * Format: Arbeitsverzeichnis/ALBUMTITEL/mp3
+     * Format: Arbeitsverzeichnis/ALBUMTITEL/MP3
      */
     public static File getMp3Dir(final Album album, final boolean createOrDelete) throws IOException {
         final File dir = new File(getWorkDir(album), "mp3");

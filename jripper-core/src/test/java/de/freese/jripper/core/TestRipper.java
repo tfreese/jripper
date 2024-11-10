@@ -23,8 +23,9 @@ import de.freese.jripper.core.ripper.RipperFactory;
 @TestMethodOrder(MethodOrderer.MethodName.class)
 class TestRipper {
     @Test
-    void testGetService() throws Exception {
+    void testGetService() {
         final Ripper ripper = RipperFactory.getInstance();
+        
         assertNotNull(ripper);
     }
 

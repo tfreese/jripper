@@ -25,7 +25,7 @@ import de.freese.jripper.core.model.DiskId;
 @TestMethodOrder(MethodOrderer.MethodName.class)
 class TestCddbProvider {
     @Test
-    void testGetService() throws Exception {
+    void testGetService() {
         final DiskIDProvider diskID = DiskIDProviderFactory.getInstance();
         assertNotNull(diskID);
     }
