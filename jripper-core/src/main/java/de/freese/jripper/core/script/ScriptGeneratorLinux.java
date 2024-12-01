@@ -4,6 +4,7 @@ package de.freese.jripper.core.script;
 import java.io.File;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,7 +53,7 @@ public class ScriptGeneratorLinux extends AbstractProcess implements ScriptGener
         final File script = new File(folder, getPath(album) + ".sh");
 
         if (script.exists()) {
-            script.delete();
+            Files.delete(script.toPath());
         }
 
         try (PrintWriter pw = new PrintWriter(script, StandardCharsets.UTF_8)) {
