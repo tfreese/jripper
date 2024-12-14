@@ -24,9 +24,8 @@ public class ActionChooseWorkDir extends AbstractAction {
     private final Component parent;
     private final transient Property<String> workDirProperty;
 
-    @SuppressWarnings("checkstyle:AvoidEscapedUnicodeCharacters")
     public ActionChooseWorkDir(final Component parent, final Property<String> workDirProperty) {
-        super("\u2026");
+        super("...");
 
         this.parent = parent;
         this.workDirProperty = workDirProperty;
