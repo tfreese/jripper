@@ -24,23 +24,23 @@ public class DiskId {
     }
 
     public String getID() {
-        return this.id;
+        return id;
     }
 
     public int getOffset() {
-        return this.offset;
+        return offset;
     }
 
     public int getSeconds() {
-        return this.seconds;
+        return seconds;
     }
 
     public int getTrackCount() {
-        return this.trackCount;
+        return trackCount;
     }
 
     public int[] getTrackOffsets() {
-        return this.trackOffsets;
+        return trackOffsets;
     }
 
     /**
@@ -52,18 +52,18 @@ public class DiskId {
 
         if (track == 0) {
             // Erster Titel
-            final int frames = this.trackOffsets[0] - this.offset;
+            final int frames = trackOffsets[0] - offset;
             trackSeconds = frames / framesPerSecond;
         }
-        else if (track < this.trackOffsets.length) {
-            final int frames = this.trackOffsets[track] - this.trackOffsets[track - 1] - this.offset;
+        else if (track < trackOffsets.length) {
+            final int frames = trackOffsets[track] - trackOffsets[track - 1] - offset;
             trackSeconds = frames / framesPerSecond;
         }
         else {
             // Letzter Track erhält seine Länge durch Gesamtzeit - Laufzeit vorheriger Titel.
-            final int vorherigeFrames = this.trackOffsets[this.trackOffsets.length - 1] - this.offset;
+            final int vorherigeFrames = trackOffsets[trackOffsets.length - 1] - offset;
             final int vorherigeSeconds = vorherigeFrames / framesPerSecond;
-            trackSeconds = this.seconds - vorherigeSeconds;
+            trackSeconds = seconds - vorherigeSeconds;
         }
 
         return trackSeconds;
@@ -93,16 +93,16 @@ public class DiskId {
         Objects.requireNonNull(diskID, "diskID required");
 
         final String[] splits = diskID.split(" ");
-        this.id = splits[0];
-        this.trackCount = Integer.parseInt(splits[1]);
-        this.offset = Integer.parseInt(splits[2]);
+        id = splits[0];
+        trackCount = Integer.parseInt(splits[1]);
+        offset = Integer.parseInt(splits[2]);
 
-        this.trackOffsets = new int[splits.length - 4];
+        trackOffsets = new int[splits.length - 4];
 
-        for (int i = 0; i < this.trackOffsets.length; i++) {
-            this.trackOffsets[i] = Integer.parseInt(splits[i + 3]);
+        for (int i = 0; i < trackOffsets.length; i++) {
+            trackOffsets[i] = Integer.parseInt(splits[i + 3]);
         }
 
-        this.seconds = Integer.parseInt(splits[splits.length - 1]);
+        seconds = Integer.parseInt(splits[splits.length - 1]);
     }
 }

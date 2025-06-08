@@ -33,7 +33,7 @@ public class AlbumImpl implements Album {
     public AlbumImpl() {
         super();
 
-        this.diskID = null;
+        diskID = null;
     }
 
     public AlbumImpl(final DiskId diskID) {
@@ -46,7 +46,7 @@ public class AlbumImpl implements Album {
      * @param artist String; Nur bei Compilations != null.
      */
     public void addTrack(final String artist, final String title) {
-        final int trackIndex = this.tracks.size();
+        final int trackIndex = tracks.size();
 
         final Track track = new Track();
         track.setAlbum(this);
@@ -55,67 +55,67 @@ public class AlbumImpl implements Album {
         track.setNumber(trackIndex + 1);
         track.setSeconds(getDiskID().getTrackSeconds(trackIndex));
 
-        this.tracks.add(track);
+        tracks.add(track);
     }
 
     @Override
     public String getArtist() {
-        return this.artist;
+        return artist;
     }
 
     @Override
     public String getComment() {
-        return Objects.toString(this.comment, "");
+        return Objects.toString(comment, "");
     }
 
     @Override
     public DiskId getDiskID() {
-        return this.diskID;
+        return diskID;
     }
 
     @Override
     public int getDiskNumber() {
-        return this.diskNumber;
+        return diskNumber;
     }
 
     @Override
     public String getGenre() {
-        return this.genre;
+        return genre;
     }
 
     @Override
     public String getTitle() {
-        return this.title;
+        return title;
     }
 
     @Override
     public int getTotalDisks() {
-        return this.totalDisks;
+        return totalDisks;
     }
 
     @Override
     public Track getTrack(final int index) {
-        return this.tracks.get(index);
+        return tracks.get(index);
     }
 
     @Override
     public int getTrackCount() {
-        return this.tracks.size();
+        return tracks.size();
     }
 
     @Override
     public int getYear() {
-        return this.year;
+        return year;
     }
 
     @Override
     public boolean isCompilation() {
-        return this.artist == null || this.artist.isBlank();
+        return artist == null || artist.isBlank();
     }
 
     @Override
     public Iterator<Track> iterator() {
-        return this.tracks.iterator();
+        return tracks.iterator();
     }
 
     @Override
@@ -164,7 +164,7 @@ public class AlbumImpl implements Album {
      * @param index int, beginnend mit 0
      */
     public void setTrackArtist(final int index, final String artist) {
-        final Track track = this.tracks.get(index);
+        final Track track = tracks.get(index);
         track.setArtist(artist);
 
         LOGGER.debug("index/artist = {}/{}", index, artist);
@@ -174,7 +174,7 @@ public class AlbumImpl implements Album {
      * @param index int, beginnend mit 0
      */
     public void setTrackTitle(final int index, final String title) {
-        final Track track = this.tracks.get(index);
+        final Track track = tracks.get(index);
         track.setTitle(title);
 
         LOGGER.debug("index/title = {}/{}", index, title);

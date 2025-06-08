@@ -318,7 +318,7 @@ public final class JRipperSwing {
         final Property<Integer> yearSpinnerProperty = new SimpleIntegerProperty();
         final Property<String> commentTextAreaProperty = new SimpleStringProperty();
 
-        this.albumProperty.addListener((observable, oldValue, newAlbum) -> {
+        albumProperty.addListener((observable, oldValue, newAlbum) -> {
             artistTextFieldProperty.setValue(newAlbum.getArtist());
             titleTextFieldProperty.setValue(newAlbum.getTitle());
             genreTextFieldProperty.setValue(newAlbum.getGenre());
@@ -445,7 +445,7 @@ public final class JRipperSwing {
         splitPane2.setLeftComponent(panelAlbum);
 
         // Tabelle
-        final AlbumTableModel tableModel = new AlbumTableModel(this.albumTracks);
+        final AlbumTableModel tableModel = new AlbumTableModel(albumTracks);
 
         final JTable table = new JTable();
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);

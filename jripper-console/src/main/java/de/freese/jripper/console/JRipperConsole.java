@@ -46,18 +46,18 @@ public class JRipperConsole {
 
         if (console != null) {
             if (console.reader() instanceof BufferedReader bufferedReader) {
-                this.reader = bufferedReader;
+                reader = bufferedReader;
             }
             else {
-                this.reader = new BufferedReader(console.reader());
+                reader = new BufferedReader(console.reader());
             }
 
-            this.printWriter = console.writer();
+            printWriter = console.writer();
         }
         else {
             // In Eclipse kann Console null sein.
-            this.reader = new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8));
-            this.printWriter = new PrintWriter(System.out, true, StandardCharsets.UTF_8);
+            reader = new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8));
+            printWriter = new PrintWriter(System.out, true, StandardCharsets.UTF_8);
         }
     }
 
@@ -70,23 +70,23 @@ public class JRipperConsole {
         print("%s%s%s \t%s" + System.lineSeparator(), AnsiCodes.ANSI_CYAN, "1", AnsiCodes.ANSI_RESET, "FreeDB abfragen");
         final String workDir = Settings.getInstance().getWorkDir();
 
-        if (this.album != null) {
+        if (album != null) {
             println("%s%s%s \t%s", AnsiCodes.ANSI_CYAN, "2", AnsiCodes.ANSI_RESET, "Album bearbeiten");
-            println("%s%s%s \t%s%s/%s/wav", AnsiCodes.ANSI_CYAN, "3", AnsiCodes.ANSI_RESET, "CD auslesen -> ", workDir, this.album.getTitle());
+            println("%s%s%s \t%s%s/%s/wav", AnsiCodes.ANSI_CYAN, "3", AnsiCodes.ANSI_RESET, "CD auslesen -> ", workDir, album.getTitle());
         }
 
         File wavDir = null;
 
         try {
-            wavDir = JRipperUtils.getWavDir(this.album, false);
+            wavDir = JRipperUtils.getWavDir(album, false);
         }
         catch (Exception ex) {
             // Ignore
         }
 
-        if (wavDir != null && wavDir.exists() && this.album != null && this.album.getTrackCount() > 0) {
-            println("%s%s%s \t%s%s/%s/flac", AnsiCodes.ANSI_CYAN, "4", AnsiCodes.ANSI_RESET, "flac erzeugen -> ", workDir, this.album.getTitle());
-            println("%s%s%s \t%s%s/%s/map3", AnsiCodes.ANSI_CYAN, "5", AnsiCodes.ANSI_RESET, "mp3 erzeugen -> ", workDir, this.album.getTitle());
+        if (wavDir != null && wavDir.exists() && album != null && album.getTrackCount() > 0) {
+            println("%s%s%s \t%s%s/%s/flac", AnsiCodes.ANSI_CYAN, "4", AnsiCodes.ANSI_RESET, "flac erzeugen -> ", workDir, album.getTitle());
+            println("%s%s%s \t%s%s/%s/map3", AnsiCodes.ANSI_CYAN, "5", AnsiCodes.ANSI_RESET, "mp3 erzeugen -> ", workDir, album.getTitle());
         }
 
         println("");
@@ -99,28 +99,28 @@ public class JRipperConsole {
 
             switch (input) {
                 case "1":
-                    this.album = null;
+                    album = null;
                     final DiskId diskID = getDiskID();
                     final String genre = queryCDDB(diskID);
-                    this.album = readCDDB(diskID, genre);
-                    showAlbum(this.album);
+                    album = readCDDB(diskID, genre);
+                    showAlbum(album);
                     break;
 
                 case "2":
                     break;
 
                 case "3":
-                    rip(this.album, this.printWriter);
+                    rip(album, printWriter);
                     break;
 
                 case "4":
-                    final File flacDir = JRipperUtils.getFlacDir(this.album, true);
-                    encode(this.album, this.printWriter, JRipper.getInstance().getEncoderFlac(), flacDir);
+                    final File flacDir = JRipperUtils.getFlacDir(album, true);
+                    encode(album, printWriter, JRipper.getInstance().getEncoderFlac(), flacDir);
                     break;
 
                 case "5":
-                    final File mp3Dir = JRipperUtils.getMp3Dir(this.album, true);
-                    encode(this.album, this.printWriter, JRipper.getInstance().getEncoderMp3(), mp3Dir);
+                    final File mp3Dir = JRipperUtils.getMp3Dir(album, true);
+                    encode(album, printWriter, JRipper.getInstance().getEncoderMp3(), mp3Dir);
                     break;
 
                 case "q":
@@ -169,7 +169,7 @@ public class JRipperConsole {
     private String getInput() throws Exception {
         println("%s%s%s: ", AnsiCodes.ANSI_GREEN, "Eingabe", AnsiCodes.ANSI_RESET);
 
-        return this.reader.readLine();
+        return reader.readLine();
     }
 
     private void print(final String format, final Object... params) {
@@ -191,8 +191,8 @@ public class JRipperConsole {
             }
         }
 
-        this.printWriter.printf(format, params);
-        this.printWriter.flush();
+        printWriter.printf(format, params);
+        printWriter.flush();
     }
 
     private void println(final String format, final Object... params) {
@@ -224,7 +224,7 @@ public class JRipperConsole {
         println("%s", "Album Inhalt");
         println("%s", "*****************");
 
-        println("%-15s%s", "Artist", this.album.getArtist());
+        println("%-15s%s", "Artist", album.getArtist());
         println("%-15s%s", "Title", album.getTitle());
         println("%-15s%s", "Genre", album.getGenre());
         println("%-15s%d", "Year", album.getYear());
@@ -239,7 +239,7 @@ public class JRipperConsole {
     }
 
     private void showEditMenu() {
-        showAlbum(this.album);
+        showAlbum(album);
 
         println("%s", "*****************");
         println("%s", "Album Edit-Menü");
@@ -267,43 +267,43 @@ public class JRipperConsole {
                 case "aa":
                     println("%s - ", "Neuer Wert");
                     input = getInput();
-                    this.album.setArtist(input);
+                    album.setArtist(input);
                     break;
 
                 case "at":
                     println("%s - ", "Neuer Wert");
                     input = getInput();
-                    this.album.setTitle(input);
+                    album.setTitle(input);
                     break;
 
                 case "ag":
                     println("%s - ", "Neuer Wert");
                     input = getInput();
-                    this.album.setGenre(input);
+                    album.setGenre(input);
                     break;
 
                 case "ay":
                     println("%s - ", "Neuer Wert");
                     input = getInput();
-                    this.album.setYear(Integer.parseInt(input));
+                    album.setYear(Integer.parseInt(input));
                     break;
 
                 case "ac":
                     println("%s - ", "Neuer Wert");
                     input = getInput();
-                    this.album.setComment(input);
+                    album.setComment(input);
                     break;
 
                 case "adn":
                     println("%s - ", "Neuer Wert");
                     input = getInput();
-                    this.album.setDiskNumber(Integer.parseInt(input));
+                    album.setDiskNumber(Integer.parseInt(input));
                     break;
 
                 case "atd":
                     println("%s - ", "Neuer Wert");
                     input = getInput();
-                    this.album.setTotalDisks(Integer.parseInt(input));
+                    album.setTotalDisks(Integer.parseInt(input));
                     break;
 
                 case "h":
@@ -317,7 +317,7 @@ public class JRipperConsole {
 
                         println("%s - ", "Neuer Wert");
                         input = getInput();
-                        ((AlbumImpl) this.album).setTrackArtist(index, input);
+                        ((AlbumImpl) album).setTrackArtist(index, input);
                     }
                     else if (input.startsWith("tt")) {
                         input = input.replace("tt", "").replace(".", "");
@@ -326,7 +326,7 @@ public class JRipperConsole {
 
                         println("%s - ", "Neuer Wert");
                         input = getInput();
-                        ((AlbumImpl) this.album).setTrackTitle(index, input);
+                        ((AlbumImpl) album).setTrackTitle(index, input);
                     }
                     else {
                         println("%s%s \t%s%s", AnsiCodes.ANSI_RED, input, "Unbekannte Eingabe", AnsiCodes.ANSI_RESET);

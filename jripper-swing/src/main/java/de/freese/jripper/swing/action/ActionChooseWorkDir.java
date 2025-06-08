@@ -34,14 +34,14 @@ public class ActionChooseWorkDir extends AbstractAction {
     @Override
     public void actionPerformed(final ActionEvent event) {
         final JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setCurrentDirectory(new File(this.workDirProperty.getValue()));
+        fileChooser.setCurrentDirectory(new File(workDirProperty.getValue()));
         fileChooser.setAcceptAllFileFilterUsed(false);
         fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 
-        final int returnVal = fileChooser.showDialog(this.parent, "Work.-Dir.");
+        final int returnVal = fileChooser.showDialog(parent, "Work.-Dir.");
 
         if (returnVal == JFileChooser.APPROVE_OPTION) {
-            this.workDirProperty.setValue(fileChooser.getSelectedFile().getAbsolutePath());
+            workDirProperty.setValue(fileChooser.getSelectedFile().getAbsolutePath());
         }
     }
 }

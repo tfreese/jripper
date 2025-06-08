@@ -44,19 +44,19 @@ public class CddbResponse {
     }
 
     public Album getAlbum() {
-        return this.album;
+        return album;
     }
 
     public String getErrorMessage() {
-        return this.errorMessage;
+        return errorMessage;
     }
 
     public List<String> getGenres() {
-        return this.genres;
+        return genres;
     }
 
     public int getStatus() {
-        return this.status;
+        return status;
     }
 
     public void setAlbum(final Album album) {

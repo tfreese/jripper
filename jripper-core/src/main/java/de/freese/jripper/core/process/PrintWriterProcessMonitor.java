@@ -28,6 +28,6 @@ public class PrintWriterProcessMonitor implements ProcessMonitor {
     }
 
     protected PrintWriter getPrintWriter() {
-        return this.printWriter;
+        return printWriter;
     }
 }

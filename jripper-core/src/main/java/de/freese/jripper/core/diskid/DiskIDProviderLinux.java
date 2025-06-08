@@ -25,11 +25,11 @@ public class DiskIDProviderLinux extends AbstractProcess implements DiskIDProvid
         command.add("cd-discid");
         command.add(device);
 
-        this.sb = new StringBuilder();
+        sb = new StringBuilder();
 
         execute(command, new File(Settings.getInstance().getWorkDir()), this);
 
-        final String id = this.sb.toString();
+        final String id = sb.toString();
 
         getLogger().debug(id);
 
@@ -42,7 +42,7 @@ public class DiskIDProviderLinux extends AbstractProcess implements DiskIDProvid
 
     @Override
     public void monitorProcess(final String line) {
-        this.sb.append(line);
+        sb.append(line);
     }
 
     @Override

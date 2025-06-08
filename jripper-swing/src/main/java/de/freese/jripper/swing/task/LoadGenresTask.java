@@ -37,8 +37,8 @@ public class LoadGenresTask extends SwingWorker<Set<String>, Void> {
         try {
             final Set<String> genres = get();
 
-            this.genresObservableList.clear();
-            this.genresObservableList.addAll(genres);
+            genresObservableList.clear();
+            genresObservableList.addAll(genres);
         }
         catch (InterruptedException ex) {
             JRipperSwing.LOGGER.error(ex.getMessage(), ex);

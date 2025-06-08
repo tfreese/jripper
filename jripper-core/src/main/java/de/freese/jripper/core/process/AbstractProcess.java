@@ -65,6 +65,6 @@ public abstract class AbstractProcess {
     }
 
     protected Logger getLogger() {
-        return this.logger;
+        return logger;
     }
 }

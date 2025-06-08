@@ -47,42 +47,42 @@ public final class Settings {
         setMp3Bitrate(320);
         setMp3Enabled(false);
 
-        this.mp3BitRates = List.of(320, 256, 224, 192, 160, 128, 112, 96, 80, 64, 56, 48, 40, 32);
+        mp3BitRates = List.of(320, 256, 224, 192, 160, 128, 112, 96, 80, 64, 56, 48, 40, 32);
     }
 
     public String getDevice() {
-        return this.device;
+        return device;
     }
 
     /**
      * 0-8
      */
     public int getFlacCompression() {
-        return this.flacCompression;
+        return flacCompression;
     }
 
     public int getFramesPerSecond() {
-        return this.framesPerSecond;
+        return framesPerSecond;
     }
 
     public List<Integer> getMp3BitRates() {
-        return this.mp3BitRates;
+        return mp3BitRates;
     }
 
     public int getMp3Bitrate() {
-        return this.mp3Bitrate;
+        return mp3Bitrate;
     }
 
     public String getWorkDir() {
-        return this.workDir;
+        return workDir;
     }
 
     public boolean isFlacEnabled() {
-        return this.flacEnabled;
+        return flacEnabled;
     }
 
     public boolean isMp3Enabled() {
-        return this.mp3Enabled;
+        return mp3Enabled;
     }
 
     public void setDevice(final String device) {
@@ -131,6 +131,6 @@ public final class Settings {
     }
 
     private Logger getLogger() {
-        return this.logger;
+        return logger;
     }
 }

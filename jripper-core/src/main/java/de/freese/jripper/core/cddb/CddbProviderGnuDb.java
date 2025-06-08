@@ -58,7 +58,7 @@ public class CddbProviderGnuDb implements CddbProvider {
         sb.append("&hello=").append(USER);
         sb.append("+").append(HOST);
         sb.append("+jRipper+1.0.0&proto=6");
-        this.requestPostfix = sb.toString();
+        requestPostfix = sb.toString();
     }
 
     /**
@@ -74,7 +74,7 @@ public class CddbProviderGnuDb implements CddbProvider {
         String[] splits = diskID.toString().split(" ");
         sb.append("+").append(splits[0]);
 
-        sb.append(this.requestPostfix);
+        sb.append(requestPostfix);
 
         // gnudb.gnudb.org verwendet kein HTTPS !
         final URL url = URI.create("http://" + SERVER + ":" + PORT + sb).toURL();
@@ -254,7 +254,7 @@ public class CddbProviderGnuDb implements CddbProvider {
 
         sb.append("+").append(diskID.getSeconds());
 
-        sb.append(this.requestPostfix);
+        sb.append(requestPostfix);
 
         // gnudb.gnudb.org verwendet kein HTTPS !
         final URL url = URI.create("http://" + SERVER + ":" + PORT + sb).toURL();
@@ -318,7 +318,7 @@ public class CddbProviderGnuDb implements CddbProvider {
     }
 
     private Logger getLogger() {
-        return this.logger;
+        return logger;
     }
 
     /**

@@ -26,6 +26,6 @@ public class LoggerProcessMonitor implements ProcessMonitor {
     }
 
     protected Logger getLogger() {
-        return this.logger;
+        return logger;
     }
 }

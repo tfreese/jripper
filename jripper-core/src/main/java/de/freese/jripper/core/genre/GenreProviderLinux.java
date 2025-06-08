@@ -22,7 +22,7 @@ public class GenreProviderLinux extends AbstractProcess implements GenreProvider
 
     @Override
     public Set<String> getGenres() throws Exception {
-        this.genres.clear();
+        genres.clear();
 
         final List<String> command = new ArrayList<>();
         command.add("lame");
@@ -31,17 +31,17 @@ public class GenreProviderLinux extends AbstractProcess implements GenreProvider
         execute(command, new File(Settings.getInstance().getWorkDir()), this);
 
         if (getLogger().isDebugEnabled()) {
-            getLogger().debug(this.genres.toString());
+            getLogger().debug(genres.toString());
         }
 
-        return this.genres;
+        return genres;
     }
 
     @Override
     public void monitorProcess(final String line) {
         final String[] splits = line.split(" ", 2);
 
-        this.genres.add(splits[1]);
+        genres.add(splits[1]);
     }
 
     @Override

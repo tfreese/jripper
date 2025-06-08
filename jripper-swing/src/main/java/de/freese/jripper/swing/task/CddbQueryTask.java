@@ -60,7 +60,7 @@ public class CddbQueryTask extends SwingWorker<CddbResponse, Void> {
 
             final Album album = cddbResponse.getAlbum();
 
-            this.albumProperty.setValue(album);
+            albumProperty.setValue(album);
         }
         catch (InterruptedException ex) {
             JRipperSwing.LOGGER.error(ex.getMessage(), ex);

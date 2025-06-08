@@ -23,30 +23,30 @@ public class Track {
     }
 
     public Album getAlbum() {
-        return this.album;
+        return album;
     }
 
     /**
      * Nur bei Compilations gefüllt.
      */
     public String getArtist() {
-        if (this.artist == null || this.artist.isBlank()) {
+        if (artist == null || artist.isBlank()) {
             return getAlbum().getArtist();
         }
 
-        return this.artist;
+        return artist;
     }
 
     public int getNumber() {
-        return this.number;
+        return number;
     }
 
     public int getSeconds() {
-        return this.seconds;
+        return seconds;
     }
 
     public String getTitle() {
-        return this.title;
+        return title;
     }
 
     /**
