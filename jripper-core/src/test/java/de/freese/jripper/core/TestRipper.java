@@ -25,7 +25,7 @@ class TestRipper {
     @Test
     void testGetService() {
         final Ripper ripper = RipperFactory.getInstance();
-        
+
         assertNotNull(ripper);
     }
 
@@ -40,7 +40,7 @@ class TestRipper {
             final DiskId diskID = service.getDiskID(JRipperUtils.detectCdDevice());
             assertNotNull(diskID);
         }
-        catch (IllegalStateException ex) {
+        catch (IllegalStateException _) {
             // No CD/DVD/BluRay Drive.
         }
     }

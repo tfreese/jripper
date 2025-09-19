@@ -99,7 +99,7 @@ class TestCddbProvider {
             final DiskId diskID = diskIDProvider.getDiskID(device);
             assertNotNull(diskID);
         }
-        catch (IllegalStateException ex) {
+        catch (IllegalStateException _) {
             // No CD/DVD/BluRay Drive.
         }
     }

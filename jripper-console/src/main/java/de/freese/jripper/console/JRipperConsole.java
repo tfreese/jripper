@@ -29,7 +29,7 @@ import de.freese.jripper.core.ripper.Ripper;
  * @author Thomas Freese
  */
 public class JRipperConsole {
-    public static void main(final String[] args) {
+    static void main(final String[] args) {
         final JRipperConsole console = new JRipperConsole();
         console.showMainMenu();
     }
@@ -80,7 +80,7 @@ public class JRipperConsole {
         try {
             wavDir = JRipperUtils.getWavDir(album, false);
         }
-        catch (Exception ex) {
+        catch (Exception _) {
             // Ignore
         }
 

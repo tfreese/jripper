@@ -32,7 +32,7 @@ public class KeyListenerErsatz implements Runnable {
             // Read Input.
             ((BufferedReader) reader).readLine();
         }
-        catch (Exception ex) {
+        catch (Exception _) {
             // Ignore
         }
 
