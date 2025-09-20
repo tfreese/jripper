@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 public final class Misc {
     private static final Logger LOGGER = LoggerFactory.getLogger(Misc.class);
 
-    public static void main(final String[] args) {
+    static void main() {
         final String s = "100/12453 ( 1%)| 0:00/ 0:21| 0:00/ 0:22| 15.366x| 0:22";
         // Pattern pattern = Pattern.compile("[(\\s[\\d]{1,2}%)]?");
         // Pattern pattern = Pattern.compile("[\\(][.*][\\)]"); // \[(.*?)\], /[^(<td>)].+[^(</td>)]/;

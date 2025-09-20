@@ -84,7 +84,7 @@ public final class JRipperSwing {
         return frame;
     }
 
-    public static void main(final String[] args) {
+    static void main() {
         SwingUtilities.invokeLater(() -> {
             final JRipperSwing view = new JRipperSwing();
             view.init();
