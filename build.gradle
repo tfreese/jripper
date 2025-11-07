@@ -1,12 +1,12 @@
 // Execute Tasks in SubModule: gradle MODUL:clean build
 plugins {
-    id("de.freese.gradle.java.conventions") version("$version_myJavaConventionPlugin") apply(false)
-    id("io.spring.dependency-management") version("$version_springDependencyManagementPlugin") apply(false)
-    id("org.springframework.boot") version("$version_springBoot") apply(false)
+    id("de.freese.gradle.conventions").version("$version_myJavaConventionPlugin").apply(false)
+    id("io.spring.dependency-management").version("$version_springDependencyManagementPlugin").apply(false)
+    id("org.springframework.boot").version("$version_springBoot").apply(false)
 }
 
 allprojects {
-    apply plugin: "base"
+    apply(plugin: "base")
 
     ant.lifecycleLogLevel = "INFO"
 
@@ -16,8 +16,8 @@ allprojects {
 }
 
 subprojects {
-    apply plugin: "de.freese.gradle.java.conventions"
-    apply plugin: "io.spring.dependency-management"
+    apply(plugin: "de.freese.gradle.conventions")
+    apply(plugin: "io.spring.dependency-management")
 
     // Workaround for Exception: SourceSet with name 'test' not found.
     if (file("src/main/java").isDirectory()) {
