@@ -20,7 +20,7 @@ public class AlbumImpl implements Album {
     private final DiskId diskID;
     private final List<Track> tracks = new ArrayList<>();
     /**
-     * Bei Compilations null.
+     * Null for Compilations.
      */
     private String artist;
     private String comment;
@@ -43,7 +43,7 @@ public class AlbumImpl implements Album {
     }
 
     /**
-     * @param artist String; Nur bei Compilations != null.
+     * @param artist String; Null for Compilations.
      */
     public void addTrack(final String artist, final String title) {
         final int trackIndex = tracks.size();
@@ -161,7 +161,7 @@ public class AlbumImpl implements Album {
     }
 
     /**
-     * @param index int, beginnend mit 0
+     * @param index int, 0 based
      */
     public void setTrackArtist(final int index, final String artist) {
         final Track track = tracks.get(index);
@@ -171,7 +171,7 @@ public class AlbumImpl implements Album {
     }
 
     /**
-     * @param index int, beginnend mit 0
+     * @param index int, 0 based
      */
     public void setTrackTitle(final int index, final String title) {
         final Track track = tracks.get(index);

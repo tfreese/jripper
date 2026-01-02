@@ -12,7 +12,7 @@ import de.freese.jripper.core.process.AbstractProcess;
 import de.freese.jripper.core.process.ProcessMonitor;
 
 /**
- * Linux Implementierung mit dem Programm "cd-discid".
+ * Linux Implementation with "cd-discid".
  *
  * @author Thomas Freese
  */

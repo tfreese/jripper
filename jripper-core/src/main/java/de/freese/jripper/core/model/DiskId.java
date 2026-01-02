@@ -6,7 +6,7 @@ import java.util.Objects;
 import de.freese.jripper.core.Settings;
 
 /**
- * DiskId Informationen einer CD.<br>
+ * DiskId Information of a CD.<br>
  *
  * @author Thomas Freese
  */
@@ -44,14 +44,14 @@ public class DiskId {
     }
 
     /**
-     * Liefert die Trackdauer in Sekunden.
+     * Returns the Track duration in Seconds.
      */
     public int getTrackSeconds(final int track) {
         final int framesPerSecond = Settings.getInstance().getFramesPerSecond();
         final int trackSeconds;
 
         if (track == 0) {
-            // Erster Titel
+            // First Title.
             final int frames = trackOffsets[0] - offset;
             trackSeconds = frames / framesPerSecond;
         }
@@ -60,7 +60,7 @@ public class DiskId {
             trackSeconds = frames / framesPerSecond;
         }
         else {
-            // Letzter Track erhält seine Länge durch Gesamtzeit - Laufzeit vorheriger Titel.
+            // Last Track get its Length by "hole duration - Running time of previous title".
             final int vorherigeFrames = trackOffsets[trackOffsets.length - 1] - offset;
             final int vorherigeSeconds = vorherigeFrames / framesPerSecond;
             trackSeconds = seconds - vorherigeSeconds;

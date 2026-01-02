@@ -18,9 +18,7 @@ public final class Settings {
 
     private final Logger logger = LoggerFactory.getLogger(Settings.class);
     private final List<Integer> mp3BitRates;
-    /**
-     * Laufwerk
-     */
+
     private String device;
     /**
      * 0-8
@@ -30,9 +28,6 @@ public final class Settings {
     private int framesPerSecond = 75;
     private int mp3Bitrate = 320;
     private boolean mp3Enabled = true;
-    /**
-     * Arbeitsverzeichnis
-     */
     private String workDir;
 
     private Settings() {

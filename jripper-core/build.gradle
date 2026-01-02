@@ -2,7 +2,7 @@ plugins {
     id("java-library")
 }
 
-description = "Java Ripper Core Modul"
+description = "Java Ripper Core Module"
 
 dependencies {
     api("org.apache.commons:commons-lang3")

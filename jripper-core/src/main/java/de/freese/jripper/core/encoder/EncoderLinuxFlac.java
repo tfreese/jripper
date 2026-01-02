@@ -13,7 +13,7 @@ import de.freese.jripper.core.process.AbstractProcess;
 import de.freese.jripper.core.process.ProcessMonitor;
 
 /**
- * Linux Implementierung mit dem Programm "flac" und für den ReplayGain mit "metaflac".
+ * Linux Implementation with "flac" and "metaflac".
  *
  * @author Thomas Freese
  */
@@ -68,7 +68,7 @@ public class EncoderLinuxFlac extends AbstractProcess implements Encoder {
         }
 
         // Replay-Gain.
-        monitor.monitorText(String.format("%n%s%n", "Generiere Replay-Gain..."));
+        monitor.monitorText(String.format("%n%s%n", "Create Replay-Gain..."));
         command.clear();
         command.add("metaflac");
         command.add("--add-replay-gain");

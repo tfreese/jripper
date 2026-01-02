@@ -2,7 +2,7 @@
 package de.freese.jripper.core.model;
 
 /**
- * Zusammenfassendes Objekt für eine CD.
+ * CD-Descriptor.
  *
  * @author Thomas Freese
  */

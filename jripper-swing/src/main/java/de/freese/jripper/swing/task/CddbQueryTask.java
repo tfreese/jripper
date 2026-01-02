@@ -2,11 +2,11 @@
 package de.freese.jripper.swing.task;
 
 import java.util.Objects;
+import java.util.function.Consumer;
 
 import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 
-import de.freese.binding.property.Property;
 import de.freese.jripper.core.JRipper;
 import de.freese.jripper.core.Settings;
 import de.freese.jripper.core.cddb.CddbProvider;
@@ -21,12 +21,12 @@ import de.freese.jripper.swing.JRipperSwing;
  * @author Thomas Freese
  */
 public class CddbQueryTask extends SwingWorker<CddbResponse, Void> {
-    private final Property<Album> albumProperty;
+    private final Consumer<Album> albumConsumer;
 
-    public CddbQueryTask(final Property<Album> albumProperty) {
+    public CddbQueryTask(final Consumer<Album> albumConsumer) {
         super();
 
-        this.albumProperty = Objects.requireNonNull(albumProperty, "albumProperty required");
+        this.albumConsumer = Objects.requireNonNull(albumConsumer, "albumConsumer required");
     }
 
     @Override
@@ -60,7 +60,7 @@ public class CddbQueryTask extends SwingWorker<CddbResponse, Void> {
 
             final Album album = cddbResponse.getAlbum();
 
-            albumProperty.setValue(album);
+            albumConsumer.accept(album);
         }
         catch (InterruptedException ex) {
             JRipperSwing.LOGGER.error(ex.getMessage(), ex);

@@ -1,12 +1,12 @@
 // Created: 10.10.2013
 package de.freese.jripper.swing.task;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
 import javax.swing.SwingWorker;
 
-import de.freese.binding.collections.ObservableList;
 import de.freese.jripper.core.JRipper;
 import de.freese.jripper.core.genre.GenreProvider;
 import de.freese.jripper.swing.JRipperSwing;
@@ -17,12 +17,12 @@ import de.freese.jripper.swing.JRipperSwing;
  * @author Thomas Freese
  */
 public class LoadGenresTask extends SwingWorker<Set<String>, Void> {
-    private final ObservableList<String> genresObservableList;
+    private final List<String> genresList;
 
-    public LoadGenresTask(final ObservableList<String> genresObservableList) {
+    public LoadGenresTask(final List<String> genresList) {
         super();
 
-        this.genresObservableList = Objects.requireNonNull(genresObservableList, "genresObservableList required");
+        this.genresList = Objects.requireNonNull(genresList, "genresList required");
     }
 
     @Override
@@ -37,8 +37,8 @@ public class LoadGenresTask extends SwingWorker<Set<String>, Void> {
         try {
             final Set<String> genres = get();
 
-            genresObservableList.clear();
-            genresObservableList.addAll(genres);
+            genresList.clear();
+            genresList.addAll(genres);
         }
         catch (InterruptedException ex) {
             JRipperSwing.LOGGER.error(ex.getMessage(), ex);

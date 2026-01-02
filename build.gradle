@@ -21,7 +21,7 @@ subprojects {
 
     // Workaround for Exception: SourceSet with name 'test' not found.
     if (file("src/main/java").isDirectory()) {
-        apply plugin: "name.remal.sonarlint"
+        apply(plugin: "name.remal.sonarlint")
     }
 
     dependencyManagement {

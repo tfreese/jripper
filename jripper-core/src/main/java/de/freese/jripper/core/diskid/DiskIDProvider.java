@@ -5,13 +5,10 @@ import de.freese.jripper.core.OSProvider;
 import de.freese.jripper.core.model.DiskId;
 
 /**
- * Liefert die DiskId der CD für die CDDB Abfrage.
+ * Returns the DiskId of the CD for the CDDB Query.
  *
  * @author Thomas Freese
  */
 public interface DiskIDProvider extends OSProvider {
-    /**
-     * Liefert die DiskId der CD.
-     */
     DiskId getDiskID(String device) throws Exception;
 }

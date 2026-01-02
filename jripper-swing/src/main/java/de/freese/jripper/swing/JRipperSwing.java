@@ -98,13 +98,13 @@ public final class JRipperSwing {
         // Dummy
         panel.add(Box.createGlue(), GbcBuilder.of(0, 0).weightX(1));
 
-        JButton button = new JButton(new ActionCddbQuery(albumProperty));
+        JButton button = new JButton(new ActionCddbQuery(albumProperty::setValue));
         panel.add(button, GbcBuilder.of(1, 0).anchorCenter().gridWidth(2).fillHorizontal());
 
         // Dummy
         panel.add(Box.createGlue(), GbcBuilder.of(3, 0).weightX(1));
 
-        button = new JButton(new ActionRipping(albumProperty));
+        button = new JButton(new ActionRipping(albumProperty::getValue));
         panel.add(button, GbcBuilder.of(4, 0).anchorCenter().gridWidth(2).fillHorizontal());
 
         // Dummy
@@ -144,7 +144,7 @@ public final class JRipperSwing {
 
         panel.add(textFieldWorkDir, GbcBuilder.of(1, 1).fillHorizontal());
 
-        final JButton button = new JButton(new ActionChooseWorkDir(splitPane.getParent(), workDirProperty));
+        final JButton button = new JButton(new ActionChooseWorkDir(splitPane.getParent(), workDirProperty::getValue, workDirProperty::setValue));
         button.setBorder(BorderFactory.createEmptyBorder());
         button.setFocusPainted(false);
         button.setMargin(new Insets(0, 0, 0, 0));

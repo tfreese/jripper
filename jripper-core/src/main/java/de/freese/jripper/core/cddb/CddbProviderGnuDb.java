@@ -24,7 +24,7 @@ import de.freese.jripper.core.model.AlbumImpl;
 import de.freese.jripper.core.model.DiskId;
 
 /**
- * CDDB Provider für FreeDB.
+ * CDDB Provider for GnuDB.
  *
  * @author Thomas Freese
  */
@@ -43,7 +43,7 @@ public class CddbProviderGnuDb implements CddbProvider {
 
     private static final int PORT = 80;
     /**
-     * freedb.freedb.org gibs nicht mehr.
+     * freedb.freedb.org doesn't exist anymore.
      */
     private static final String SERVER = "gnudb.gnudb.org";
     private static final String USER = "anonymous";
@@ -62,8 +62,8 @@ public class CddbProviderGnuDb implements CddbProvider {
     }
 
     /**
-     * https://gnudb.gnudb.org/~cddb/cddb.cgi?cmd=cddb+read+rock+b111140e&hello=anonymous+localhost+jRipper+1.0.0&proto=6<br>
-     * https://gnudb.gnudb.org/~cddb/cddb.cgi?cmd=cddb+read+misc+ae0ff80e&hello=anonymous+localhost+jRipper+1.0.0&proto=6<br>
+     * <a href="https://gnudb.gnudb.org/~cddb/cddb.cgi?cmd=cddb+read+rock+b111140e&hello=anonymous+localhost+jRipper+1.0.0&proto=6">Karat</a>
+     * <a href="https://gnudb.gnudb.org/~cddb/cddb.cgi?cmd=cddb+read+misc+ae0ff80e&hello=anonymous+localhost+jRipper+1.0.0&proto=6">Culture Beat</a>
      */
     @Override
     public CddbResponse queryAlbum(final DiskId diskID, final String genre) throws Exception {
@@ -76,8 +76,7 @@ public class CddbProviderGnuDb implements CddbProvider {
 
         sb.append(requestPostfix);
 
-        // gnudb.gnudb.org verwendet kein HTTPS !
-        final URL url = URI.create("http://" + SERVER + ":" + PORT + sb).toURL();
+        final URL url = URI.create("https://" + SERVER + ":" + PORT + sb).toURL();
 
         getLogger().debug("Query {}", url);
 
@@ -93,7 +92,7 @@ public class CddbProviderGnuDb implements CddbProvider {
         final CddbResponse cddbResponse = new CddbResponse(status);
 
         if (status == CddbResponse.NO_MATCH || status == CddbResponse.SYNTAX_ERROR) {
-            // Nichts gefunden -> Abbruch
+            // Nothing found -> Exit.
             cddbResponse.setErrorMessage(firstLine);
         }
         else {
@@ -103,21 +102,21 @@ public class CddbProviderGnuDb implements CddbProvider {
                 getLogger().debug(line);
 
                 if (line.startsWith("#") || !line.contains("=")) {
-                    // Kein KeyValue
+                    // No KeyValue.
                     continue;
                 }
 
                 splits = line.split("=", 2);
 
                 if (splits.length == 1) {
-                    // Kein Value
+                    // No Value.
                     continue;
                 }
 
                 final String key = splits[0];
                 String value = splits[1];
 
-                // Value mit möglichem Vorgänger verknüpfen.
+                // Link Value with previous.
                 value = Objects.toString(responseMap.get(key), "") + value;
 
                 responseMap.put(key, value);
@@ -141,9 +140,8 @@ public class CddbProviderGnuDb implements CddbProvider {
                         artistTitle = null;
                     }
 
-                    // if ((splits.length == 1) && StringUtils.isNoneBlank(album.getTitle()))
-                    // {
-                    // // 2. Titel
+                    // if ((splits.length == 1) && StringUtils.isNoneBlank(album.getTitle())) {
+                    // // 2. Title
                     // String title = StringUtils.join(album.getTitle(), " ", artistTitle);
                     // album.setTitle(title);
                     //
@@ -165,7 +163,7 @@ public class CddbProviderGnuDb implements CddbProvider {
                     }
                 }
                 else if ("DGENRE".equals(key)) {
-                    // "Richtiges" Genre auslesen.
+                    // Read "Corret" Genre.
                     final String genre2 = normalize(value);
 
                     if (genre2 != null && !genre2.isBlank()) {
@@ -174,7 +172,7 @@ public class CddbProviderGnuDb implements CddbProvider {
                 }
                 else if ("EXTD".equals(key)) {
                     if (value == null || value.isBlank()) {
-                        // Kein Kommentar.
+                        // No Comment.
                         continue;
                     }
 
@@ -196,14 +194,14 @@ public class CddbProviderGnuDb implements CddbProvider {
                     String trackTitle = null;
 
                     if (value.contains("/")) {
-                        // Annahme Compilation.
+                        // Assume Compilation..
                         splits = value.split("/");
 
                         trackArtist = normalize(splits[0]);
                         trackTitle = normalize(splits[1]);
                     }
                     else {
-                        // Annahme Album.
+                        // Assume Album.
                         splits = value.split(" ");
 
                         for (int i = 0; i < splits.length; i++) {
@@ -219,7 +217,7 @@ public class CddbProviderGnuDb implements CddbProvider {
                         trackTitle = JRipperUtils.trim(trackTitle);
                     }
 
-                    // Wenn TrackArtist=null wird AlbumArtist genommen.
+                    // If TrackArtist is null, take AlbumArtist.
                     album.addTrack(trackArtist, trackTitle);
                 }
             }
@@ -234,10 +232,8 @@ public class CddbProviderGnuDb implements CddbProvider {
     }
 
     /**
-     * https://gnudb.gnudb.org/~cddb/cddb.cgi?cmd=cddb+query+b111140e+14+150+24545+41797+60822+80152+117002+142550+169755+192057+211360+239297+256325+279075+306220+4374
-     * &hello=anonymous+localhost+jRipper+1.0.0&proto=6<br>
-     * https://gnudb.gnudb.org/~cddb/cddb.cgi?cmd=cddb+query+ae0ff80e+14+150+10972+37962+56825+81450+103550+127900+153025+179675+200425+225187+247687+270712+295700+4090
-     * &hello=anonymous+localhost+jRipper+1.0.0&proto=6<br>
+     * <a href="https://gnudb.gnudb.org/~cddb/cddb.cgi?cmd=cddb+query+b1111485+14+150+24545+41797+60822+80152+117002+142550+169755+192057+211360+239297+256325+279075+306220+4374&hello=anonymous+localhost+jRipper+1.0.0&proto=6">Karat</a>
+     * <a href="https://gnudb.gnudb.org/~cddb/cddb.cgi?cmd=cddb+query+ae0ff881+14+150+10972+37962+56825+81450+103550+127900+153025+179675+200425+225187+247687+270712+295700+4090&hello=anonymous+localhost+jRipper+1.0.0&proto=6">Culture Beat</a><br>
      */
     @Override
     public CddbResponse queryGenres(final DiskId diskID) throws Exception {
@@ -256,8 +252,7 @@ public class CddbProviderGnuDb implements CddbProvider {
 
         sb.append(requestPostfix);
 
-        // gnudb.gnudb.org verwendet kein HTTPS !
-        final URL url = URI.create("http://" + SERVER + ":" + PORT + sb).toURL();
+        final URL url = URI.create("https://" + SERVER + ":" + PORT + sb).toURL();
 
         getLogger().debug("Query {}", url);
 
@@ -273,7 +268,7 @@ public class CddbProviderGnuDb implements CddbProvider {
         final CddbResponse cddbResponse = new CddbResponse(status);
 
         if (status == CddbResponse.NO_MATCH || status == CddbResponse.SYNTAX_ERROR) {
-            // Nichts gefunden -> Abbruch
+            // Nothing found -> Exit.
             cddbResponse.setErrorMessage(firstLine);
         }
         else {
@@ -282,7 +277,7 @@ public class CddbProviderGnuDb implements CddbProvider {
             for (String line : lines) {
                 getLogger().debug(line);
 
-                // Abschluss Kennung
+                // Finish Indicator.
                 if (line.startsWith(".")) {
                     break;
                 }
@@ -302,7 +297,7 @@ public class CddbProviderGnuDb implements CddbProvider {
                 genres.add(genre);
 
                 if (status == CddbResponse.INEXACT_MATCHES) {
-                    // Erstes Genre nehmen, DiskId aktualisieren und Abbruch.
+                    // Take first Genre, update DiskId and exit.
                     final String id = JRipperUtils.trim(splits[1]);
                     diskID.setID(id);
                     break;
@@ -322,24 +317,24 @@ public class CddbProviderGnuDb implements CddbProvider {
     }
 
     /**
-     * Normalisiert die Texte.<br>
+     * Normalising Strings.<br>
      * <ul>
      * <li>trimToEmpty</li>
      * <li>toLowerCase</li>
      * <li>capitalize</li>
-     * <li>' cd ' durch ' CD ' ersetzen</li>
-     * <li>'(cd ' durch '(CD ' ersetzen</li>
-     * <li>dj durch DJ ersetzen</li>
-     * <li>' feat ' durch ' Feat. ' ersetzen</li>
-     * <li>':' durch ' - ' ersetzen</li>
-     * <li>'<' durch '-' ersetzen</li>
-     * <li>'>' durch '-' ersetzen</li>
-     * <li>'[' durch '(' ersetzen</li>
-     * <li>']' durch ')' ersetzen</li>
-     * <li>'´' durch ''' ersetzen</li>
-     * <li>'`' durch ''' ersetzen</li>
-     * <li>Mehrfache Spaces durch einen ersetzen</li>
-     * <li>nicht erlaubte Zeichen: < > ? " : | \ / *</li>
+     * <li>' cd ' replace by ' CD '</li>
+     * <li>'(cd ' replace by '(CD '</li>
+     * <li>dj replace by DJ</li>
+     * <li>' feat ' replace by ' Feat. '</li>
+     * <li>':' replace by ' - '</li>
+     * <li>'<' replace by '-'</li>
+     * <li>'>' replace by '-'</li>
+     * <li>'[' replace by '('</li>
+     * <li>']' replace by ')'</li>
+     * <li>'´' replace by '''</li>
+     * <li>'`' replace by '''</li>
+     * <li>Multiple Spaces replace by one</li>
+     * <li>not allowed Chars: < > ? " : | \ / *</li>
      * </ul>
      */
     private String normalize(final String text) {
@@ -364,7 +359,7 @@ public class CddbProviderGnuDb implements CddbProvider {
         value = value.replace("`", "'");
         value = JRipperUtils.normalizeSpace(value);
 
-        // Nach '(', '-', '.' auch Grossbuchstaben.
+        // After '(', '-', '.' allow Capital Letters.
         if (value.contains("(") || value.contains("-") || value.contains(".")) {
             final StringBuilder sb = new StringBuilder();
 

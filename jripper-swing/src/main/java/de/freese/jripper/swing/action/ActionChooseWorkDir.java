@@ -5,12 +5,13 @@ import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.Serial;
+import java.util.Objects;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JFileChooser;
-
-import de.freese.binding.property.Property;
 
 /**
  * {@link Action} fot the Working-Directory.
@@ -22,26 +23,28 @@ public class ActionChooseWorkDir extends AbstractAction {
     private static final long serialVersionUID = 3262325088354448846L;
 
     private final Component parent;
-    private final transient Property<String> workDirProperty;
+    private final transient Consumer<String> workDirConsumer;
+    private final transient Supplier<String> workDirSupplier;
 
-    public ActionChooseWorkDir(final Component parent, final Property<String> workDirProperty) {
+    public ActionChooseWorkDir(final Component parent, final Supplier<String> workDirSupplier, final Consumer<String> workDirConsumer) {
         super("...");
 
         this.parent = parent;
-        this.workDirProperty = workDirProperty;
+        this.workDirSupplier = Objects.requireNonNull(workDirSupplier, "workDirSupplier required");
+        this.workDirConsumer = Objects.requireNonNull(workDirConsumer, "workDirConsumer required");
     }
 
     @Override
     public void actionPerformed(final ActionEvent event) {
         final JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setCurrentDirectory(new File(workDirProperty.getValue()));
+        fileChooser.setCurrentDirectory(new File(workDirSupplier.get()));
         fileChooser.setAcceptAllFileFilterUsed(false);
         fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 
         final int returnVal = fileChooser.showDialog(parent, "Work.-Dir.");
 
         if (returnVal == JFileChooser.APPROVE_OPTION) {
-            workDirProperty.setValue(fileChooser.getSelectedFile().getAbsolutePath());
+            workDirConsumer.accept(fileChooser.getSelectedFile().getAbsolutePath());
         }
     }
 }

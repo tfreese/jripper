@@ -4,14 +4,14 @@ package de.freese.jripper.core.model;
 import java.util.Objects;
 
 /**
- * Informationen über einen Titel einer CD.
+ * CD-Title Descriptor.
  *
  * @author Thomas Freese
  */
 public class Track {
     private Album album;
     /**
-     * Nur bei Compilations gefüllt.
+     * Only for Compilations.
      */
     private String artist;
     private int number;
@@ -27,7 +27,7 @@ public class Track {
     }
 
     /**
-     * Nur bei Compilations gefüllt.
+     * Only for Compilations.
      */
     public String getArtist() {
         if (artist == null || artist.isBlank()) {
@@ -50,7 +50,7 @@ public class Track {
     }
 
     /**
-     * Nur bei Compilations gefüllt.
+     * Only for Compilations.
      */
     public void setArtist(final String artist) {
         this.artist = Objects.requireNonNull(artist, "artist required");

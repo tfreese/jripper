@@ -13,7 +13,7 @@ import de.freese.jripper.core.process.AbstractProcess;
 import de.freese.jripper.core.process.ProcessMonitor;
 
 /**
- * Linux Implementierung mit dem Programm "lame", für Überprüfung mit "mp3val" und für den ReplayGain mit "mp3gain".
+ * Linux Implementation with "lame", "mp3val" and "mp3gain".
  *
  * @author Thomas Freese
  */
@@ -85,7 +85,7 @@ public class EncoderLinuxMp3 extends AbstractProcess implements Encoder {
         }
 
         // Replay-Gain.
-        monitor.monitorText(String.format("%n%s%n", "Generiere Replay-Gain..."));
+        monitor.monitorText(String.format("%n%s%n", "Create Replay-Gain..."));
         command.clear();
         command.add("mp3gain");
         command.add("-r");

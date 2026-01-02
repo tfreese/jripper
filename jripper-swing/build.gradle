@@ -3,7 +3,7 @@ plugins {
     id("org.springframework.boot")
 }
 
-description = "Java Ripper Swing Modul"
+description = "Java Ripper Swing Module"
 
 dependencies {
     implementation(project(":jripper-core"))

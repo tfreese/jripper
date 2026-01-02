@@ -13,7 +13,7 @@ import de.freese.jripper.core.process.AbstractProcess;
 import de.freese.jripper.core.process.ProcessMonitor;
 
 /**
- * Liefert die Genres der lame-Definition.
+ * Returns the Genres from the lame-Definition.
  *
  * @author Thomas Freese
  */

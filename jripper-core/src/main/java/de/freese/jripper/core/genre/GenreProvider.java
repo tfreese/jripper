@@ -10,7 +10,7 @@ import de.freese.jripper.core.OSProvider;
  */
 public interface GenreProvider extends OSProvider {
     /**
-     * Liefert mögliche Genres.
+     * Returns available Genres.
      */
     Set<String> getGenres() throws Exception;
 }
