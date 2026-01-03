@@ -3,13 +3,13 @@ package de.freese.jripper.core.encoder;
 
 import java.io.PrintWriter;
 
-import de.freese.jripper.core.process.PrintWriterProcessMonitor;
+import de.freese.jripper.core.callback.PrintWriterCallback;
 
 /**
  * @author Thomas Freese
  */
-public class LameProcessMonitor extends PrintWriterProcessMonitor {
-    public LameProcessMonitor(final PrintWriter printWriter) {
+public class LameProcessCallback extends PrintWriterCallback {
+    public LameProcessCallback(final PrintWriter printWriter) {
         super(printWriter);
     }
 
@@ -44,9 +44,8 @@ public class LameProcessMonitor extends PrintWriterProcessMonitor {
     // kbps LR MS % long switch short %
     // 320.0 74.3 25.7 78.7 11.7 9.7 [A[A[A
     // 400/12453 ( 3%)| 0:00/ 0:29| 0:00/ 0:30| 10.884x| 0:29
-
     @Override
-    public void monitorProcess(final String line) {
+    public void process(final String line) {
         if (line.startsWith("Encoding") || line.contains("to") || line.contains("Frame")) {
             getPrintWriter().println(line);
         }
@@ -54,7 +53,7 @@ public class LameProcessMonitor extends PrintWriterProcessMonitor {
             // int start = line.indexOf(" (");
             // int end = line.indexOf("%)");
             //
-            // String prozentS = line.substring(start + 2, end).trim();
+            // String prozentS = line.substring(start + 2, end).strip();
             // int prozent = Integer.parseInt(prozentS);
 
             // if ((prozent % 5) == 0) {

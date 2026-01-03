@@ -7,10 +7,11 @@ import java.util.List;
 
 import de.freese.jripper.core.JRipperUtils;
 import de.freese.jripper.core.Settings;
+import de.freese.jripper.core.callback.LoggerCallback;
+import de.freese.jripper.core.callback.ProcessCallback;
 import de.freese.jripper.core.model.Album;
 import de.freese.jripper.core.model.Track;
 import de.freese.jripper.core.process.AbstractProcess;
-import de.freese.jripper.core.process.ProcessMonitor;
 
 /**
  * Linux Implementation with "flac" and "metaflac".
@@ -19,7 +20,7 @@ import de.freese.jripper.core.process.ProcessMonitor;
  */
 public class EncoderLinuxFlac extends AbstractProcess implements Encoder {
     @Override
-    public void encode(final Album album, final File directory, final ProcessMonitor monitor) throws Exception {
+    public void encode(final Album album, final File directory, final ProcessCallback processCallback, final LoggerCallback loggerCallback) throws Exception {
         final String diskID = album.getDiskID().getID();
         final List<String> flacFiles = new ArrayList<>();
         final List<String> command = new ArrayList<>();
@@ -42,10 +43,10 @@ public class EncoderLinuxFlac extends AbstractProcess implements Encoder {
             command.add("--tag=DATE=" + album.getYear());
             command.add("--tag=COMMENT=" + album.getComment());
             command.add("--tag=TOTALTRACKS=" + album.getTrackCount());
-            command.add("--tag=TRACKTOTAL=" + album.getTrackCount()); // Für Player-Kompatibilität
+            command.add("--tag=TRACKTOTAL=" + album.getTrackCount()); // For Player-Compatibility.
             command.add("--tag=DISCNUMBER=" + album.getDiskNumber());
             command.add("--tag=TOTALDISCS=" + album.getTotalDisks());
-            command.add("--tag=DISCTOTAL=" + album.getTotalDisks()); // Für Player-Kompatibilität
+            command.add("--tag=DISCTOTAL=" + album.getTotalDisks()); // For Player-Compatibility.
             command.add("--tag=DISKID=" + diskID);
 
             String flacFile = String.format("%s (%s) - %02d - %s.flac", track.getArtist(), album.getTitle(), track.getNumber(), track.getTitle());
@@ -55,20 +56,20 @@ public class EncoderLinuxFlac extends AbstractProcess implements Encoder {
             command.add("-o");
             command.add(flacFile);
 
-            execute(command, directory, monitor);
+            execute(command, directory, processCallback);
 
-            // Überprüfung.
+            // Check.
             command.clear();
             command.add("flac");
             command.add("-tw");
             command.add(flacFile);
-            execute(command, directory, monitor);
+            execute(command, directory, processCallback);
 
             // metaflac --list "$flacFile"
         }
 
         // Replay-Gain.
-        monitor.monitorText(String.format("%n%s%n", "Create Replay-Gain..."));
+        loggerCallback.log(String.format("%n%s%n", "Create Replay-Gain..."));
         command.clear();
         command.add("metaflac");
         command.add("--add-replay-gain");
@@ -76,7 +77,7 @@ public class EncoderLinuxFlac extends AbstractProcess implements Encoder {
         command.addAll(flacFiles);
         // command.add("*.flac");
 
-        execute(command, directory, monitor);
+        execute(command, directory, processCallback);
     }
 
     @Override

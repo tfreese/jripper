@@ -7,10 +7,11 @@ import java.util.List;
 
 import de.freese.jripper.core.JRipperUtils;
 import de.freese.jripper.core.Settings;
+import de.freese.jripper.core.callback.LoggerCallback;
+import de.freese.jripper.core.callback.ProcessCallback;
 import de.freese.jripper.core.model.Album;
 import de.freese.jripper.core.model.Track;
 import de.freese.jripper.core.process.AbstractProcess;
-import de.freese.jripper.core.process.ProcessMonitor;
 
 /**
  * Linux Implementation with "lame", "mp3val" and "mp3gain".
@@ -19,7 +20,7 @@ import de.freese.jripper.core.process.ProcessMonitor;
  */
 public class EncoderLinuxMp3 extends AbstractProcess implements Encoder {
     @Override
-    public void encode(final Album album, final File directory, final ProcessMonitor monitor) throws Exception {
+    public void encode(final Album album, final File directory, final ProcessCallback processCallback, final LoggerCallback loggerCallback) throws Exception {
         final String diskID = album.getDiskID().getID();
         final List<String> mp3Files = new ArrayList<>();
         final List<String> command = new ArrayList<>();
@@ -70,22 +71,22 @@ public class EncoderLinuxMp3 extends AbstractProcess implements Encoder {
 
             command.add(mp3File);
 
-            execute(command, directory, monitor);
+            execute(command, directory, processCallback);
 
-            // Überprüfung.
+            // Check.
             command.clear();
             command.add("mp3val");
             command.add(mp3File);
             command.add("-f");
             command.add("-nb");
 
-            execute(command, directory, monitor);
+            execute(command, directory, processCallback);
 
             // mp3info "$OUTPUT"
         }
 
         // Replay-Gain.
-        monitor.monitorText(String.format("%n%s%n", "Create Replay-Gain..."));
+        loggerCallback.log(String.format("%n%s%n", "Create Replay-Gain..."));
         command.clear();
         command.add("mp3gain");
         command.add("-r");
@@ -94,7 +95,7 @@ public class EncoderLinuxMp3 extends AbstractProcess implements Encoder {
         command.addAll(mp3Files);
         // command.add("*.mp3");
 
-        execute(command, directory, monitor);
+        execute(command, directory, processCallback);
     }
 
     @Override

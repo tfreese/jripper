@@ -9,25 +9,22 @@ import de.freese.jripper.core.JRipperUtils;
 import de.freese.jripper.core.Settings;
 import de.freese.jripper.core.model.DiskId;
 import de.freese.jripper.core.process.AbstractProcess;
-import de.freese.jripper.core.process.ProcessMonitor;
 
 /**
  * Linux Implementation with "cd-discid".
  *
  * @author Thomas Freese
  */
-public class DiskIDProviderLinux extends AbstractProcess implements DiskIDProvider, ProcessMonitor {
-    private StringBuilder sb;
-
+public class DiskIDProviderLinux extends AbstractProcess implements DiskIDProvider {
     @Override
     public DiskId getDiskID(final String device) throws Exception {
         final List<String> command = new ArrayList<>();
         command.add("cd-discid");
         command.add(device);
 
-        sb = new StringBuilder();
+        final StringBuilder sb = new StringBuilder();
 
-        execute(command, new File(Settings.getInstance().getWorkDir()), this);
+        execute(command, new File(Settings.getInstance().getWorkDir()), sb::append);
 
         final String id = sb.toString();
 
@@ -38,16 +35,6 @@ public class DiskIDProviderLinux extends AbstractProcess implements DiskIDProvid
         }
 
         return new DiskId(id);
-    }
-
-    @Override
-    public void monitorProcess(final String line) {
-        sb.append(line);
-    }
-
-    @Override
-    public void monitorText(final String line) {
-        // Empty
     }
 
     @Override

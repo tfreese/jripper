@@ -9,10 +9,6 @@ dependencies {
     api("org.slf4j:slf4j-api")
 
     runtimeOnly("ch.qos.logback:logback-classic")
-    runtimeOnly("org.codehaus.janino:janino")
-
-    testImplementation("org.junit.jupiter:junit-jupiter")
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
 // test {

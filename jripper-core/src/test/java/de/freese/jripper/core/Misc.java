@@ -1,8 +1,6 @@
 // Created: 07.03.2013
 package de.freese.jripper.core;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -37,15 +35,15 @@ public final class Misc {
             LOGGER.info(prozent);
         }
 
-        // Shell öffnen und Skript ausführen.
-        final List<String> command = new ArrayList<>();
-
-        command.add("konsole");
-        // command.add("--nofork");
-        command.add("--new-tab");
-        command.add("--hold");
-        command.add("-e");
-        command.add("/tmp/test.sh");
+        // Open Shell and execute Script.
+        // final List<String> command = new ArrayList<>();
+        //
+        // command.add("konsole");
+        // // command.add("--nofork");
+        // command.add("--new-tab");
+        // command.add("--hold");
+        // command.add("-e");
+        // command.add("/tmp/test.sh");
 
         // command.add("xterm");
         // // command.add("-T");

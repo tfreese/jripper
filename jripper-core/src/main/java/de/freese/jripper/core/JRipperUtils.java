@@ -58,7 +58,7 @@ public final class JRipperUtils {
         final File dir = new File(getWorkDir(album), "flac");
 
         if (createOrDelete) {
-            createOrCleanDir(album, dir);
+            createOrCleanDir(dir);
         }
 
         return dir;
@@ -72,7 +72,7 @@ public final class JRipperUtils {
         final File dir = new File(getWorkDir(album), "mp3");
 
         if (createOrDelete) {
-            createOrCleanDir(album, dir);
+            createOrCleanDir(dir);
         }
 
         return dir;
@@ -90,7 +90,7 @@ public final class JRipperUtils {
         final File dir = new File(getWorkDir(album), "wav");
 
         if (createOrDelete) {
-            createOrCleanDir(album, dir);
+            createOrCleanDir(dir);
         }
 
         return dir;
@@ -259,7 +259,7 @@ public final class JRipperUtils {
      * Vorhandene Daten werden gelöscht.
      * Format: Arbeitsverzeichnis/ALBUMTITEL/PFAD<br>
      */
-    private static void createOrCleanDir(final Album album, final File directory) throws IOException {
+    private static void createOrCleanDir(final File directory) throws IOException {
         if (directory.exists()) {
             deleteDirectoryRecursive(directory.toPath());
         }

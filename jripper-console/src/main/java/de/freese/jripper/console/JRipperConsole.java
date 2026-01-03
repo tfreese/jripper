@@ -11,16 +11,17 @@ import java.nio.charset.StandardCharsets;
 import de.freese.jripper.core.JRipper;
 import de.freese.jripper.core.JRipperUtils;
 import de.freese.jripper.core.Settings;
+import de.freese.jripper.core.callback.LoggerCallback;
+import de.freese.jripper.core.callback.PrintWriterCallback;
+import de.freese.jripper.core.callback.ProcessCallback;
 import de.freese.jripper.core.cddb.CddbResponse;
 import de.freese.jripper.core.encoder.Encoder;
 import de.freese.jripper.core.encoder.EncoderLinuxMp3;
-import de.freese.jripper.core.encoder.LameProcessMonitor;
+import de.freese.jripper.core.encoder.LameProcessCallback;
 import de.freese.jripper.core.model.Album;
 import de.freese.jripper.core.model.AlbumImpl;
 import de.freese.jripper.core.model.DiskId;
 import de.freese.jripper.core.model.Track;
-import de.freese.jripper.core.process.PrintWriterProcessMonitor;
-import de.freese.jripper.core.process.ProcessMonitor;
 import de.freese.jripper.core.ripper.Ripper;
 
 /**
@@ -29,14 +30,59 @@ import de.freese.jripper.core.ripper.Ripper;
  * @author Thomas Freese
  */
 public class JRipperConsole {
-    static void main(final String[] args) {
+    static void main() {
         final JRipperConsole console = new JRipperConsole();
         console.showMainMenu();
     }
 
+    private static void encode(final Album album, final PrintWriter printWriter, final Encoder encoder, final File directory) throws Exception {
+        final ProcessCallback processCallback;
+        final LoggerCallback loggerCallback;
+
+        if (encoder instanceof EncoderLinuxMp3) {
+            final LameProcessCallback lameProcessCallback = new LameProcessCallback(printWriter);
+
+            processCallback = lameProcessCallback;
+            loggerCallback = lameProcessCallback;
+        }
+        else {
+            final PrintWriterCallback printWriterCallback = new PrintWriterCallback(printWriter);
+
+            processCallback = printWriterCallback;
+            loggerCallback = printWriterCallback;
+        }
+
+        encoder.encode(album, directory, processCallback, loggerCallback);
+    }
+
+    private static DiskId getDiskID() throws Exception {
+        final String device = Settings.getInstance().getDevice();
+
+        return JRipper.getInstance().getDiskIDProvider().getDiskID(device);
+    }
+
+    private static String queryCDDB(final DiskId diskID) throws Exception {
+        final CddbResponse cddbResponse = JRipper.getInstance().getCddbProvider().queryGenres(diskID);
+
+        return cddbResponse.getGenres().getFirst();
+    }
+
+    private static Album readCDDB(final DiskId diskID, final String genre) throws Exception {
+        final CddbResponse cddbResponse = JRipper.getInstance().getCddbProvider().queryAlbum(diskID, genre);
+
+        return cddbResponse.getAlbum();
+    }
+
+    private static void rip(final Album album, final PrintWriter printWriter) throws Exception {
+        final String device = Settings.getInstance().getDevice();
+        final Ripper ripper = JRipper.getInstance().getRipper();
+        final File directory = JRipperUtils.getWavDir(album, true);
+
+        ripper.rip(device, directory, new PrintWriterCallback(printWriter));
+    }
+
     private final PrintWriter printWriter;
     private final BufferedReader reader;
-
     private Album album;
 
     public JRipperConsole() {
@@ -55,7 +101,7 @@ public class JRipperConsole {
             printWriter = console.writer();
         }
         else {
-            // In Eclipse kann Console null sein.
+            // In IDE kann Console null sein.
             reader = new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8));
             printWriter = new PrintWriter(System.out, true, StandardCharsets.UTF_8);
         }
@@ -147,25 +193,6 @@ public class JRipperConsole {
         }
     }
 
-    private void encode(final Album album, final PrintWriter printWriter, final Encoder encoder, final File directory) throws Exception {
-        ProcessMonitor monitor = null;
-
-        if (encoder instanceof EncoderLinuxMp3) {
-            monitor = new LameProcessMonitor(printWriter);
-        }
-        else {
-            monitor = new PrintWriterProcessMonitor(printWriter);
-        }
-
-        encoder.encode(album, directory, monitor);
-    }
-
-    private DiskId getDiskID() throws Exception {
-        final String device = Settings.getInstance().getDevice();
-
-        return JRipper.getInstance().getDiskIDProvider().getDiskID(device);
-    }
-
     private String getInput() throws Exception {
         println("%s%s%s: ", AnsiCodes.ANSI_GREEN, "Eingabe", AnsiCodes.ANSI_RESET);
 
@@ -174,7 +201,7 @@ public class JRipperConsole {
 
     private void print(final String format, final Object... params) {
         if (JRipperUtils.isDevelopment()) {
-            // In der Entwicklungsumgebung die ANSI-Codes entfernen.
+            // In IDE die ANSI-Codes entfernen.
             for (int i = 0; i < params.length; i++) {
                 if (params[i] == null) {
                     continue;
@@ -197,26 +224,6 @@ public class JRipperConsole {
 
     private void println(final String format, final Object... params) {
         print(format + System.lineSeparator(), params);
-    }
-
-    private String queryCDDB(final DiskId diskID) throws Exception {
-        final CddbResponse cddbResponse = JRipper.getInstance().getCddbProvider().queryGenres(diskID);
-
-        return cddbResponse.getGenres().getFirst();
-    }
-
-    private Album readCDDB(final DiskId diskID, final String genre) throws Exception {
-        final CddbResponse cddbResponse = JRipper.getInstance().getCddbProvider().queryAlbum(diskID, genre);
-
-        return cddbResponse.getAlbum();
-    }
-
-    private void rip(final Album album, final PrintWriter printWriter) throws Exception {
-        final String device = Settings.getInstance().getDevice();
-        final Ripper ripper = JRipper.getInstance().getRipper();
-        final File directory = JRipperUtils.getWavDir(album, true);
-
-        ripper.rip(device, directory, new PrintWriterProcessMonitor(printWriter));
     }
 
     private void showAlbum(final Album album) {

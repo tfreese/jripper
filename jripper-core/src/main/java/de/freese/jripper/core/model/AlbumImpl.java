@@ -10,7 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Zusammenfassendes Objekt für eine CD.
+ * CD-Descriptor.
  *
  * @author Thomas Freese
  */

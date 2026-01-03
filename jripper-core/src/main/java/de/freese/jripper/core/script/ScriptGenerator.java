@@ -10,12 +10,12 @@ import de.freese.jripper.core.model.Album;
  */
 public interface ScriptGenerator {
     /**
-     * Führt das Skript aus.
+     * Execute the Script.
      */
     void execute(File script) throws Exception;
 
     /**
-     * Erstellt das Skript mit Ausführungsrechten.
+     * Create the Script.
      */
     File generate(Album album, File folder) throws Exception;
 }

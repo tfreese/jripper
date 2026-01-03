@@ -1,30 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configuration debug="false" scan="false" scanPeriod="60 seconds">
+<configuration debug="false" scan="false">
     <!--statusListener class="ch.qos.logback.core.status.OnConsoleStatusListener" /-->
 
     <!--Levels are ordered: TRACE < DEBUG < INFO < WARN < ERROR -->
     <!-- %date{yyyy-MM-dd HH:mm:ss.SSS} -->
-    <property name="pattern" value="%date{HH:mm:ss.SSS} - %-5level[%thread] - %logger{0}[%method] - %message%n" />
-    <property name="log.dir" value="${user.home}/.java-apps/jripper" />
-
-    <if condition='isNull("pattern")'>
-        <then>
-            <property name="pattern" value="%date{HH:mm:ss.SSS} - %.-1level - %-35.-35logger{0} - %message%n" />
-        </then>
-        <else>
-        </else>
-    </if>
-    <if condition='isNull("log.dir")'>
-        <then>
-            <property name="log.dir" value="${user.home}/.java-apps/jripper" />
-        </then>
-    </if>
+    <property name="PATTERN" value="%date{HH:mm:ss.SSS} - %-5level[%thread] - %logger{0}.%method - %message%n" />
+    <property name="LOG_DIRECTORY" value="${LOG_DIR:-${user.home}/.java-apps/jripper}" />
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <target>System.out</target>
-        <immediateFlush>false</immediateFlush>
+        <immediateFlush>true</immediateFlush>
         <encoder>
-            <pattern>${pattern}</pattern>
+            <pattern>${PATTERN}</pattern>
             <outputPatternAsHeader>false</outputPatternAsHeader>
         </encoder>
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
@@ -38,7 +25,7 @@
         <target>System.err</target>
         <immediateFlush>false</immediateFlush>
         <encoder>
-            <pattern>${pattern}</pattern>
+            <pattern>${PATTERN}</pattern>
             <outputPatternAsHeader>false</outputPatternAsHeader>
         </encoder>
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
@@ -47,15 +34,15 @@
     </appender>
 
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${log.dir}/jripper.log</file>
+        <file>${LOG_DIRECTORY}/jripper.log</file>
         <append>true</append>
         <immediateFlush>true</immediateFlush>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${log.dir}/%d{yyyy-MM,aux}/jripper.%d{yyyy-MM-dd}.log.gz</fileNamePattern>
+            <fileNamePattern>${LOG_DIRECTORY}/%d{yyyy-MM,aux}/jripper.%d{yyyy-MM-dd}.log.gz</fileNamePattern>
             <maxHistory>30</maxHistory>
         </rollingPolicy>
         <encoder>
-            <pattern>${pattern}</pattern>
+            <pattern>${PATTERN}</pattern>
             <outputPatternAsHeader>false</outputPatternAsHeader>
         </encoder>
         <!--filter class="ch.qos.logback.classic.filter.LevelFilter">

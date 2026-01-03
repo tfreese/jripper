@@ -10,43 +10,32 @@ import java.util.TreeSet;
 import de.freese.jripper.core.JRipperUtils;
 import de.freese.jripper.core.Settings;
 import de.freese.jripper.core.process.AbstractProcess;
-import de.freese.jripper.core.process.ProcessMonitor;
 
 /**
  * Returns the Genres from the lame-Definition.
  *
  * @author Thomas Freese
  */
-public class GenreProviderLinux extends AbstractProcess implements GenreProvider, ProcessMonitor {
-    private final Set<String> genres = new TreeSet<>();
-
+public class GenreProviderLinux extends AbstractProcess implements GenreProvider {
     @Override
     public Set<String> getGenres() throws Exception {
-        genres.clear();
+        final Set<String> genres = new TreeSet<>();
 
         final List<String> command = new ArrayList<>();
         command.add("lame");
         command.add("--genre-list");
 
-        execute(command, new File(Settings.getInstance().getWorkDir()), this);
+        execute(command, new File(Settings.getInstance().getWorkDir()), line -> {
+            final String[] splits = line.split(" ", 2);
+
+            genres.add(splits[1]);
+        });
 
         if (getLogger().isDebugEnabled()) {
             getLogger().debug(genres.toString());
         }
 
         return genres;
-    }
-
-    @Override
-    public void monitorProcess(final String line) {
-        final String[] splits = line.split(" ", 2);
-
-        genres.add(splits[1]);
-    }
-
-    @Override
-    public void monitorText(final String line) {
-        // Empty
     }
 
     @Override

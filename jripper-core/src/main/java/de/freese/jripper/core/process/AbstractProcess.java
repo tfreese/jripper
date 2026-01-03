@@ -10,6 +10,7 @@ import java.util.List;
 import org.slf4j.Logger;
 
 import de.freese.jripper.core.JRipper;
+import de.freese.jripper.core.callback.ProcessCallback;
 
 /**
  * @author Thomas Freese
@@ -29,7 +30,7 @@ public abstract class AbstractProcess {
         super();
     }
 
-    protected void execute(final List<String> command, final File directory, final ProcessMonitor monitor) throws Exception {
+    protected void execute(final List<String> command, final File directory, final ProcessCallback processCallback) throws Exception {
         if (!directory.exists()) {
             directory.mkdirs();
         }
@@ -50,7 +51,7 @@ public abstract class AbstractProcess {
             String line = null;
 
             while ((line = inputReader.readLine()) != null) {
-                monitor.monitorProcess(line);
+                processCallback.process(line);
             }
         }
 

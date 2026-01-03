@@ -10,11 +10,11 @@ import java.util.List;
 
 import de.freese.jripper.core.JRipperUtils;
 import de.freese.jripper.core.Settings;
+import de.freese.jripper.core.callback.EmptyCallback;
+import de.freese.jripper.core.callback.ProcessLoggerCallback;
 import de.freese.jripper.core.model.Album;
 import de.freese.jripper.core.model.Track;
 import de.freese.jripper.core.process.AbstractProcess;
-import de.freese.jripper.core.process.EmptyProcessMonitor;
-import de.freese.jripper.core.process.LoggerProcessMonitor;
 
 /**
  * @author Thomas Freese
@@ -43,7 +43,7 @@ public class ScriptGeneratorLinux extends AbstractProcess implements ScriptGener
         command.add("-e");
         command.add(script.getAbsolutePath());
 
-        execute(command, script.getParentFile(), new EmptyProcessMonitor());
+        execute(command, script.getParentFile(), new EmptyCallback());
     }
 
     @Override
@@ -79,7 +79,7 @@ public class ScriptGeneratorLinux extends AbstractProcess implements ScriptGener
                 writeProgramChecks(pw, "mp3gain");
             }
 
-            // Variablen
+            // Variables
             pw.println();
             pw.println("BASE_DIR=$PWD");
             // pw.printf("BASE_DIR=%s/\n", folder.getAbsoluteFile());
@@ -99,7 +99,7 @@ public class ScriptGeneratorLinux extends AbstractProcess implements ScriptGener
                 writeMP3(pw, album);
             }
 
-            // Shell offen lassen
+            // Keep the Shell open.
             pw.println();
             // pw.println("$SHELL");
             pw.println("exit");
@@ -109,13 +109,13 @@ public class ScriptGeneratorLinux extends AbstractProcess implements ScriptGener
         command.add("chmod");
         command.add("+x");
         command.add(script.getAbsolutePath());
-        execute(command, script.getParentFile(), new LoggerProcessMonitor(getLogger()));
+        execute(command, script.getParentFile(), new ProcessLoggerCallback(getLogger()));
 
         return script;
     }
 
     /**
-     * Formatiert den Pfad des Albums.
+     * Create Path from Album.
      */
     private String getPath(final Album album) {
         // String path = StringUtils.replace(album.getTitle(), " ", "-");
@@ -151,10 +151,10 @@ public class ScriptGeneratorLinux extends AbstractProcess implements ScriptGener
             pw.printf("\t--tag=COMMENT=\"%s\" \\%n", album.getComment());
             pw.printf("\t--tag=TRACKNUMBER=%d \\%n", track.getNumber());
             pw.printf("\t--tag=TOTALTRACKS=%d \\%n", album.getTrackCount());
-            pw.printf("\t--tag=TRACKTOTAL=%d \\%n", album.getTrackCount()); // Für Player-Kompatibilität
+            pw.printf("\t--tag=TRACKTOTAL=%d \\%n", album.getTrackCount()); // For Player-Compatibility.
             pw.printf("\t--tag=DISCNUMBER=%d \\%n", album.getDiskNumber());
             pw.printf("\t--tag=TOTALDISCS=%d \\%n", album.getTotalDisks());
-            pw.printf("\t--tag=DISCTOTAL=%d \\%n", album.getTotalDisks()); // Für Player-Kompatibilität
+            pw.printf("\t--tag=DISCTOTAL=%d \\%n", album.getTotalDisks()); // For Player-Compatibility.
             pw.printf("\t--tag=DISKID=%s \\%n", diskID);
 
             String flacFile = String.format("\"%s (%s) - %02d - %s.flac\"", track.getArtist(), album.getTitle(), track.getNumber(), track.getTitle());
@@ -206,7 +206,7 @@ public class ScriptGeneratorLinux extends AbstractProcess implements ScriptGener
             pw.printf("\t--tv \"DISCID=%s\" \\%n", diskID);
             pw.printf("\t--tv \"DISCNUMBER=%d\" \\%n", album.getDiskNumber());
             pw.printf("\t--tv \"TOTALDISCS=%d\" \\%n", album.getTotalDisks());
-            pw.printf("\t--tv \"DISCTOTAL=%d\" \\%n", album.getTotalDisks());  // Für Player-Kompatibilität.
+            pw.printf("\t--tv \"DISCTOTAL=%d\" \\%n", album.getTotalDisks());  // For Player-Compatibility.
             pw.printf("\t\"$BASE_DIR\"/wav/track%02d.cdda.wav", track.getNumber());
 
             String mp3File = String.format("\"%s (%s) - %02d - %s.mp3\"", track.getArtist(), album.getTitle(), track.getNumber(), track.getTitle());
@@ -247,7 +247,7 @@ public class ScriptGeneratorLinux extends AbstractProcess implements ScriptGener
         pw.println("\tmkdir -p \"$BASE_DIR\"/wav");
         pw.println("\tcd \"$BASE_DIR\"/wav");
         pw.println("\trm -f ./*.wav");
-        pw.printf("\t$CDPARANOIA -w -B -z -d %s%n", Settings.getInstance().getDevice()); // -S 2 = Nur 2x Geschwindigkeit.
+        pw.printf("\t$CDPARANOIA -w -B -z -d %s%n", Settings.getInstance().getDevice()); // -S 2 = Read with 2x Speed.
         pw.println("fi");
     }
 }
