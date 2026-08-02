@@ -16,5 +16,5 @@ dependencies {
 // [archiveBaseName]-[archiveAppendix]-[archiveVersion]-[archiveClassifier].[archiveExtension]
 // archiveFileName = "my-boot.jar"
 springBoot {
-    mainClass = "de.freese.jripper.swing.JRipperSwing"
+    mainClass.set("de.freese.jripper.swing.JRipperSwing")
 }
