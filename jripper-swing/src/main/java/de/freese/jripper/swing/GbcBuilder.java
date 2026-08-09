@@ -1,4 +1,3 @@
-// Created: 17.10.2013
 package de.freese.jripper.swing;
 
 import java.awt.GridBagConstraints;
@@ -9,6 +8,7 @@ import java.io.Serial;
  * Extends the {@link GridBagConstraints} by the Builder-Pattern.
  *
  * @author Thomas Freese
+ * @since 17.10.2013
  */
 @SuppressWarnings("java:S1845")
 public final class GbcBuilder extends GridBagConstraints {

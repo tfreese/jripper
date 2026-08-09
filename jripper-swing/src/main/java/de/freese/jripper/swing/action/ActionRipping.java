@@ -1,21 +1,20 @@
-// Created: 10.10.2013
 package de.freese.jripper.swing.action;
 
+import de.freese.jripper.core.model.Album;
+import de.freese.jripper.swing.task.RippingTask;
+
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 import java.awt.event.ActionEvent;
 import java.io.Serial;
 import java.util.Objects;
 import java.util.function.Supplier;
 
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-
-import de.freese.jripper.core.model.Album;
-import de.freese.jripper.swing.task.RippingTask;
-
 /**
  * {@link Action} for Ripping and Coding.
  *
  * @author Thomas Freese
+ * @since 10.10.2013
  */
 public class ActionRipping extends AbstractAction {
     @Serial

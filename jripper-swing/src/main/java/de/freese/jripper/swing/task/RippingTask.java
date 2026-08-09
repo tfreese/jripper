@@ -1,20 +1,19 @@
-// Created: 10.10.2013
 package de.freese.jripper.swing.task;
-
-import java.io.File;
-import java.util.Objects;
-
-import javax.swing.SwingWorker;
 
 import de.freese.jripper.core.JRipperUtils;
 import de.freese.jripper.core.model.Album;
 import de.freese.jripper.core.script.ScriptGenerator;
 import de.freese.jripper.core.script.ScriptGeneratorLinux;
 
+import javax.swing.SwingWorker;
+import java.io.File;
+import java.util.Objects;
+
 /**
  * {@link SwingWorker} for Ripping and Coding.
  *
  * @author Thomas Freese
+ * @since 10.10.2013
  */
 public class RippingTask extends SwingWorker<Void, Void> {
     private final Album album;

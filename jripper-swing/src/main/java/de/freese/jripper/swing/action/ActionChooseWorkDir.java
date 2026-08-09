@@ -1,6 +1,8 @@
-// Created: 18.10.2013
 package de.freese.jripper.swing.action;
 
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.JFileChooser;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.io.File;
@@ -9,14 +11,11 @@ import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.JFileChooser;
-
 /**
  * {@link Action} fot the Working-Directory.
  *
  * @author Thomas Freese
+ * @since 18.10.2013
  */
 public class ActionChooseWorkDir extends AbstractAction {
     @Serial

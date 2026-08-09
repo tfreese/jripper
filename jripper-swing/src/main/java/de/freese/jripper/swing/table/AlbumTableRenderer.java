@@ -1,18 +1,17 @@
-// Created: 18.10.2013
 package de.freese.jripper.swing.table;
-
-import java.awt.Component;
-import java.io.Serial;
 
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableModel;
+import java.awt.Component;
+import java.io.Serial;
 
 /**
  * {@link TableModel} des Albums.
  *
  * @author Thomas Freese
+ * @since 18.10.2013
  */
 public class AlbumTableRenderer extends DefaultTableCellRenderer {
     @Serial

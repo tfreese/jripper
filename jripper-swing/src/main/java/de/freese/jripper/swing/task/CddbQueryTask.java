@@ -1,11 +1,4 @@
-// Created: 10.10.2013
 package de.freese.jripper.swing.task;
-
-import java.util.Objects;
-import java.util.function.Consumer;
-
-import javax.swing.JOptionPane;
-import javax.swing.SwingWorker;
 
 import de.freese.jripper.core.JRipper;
 import de.freese.jripper.core.Settings;
@@ -15,10 +8,16 @@ import de.freese.jripper.core.model.Album;
 import de.freese.jripper.core.model.DiskId;
 import de.freese.jripper.swing.JRipperSwing;
 
+import javax.swing.JOptionPane;
+import javax.swing.SwingWorker;
+import java.util.Objects;
+import java.util.function.Consumer;
+
 /**
  * {@link SwingWorker} for the CDDB Query.
  *
  * @author Thomas Freese
+ * @since 10.10.2013
  */
 public class CddbQueryTask extends SwingWorker<CddbResponse, Void> {
     private final Consumer<Album> albumConsumer;
@@ -61,14 +60,12 @@ public class CddbQueryTask extends SwingWorker<CddbResponse, Void> {
             final Album album = cddbResponse.getAlbum();
 
             albumConsumer.accept(album);
-        }
-        catch (InterruptedException ex) {
+        } catch (final InterruptedException ex) {
             JRipperSwing.LOGGER.error(ex.getMessage(), ex);
 
             // Restore interrupted state.
             Thread.currentThread().interrupt();
-        }
-        catch (Exception ex) {
+        } catch (final Exception ex) {
             JRipperSwing.LOGGER.error(ex.getMessage(), ex);
         }
     }

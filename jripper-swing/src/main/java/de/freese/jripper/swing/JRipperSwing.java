@@ -1,18 +1,26 @@
-// Created: 10.10.2013
 package de.freese.jripper.swing;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Container;
-import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.time.LocalDate;
-import java.util.Dictionary;
-import java.util.Map.Entry;
+import de.freese.binding.SwingBindings;
+import de.freese.binding.collections.DefaultObservableList;
+import de.freese.binding.collections.ObservableList;
+import de.freese.binding.property.Property;
+import de.freese.binding.property.SimpleBooleanProperty;
+import de.freese.binding.property.SimpleIntegerProperty;
+import de.freese.binding.property.SimpleObjectProperty;
+import de.freese.binding.property.SimpleStringProperty;
+import de.freese.binding.swing.combobox.DefaultObservableListComboBoxModel;
+import de.freese.jripper.core.Settings;
+import de.freese.jripper.core.model.Album;
+import de.freese.jripper.core.model.AlbumImpl;
+import de.freese.jripper.core.model.Track;
+import de.freese.jripper.swing.action.ActionCddbQuery;
+import de.freese.jripper.swing.action.ActionChooseWorkDir;
+import de.freese.jripper.swing.action.ActionRipping;
+import de.freese.jripper.swing.table.AlbumTableModel;
+import de.freese.jripper.swing.table.AlbumTableRenderer;
+import de.freese.jripper.swing.task.LoadGenresTask;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -36,39 +44,28 @@ import javax.swing.UIDefaults;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 import javax.swing.plaf.FontUIResource;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import de.freese.binding.SwingBindings;
-import de.freese.binding.collections.DefaultObservableList;
-import de.freese.binding.collections.ObservableList;
-import de.freese.binding.property.Property;
-import de.freese.binding.property.SimpleBooleanProperty;
-import de.freese.binding.property.SimpleIntegerProperty;
-import de.freese.binding.property.SimpleObjectProperty;
-import de.freese.binding.property.SimpleStringProperty;
-import de.freese.binding.swing.combobox.DefaultObservableListComboBoxModel;
-import de.freese.jripper.core.Settings;
-import de.freese.jripper.core.model.Album;
-import de.freese.jripper.core.model.AlbumImpl;
-import de.freese.jripper.core.model.Track;
-import de.freese.jripper.swing.action.ActionCddbQuery;
-import de.freese.jripper.swing.action.ActionChooseWorkDir;
-import de.freese.jripper.swing.action.ActionRipping;
-import de.freese.jripper.swing.table.AlbumTableModel;
-import de.freese.jripper.swing.table.AlbumTableRenderer;
-import de.freese.jripper.swing.task.LoadGenresTask;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Container;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Dictionary;
+import java.util.Map.Entry;
 
 /**
  * Swing-View for the JRipper.
  *
  * @author Thomas Freese
+ * @since 10.10.2013
  */
 public final class JRipperSwing {
     public static final Logger LOGGER = LoggerFactory.getLogger("JRipperSwing");
-
-    private static JFrame frame;
 
     /**
      * @author Thomas Freese
@@ -82,6 +79,10 @@ public final class JRipperSwing {
 
     public static JFrame getFrame() {
         return frame;
+    }
+
+    private static void setFrame(final JFrame frame) {
+        JRipperSwing.frame = frame;
     }
 
     static void main() {
@@ -136,6 +137,7 @@ public final class JRipperSwing {
         panel.add(new JLabel("Work.-Dir."), GbcBuilder.of(0, 1));
 
         final Property<String> workDirProperty = new SimpleStringProperty();
+        workDirProperty.setValue(settings.getWorkDir());
 
         final JTextField textFieldWorkDir = new JTextField(settings.getWorkDir());
 
@@ -250,7 +252,7 @@ public final class JRipperSwing {
         // UIDefaults defaults = UIManager.getLookAndFeelDefaults();
         final UIDefaults defaults = UIManager.getDefaults();
 
-        for (Entry<Object, Object> entry : defaults.entrySet()) {
+        for (final Entry<Object, Object> entry : defaults.entrySet()) {
             final Object key = entry.getKey();
             final Object value = entry.getValue();
 
@@ -270,10 +272,7 @@ public final class JRipperSwing {
         UIManager.put("TitledBorder.font", fontBold);
     }
 
-    private static void setFrame(final JFrame frame) {
-        JRipperSwing.frame = frame;
-    }
-
+    private static JFrame frame;
     private final Property<Album> albumProperty = new SimpleObjectProperty<>(this, "album", new AlbumImpl());
     private final ObservableList<Track> albumTracks = new DefaultObservableList<>();
 
@@ -329,7 +328,7 @@ public final class JRipperSwing {
 
             albumTracks.clear();
 
-            for (Track track : newAlbum) {
+            for (final Track track : newAlbum) {
                 albumTracks.add(track);
             }
         });
@@ -417,7 +416,7 @@ public final class JRipperSwing {
 
         // Year
         panelAlbum.add(new JLabel("Year"), GbcBuilder.of(0, row));
-        final int currentYear = LocalDate.now().getYear();
+        final int currentYear = LocalDate.now(ZoneId.systemDefault()).getYear();
         final JSpinner yearSpinner = new JSpinner(new SpinnerNumberModel(currentYear, 1900, 3000, 1));
         yearSpinner.setEditor(new JSpinner.NumberEditor(yearSpinner, "0000"));
 

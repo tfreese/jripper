@@ -1,20 +1,19 @@
-// Created: 10.10.2013
 package de.freese.jripper.swing.task;
-
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
-
-import javax.swing.SwingWorker;
 
 import de.freese.jripper.core.JRipper;
 import de.freese.jripper.core.genre.GenreProvider;
 import de.freese.jripper.swing.JRipperSwing;
 
+import javax.swing.SwingWorker;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
+
 /**
  * {@link SwingWorker} to load the Genres.
  *
  * @author Thomas Freese
+ * @since 10.10.2013
  */
 public class LoadGenresTask extends SwingWorker<Set<String>, Void> {
     private final List<String> genresList;
@@ -39,14 +38,12 @@ public class LoadGenresTask extends SwingWorker<Set<String>, Void> {
 
             genresList.clear();
             genresList.addAll(genres);
-        }
-        catch (InterruptedException ex) {
+        } catch (final InterruptedException ex) {
             JRipperSwing.LOGGER.error(ex.getMessage(), ex);
 
             // Restore interrupted state.
             Thread.currentThread().interrupt();
-        }
-        catch (Exception ex) {
+        } catch (final Exception ex) {
             JRipperSwing.LOGGER.error(ex.getMessage(), ex);
         }
     }

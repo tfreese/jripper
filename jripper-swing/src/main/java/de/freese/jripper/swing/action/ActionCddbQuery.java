@@ -1,20 +1,19 @@
-// Created: 10.10.2013
 package de.freese.jripper.swing.action;
-
-import java.awt.event.ActionEvent;
-import java.io.Serial;
-import java.util.function.Consumer;
-
-import javax.swing.AbstractAction;
-import javax.swing.Action;
 
 import de.freese.jripper.core.model.Album;
 import de.freese.jripper.swing.task.CddbQueryTask;
+
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import java.awt.event.ActionEvent;
+import java.io.Serial;
+import java.util.function.Consumer;
 
 /**
  * {@link Action} for the CDDB Query.
  *
  * @author Thomas Freese
+ * @since 10.10.2013
  */
 public class ActionCddbQuery extends AbstractAction {
     @Serial
