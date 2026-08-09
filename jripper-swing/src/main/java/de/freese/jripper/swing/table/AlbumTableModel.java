@@ -1,6 +1,6 @@
 package de.freese.jripper.swing.table;
 
-import de.freese.binding.collections.ObservableList;
+import de.freese.binding.collection.ObservableList;
 import de.freese.binding.swing.table.AbstractObservableListTableModel;
 import de.freese.jripper.core.model.Track;
 

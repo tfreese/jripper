@@ -4,8 +4,8 @@
 
     <!--Levels are ordered: TRACE < DEBUG < INFO < WARN < ERROR -->
     <!-- %date{yyyy-MM-dd HH:mm:ss.SSS} -->
-    <property name="PATTERN" value="%date{HH:mm:ss.SSS} - %-5level[%thread] - %logger{0}.%method - %message%n" />
-    <property name="LOG_DIRECTORY" value="${LOG_DIR:-${user.home}/.java-apps/jripper}" />
+    <property name="PATTERN" value="%date{HH:mm:ss.SSS} - %-5level[%thread] - %logger{0}.%method - %message%n"/>
+    <property name="LOG_DIRECTORY" value="${LOG_DIR:-${user.home}/.java-apps/jripper}"/>
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <target>System.out</target>
@@ -53,18 +53,19 @@
     </appender>
 
     <logger name="JRipper" level="DEBUG">
-        <appender-ref ref="FILE" />
+        <appender-ref ref="FILE"/>
     </logger>
     <logger name="JRipperSwing" level="INFO">
-        <appender-ref ref="FILE" />
+        <appender-ref ref="FILE"/>
     </logger>
 
-    <logger name="de.freese.binding" level="DEBUG" />
-    <logger name="de.freese.jripper" level="DEBUG" />
+    <logger name="de.freese.binding" level="DEBUG"/>
+    <logger name="de.freese.newbinding" level="DEBUG"/>
+    <logger name="de.freese.jripper" level="DEBUG"/>
 
     <root level="INFO">
-        <appender-ref ref="STDOUT" />
-        <appender-ref ref="STDERR" />
-        <appender-ref ref="FILE" />
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="STDERR"/>
+        <appender-ref ref="FILE"/>
     </root>
 </configuration>
