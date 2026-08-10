@@ -60,7 +60,6 @@
     </logger>
 
     <logger name="de.freese.binding" level="DEBUG"/>
-    <logger name="de.freese.newbinding" level="DEBUG"/>
     <logger name="de.freese.jripper" level="DEBUG"/>
 
     <root level="INFO">

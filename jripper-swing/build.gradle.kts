@@ -8,7 +8,7 @@ description = "Java Ripper Swing Module"
 dependencies {
     implementation(project(":jripper-core"))
 
-    implementation("de.freese:binding:" + project.version)
+    implementation("de.freese:binding:$version")
 }
 
 // Start: gradle bootRun --args="--spring.profiles.active=dev"
