@@ -1,4 +1,3 @@
-// Created: 02.03.2013
 package de.freese.jripper.core.encoder;
 
 import java.io.File;
@@ -17,6 +16,7 @@ import de.freese.jripper.core.process.AbstractProcess;
  * Linux Implementation with "lame", "mp3val" and "mp3gain".
  *
  * @author Thomas Freese
+ * @since 02.03.2013
  */
 public class EncoderLinuxMp3 extends AbstractProcess implements Encoder {
     @Override
@@ -25,7 +25,7 @@ public class EncoderLinuxMp3 extends AbstractProcess implements Encoder {
         final List<String> mp3Files = new ArrayList<>();
         final List<String> command = new ArrayList<>();
 
-        for (Track track : album) {
+        for (final Track track : album) {
             command.clear();
             command.add("lame");
             command.add("-m");

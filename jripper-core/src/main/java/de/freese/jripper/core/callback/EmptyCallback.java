@@ -1,8 +1,8 @@
-// Created: 21.10.2013
 package de.freese.jripper.core.callback;
 
 /**
  * @author Thomas Freese
+ * @since 21.10.2013
  */
 public class EmptyCallback implements ProcessCallback, LoggerCallback {
     @Override

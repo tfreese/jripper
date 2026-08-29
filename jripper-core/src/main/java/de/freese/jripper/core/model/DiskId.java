@@ -1,4 +1,3 @@
-// Created: 09.03.2013
 package de.freese.jripper.core.model;
 
 import java.util.Objects;
@@ -9,6 +8,7 @@ import de.freese.jripper.core.Settings;
  * DiskId Information of a CD.<br>
  *
  * @author Thomas Freese
+ * @since 09.03.2013
  */
 public class DiskId {
     private String id;
@@ -80,7 +80,7 @@ public class DiskId {
         sb.append(" ").append(getTrackCount());
         sb.append(" ").append(getOffset());
 
-        for (int trackOffset : getTrackOffsets()) {
+        for (final int trackOffset : getTrackOffsets()) {
             sb.append(" ").append(trackOffset);
         }
 

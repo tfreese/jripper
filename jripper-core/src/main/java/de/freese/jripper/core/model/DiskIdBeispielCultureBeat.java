@@ -1,4 +1,3 @@
-// Created: 19.09.2021
 package de.freese.jripper.core.model;
 
 /**
@@ -6,6 +5,7 @@ package de.freese.jripper.core.model;
  * misc, soundtrack<br>
  *
  * @author Thomas Freese
+ * @since 19.09.2021
  */
 public final class DiskIdBeispielCultureBeat extends DiskId {
     public DiskIdBeispielCultureBeat() {

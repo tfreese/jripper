@@ -1,4 +1,3 @@
-// Created: 02.03.2013
 package de.freese.jripper.core.process;
 
 import java.io.BufferedReader;
@@ -14,6 +13,7 @@ import de.freese.jripper.core.callback.ProcessCallback;
 
 /**
  * @author Thomas Freese
+ * @since 02.03.2013
  */
 public abstract class AbstractProcess {
     private static Thread createShutDownHook(final Process process) {

@@ -1,4 +1,3 @@
-// Created: 01.03.2013
 package de.freese.jripper.core.model;
 
 import java.util.Objects;
@@ -7,6 +6,7 @@ import java.util.Objects;
  * CD-Title Descriptor.
  *
  * @author Thomas Freese
+ * @since 01.03.2013
  */
 public class Track {
     private Album album;

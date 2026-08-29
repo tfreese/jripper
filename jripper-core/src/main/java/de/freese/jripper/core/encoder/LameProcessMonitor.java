@@ -1,4 +1,3 @@
-// Created: 07.10.2013
 package de.freese.jripper.core.encoder;
 
 import java.io.PrintWriter;
@@ -7,6 +6,7 @@ import de.freese.jripper.core.process.PrintWriterProcessMonitor;
 
 /**
  * @author Thomas Freese
+ * @since 07.10.2013
  */
 public class LameProcessMonitor extends PrintWriterProcessMonitor {
     public LameProcessMonitor(final PrintWriter printWriter) {

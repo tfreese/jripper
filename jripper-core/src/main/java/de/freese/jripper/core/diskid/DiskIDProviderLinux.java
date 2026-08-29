@@ -1,4 +1,3 @@
-// Created: 25.02.2013
 package de.freese.jripper.core.diskid;
 
 import java.io.File;
@@ -14,6 +13,7 @@ import de.freese.jripper.core.process.AbstractProcess;
  * Linux Implementation with "cd-discid".
  *
  * @author Thomas Freese
+ * @since 25.02.2013
  */
 public class DiskIDProviderLinux extends AbstractProcess implements DiskIDProvider {
     @Override

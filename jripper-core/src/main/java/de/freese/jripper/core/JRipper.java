@@ -1,4 +1,3 @@
-// Created: 07.10.2013
 package de.freese.jripper.core;
 
 import org.slf4j.Logger;
@@ -18,6 +17,7 @@ import de.freese.jripper.core.ripper.RipperFactory;
 
 /**
  * @author Thomas Freese
+ * @since 07.10.2013
  */
 public final class JRipper {
     private static final JRipper INSTANCE = new JRipper();

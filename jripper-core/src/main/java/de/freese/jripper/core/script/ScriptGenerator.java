@@ -1,4 +1,3 @@
-// Created: 11.10.2013
 package de.freese.jripper.core.script;
 
 import java.io.File;
@@ -7,6 +6,7 @@ import de.freese.jripper.core.model.Album;
 
 /**
  * @author Thomas Freese
+ * @since 11.10.2013
  */
 public interface ScriptGenerator {
     /**

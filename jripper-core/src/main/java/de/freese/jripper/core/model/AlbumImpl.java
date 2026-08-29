@@ -1,4 +1,3 @@
-// Created: 26.02.2013
 package de.freese.jripper.core.model;
 
 import java.util.ArrayList;
@@ -13,6 +12,7 @@ import org.slf4j.LoggerFactory;
  * CD-Descriptor.
  *
  * @author Thomas Freese
+ * @since 26.02.2013
  */
 public class AlbumImpl implements Album {
     private static final Logger LOGGER = LoggerFactory.getLogger(AlbumImpl.class);

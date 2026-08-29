@@ -1,4 +1,3 @@
-// Created: 07.10.2013
 package de.freese.jripper.core.callback;
 
 import java.util.Objects;
@@ -7,6 +6,7 @@ import org.slf4j.Logger;
 
 /**
  * @author Thomas Freese
+ * @since 07.10.2013
  */
 public class ProcessLoggerCallback implements ProcessCallback, LoggerCallback {
     private final Logger logger;

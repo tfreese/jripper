@@ -1,10 +1,10 @@
-// Created: 07.10.2013
 package de.freese.jripper.core.process;
 
 import java.io.PrintWriter;
 
 /**
  * @author Thomas Freese
+ * @since 07.10.2013
  */
 public class PrintWriterProcessMonitor implements ProcessMonitor {
     private final PrintWriter printWriter;

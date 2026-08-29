@@ -1,4 +1,3 @@
-// Created: 09.03.2013
 package de.freese.jripper.core.cddb;
 
 import java.util.List;
@@ -10,6 +9,7 @@ import de.freese.jripper.core.model.Album;
  * ResponseCodes der CDDB - Server.
  *
  * @author Thomas Freese
+ * @since 09.03.2013
  */
 public class CddbResponse {
     /**

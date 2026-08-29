@@ -1,10 +1,10 @@
-// Created: 20.10.2013
 package de.freese.jripper.core.model;
 
 /**
  * CD-Descriptor.
  *
  * @author Thomas Freese
+ * @since 20.10.2013
  */
 public interface Album extends Iterable<Track> {
     /**

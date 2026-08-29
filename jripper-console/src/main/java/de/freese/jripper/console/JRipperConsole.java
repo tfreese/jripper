@@ -1,4 +1,3 @@
-// Created: 26.02.2013
 package de.freese.jripper.console;
 
 import java.io.BufferedReader;
@@ -28,6 +27,7 @@ import de.freese.jripper.core.ripper.Ripper;
  * Console-View für den JRipper.
  *
  * @author Thomas Freese
+ * @since 26.02.2013
  */
 public class JRipperConsole {
     static void main() {
@@ -91,7 +91,7 @@ public class JRipperConsole {
         final Console console = System.console();
 
         if (console != null) {
-            if (console.reader() instanceof BufferedReader bufferedReader) {
+            if (console.reader() instanceof final BufferedReader bufferedReader) {
                 reader = bufferedReader;
             }
             else {
@@ -177,7 +177,7 @@ public class JRipperConsole {
                     break;
             }
         }
-        catch (Exception ex) {
+        catch (final Exception ex) {
             // String message = ex.getMessage();
             // message = ex.toString();
             // message = StringUtils.isNotBlank(message) ? message : ex.toString();
@@ -240,7 +240,7 @@ public class JRipperConsole {
         println("%-15s%s", "Comment", album.getComment());
         print(System.lineSeparator());
 
-        for (Track track : album) {
+        for (final Track track : album) {
             println("%2d. %s %s", track.getNumber(), String.format("%-35s", track.getArtist()).replace(' ', '.'), track.getTitle());
         }
     }
@@ -342,7 +342,7 @@ public class JRipperConsole {
                     break;
             }
         }
-        catch (Exception ex) {
+        catch (final Exception ex) {
             // String message = ex.getMessage();
             // message = ex.toString();
             // message = StringUtils.isNotBlank(message) ? message : ex.toString();

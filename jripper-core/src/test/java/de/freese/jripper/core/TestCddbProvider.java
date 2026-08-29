@@ -1,4 +1,3 @@
-// Created: 25.02.2013
 package de.freese.jripper.core;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -22,6 +21,7 @@ import de.freese.jripper.core.model.DiskId;
 
 /**
  * @author Thomas Freese
+ * @since 25.02.2013
  */
 @TestMethodOrder(MethodOrderer.MethodName.class)
 class TestCddbProvider {

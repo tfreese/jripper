@@ -1,4 +1,3 @@
-// Created: 07.03.2013
 package de.freese.jripper.core;
 
 import java.util.regex.Matcher;
@@ -9,6 +8,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * @author Thomas Freese
+ * @since 07.03.2013
  */
 public final class Misc {
     private static final Logger LOGGER = LoggerFactory.getLogger(Misc.class);

@@ -1,4 +1,3 @@
-// Created: 11.10.2013
 package de.freese.jripper.core.script;
 
 import java.io.File;
@@ -18,6 +17,7 @@ import de.freese.jripper.core.process.AbstractProcess;
 
 /**
  * @author Thomas Freese
+ * @since 11.10.2013
  */
 public class ScriptGeneratorLinux extends AbstractProcess implements ScriptGenerator {
     @Override
@@ -133,7 +133,7 @@ public class ScriptGeneratorLinux extends AbstractProcess implements ScriptGener
         pw.println("cd \"$BASE_DIR\"/flac");
         pw.println("rm -f ./*.flac");
 
-        for (Track track : album) {
+        for (final Track track : album) {
             pw.println();
             pw.print("$FLAC");
             pw.print(String.format(" -%d", Settings.getInstance().getFlacCompression()));
@@ -184,7 +184,7 @@ public class ScriptGeneratorLinux extends AbstractProcess implements ScriptGener
         pw.println("cd \"$BASE_DIR\"/mp3");
         pw.println("rm -f ./*.mp3");
 
-        for (Track track : album) {
+        for (final Track track : album) {
             pw.println();
             pw.print("$LAME");
             pw.print(" -m j"); // Mode = Joint-Stereo

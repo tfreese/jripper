@@ -1,4 +1,3 @@
-// Created: 07.10.2013
 package de.freese.jripper.core.callback;
 
 import java.io.PrintWriter;
@@ -6,6 +5,7 @@ import java.util.Objects;
 
 /**
  * @author Thomas Freese
+ * @since 07.10.2013
  */
 public class PrintWriterCallback implements ProcessCallback, LoggerCallback {
     private final PrintWriter printWriter;

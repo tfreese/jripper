@@ -1,4 +1,3 @@
-// Created: 02.03.2013
 package de.freese.jripper.core.ripper;
 
 import java.util.ServiceLoader;
@@ -7,6 +6,7 @@ import de.freese.jripper.core.JRipperUtils;
 
 /**
  * @author Thomas Freese
+ * @since 02.03.2013
  */
 public final class RipperFactory {
     private static final ServiceLoader<Ripper> SERVICE_LOADER = ServiceLoader.load(Ripper.class);
@@ -17,7 +17,7 @@ public final class RipperFactory {
     public static Ripper getInstance() {
         Ripper impl = null;
 
-        for (Ripper ripper : SERVICE_LOADER) {
+        for (final Ripper ripper : SERVICE_LOADER) {
             if (ripper.supportsOS(JRipperUtils.getOsName())) {
                 impl = ripper;
                 break;

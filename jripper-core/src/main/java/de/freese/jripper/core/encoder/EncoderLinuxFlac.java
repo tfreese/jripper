@@ -1,4 +1,3 @@
-// Created: 02.03.2013
 package de.freese.jripper.core.encoder;
 
 import java.io.File;
@@ -17,6 +16,7 @@ import de.freese.jripper.core.process.AbstractProcess;
  * Linux Implementation with "flac" and "metaflac".
  *
  * @author Thomas Freese
+ * @since 02.03.2013
  */
 public class EncoderLinuxFlac extends AbstractProcess implements Encoder {
     @Override
@@ -25,7 +25,7 @@ public class EncoderLinuxFlac extends AbstractProcess implements Encoder {
         final List<String> flacFiles = new ArrayList<>();
         final List<String> command = new ArrayList<>();
 
-        for (Track track : album) {
+        for (final Track track : album) {
             command.clear();
             command.add("flac");
             command.add(String.format("-%d", Settings.getInstance().getFlacCompression()));

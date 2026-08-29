@@ -1,4 +1,3 @@
-// Created: 20.10.2013
 package de.freese.jripper.core.genre;
 
 import java.io.File;
@@ -15,6 +14,7 @@ import de.freese.jripper.core.process.AbstractProcess;
  * Returns the Genres from the lame-Definition.
  *
  * @author Thomas Freese
+ * @since 20.10.2013
  */
 public class GenreProviderLinux extends AbstractProcess implements GenreProvider {
     @Override

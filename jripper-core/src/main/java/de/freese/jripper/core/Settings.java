@@ -1,4 +1,3 @@
-// Created: 07.10.2013
 package de.freese.jripper.core;
 
 import java.util.List;
@@ -8,6 +7,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * @author Thomas Freese
+ * @since 07.10.2013
  */
 public final class Settings {
     private static final Settings INSTANCE = new Settings();

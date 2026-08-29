@@ -1,4 +1,3 @@
-// Created: 02.03.2013
 package de.freese.jripper.core.cddb;
 
 import java.io.BufferedReader;
@@ -27,6 +26,7 @@ import de.freese.jripper.core.model.DiskId;
  * CDDB Provider for GnuDB.
  *
  * @author Thomas Freese
+ * @since 02.03.2013
  */
 public class CddbProviderGnuDb implements CddbProvider {
     private static final String HOST = "localhost";
@@ -54,11 +54,9 @@ public class CddbProviderGnuDb implements CddbProvider {
     public CddbProviderGnuDb() {
         super();
 
-        final StringBuilder sb = new StringBuilder();
-        sb.append("&hello=").append(USER);
-        sb.append("+").append(HOST);
-        sb.append("+jRipper+1.0.0&proto=6");
-        requestPostfix = sb.toString();
+        requestPostfix = "&hello=" + USER
+                + "+" + HOST
+                + "+jRipper+1.0.0&proto=6";
     }
 
     /**
@@ -98,7 +96,7 @@ public class CddbProviderGnuDb implements CddbProvider {
         else {
             Map<String, String> responseMap = new TreeMap<>(new TrackTitleComparator());
 
-            for (String line : lines) {
+            for (final String line : lines) {
                 getLogger().debug(line);
 
                 if (line.startsWith("#") || !line.contains("=")) {
@@ -124,7 +122,7 @@ public class CddbProviderGnuDb implements CddbProvider {
 
             final AlbumImpl album = new AlbumImpl(diskID);
 
-            for (Entry<String, String> entry : responseMap.entrySet()) {
+            for (final Entry<String, String> entry : responseMap.entrySet()) {
                 final String key = entry.getKey();
                 final String value = entry.getValue();
 
@@ -244,7 +242,7 @@ public class CddbProviderGnuDb implements CddbProvider {
         sb.append("+").append(diskID.getTrackCount());
         sb.append("+").append(diskID.getOffset());
 
-        for (int offset : diskID.getTrackOffsets()) {
+        for (final int offset : diskID.getTrackOffsets()) {
             sb.append("+").append(offset);
         }
 
@@ -274,7 +272,7 @@ public class CddbProviderGnuDb implements CddbProvider {
         else {
             final Set<String> genres = new TreeSet<>();
 
-            for (String line : lines) {
+            for (final String line : lines) {
                 getLogger().debug(line);
 
                 // Finish Indicator.

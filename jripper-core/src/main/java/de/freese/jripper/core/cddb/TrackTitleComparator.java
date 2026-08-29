@@ -1,10 +1,10 @@
-// * Created: 11.07.2014
 package de.freese.jripper.core.cddb;
 
 import java.util.Comparator;
 
 /**
  * @author Thomas Freese
+ * @since 11.07.2014
  */
 public class TrackTitleComparator implements Comparator<String> {
     @Override

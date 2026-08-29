@@ -1,4 +1,3 @@
-// Created: 02.03.2013
 package de.freese.jripper.core.ripper;
 
 import java.io.File;
@@ -11,6 +10,7 @@ import de.freese.jripper.core.process.AbstractProcess;
 
 /**
  * @author Thomas Freese
+ * @since 02.03.2013
  */
 public class RipperLinuxCdParanoia extends AbstractProcess implements Ripper {
     @Override

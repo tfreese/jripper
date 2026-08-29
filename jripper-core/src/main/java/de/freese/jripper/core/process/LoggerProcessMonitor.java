@@ -1,10 +1,10 @@
-// Created: 07.10.2013
 package de.freese.jripper.core.process;
 
 import org.slf4j.Logger;
 
 /**
  * @author Thomas Freese
+ * @since 07.10.2013
  */
 public class LoggerProcessMonitor implements ProcessMonitor {
     private final Logger logger;

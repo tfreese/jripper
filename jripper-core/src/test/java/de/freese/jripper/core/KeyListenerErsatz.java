@@ -1,4 +1,3 @@
-// Created: 23.02.2013
 package de.freese.jripper.core;
 
 import java.io.BufferedReader;
@@ -10,12 +9,13 @@ import java.io.Reader;
  * Reagiert auf ENTER der Konsole und beendet das Programm.
  *
  * @author Thomas Freese
+ * @since 23.02.2013
  */
 public class KeyListenerErsatz implements Runnable {
     @Override
     public void run() {
         final Console console = System.console();
-        Reader reader = null;
+        Reader reader;
 
         if (console != null) {
             reader = console.reader();

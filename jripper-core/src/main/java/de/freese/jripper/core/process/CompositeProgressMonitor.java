@@ -1,4 +1,3 @@
-// Created: 07.10.2013
 package de.freese.jripper.core.process;
 
 import java.util.ArrayList;
@@ -6,6 +5,7 @@ import java.util.List;
 
 /**
  * @author Thomas Freese
+ * @since 07.10.2013
  */
 public class CompositeProgressMonitor implements ProcessMonitor {
     private final List<ProcessMonitor> monitore;

@@ -1,10 +1,10 @@
-// Created: 25.02.2013
 package de.freese.jripper.console;
 
 /**
  * Interface für die Farbgebung auf der Console.
  *
  * @author Thomas Freese
+ * @since 25.02.2013
  */
 @SuppressWarnings("checkstyle:AvoidEscapedUnicodeCharacters")
 public final class AnsiCodes {

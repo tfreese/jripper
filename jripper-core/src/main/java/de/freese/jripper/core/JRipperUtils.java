@@ -1,4 +1,3 @@
-// Created: 02.03.2013
 package de.freese.jripper.core;
 
 import java.io.File;
@@ -13,6 +12,7 @@ import de.freese.jripper.core.model.Album;
 
 /**
  * @author Thomas Freese
+ * @since 02.03.2013
  */
 public final class JRipperUtils {
     public static String capitalize(final String value) {
@@ -101,13 +101,12 @@ public final class JRipperUtils {
      * Format: Arbeitsverzeichnis/ALBUMTITEL
      */
     public static File getWorkDir(final Album album) {
-        final StringBuilder sb = new StringBuilder();
-        sb.append(Settings.getInstance().getWorkDir());
-        // sb.append(File.separator).append(StringUtils.replace(album.getTitle(), " ", "-"));
-        sb.append(File.separator).append(album.getTitle());
-        sb.append("-CD").append(album.getDiskNumber());
+        final String sb = Settings.getInstance().getWorkDir()
+                // sb.append(File.separator).append(StringUtils.replace(album.getTitle(), " ", "-"));
+                + File.separator + album.getTitle()
+                + "-CD" + album.getDiskNumber();
 
-        final File dir = new File(sb.toString());
+        final File dir = new File(sb);
 
         if (!dir.exists()) {
             dir.mkdirs();
