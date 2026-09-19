@@ -24,7 +24,11 @@ subprojects {
         }
 
         dependencies {
-            //dependency("GROUP:ARTIFACT:" + property("version_XXX"))
+            // dependency("GROUP:ARTIFACT:" + property("version_XXX"))
+            dependencySet("com.formdev:" + property("version_flatLaf")) {
+                entry("flatlaf")
+                entry("flatlaf-intellij-themes")
+            }
         }
     }
 

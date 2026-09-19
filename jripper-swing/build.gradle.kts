@@ -9,6 +9,7 @@ dependencies {
     implementation(project(":jripper-core"))
 
     implementation("de.freese:binding:$version")
+    implementation("com.formdev:flatlaf")
 }
 
 // Start: gradle bootRun --args="--spring.profiles.active=dev"

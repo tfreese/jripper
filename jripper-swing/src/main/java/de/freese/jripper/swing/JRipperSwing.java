@@ -1,21 +1,20 @@
 package de.freese.jripper.swing;
 
-import de.freese.binding.Property;
-import de.freese.binding.SwingBindings;
-import de.freese.binding.collection.ObservableList;
-import de.freese.binding.swing.combobox.ObservableListComboBoxModel;
-import de.freese.jripper.core.Settings;
-import de.freese.jripper.core.model.Album;
-import de.freese.jripper.core.model.AlbumImpl;
-import de.freese.jripper.core.model.Track;
-import de.freese.jripper.swing.action.ActionCddbQuery;
-import de.freese.jripper.swing.action.ActionChooseWorkDir;
-import de.freese.jripper.swing.action.ActionRipping;
-import de.freese.jripper.swing.table.AlbumTableModel;
-import de.freese.jripper.swing.table.AlbumTableRenderer;
-import de.freese.jripper.swing.task.LoadGenresTask;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Container;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.Rectangle;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.Dictionary;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -35,24 +34,28 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingUtilities;
-import javax.swing.UIDefaults;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
-import javax.swing.plaf.FontUIResource;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Container;
-import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Dictionary;
-import java.util.Map.Entry;
+
+import com.formdev.flatlaf.FlatDarculaLaf;
+import com.formdev.flatlaf.FlatLaf;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import de.freese.binding.Property;
+import de.freese.binding.SwingBindings;
+import de.freese.binding.collection.ObservableList;
+import de.freese.binding.swing.combobox.ObservableListComboBoxModel;
+import de.freese.jripper.core.Settings;
+import de.freese.jripper.core.model.Album;
+import de.freese.jripper.core.model.AlbumImpl;
+import de.freese.jripper.core.model.Track;
+import de.freese.jripper.swing.action.ActionCddbQuery;
+import de.freese.jripper.swing.action.ActionChooseWorkDir;
+import de.freese.jripper.swing.action.ActionRipping;
+import de.freese.jripper.swing.table.AlbumTableModel;
+import de.freese.jripper.swing.table.AlbumTableRenderer;
+import de.freese.jripper.swing.task.LoadGenresTask;
 
 /**
  * Swing-View for the JRipper.
@@ -62,6 +65,7 @@ import java.util.Map.Entry;
  */
 public final class JRipperSwing {
     public static final Logger LOGGER = LoggerFactory.getLogger("JRipperSwing");
+    private static JFrame frame;
 
     /**
      * @author Thomas Freese
@@ -75,10 +79,6 @@ public final class JRipperSwing {
 
     public static JFrame getFrame() {
         return frame;
-    }
-
-    private static void setFrame(final JFrame frame) {
-        JRipperSwing.frame = frame;
     }
 
     static void main() {
@@ -226,51 +226,62 @@ public final class JRipperSwing {
     }
 
     private static void initUIDefaults() {
-        // try {
-        //     // UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        //     // UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
-        //     // UIManager.setLookAndFeel("com.sun.java.swing.plaf.motif.MotifLookAndFeel");
-        // }
-        // catch (Exception ex) {
-        //     LOGGER.error(ex.getMessage(), ex);
-        // }
-
-        UIManager.put("FileChooser.useSystemIcons", Boolean.TRUE);
-
+        FlatLaf.registerCustomDefaultsSource("themes");
+        FlatDarculaLaf.setup();
+        // // try {
+        // //     // UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        // //     // UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
+        // //     // UIManager.setLookAndFeel("com.sun.java.swing.plaf.motif.MotifLookAndFeel");
+        // // }
+        // // catch (Exception ex) {
+        // //     LOGGER.error(ex.getMessage(), ex);
+        // // }
+        //
+        // UIManager.put("FileChooser.useSystemIcons", Boolean.TRUE);
+        //
         // Farben
-        final Color color = new Color(215, 215, 215);
-        UIManager.put("Table.alternatingBackground", color);
-        UIManager.put("Table.alternateRowColor", color);
-        UIManager.put("List.alternatingBackground", color);
-        // defaults.put("Tree.alternatingBackground", color);
+        // 70, 73, 75
+        final Color color = UIManager.getColor("Table.background");
 
-        // Fonts: Dialog, Monospaced, Arial
-        final Font font = new Font("Dialog", Font.PLAIN, 16);
+        // 49, 51, 52
+        final Color colorAlternating = color.darker();
+        // final Color colorAlternating = new Color(color.getRed() - 15, color.getGreen() - 15, color.getBlue() - 15);
 
-        // UIDefaults defaults = UIManager.getLookAndFeelDefaults();
-        final UIDefaults defaults = UIManager.getDefaults();
-
-        for (final Entry<Object, Object> entry : defaults.entrySet()) {
-            final Object key = entry.getKey();
-            final Object value = entry.getValue();
-
-            if (value instanceof FontUIResource) {
-                UIManager.put(key, new FontUIResource(font));
-            }
-
-            // String keyString = key.toString();
-            //
-            // if (keyString.endsWith(".font") || keyString.endsWith(".acceleratorFont")) {
-            // UIManager.put(key, font);
-            // }
-        }
-
-        // Ausnahmen
-        final Font fontBold = font.deriveFont(Font.BOLD);
-        UIManager.put("TitledBorder.font", fontBold);
+        UIManager.put("Table.alternatingBackground", colorAlternating);
+        UIManager.put("Table.alternateRowColor", colorAlternating);
+        UIManager.put("List.alternatingBackground", UIManager.getColor("List.background").darker());
+        // defaults.put("Tree.alternatingBackground", UIManager.getColor("Tree.background").darker());
+        //
+        // // Fonts: Dialog, Monospaced, Arial
+        // final Font font = new Font("Dialog", Font.PLAIN, 24);
+        //
+        // // UIDefaults defaults = UIManager.getLookAndFeelDefaults();
+        // final UIDefaults defaults = UIManager.getDefaults();
+        //
+        // for (final Entry<Object, Object> entry : defaults.entrySet()) {
+        //     final Object key = entry.getKey();
+        //     final Object value = entry.getValue();
+        //
+        //     if (value instanceof FontUIResource) {
+        //         UIManager.put(key, new FontUIResource(font));
+        //     }
+        //
+        //     // String keyString = key.toString();
+        //     //
+        //     // if (keyString.endsWith(".font") || keyString.endsWith(".acceleratorFont")) {
+        //     // UIManager.put(key, font);
+        //     // }
+        // }
+        //
+        // // Ausnahmen
+        // final Font fontBold = font.deriveFont(Font.BOLD);
+        // UIManager.put("TitledBorder.font", fontBold);
     }
 
-    private static JFrame frame;
+    private static void setFrame(final JFrame frame) {
+        JRipperSwing.frame = frame;
+    }
+
     private final Property<Album> albumProperty = new Property<>("album", new AlbumImpl());
     private final ObservableList<Track> albumTracks = new ObservableList<>(new ArrayList<>());
 
@@ -281,15 +292,23 @@ public final class JRipperSwing {
     private void init() {
         initUIDefaults();
 
+        final GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment(); // Multi-Monitor
+        final GraphicsDevice gd = ge.getDefaultScreenDevice(); // Main-Monitor
+
+        final Rectangle r = gd.getDefaultConfiguration().getBounds();
+        final int frameWidth = (int) (r.getWidth() * 0.75D);
+        final int frameHeight = (int) (r.getHeight() * 0.75D);
+
         setFrame(new JFrame());
 
         frame.setTitle("JRipper");
         // frame.setSize(1024, 768);
         // frame.setSize(1280, 1024);
-        frame.setSize(1280, 768);
+        frame.setSize(frameWidth, frameHeight);
         frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         frame.addWindowListener(new MainFrameListener());
         // frame.setExtendedState(Frame.MAXIMIZED_BOTH);
+        frame.setAlwaysOnTop(false);
         frame.setLocationRelativeTo(null);
         frame.setLayout(new BorderLayout());
 
@@ -303,7 +322,15 @@ public final class JRipperSwing {
         initAlbum(splitPane);
 
         frame.setVisible(true);
+        frame.toFront();
         splitPane.setDividerLocation(0.75D);
+
+        // final AlbumImpl album = new AlbumImpl(new DiskId("ae0ff80e 14 150 10972 37962 56825 81450 103550 127900 153025 179675 200425 225187 247687 270712 295700 4090"));
+        // album.addTrack("a", "bb");
+        // album.addTrack("b", "bb");
+        // album.addTrack("c", "cc");
+        // album.addTrack("d", "dd");
+        // albumProperty.setValue(album);
     }
 
     private void initAlbum(final JSplitPane splitPane) {
@@ -458,10 +485,10 @@ public final class JRipperSwing {
         table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
         table.setRowHeight(table.getFont().getSize() + 4);
 
-        table.getColumnModel().getColumn(0).setMinWidth(40);
-        table.getColumnModel().getColumn(0).setMaxWidth(40);
-        table.getColumnModel().getColumn(3).setMinWidth(60);
-        table.getColumnModel().getColumn(3).setMaxWidth(60);
+        table.getColumnModel().getColumn(0).setMinWidth(100);
+        table.getColumnModel().getColumn(0).setMaxWidth(100);
+        table.getColumnModel().getColumn(3).setMinWidth(150);
+        table.getColumnModel().getColumn(3).setMaxWidth(150);
 
         splitPane2.setRightComponent(new JScrollPane(table));
 
